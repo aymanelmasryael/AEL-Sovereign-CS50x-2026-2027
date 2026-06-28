@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEL CS Encyclopedia™ – 04_Deep_Internal_Analysis (Week 1 C)</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #020814;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aab2;
+            --primary-accent: #0074FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(0, 116, 255, 0.35);
+            --glass-border-hover: rgba(0, 116, 255, 0.75);
+            --border-radius: 24px;
+            --warning-color: #ff9800;
+            --success-color: #00ff64;
+            --danger-color: #ff4757;
+            --panel-bg: rgba(5, 15, 35, 0.75);
+            --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* Sovereign Identity Card (Header) */
+        .ael-identity-card {
+            width: 100%;
+            margin: 20px auto 50px auto;
+            padding: 42px;
+            border-radius: 36px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            border: 1px solid var(--glass-border-hover);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 116, 255, 0.18), inset 0 0 25px rgba(0, 116, 255, 0.06);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .ael-identity-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%);
+            opacity: 0.5;
+        }
+
+        .ael-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 28px;
+            border-bottom: 1px dashed rgba(0, 116, 255, 0.55);
+            flex-wrap: wrap;
+        }
+
+        .ael-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .ael-logo {
+            width: 82px;
+            height: 82px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 16px rgba(0, 116, 255, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .ael-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .ael-title {
+            color: #f1f6ff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-subtitle {
+            margin-top: 8px;
+            color: #8db7ff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .directive-badge {
+            background: rgba(0, 116, 255, 0.12);
+            color: #0074FF;
+            border: 1px solid var(--glass-border-hover);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 116, 255, 0.2);
+            align-self: center;
+        }
+
+        .ael-owner {
+            margin-top: 36px;
+            padding-left: 24px;
+            border-left: 5px solid var(--primary-accent);
+        }
+
+        .ael-owner-name {
+            color: #ffffff;
+            font-size: 54px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-owner-role {
+            margin-top: 18px;
+            color: #c7d8ff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Sovereign Seal Box */
+        .ael-seal-box {
+            margin-top: 40px;
+            padding: 32px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72));
+            border: 1px solid rgba(0, 116, 255, 0.55);
+            box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08);
+        }
+
+        .ael-seal-title {
+            color: #6da8ff;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code {
+            padding: 24px;
+            border-radius: 20px;
+            background: #020b18;
+            border: 1px solid rgba(0, 116, 255, 0.7);
+            color: #d9ebff;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: auto;
+            box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .breadcrumb { font-size: 1.1rem; color: #8b949e; }
+        .breadcrumb a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
+
+        .tabs { display: flex; gap: 1rem; }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover { border-color: var(--primary-accent); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--primary-accent); color: #fff; border-color: var(--primary-accent); box-shadow: 0 0 15px rgba(0,116,255,0.4); }
+
+        .content-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 4rem;
+            box-shadow: var(--shadow-gloss);
+            display: none;
+        }
+        .content-panel.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
+        .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
+
+        h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
+        h3 { font-size: 1.6rem; color: #87bffd; margin: 2rem 0 1rem 0; }
+        h4 { font-size: 1.3rem; color: var(--text-primary); margin: 1.5rem 0 0.8rem 0; }
+        p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #b1bac4; }
+        
+        ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
+        ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
+        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
+        ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
+        .panel-ar ul li::before { left: auto; right: 0; }
+
+        .content-panel pre {
+            background: #020b18;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.05rem;
+            margin: 2rem 0;
+            color: #79c0ff;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .alert-box {
+            background: rgba(13, 27, 42, 0.8);
+            border-left: 4px solid var(--primary-accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            border: 1px solid var(--glass-border);
+        }
+        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
+        .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
+
+        .file-link-bar {
+            background: #050f23;
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-link-bar a { color: var(--primary-accent); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .file-link-bar a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .ael-footer {
+            margin-top: 50px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0, 116, 255, 0.45);
+            display: flex;
+            justify-content: space-between;
+            gap: 34px;
+            flex-wrap: wrap;
+            color: #c6dcff;
+            font-size: 16px;
+        }
+
+        @media(max-width: 768px) {
+            .ael-identity-card { padding: 28px; border-radius: 28px; }
+            .ael-owner-name { font-size: 38px; }
+            .ael-title { font-size: 24px; }
+            .content-panel { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- AEL Sovereign Identity Block (Header) -->
+    <div class="ael-identity-card">
+        <div class="ael-header">
+            <div class="ael-logo-group">
+                <svg class="ael-logo" viewBox="0 0 226.77 226.77" aria-label="AEL Logo">
+                    <g fill="#0074FF" stroke="none">
+                        <path d="m97.19,48.59v16.2h-32.4v-16.2c0-8.94-7.25-16.2-16.2-16.2s-16.2,7.25-16.2,16.2v16.2H0v-16.2c0-5.68.98-11.13,2.76-16.2C9.44,13.52,27.44,0,48.59,0s39.16,13.52,45.83,32.4c1.79,5.07,2.76,10.52,2.76,16.2Z" style="fill:#ffffff;"></path>
+                        <rect y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="32.4" width="32.4" height="32.4"></rect>
+                        <rect y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="32.4" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="97.19" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="194.38" width="32.4" height="32.4"></rect>
+                    </g>
+                </svg>
+                <div>
+                    <div class="ael-title">AEL COMPUTER SCIENCE ENCYCLOPEDIA</div>
+                    <div class="ael-subtitle">04_Deep_Internal_Analysis (Week 1 C) &middot; Sovereign Documentation</div>
+                </div>
+            </div>
+            <div class="directive-badge">⚡ 100% SILICON & COGNITIVE DEPTH</div>
+        </div>
+
+        <div class="ael-owner">
+            <div class="ael-owner-name">AYMAN ELMASRY</div>
+            <div class="ael-owner-role">
+                Computational Creative Director &middot; AI Prompt Engineer<br>
+                Founder of Ayman Elmasry LLC
+            </div>
+        </div>
+
+        <div class="ael-seal-box">
+            <div class="ael-seal-title">🔒 ⚡ AEL Sovereign Seal (Active Verification)</div>
+            <div class="ael-code">
+<pre>{
+  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
+  "owner": "Ayman Elmasry",
+  "legal_entities": [
+    "Ayman Elmasry LLC (UAE)",
+    "Ayman Elmasry Advertising & Marketing (Egypt)"
+  ],
+  "section": "04_Deep_Internal_Analysis (Week 1 C)",
+  "syllabus_source": "Harvard CS50x (Deep Internal Analysis)",
+  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
+  "system_version": "v3.0"
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <div class="breadcrumb">
+            <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>04_Deep_Internal_Analysis (Week 1 C)</span>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
+            <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
+        </div>
+    </div>
+
+    <!-- ARABIC PANEL -->
+    <div id="panel-ar" class="content-panel panel-ar active">
+        <div class="file-link-bar">
+            <span>الملف المصدري المباشر: <code>Week_1_Memory_Compilers_AR.md</code></span>
+            <a href="Week_1_Memory_Compilers_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
+        </div>
+        
+        <h2>🏛️ تشريح مراحل المترجم الأربع (The 4 Stages of Clang Compilation)</h2>
+        <p>عندما يكتب الطالب أمر <code>make hello</code> في سطر الأوامر، يبدو وكأن النظام يحول ملف <code>hello.c</code> إلى برنامج تشغيلي <code>hello</code> في خطوة سحرية واحدة. لكن في هندسة النظم العميقة، يقوم محرك <code>make</code> باستدعاء مترجم <code>Clang</code> (أو <code>GCC</code>) ليمر الكود بأربع مراحل معمارية منفصلة وصارمة.</p>
+
+<pre>
+===================================================================================
+                       THE 4 STAGES OF COMPILATION (clang)
+===================================================================================
+
+  [ Source Code: hello.c ]
+            │
+            ▼
+  ┌────────────────────────────────────────────────────────┐
+  │ 1. PREPROCESSING (المعالجة المسبقة)                    │ ──> Expands #include &amp; macros
+  └────────────────────────────────────────────────────────┘
+            │  (Produces hello.i - Expanded Source)
+            ▼
+  ┌────────────────────────────────────────────────────────┐
+  │ 2. COMPILING (الترجمة إلى لغة التجميع)                  │ ──> Generates Assembly
+  └────────────────────────────────────────────────────────┘
+            │  (Produces hello.s - Assembly Code)
+            ▼
+  ┌────────────────────────────────────────────────────────┐
+  │ 3. ASSEMBLING (التجميع إلى كود ثنائي)                   │ ──> Generates Object Code (0s &amp; 1s)
+  └────────────────────────────────────────────────────────┘
+            │  (Produces hello.o - Raw Object File)
+            ▼
+  ┌────────────────────────────────────────────────────────┐
+  │ 4. LINKING (الربط مع المكتبات القياسية)                │ ──> Merges stdio.o &amp; cs50.o
+  └────────────────────────────────────────────────────────┘
+            │
+            ▼
+  [ Final Standalone Binary: ./hello ]
+
+===================================================================================
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🔬 الغوص العميق في كل مرحلة تشغيلية</h2>
+
+        <h3>1. مرحلة المعالجة المسبقة (Preprocessing)</h3>
+        <p>يبحث المعالج المسبق عن أي سطر يبدأ برمز المربع <code>#</code> (مثل <code>#include &lt;stdio.h&gt;</code> أو <code>#include &lt;cs50.h&gt;</code>). يقوم النظام حرفياً بفتح ملف الرأس القياسي <code>stdio.h</code> الموجود في مكتبات النظام، ونسخ محتوياته (التي تحتوي على تعريف دالة <code>printf</code> ونماذج الدوال الأخرى)، ثم لصقها مباشرة أعلى ملف <code>hello.c</code>. كما يقوم في هذه المرحلة بحذف كافة التعليقات البرمجية <code>//</code> لأن المعالج لا يحتاجها.</p>
+
+        <h3>2. مرحلة الترجمة (Compiling)</h3>
+        <p>تحويل كود لغة C (الذي أصبح الآن ملفاً ضخماً يحتوي على كل المكتبات المضمنة) إلى لغة التجميع (<code>Assembly Language</code>). لغة C لا تزال عالية المستوى بالنسبة للمعالج. يقوم المترجم بتحويل الجمل مثل <code>int z = x + y;</code> إلى تعليمات معالج منخفضة المستوى (<code>MOV, ADD, PUSH, POP, CALL</code>) مخصصة لهندسة المعالج المستهدف (مثل <code>x86_64</code> أو <code>ARM64</code>).</p>
+
+        <h3>3. مرحلة التجميع (Assembling)</h3>
+        <p>تحويل تعليمات الأسمبلي النصية إلى تعليمات ثنائية (<code>Machine Code / Object Code</code>) تتكون بالكامل من الأصفار والآحاد. يقوم برنامج المجمع (<code>Assembler</code>) بترجمة كل أمر أسمبلي إلى شفرة تشغيلية (<code>Opcode</code>). الناتج هو ملف يسمى <code>hello.o</code>. هذا الملف ثنائي ويحتوي على الكود الخاص ببرنامجنا فقط، لكنه <strong>لا يستطيع العمل بمفرده بعد</strong> لأنه يحتوي على إشارة لدالة <code>printf</code> دون معرفة شفرتها التنفيذية الفعلية.</p>
+
+        <h3>4. مرحلة الربط (Linking)</h3>
+        <p>دمج ملف الكود الثنائي <code>hello.o</code> مع ملفات الكود الثنائي للمكتبات الخارجية (مثل <code>cs50.o</code> و <code>libc.a / stdio.o</code>). يقوم الرابط (<code>Linker</code>) بدمج كل هذه الملفات الثنائية في جدول عناوين موحد (<code>Symbol Table</code>). يقوم باستبدال الإشارات المؤقتة لدالة <code>printf</code> و <code>get_string</code> بالعناوين الذاكرية الحقيقية لشفرتها الثنائية في المكتبة المجمعة. الناتج النهائي هو الملف التشغيلي الواحد <code>hello</code>.</p>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>⚙️ التمثيل العتادي للبيانات في الذاكرة (Hardware Data Representation)</h2>
+        <p>لفهم أسباب المشاكل الهندسية مثل طفح الأعداد (<code>Overflow</code>) والقصور الكسري (<code>Imprecision</code>)، يجب فحص معمارية الذاكرة على المستوى البتي (<code>Bit-Level</code>).</p>
+
+<pre>
+┌──────────────────────────────────────────────────────────────┐
+│  32-Bit Signed Integer Architecture (Two's Complement)       │
+│  [S] [ 31 Bits for Magnitude / Two's Complement ]            │
+│   ▲                                                          │
+│   └── Sign Bit (0 = Positive, 1 = Negative)                  │
+└──────────────────────────────────────────────────────────────┘
+</pre>
+
+        <div class="alert-box">
+            <h4>💡 معمارية الأعداد الصحيحة والمكمل الثنائي (Two's Complement)</h4>
+            <p>في لغة C، يتم تخزين الأعداد الصحيحة <code>int</code> في 32 بت. تم تخصيص البت الأخير (الأكثر أهمية <code>MSB</code>) كـ <strong>بت الإشارة (Sign Bit)</strong>: إذا كان البت <code>0</code>، فالرقم موجب. وإذا كان البت <code>1</code>، فالرقم سالب.</p>
+            <p><strong>لماذا يحدث الـ Overflow؟</strong> عندما نصل إلى الرقم <code>2,147,483,647</code>، تكون كافة الـ 31 بت المخصصة للرقم مشغولة بالآحاد <code>111...1</code> وبت الإشارة <code>0</code>. إذا أضفنا <code>1</code>، يحدث ترحيل بتي (<code>Carry</code>) يغير بت الإشارة إلى <code>1</code>، مما يخدع المعالج ليعتبر أن الرقم تحول فجأة إلى أقصى رقم سالب <code>-2,147,483,648</code>.</p>
+        </div>
+
+        <h3>1. معيار IEEE 754 للأعداد العشرية (IEEE 754 Floating-Point Standard)</h3>
+        <p>تخزين الأعداد العشرية <code>float</code> (4 بايت / 32 بت) يعتمد على تقسيم البتات إلى 3 مكونات أساسية:</p>
+<pre>
+┌────────┬──────────────────┬──────────────────────────────────┐
+│ Sign   │ Exponent (8 bit) │ Mantissa / Fraction (23 bits)    │
+│ (1 bit)│                  │                                  │
+└────────┴──────────────────┴──────────────────────────────────┘
+</pre>
+        <ul>
+            <li><strong>بت الإشارة (Sign):</strong> بت واحد (0 موجب، 1 سالب).</li>
+            <li><strong>الأس (Exponent):</strong> 8 بت تمثل حجم الرقم (مضروباً في قوى الأساس 2).</li>
+            <li><strong>الكسر أو المعامل (Mantissa / Fraction):</strong> 23 بت تمثل الدقة الكسرية للرقم.</li>
+            <li><strong>تشريح القصور الكسري (Imprecision):</strong> نظراً لأننا نملك 23 بت فقط لتمثيل الكسر، فإن الأرقام غير المنتهية في الأساس الثنائي (مثل <code>0.1</code> أو <code>0.2</code>) يتم اقتطاعها وتقريبها لأقرب رقم بتي متاح. عند استخدام أمر <code>printf("%.50f\n", x/y);</code>، يكشف النظام هذا الاقتطاع الداخلي للبتات.</li>
+        </ul>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🧱 إدارة الذاكرة ونطاقات إطار التكدس (Memory Stack Frames &amp; Scope)</h2>
+        <p>عند استدعاء الدوال (مثل استدعاء <code>meow</code> من <code>main</code>)، يتعامل المعالج مع الذاكرة بنظام <strong>تكدس الاستدعاء (Call Stack)</strong>.</p>
+
+<pre>
+===================================================================================
+                       THE MEMORY CALL STACK ARCHITECTURE
+===================================================================================
+
+  ┌────────────────────────────────────────────────────────┐
+  │  [ meow() Stack Frame ]                                │ ──> Contains local copy of 'n'
+  ├────────────────────────────────────────────────────────┤
+  │  [ main() Stack Frame ]                                │ ──> Contains original 'n = 3'
+  ├────────────────────────────────────────────────────────┤
+  │  [ Available Free Heap / Memory ]                      │
+  └────────────────────────────────────────────────────────┘
+
+===================================================================================
+</pre>
+        <p><strong>العزلة الذاكرية (Memory Isolation):</strong> كل دالة تحصل على إطار تكدس خاص بها (<code>Stack Frame</code>). عندما نرسل المتغير <code>n</code> من <code>main</code> إلى <code>meow</code>، يقوم المعالج بنسخ القيمة من إطار <code>main</code> ووضعها في إطار <code>meow</code>. بمجرد انتهاء عمل دالة <code>meow</code>، يتم تدمير إطارها بالكامل، وتبقى قيم <code>main</code> الأصلية محمية ومعزولة دون أي تغيير.</p>
+    </div>
+
+    <!-- ENGLISH PANEL -->
+    <div id="panel-en" class="content-panel panel-en">
+        <div class="file-link-bar">
+            <span>Source Markdown File: <code>Week_1_Memory_Compilers_EN.md</code></span>
+            <a href="Week_1_Memory_Compilers_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
+        </div>
+        
+        <h2>🏛️ The 4 Stages of Clang Compilation</h2>
+        <p>When a student executes <code>make hello</code> in the terminal, it appears as though the underlying OS magically morphs <code>hello.c</code> into a binary executable <code>hello</code> in a single bound. However, under the hood of systems engineering, <code>make</code> delegates to a robust C compiler (<code>Clang</code> or <code>GCC</code>), initiating a rigorous 4-stage pipeline.</p>
+
+<pre>
+===================================================================================
+                       THE 4 STAGES OF COMPILATION (clang)
+===================================================================================
+
+  [ Source Code: hello.c ]
+            │
+            ▼
+  ┌────────────────────────────────────────────────────────┐
+  │ 1. PREPROCESSING (المعالجة المسبقة)                    │ ──> Expands #include &amp; macros
+  └────────────────────────────────────────────────────────┘
+            │  (Produces hello.i - Expanded Source)
+            ▼
+  ┌────────────────────────────────────────────────────────┐
+  │ 2. COMPILING (الترجمة إلى لغة التجميع)                  │ ──> Generates Assembly
+  └────────────────────────────────────────────────────────┘
+            │  (Produces hello.s - Assembly Code)
+            ▼
+  ┌────────────────────────────────────────────────────────┐
+  │ 3. ASSEMBLING (التجميع إلى كود ثنائي)                   │ ──> Generates Object Code (0s &amp; 1s)
+  └────────────────────────────────────────────────────────┘
+            │  (Produces hello.o - Raw Object File)
+            ▼
+  ┌────────────────────────────────────────────────────────┐
+  │ 4. LINKING (الربط مع المكتبات القياسية)                │ ──> Merges stdio.o &amp; cs50.o
+  └────────────────────────────────────────────────────────┘
+            │
+            ▼
+  [ Final Standalone Binary: ./hello ]
+
+===================================================================================
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🔬 Deep Internal Forensics of the Toolchain</h2>
+
+        <h3>1. Preprocessing</h3>
+        <p>The preprocessor scans the source code for any preprocessor directives prefixed by a hash symbol <code>#</code> (such as <code>#include &lt;stdio.h&gt;</code> or <code>#include &lt;cs50.h&gt;</code>). The engine physically accesses the header files residing in system libraries, copies their internal function declarations (<code>printf</code>, <code>get_string</code>), and pastes them directly into the top of <code>hello.c</code>. Concurrently, it strips away all developer comments <code>//</code>, as the underlying translation units do not require human annotations.</p>
+
+        <h3>2. Compiling</h3>
+        <p>Translates the expanded C source file into low-level Assembly code (<code>Assembly Language</code>). While C provides structural abstractions (<code>if</code>, <code>while</code>, <code>int z = x + y;</code>), the target hardware requires primitive CPU instructions. The compiler translates high-level C logic into processor-specific mnemonics (<code>MOV, ADD, PUSH, POP, CALL</code>) tailored to the explicit target architecture (<code>x86_64</code> or <code>ARM64</code>).</p>
+
+        <h3>3. Assembling</h3>
+        <p>Converts textual Assembly instructions into raw machine-level binary code (<code>Object Code</code>), composed entirely of ones and zeros. The assembler translates each Assembly mnemonic into a direct processor opcode. The resulting file is named <code>hello.o</code>. This object file contains the binary instructions for our logic alone; <strong>it cannot execute independently yet</strong> because it contains external references to <code>printf</code> without knowing its actual physical binary implementation.</p>
+
+        <h3>4. Linking</h3>
+        <p>Merges the standalone object file <code>hello.o</code> with pre-compiled object files of external libraries (<code>cs50.o</code>, <code>libc.a / stdio.o</code>). The linker resolves all external symbol references across multiple object files, mapping them into a unified, executable symbol table (<code>Symbol Table</code>). It replaces placeholder calls for <code>printf</code> with the precise memory addresses of the pre-compiled binary code in the C standard library. The ultimate output is the single, executable binary <code>hello</code>.</p>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>⚙️ Hardware Data Representation &amp; Bit-Level Storage</h2>
+        <p>To truly grasp systems phenomena such as integer overflow (<code>Overflow</code>) and floating-point imprecision (<code>Imprecision</code>), one must inspect memory architecture at the fundamental bit level.</p>
+
+<pre>
+┌──────────────────────────────────────────────────────────────┐
+│  32-Bit Signed Integer Architecture (Two's Complement)       │
+│  [S] [ 31 Bits for Magnitude / Two's Complement ]            │
+│   ▲                                                          │
+│   └── Sign Code (0 = Positive, 1 = Negative)                 │
+└──────────────────────────────────────────────────────────────┘
+</pre>
+
+        <div class="alert-box">
+            <h4>💡 Signed Integer Architecture &amp; Two's Complement</h4>
+            <p>In C, standard <code>int</code> variables occupy 32 bits of memory. The most significant bit (<code>MSB</code>) is designated as the <strong>Sign Bit</strong>: If the Sign Bit is <code>0</code>, the integer is positive. If the Sign Bit is <code>1</code>, the integer is negative.</p>
+            <p><strong>The Overflow Mechanism:</strong> When an integer reaches its positive maximum (<code>2,147,483,647</code>), all 31 magnitude bits are populated with ones <code>111...1</code>, and the sign bit is <code>0</code>. Adding <code>1</code> triggers a cascading binary carry across all bits, flipping the sign bit to <code>1</code>. The processor immediately interprets this binary sequence as the maximum negative number <code>-2,147,483,648</code>.</p>
+        </div>
+
+        <h3>1. IEEE 754 Floating-Point Standard</h3>
+        <p>The <code>float</code> data type allocates 32 bits (4 bytes) of memory, structurally partitioning the bits into three dedicated hardware fields:</p>
+<pre>
+┌────────┬──────────────────┬──────────────────────────────────┐
+│ Sign   │ Exponent (8 bit) │ Mantissa / Fraction (23 bits)    │
+│ (1 bit)│                  │                                  │
+└────────┴──────────────────┴──────────────────────────────────┘
+</pre>
+        <ul>
+            <li><strong>Sign Bit:</strong> 1 bit indicating positivity or negativity.</li>
+            <li><strong>Exponent:</strong> 8 bits representing the magnitude of the number via powers of base 2.</li>
+            <li><strong>Mantissa / Fraction:</strong> 23 bits representing the fractional precision of the value.</li>
+            <li><strong>Anatomy of Imprecision:</strong> Because only 23 bits are allocated to represent the fractional component, non-terminating binary fractions (such as <code>0.1</code> or <code>1/3</code>) must be truncated and rounded to the nearest representable bit combination. Executing <code>printf("%.50f\n", x/y);</code> forces the system to expose this inherent hardware truncation.</li>
+        </ul>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🧱 Call Stack Frames &amp; Memory Scope Isolation</h2>
+        <p>When a function invokes another function (such as <code>main</code> calling <code>meow</code>), the CPU manages execution memory via the <strong>Call Stack (Call Stack)</strong>.</p>
+
+<pre>
+===================================================================================
+                       THE MEMORY CALL STACK ARCHITECTURE
+===================================================================================
+
+  ┌────────────────────────────────────────────────────────┐
+  │  [ meow() Stack Frame ]                                │ ──> Contains local copy of 'n'
+  ├────────────────────────────────────────────────────────┤
+  │  [ main() Stack Frame ]                                │ ──> Contains original 'n = 3'
+  ├────────────────────────────────────────────────────────┤
+  │  [ Available Free Heap / Memory ]                      │
+  └────────────────────────────────────────────────────────┘
+
+===================================================================================
+</pre>
+        <p><strong>Stack Frame Isolation:</strong> Every function invocation gets allocated a private chunk of memory called a Stack Frame. When passing <code>n</code> from <code>main</code> to <code>meow</code>, the CPU pushes a duplicate copy of <code>n</code> into <code>meow</code>'s stack frame. Upon completion of <code>meow</code>, its stack frame is popped off the stack and destroyed, leaving <code>main</code>'s original variables fully isolated and unmodified.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Built for CS50x 2026-2027 &middot; Sovereign Architecture</div>
+    </footer>
+</div>
+
+<script>
+    function switchTab(lang) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
+        
+        if (lang === 'ar') {
+            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+            document.getElementById('panel-ar').classList.add('active');
+        } else {
+            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+            document.getElementById('panel-en').classList.add('active');
+        }
+    }
+</script>
+
+</body>
+</html>

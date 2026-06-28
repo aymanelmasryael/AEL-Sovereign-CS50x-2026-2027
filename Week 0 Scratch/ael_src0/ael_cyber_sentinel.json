@@ -1,0 +1,110 @@
+{
+  "title": "AEL Cyber Sentinel (DDoS Attack Simulator)",
+  "architecture": "Event-Driven Concurrency Model",
+  "engine_version": "3.0.0",
+  "sovereign_metadata": {
+    "owner": "Ayman Elmasry",
+    "entity": "AEL Digital Studio™",
+    "system": "Harvard CS50x Sovereign Subsystems Matrix"
+  },
+  "targets": [
+    {
+      "isStage": true,
+      "name": "Cyber_Citadel_Stage",
+      "variables": {
+        "DDoS_Traffic_Load": ["DDoS_Traffic_Load", 0],
+        "Shield_Integrity": ["Shield_Integrity", 100],
+        "System_Active": ["System_Active", 1]
+      },
+      "lists": {
+        "Incoming_Packets": ["Incoming_Packets", []]
+      },
+      "broadcasts": {
+        "b1": "ATTACK_DETECTED",
+        "b2": "ENGAGE_FIREWALL"
+      },
+      "blocks": {
+        "master_monitor_start": {
+          "opcode": "event_whenflagclicked",
+          "next": "control_forever_loop",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 50,
+          "y": 50
+        },
+        "control_forever_loop": {
+          "opcode": "control_forever",
+          "next": null,
+          "parent": "master_monitor_start",
+          "inputs": {
+            "SUBSTACK": [2, "control_if_attack"]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "control_if_attack": {
+          "opcode": "control_if",
+          "next": null,
+          "parent": "control_forever_loop",
+          "inputs": {
+            "CONDITION": [2, "operator_gt_traffic"],
+            "SUBSTACK": [2, "event_broadcast_firewall"]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "operator_gt_traffic": {
+          "opcode": "operator_gt",
+          "next": null,
+          "parent": "control_if_attack",
+          "inputs": {
+            "OPERAND1": [3, "DDoS_Traffic_Load", [2, "0"]],
+            "OPERAND2": [1, [4, "50000"]]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "event_broadcast_firewall": {
+          "opcode": "event_broadcast",
+          "next": null,
+          "parent": "control_if_attack",
+          "inputs": {
+            "BROADCAST_INPUT": [1, [11, "ENGAGE_FIREWALL", "b2"]]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {
+        "c1": {
+          "blockId": "master_monitor_start",
+          "x": 300,
+          "y": 50,
+          "width": 350,
+          "height": 150,
+          "minimized": false,
+          "text": "AEL Sovereign DDoS Shield Simulator: Continuously inspects packet buffers. When load exceeds 50,000 requests/sec, dynamically triggers the ENGAGE_FIREWALL broadcast to drop malicious connections."
+        }
+      },
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "name": "dark_citadel_grid",
+          "bitmapResolution": 1,
+          "dataFormat": "svg",
+          "assetId": "00a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5",
+          "md5ext": "00a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5.svg"
+        }
+      ],
+      "sounds": [],
+      "volume": 100
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEL Sovereign DOM Matrix v3.0 | Week 8 Proprietary Web Suite</title>
+    <!-- FontAwesome & Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./ael_dom_matrix.css">
+</head>
+<body>
+
+<div class="matrix-container">
+
+    <!-- Master Header Banner -->
+    <header class="matrix-header">
+        <div class="brand-wrapper">
+            <i class="fas fa-cube brand-icon"></i>
+            <div>
+                <div class="brand-title">AEL Sovereign DOM Matrix v3.0</div>
+                <div class="brand-sub">WEEK 8 PROPRIETARY CLIENT-SIDE WEB SUITE (HTML5 / CSS3 / ES6+)</div>
+            </div>
+        </div>
+        <div class="status-pill">STATUS: MASTER ACTIVE</div>
+    </header>
+
+    <!-- Event Loop & Telemetry Monitor Bar -->
+    <section class="event-loop-monitor" style="margin-bottom: 40px; margin-top: 0;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <i class="fas fa-microchip" style="font-size: 28px; color: var(--color-neon);"></i>
+            <div>
+                <div style="color: #fff; font-weight: 700; font-size: 18px;">Event Loop & Call Stack Telemetry</div>
+                <div style="color: var(--text-muted); font-size: 13px;">Real-time inspection of active JavaScript single-threaded concurrency</div>
+            </div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-box">
+                <div class="metric-lbl">Active DOM Nodes</div>
+                <div class="metric-val" id="count-active-nodes">0</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-lbl">Async Task Queue</div>
+                <div class="metric-val" id="count-async-tasks">0</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-lbl">Call Stack Frames</div>
+                <div class="metric-val" id="count-call-stack">0</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Master Dashboard Grid -->
+    <main class="dashboard-grid">
+        
+        <!-- CONTROL PANEL 1: Dynamic Node Manager -->
+        <div class="control-card">
+            <div class="card-title">
+                <i class="fas fa-sitemap"></i> Dynamic DOM Node Manager
+            </div>
+            <p style="margin-bottom: 28px;">
+                Interact with the active browser DOM tree in real-time. Spawn detached element nodes in memory and attach them dynamically, or trigger memory purges to observe DOM re-flow calculations.
+            </p>
+            <div>
+                <button class="btn-matrix" onclick="spawnSovereignNode()">
+                    <i class="fas fa-plus"></i> Spawn Sovereign Node
+                </button>
+                <button class="btn-matrix btn-matrix-danger" onclick="purgeLastNode()">
+                    <i class="fas fa-trash-can"></i> Purge Last Node
+                </button>
+            </div>
+            
+            <!-- Nodes Display Grid -->
+            <div class="nodes-grid" id="nodes-grid-container">
+                <!-- Dynamic Nodes will be injected here via JavaScript -->
+            </div>
+        </div>
+
+        <!-- CONTROL PANEL 2: Virtual Fetch API & Telemetry Console -->
+        <div class="control-card">
+            <div class="card-title">
+                <i class="fas fa-network-wired"></i> Virtual Fetch API (AJAX Stream)
+            </div>
+            <p style="margin-bottom: 28px;">
+                Execute asynchronous non-blocking HTTP requests to simulated sovereign endpoints. Monitor JSON payload handshakes and event loop callback resolutions without UI freezing.
+            </p>
+            <div>
+                <button class="btn-matrix" onclick="executeVirtualFetch()">
+                    <i class="fas fa-cloud-arrow-down"></i> Execute Virtual Fetch (JSON)
+                </button>
+            </div>
+
+            <div style="margin-top: 36px;">
+                <div style="color: #fff; font-weight: 600; font-size: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-terminal" style="color: var(--color-success);"></i> Live Telemetry Console
+                </div>
+                <div class="telemetry-display" id="telemetry-console">
+                    <!-- Logs injected here via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Sovereign Enterprise Knowledge Engine &middot; Built for Harvard CS50x 2026-2027</div>
+    </footer>
+
+</div>
+
+<!-- Interactive Engine Script -->
+<script src="./ael_dom_matrix.js"></script>
+
+</body>
+</html>

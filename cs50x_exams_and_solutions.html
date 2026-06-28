@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEL CS Encyclopedia™ – CS50x Master Exams & Solutions Citadel (Weeks 0–10)</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #020814;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aab2;
+            --primary-accent: #0074FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(0, 116, 255, 0.35);
+            --glass-border-hover: rgba(0, 116, 255, 0.75);
+            --border-radius: 24px;
+            --warning-color: #ff9800;
+            --success-color: #00ff64;
+            --danger-color: #ff4757;
+            --panel-bg: rgba(5, 15, 35, 0.75);
+            --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1350px;
+            margin: 0 auto;
+        }
+
+        /* Sovereign Identity Card (Header) */
+        .ael-identity-card {
+            width: 100%;
+            margin: 20px auto 50px auto;
+            padding: 42px;
+            border-radius: 36px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            border: 1px solid var(--glass-border-hover);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 116, 255, 0.18), inset 0 0 25px rgba(0, 116, 255, 0.06);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .ael-identity-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%);
+            opacity: 0.5;
+        }
+
+        .ael-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 28px;
+            border-bottom: 1px dashed rgba(0, 116, 255, 0.55);
+            flex-wrap: wrap;
+        }
+
+        .ael-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .ael-logo {
+            width: 82px;
+            height: 82px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 16px rgba(0, 116, 255, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .ael-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .ael-title {
+            color: #f1f6ff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-subtitle {
+            margin-top: 8px;
+            color: #8db7ff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .directive-badge {
+            background: rgba(0, 116, 255, 0.12);
+            color: #0074FF;
+            border: 1px solid var(--glass-border-hover);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 116, 255, 0.2);
+            align-self: center;
+        }
+
+        .ael-owner {
+            margin-top: 36px;
+            padding-left: 24px;
+            border-left: 5px solid var(--primary-accent);
+        }
+
+        .ael-owner-name {
+            color: #ffffff;
+            font-size: 54px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-owner-role {
+            margin-top: 18px;
+            color: #c7d8ff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Sovereign Seal Box */
+        .ael-seal-box {
+            margin-top: 40px;
+            padding: 32px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72));
+            border: 1px solid rgba(0, 116, 255, 0.55);
+            box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08);
+        }
+
+        .ael-seal-title {
+            color: #6da8ff;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code {
+            padding: 24px;
+            border-radius: 20px;
+            background: #020b18;
+            border: 1px solid rgba(0, 116, 255, 0.7);
+            color: #d9ebff;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: auto;
+            box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .breadcrumb { font-size: 1.1rem; color: #8b949e; }
+        .breadcrumb a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
+
+        .tabs { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: flex-start; }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.7rem 1.4rem;
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover { border-color: var(--primary-accent); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--primary-accent); color: #fff; border-color: var(--primary-accent); box-shadow: 0 0 20px rgba(0,116,255,0.5); }
+
+        .content-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 4rem;
+            box-shadow: var(--shadow-gloss);
+            display: none;
+        }
+        .content-panel.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
+        h3 { font-size: 1.7rem; color: #87bffd; margin: 2.5rem 0 1rem 0; display: flex; align-items: center; gap: 12px; }
+        h4 { font-size: 1.3rem; color: var(--text-primary); margin: 1.5rem 0 0.8rem 0; }
+        p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #b1bac4; }
+
+        /* Exam Questions & Solutions Styling */
+        .exam-card {
+            background: #050f23;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .exam-question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 116, 255, 0.3);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .question-badge {
+            background: rgba(255, 152, 0, 0.15);
+            color: var(--warning-color);
+            border: 1px solid var(--warning-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .diff-badge {
+            background: rgba(255, 71, 87, 0.15);
+            color: var(--danger-color);
+            border: 1px solid var(--danger-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .exam-card pre {
+            background: #020b18;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 16px;
+            overflow-x: auto;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.05rem;
+            color: #79c0ff;
+            margin: 2rem 0;
+        }
+
+        .solution-box {
+            background: rgba(0, 25, 70, 0.4);
+            border-left: 5px solid var(--success-color);
+            padding: 2rem;
+            border-radius: 0 16px 16px 0;
+            margin-top: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+        .solution-box h4 { color: var(--success-color); margin-top: 0; display: flex; align-items: center; gap: 10px; font-size: 1.4rem; }
+
+        /* Quiz Simulator Styling */
+        .quiz-option {
+            background: #091329;
+            border: 1px solid var(--glass-border);
+            padding: 1.2rem 2rem;
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .quiz-option:hover { border-color: var(--primary-accent); background: #0c1a38; transform: translateX(5px); }
+        .quiz-option.correct { background: rgba(0, 255, 100, 0.15); border-color: var(--success-color); color: #00ff64; font-weight: 700; }
+        .quiz-option.incorrect { background: rgba(255, 71, 87, 0.15); border-color: var(--danger-color); color: #ff4757; font-weight: 700; }
+        
+        .quiz-feedback {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 14px;
+            display: none;
+            font-size: 1.1rem;
+        }
+        .quiz-feedback.success { background: rgba(0, 255, 100, 0.1); border: 1px solid var(--success-color); color: #00ff64; display: block; }
+        .quiz-feedback.error { background: rgba(255, 71, 87, 0.1); border: 1px solid var(--danger-color); color: #ff4757; display: block; }
+
+        /* Raw Formats Hub */
+        .raw-formats-hub {
+            background: #050f23;
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 32px;
+            margin-top: 2rem;
+        }
+        .raw-hub-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; border-bottom: 1px solid rgba(0, 116, 255, 0.3); padding-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+        .raw-hub-title { color: #ffffff; font-size: 24px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .raw-hub-subtitle { color: #8cb4ff; font-size: 15px; margin-top: 6px; }
+        .action-group-title { color: #ffffff; font-size: 17px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+        
+        .format-buttons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+        .format-copy-btn, .format-download-btn {
+            background: #010611;
+            border: 1px solid var(--glass-border);
+            color: #d8e6ff;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .format-copy-btn:hover { border-color: #0074FF; background: #0074FF; color: #ffffff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,116,255,0.4); }
+        .format-download-btn:hover { border-color: #00E699; background: #00E699; color: #020814; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,230,153,0.4); }
+        
+        .status-message {
+            margin-top: 20px;
+            padding: 16px 24px;
+            border-radius: 16px;
+            background: rgba(0, 230, 153, 0.15);
+            border: 1px solid #00E699;
+            color: #00E699;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Footer */
+        .ael-footer {
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0, 116, 255, 0.45);
+            display: flex;
+            justify-content: space-between;
+            gap: 34px;
+            flex-wrap: wrap;
+            color: #c6dcff;
+            font-size: 16px;
+        }
+
+        @media(max-width: 768px) {
+            .ael-identity-card { padding: 28px; border-radius: 28px; }
+            .ael-owner-name { font-size: 38px; }
+            .ael-title { font-size: 24px; }
+            .content-panel { padding: 2rem; }
+            .exam-card { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- AEL Sovereign Identity Block (Header) -->
+    <div class="ael-identity-card">
+        <div class="ael-header">
+            <div class="ael-logo-group">
+                <svg class="ael-logo" viewBox="0 0 226.77 226.77" aria-label="AEL Logo">
+                    <g fill="#0074FF" stroke="none">
+                        <path d="m97.19,48.59v16.2h-32.4v-16.2c0-8.94-7.25-16.2-16.2-16.2s-16.2,7.25-16.2,16.2v16.2H0v-16.2c0-5.68.98-11.13,2.76-16.2C9.44,13.52,27.44,0,48.59,0s39.16,13.52,45.83,32.4c1.79,5.07,2.76,10.52,2.76,16.2Z" style="fill:#ffffff;"></path>
+                        <rect y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="32.4" width="32.4" height="32.4"></rect>
+                        <rect y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="32.4" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="97.19" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="194.38" width="32.4" height="32.4"></rect>
+                    </g>
+                </svg>
+                <div>
+                    <div class="ael-title">AEL COMPUTER SCIENCE ENCYCLOPEDIA</div>
+                    <div class="ael-subtitle">CS50x Master Exams &amp; Solutions Citadel (Weeks 0–10) &middot; Sovereign Knowledge Engine</div>
+                </div>
+            </div>
+            <div class="directive-badge" id="integrity-badge">⚡ 100% SILICON &amp; COGNITIVE DEPTH</div>
+        </div>
+
+        <div class="ael-owner">
+            <div class="ael-owner-name">AYMAN ELMASRY</div>
+            <div class="ael-owner-role">
+                Computational Creative Director &middot; AI Prompt Engineer<br>
+                Founder of Ayman Elmasry LLC
+            </div>
+        </div>
+
+        <div class="ael-seal-box">
+            <div class="ael-seal-title">🔒 ⚡ AEL Sovereign Seal (Active Verification)</div>
+            <div class="ael-code">
+<pre>{
+  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
+  "owner": "Ayman Elmasry",
+  "legal_entities": [
+    "Ayman Elmasry LLC (UAE)",
+    "Ayman Elmasry Advertising & Marketing (Egypt)"
+  ],
+  "section": "Complete CS50x Master Exams Citadel (Weeks 0 to 10)",
+  "syllabus_source": "Harvard CS50x 2026-2027 (Midterms, Quizzes & Final Exams)",
+  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
+  "system_version": "v3.0"
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <div class="breadcrumb">
+            <a href="docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>CS50x Complete Master Exams Citadel</span>
+        </div>
+        <!-- TAB NAVIGATION FOR ALL 11 WEEKS + SIMULATOR -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchExamTab('w0')"><i class="fas fa-shapes"></i> Week 0: Scratch</button>
+            <button class="tab-btn" onclick="switchExamTab('w1')"><i class="fas fa-code"></i> Week 1: C</button>
+            <button class="tab-btn" onclick="switchExamTab('w2')"><i class="fas fa-list-ol"></i> Week 2: Arrays</button>
+            <button class="tab-btn" onclick="switchExamTab('w3')"><i class="fas fa-route"></i> Week 3: Algorithms</button>
+            <button class="tab-btn" onclick="switchExamTab('w4')"><i class="fas fa-memory"></i> Week 4: Memory</button>
+            <button class="tab-btn" onclick="switchExamTab('w5')"><i class="fas fa-network-wired"></i> Week 5: Data Structs</button>
+            <button class="tab-btn" onclick="switchExamTab('w6')"><i class="fas fa-brain"></i> Week 6: Python</button>
+            <button class="tab-btn" onclick="switchExamTab('w7')"><i class="fas fa-database"></i> Week 7: SQL &amp; AI</button>
+            <button class="tab-btn" onclick="switchExamTab('w8')"><i class="fas fa-globe"></i> Week 8: Web</button>
+            <button class="tab-btn" onclick="switchExamTab('w9')"><i class="fas fa-server"></i> Week 9: Flask</button>
+            <button class="tab-btn" onclick="switchExamTab('w10')"><i class="fas fa-crown"></i> Week 10: The End</button>
+            <button class="tab-btn" onclick="switchExamTab('sim')"><i class="fas fa-gamepad"></i> Master Interactive Simulator</button>
+        </div>
+    </div>
+
+    <!-- WEEK 0: SCRATCH -->
+    <div id="tab-w0" class="content-panel active">
+        <h2>🎮 Week 0: Scratch &amp; Computational Thinking Exams</h2>
+        <p>Examination problems exploring event-driven state loops, broadcast synchronization, and boolean condition throttling.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 0: The Ghost Sprite Lock (Event Throttling)</h3>
+                <div>
+                    <span class="question-badge">CS50 Quiz 0</span>
+                    <span class="diff-badge">Difficulty: Medium</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> A student implements a Scratch project where a Ghost Sprite repeatedly checks if it touches a magical barrier. However, the game freezes and experiences extreme lag because the event broadcast fires thousands of times per second without yielding execution. Identify the architectural bug and provide the corrected JSON block structure.</p>
+
+<pre>// Flawed Examination Code (Infinite Unthrottled Broadcast)
+"forever_loop": {
+  "opcode": "control_forever",
+  "inputs": {
+    "SUBSTACK": [2, "control_if_touching"]
+  }
+},
+"control_if_touching": {
+  "opcode": "control_if",
+  "inputs": {
+    "CONDITION": [2, "sensing_touchingobject"],
+    "SUBSTACK": [2, "event_broadcast"] // Broadcasts endlessly without waiting
+  }
+}</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> The block utilizes <code>event_broadcast</code> inside an unthrottled <code>control_forever</code> loop. This floods the Scratch VM execution stack with event messages, locking the single-threaded rendering engine.</p>
+                <p><strong>Pristine Solution:</strong> Replace the standard broadcast with <code>event_broadcastandwait</code> or introduce a <code>control_wait</code> block to allow the VM engine to breathe and sync animation frames.</p>
+
+<pre>// Corrected Production-Grade Implementation
+"forever_loop": {
+  "opcode": "control_forever",
+  "inputs": {
+    "SUBSTACK": [2, "control_if_touching"]
+  }
+},
+"control_if_touching": {
+  "opcode": "control_if",
+  "inputs": {
+    "CONDITION": [2, "sensing_touchingobject"],
+    "SUBSTACK": [2, "event_broadcastandwait"] // Safely synchronizes execution stack
+  }
+}</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 0 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w0', 'status-w0', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w0', 'status-w0', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w0', 'status-w0', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w0', 'status-w0', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w0', 'CS50_Week0_Solution.json', 'application/json', 'status-w0', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w0', 'CS50_Week0_Solution.txt', 'text/plain', 'status-w0', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w0', 'CS50_Week0_Solution.html', 'text/html', 'status-w0', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w0', 'CS50_Week0_Solution.md', 'text/markdown', 'status-w0', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w0" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 1: C -->
+    <div id="tab-w1" class="content-panel">
+        <h2>🧱 Week 1: C Programming &amp; Stack Frame Memory Exams</h2>
+        <p>Classic examination problems testing raw pointer aliasing, stack vs. heap allocation, and manual memory management.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 1: The Secret Passcode (Pointers &amp; Stack Pops)</h3>
+                <div>
+                    <span class="question-badge">CS50 Midterm / Quiz 0</span>
+                    <span class="diff-badge">Difficulty: Hard</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> Consider the following snippet of C code. The developer attempts to pass a secret security key between two functions using pointer aliasing. However, the program exhibits unexpected behavior and prints garbage values or crashes with a segmentation fault. Identify the underlying architectural bug and provide the fully corrected C implementation.</p>
+
+<pre>// Flawed Examination Code
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int* get_secret_code(void) {
+    int secret[3] = {42, 101, 50};
+    return secret;
+}
+
+int main(void) {
+    int* code = get_secret_code();
+    printf("Secret Code: %d %d %d\n", code[0], code[1], code[2]);
+    return 0;
+}</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> The bug is a classic <em>Dangling Pointer / Stack Frame Pop</em>. The array <code>secret[3]</code> is allocated locally on the Stack Frame of <code>get_secret_code</code>. When the function returns, its stack frame is popped and invalidated. The returned pointer now references unallocated stack memory, which gets overwritten by subsequent function calls like <code>printf</code>.</p>
+                <p><strong>Pristine Solution:</strong> To persist data beyond a function's scope, the memory must be dynamically allocated on the Heap using <code>malloc</code>, or passed in via caller-owned buffer pointers.</p>
+
+<pre>// Corrected Production-Grade Implementation
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int* get_secret_code(void) {
+    // Dynamically allocate memory on the Heap
+    int* secret = (int*)malloc(3 * sizeof(int));
+    if (secret == NULL) return NULL;
+    
+    secret[0] = 42;
+    secret[1] = 101;
+    secret[2] = 50;
+    return secret;
+}
+
+int main(void) {
+    int* code = get_secret_code();
+    if (code == NULL) {
+        printf("Fatal Error: Heap exhaustion.\n");
+        return 1;
+    }
+    
+    printf("Secret Code: %d %d %d\n", code[0], code[1], code[2]);
+    
+    // Explicitly free the acquired heap memory to prevent leaks
+    free(code);
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 1 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w1', 'status-w1', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w1', 'status-w1', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w1', 'status-w1', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w1', 'status-w1', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w1', 'CS50_Week1_Solution.json', 'application/json', 'status-w1', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w1', 'CS50_Week1_Solution.txt', 'text/plain', 'status-w1', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w1', 'CS50_Week1_Solution.html', 'text/html', 'status-w1', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w1', 'CS50_Week1_Solution.md', 'text/markdown', 'status-w1', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w1" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 2: ARRAYS -->
+    <div id="tab-w2" class="content-panel">
+        <h2>🔠 Week 2: Arrays, Strings &amp; Cryptographic Ciphers Exams</h2>
+        <p>Expert examination problems covering command-line argument parsing, ASCII integer arithmetic, and string bounds verification.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 2: Polyalphabetic Key Overflow (Vigenere Cipher)</h3>
+                <div>
+                    <span class="question-badge">CS50 Midterm Examination</span>
+                    <span class="diff-badge">Difficulty: Hard</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> A student writes a Vigenere cipher implementation in C. However, the program crashes with a segmentation fault when the user passes a key containing numbers, or when the plaintext is longer than the encryption key. Correct the C implementation to utilize safe modulo indexing and verify key alphabet integrity.</p>
+
+<pre>// Flawed Examination Code
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+
+int main(int argc, char *argv[]) {
+    char *key = argv[1]; // Unverified argc count!
+    char *plaintext = "HELLO WORLD";
+    char ciphertext[50];
+    
+    for (int i = 0, n = strlen(plaintext); i &lt; n; i++) {
+        // Direct indexing without modulo crashes when i >= strlen(key)
+        ciphertext[i] = plaintext[i] + (key[i] - 'A'); 
+    }
+    printf("%s\n", ciphertext);
+    return 0;
+}</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> Accessing <code>argv[1]</code> without verifying <code>argc == 2</code> triggers a null pointer dereference. Furthermore, direct indexing <code>key[i]</code> causes a buffer overflow when the plaintext exceeds the key's length. Finally, non-alphabetic characters (like spaces) must not advance the key index.</p>
+
+<pre>// Corrected Production-Grade Implementation
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;stdbool.h&gt;
+
+bool is_valid_key(const char *key) {
+    for (int i = 0, n = strlen(key); i &lt; n; i++) {
+        if (!isalpha(key[i])) return false;
+    }
+    return true;
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 2 || !is_valid_key(argv[1])) {
+        printf("Usage: ./vigenere keyword\n");
+        return 1;
+    }
+
+    char *key = argv[1];
+    int key_len = strlen(key);
+    char *plaintext = "HELLO WORLD";
+    char ciphertext[50];
+    int key_index = 0;
+
+    for (int i = 0, n = strlen(plaintext); i &lt; n; i++) {
+        char c = plaintext[i];
+        if (isalpha(c)) {
+            char base = isupper(c) ? 'A' : 'a';
+            char key_char = tolower(key[key_index % key_len]) - 'a';
+            ciphertext[i] = (c - base + key_char) % 26 + base;
+            key_index++; // Only advance key index on alphabetic characters
+        } else {
+            ciphertext[i] = c;
+        }
+    }
+    ciphertext[strlen(plaintext)] = '\0'; // Null-terminate the string safely
+    printf("Ciphertext: %s\n", ciphertext);
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 2 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w2', 'status-w2', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w2', 'status-w2', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w2', 'status-w2', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w2', 'status-w2', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w2', 'CS50_Week2_Solution.json', 'application/json', 'status-w2', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w2', 'CS50_Week2_Solution.txt', 'text/plain', 'status-w2', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w2', 'CS50_Week2_Solution.html', 'text/html', 'status-w2', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w2', 'CS50_Week2_Solution.md', 'text/markdown', 'status-w2', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w2" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 3: ALGORITHMS -->
+    <div id="tab-w3" class="content-panel">
+        <h2>🔄 Week 3: Algorithms, Asymptotic Complexity &amp; Voting Exams</h2>
+        <p>Advanced midterm problems testing sorting mechanics, recursion trees, and edge-case handling in plurality and runoff elections.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 3: Tied Candidates in Runoff (Electoral Ties)</h3>
+                <div>
+                    <span class="question-badge">CS50 Midterm Examination</span>
+                    <span class="diff-badge">Difficulty: Hard</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> In the CS50 <code>runoff</code> election simulation, the <code>print_winner</code> function is tasked with determining if any candidate possesses more than half of the total votes. However, a student's implementation incorrectly declares multiple winners or fails entirely when candidates are tied with exactly 50% of the vote. Provide the flawless C implementation for <code>print_winner</code> and <code>is_tie</code>.</p>
+
+<pre>// Flawed Examination Code
+bool print_winner(void) {
+    for (int i = 0; i &lt; candidate_count; i++) {
+        // Flawed condition: >= allows two candidates with exactly 50% to both win!
+        if (candidates[i].votes &gt;= total_votes / 2) { 
+            printf("%s\n", candidates[i].name);
+            return true;
+        }
+    }
+    return false;
+}</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> An instant runoff election mandates a strict majority (<code>votes &gt; total_votes / 2</code>). If the total votes are 10, a candidate needs 6 votes to win, not 5. Furthermore, checking for a complete tie requires verifying that all remaining non-eliminated candidates share the exact same vote count.</p>
+
+<pre>// Corrected Production-Grade Implementation
+#include &lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+
+typedef struct {
+    char name[64];
+    int votes;
+    bool eliminated;
+} Candidate;
+
+Candidate candidates[9];
+int candidate_count = 3;
+int total_votes = 10;
+
+bool print_winner(void) {
+    int majority = total_votes / 2;
+    for (int i = 0; i &lt; candidate_count; i++) {
+        // Must be strictly greater than half the total votes
+        if (!candidates[i].eliminated &amp;&amp; candidates[i].votes &gt; majority) {
+            printf("%s\n", candidates[i].name);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool is_tie(int min_votes) {
+    for (int i = 0; i &lt; candidate_count; i++) {
+        if (!candidates[i].eliminated &amp;&amp; candidates[i].votes != min_votes) {
+            return false; // If any remaining candidate has a different vote count, it's not a tie
+        }
+    }
+    return true;
+}</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 3 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w3', 'status-w3', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w3', 'status-w3', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w3', 'status-w3', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w3', 'status-w3', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w3', 'CS50_Week3_Solution.json', 'application/json', 'status-w3', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w3', 'CS50_Week3_Solution.txt', 'text/plain', 'status-w3', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w3', 'CS50_Week3_Solution.html', 'text/html', 'status-w3', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w3', 'CS50_Week3_Solution.md', 'text/markdown', 'status-w3', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w3" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 4: MEMORY -->
+    <div id="tab-w4" class="content-panel">
+        <h2>💾 Week 4: Memory Forensics, Bitmaps &amp; Magic Numbers Exams</h2>
+        <p>Apex examination problems testing bitwise math, struct padding calculations, and raw file pointer extraction.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 4: Tri-color Hexadecimal Inversion (Bitmaps &amp; Bitwise Math)</h3>
+                <div>
+                    <span class="question-badge">CS50 Final Examination</span>
+                    <span class="diff-badge">Difficulty: Apex C Master</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> In 24-bit BMP images, each pixel is represented by a <code>RGBTRIPLE</code> struct containing <code>rgbtBlue</code>, <code>rgbtGreen</code>, and <code>rgbtRed</code> (each 1 byte). Write a fully optimized C function <code>invert_bitmap_colors</code> that iterates through a 2D array of pixels (height \(H\), width \(W\)) and performs an exact bitwise hexadecimal color inversion on each color channel.</p>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Analysis:</strong> Color inversion in 8-bit unsigned integers (0 to 255) can be achieved mathematically via <code>255 - value</code> or bitwise via the XOR operator <code>value ^ 0xFF</code>. The bitwise XOR approach compiles down to a single processor instruction, maximizing execution speed across large image buffers.</p>
+
+<pre>// Pristine BMP Bitwise Inversion Engine
+#include &lt;stdint.h&gt;
+
+typedef struct {
+    uint8_t rgbtBlue;
+    uint8_t rgbtGreen;
+    uint8_t rgbtRed;
+} RGBTRIPLE;
+
+void invert_bitmap_colors(int height, int width, RGBTRIPLE image[height][width]) {
+    for (int i = 0; i &lt; height; i++) {
+        for (int j = 0; j &lt; width; j++) {
+            // Bitwise XOR with 0xFF inverts all 8 bits instantly
+            image[i][j].rgbtBlue  ^= 0xFF;
+            image[i][j].rgbtGreen ^= 0xFF;
+            image[i][j].rgbtRed   ^= 0xFF;
+        }
+    }
+}</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 4 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w4', 'status-w4', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w4', 'status-w4', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w4', 'status-w4', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w4', 'status-w4', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w4', 'CS50_Week4_Solution.json', 'application/json', 'status-w4', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w4', 'CS50_Week4_Solution.txt', 'text/plain', 'status-w4', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w4', 'CS50_Week4_Solution.html', 'text/html', 'status-w4', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w4', 'CS50_Week4_Solution.md', 'text/markdown', 'status-w4', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w4" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 5: DATA STRUCTURES -->
+    <div id="tab-w5" class="content-panel">
+        <h2>🌲 Week 5: Data Structures, Hash Tables &amp; Tries Exams</h2>
+        <p>Complex examination problems exploring linked list cursor traversal, hash table case-insensitivity, and memory leak prevention.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 5: The Corrupt Hash Table (Case-Insensitive Traversal)</h3>
+                <div>
+                    <span class="question-badge">CS50 Final Examination</span>
+                    <span class="diff-badge">Difficulty: Hard</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> A student implements the <code>check</code> function for a hash table dictionary in C. However, the function fails to match capitalized words at the beginning of sentences and crashes when encountering empty buckets. Provide the fully corrected C implementation for <code>check</code>.</p>
+
+<pre>// Flawed Examination Code
+bool check(const char *word) {
+    unsigned int index = hash(word); // Flawed: hashes raw word directly without lowercasing!
+    node *cursor = table[index];
+    while (cursor != NULL) {
+        if (strcmp(cursor->word, word) == 0) return true; // Flawed: case-sensitive strcmp!
+        cursor = cursor->next;
+    }
+    return false;
+}</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> Passing <code>word</code> directly to <code>hash()</code> without standardizing case causes "Apple" and "apple" to hash to entirely different index buckets. Furthermore, <code>strcmp</code> performs exact ASCII matching; <code>strcasecmp</code> must be deployed to match case-insensitively.</p>
+
+<pre>// Corrected Production-Grade Implementation
+#include &lt;stdbool.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;strings.h&gt;
+
+#define LENGTH 45
+#define N 65536
+
+typedef struct node {
+    char word[LENGTH + 1];
+    struct node *next;
+} node;
+
+extern node *table[N];
+unsigned int hash(const char *word);
+
+bool check(const char *word) {
+    char lower_word[LENGTH + 1];
+    int n = strlen(word);
+    
+    // Standardize word to lowercase to guarantee identical hash bucket routing
+    for (int i = 0; i &lt; n; i++) {
+        lower_word[i] = tolower(word[i]);
+    }
+    lower_word[n] = '\0';
+
+    unsigned int index = hash(lower_word);
+    node *cursor = table[index];
+    
+    // Safely traverse the linked list bucket
+    while (cursor != NULL) {
+        if (strcasecmp(cursor-&gt;word, word) == 0) {
+            return true;
+        }
+        cursor = cursor-&gt;next;
+    }
+    return false;
+}</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 5 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w5', 'status-w5', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w5', 'status-w5', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w5', 'status-w5', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w5', 'status-w5', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w5', 'CS50_Week5_Solution.json', 'application/json', 'status-w5', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w5', 'CS50_Week5_Solution.txt', 'text/plain', 'status-w5', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w5', 'CS50_Week5_Solution.html', 'text/html', 'status-w5', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w5', 'CS50_Week5_Solution.md', 'text/markdown', 'status-w5', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w5" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 6: PYTHON -->
+    <div id="tab-w6" class="content-panel">
+        <h2>🐍 Week 6: Python, OOP &amp; Algorithmic DNA Matching Exams</h2>
+        <p>Advanced Python examination problems testing string slice efficiency, dictionary mapping, and file parsing mechanics.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 6: The Infinite STR DNA Match (Slice Loops)</h3>
+                <div>
+                    <span class="question-badge">CS50 Final Examination</span>
+                    <span class="diff-badge">Difficulty: Hard</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> A student writes a Python script to locate the longest consecutive run of a Short Tandem Repeat (STR) within a DNA sequence. However, the loop fails to increment correctly and hangs in an infinite loop when encountering repeating subsequences. Provide the fully corrected Python implementation for <code>longest_match</code>.</p>
+
+<pre># Flawed Examination Code
+def longest_match(sequence, subsequence):
+    longest_run = 0
+    sub_len = len(subsequence)
+    for i in range(len(sequence)):
+        count = 0
+        # Flawed: checks same static slice without advancing start index!
+        while sequence[i : i + sub_len] == subsequence: 
+            count += 1
+            # Missing index progression causes infinite loop!
+        longest_run = max(longest_run, count)
+    return longest_run</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> Inside the <code>while</code> loop, the slice index <code>i</code> remains static. If <code>sequence[i : i + sub_len]</code> matches the STR, <code>count</code> increments endlessly because the slice window never shifts forward to inspect subsequent repeat blocks.</p>
+
+<pre># Corrected Production-Grade Implementation
+def longest_match(sequence: str, subsequence: str) -&gt; int:
+    longest_run = 0
+    subsequence_length = len(subsequence)
+    sequence_length = len(sequence)
+
+    for i in range(sequence_length):
+        count = 0
+        while True:
+            # Dynamically calculate shifting window based on current repeat count
+            start = i + count * subsequence_length
+            end = start + subsequence_length
+            
+            # Check if current window matches the STR
+            if sequence[start:end] == subsequence:
+                count += 1
+            else:
+                break
+        
+        # Update longest run record
+        longest_run = max(longest_run, count)
+    
+    return longest_run</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 6 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w6', 'status-w6', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w6', 'status-w6', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w6', 'status-w6', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w6', 'status-w6', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w6', 'CS50_Week6_Solution.json', 'application/json', 'status-w6', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w6', 'CS50_Week6_Solution.txt', 'text/plain', 'status-w6', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w6', 'CS50_Week6_Solution.html', 'text/html', 'status-w6', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w6', 'CS50_Week6_Solution.md', 'text/markdown', 'status-w6', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w6" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 7: SQL & AI -->
+    <div id="tab-w7" class="content-panel">
+        <h2>🗄️ Week 7: SQL Databases, Indexing &amp; AI Integration Exams</h2>
+        <p>Advanced midterm and final examination problems covering SQLite query optimization, SQL injection prevention, and vector schema architecture.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 7: The Fiftyville Bank Breach (SQL Injection &amp; JOIN Optimization)</h3>
+                <div>
+                    <span class="question-badge">CS50 Final Examination</span>
+                    <span class="diff-badge">Difficulty: Hard</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> An investigator writes a Python SQLite query to locate suspects who made ATM transactions on '2023-07-28' on 'Leggett Street'. However, the query is vulnerable to SQL Injection and executes exceedingly slowly due to missing JOIN indexing. Correct the Python SQLite execution to utilize secure parameterized queries and optimized explicit JOIN structures.</p>
+
+<pre># Flawed Examination Code
+import sqlite3
+conn = sqlite3.connect("fiftyville.db")
+cursor = conn.cursor()
+
+user_input = "Leggett Street"
+# Vulnerable string formatting & unindexed Cartesian WHERE filter
+query = f"SELECT name FROM people, bank_accounts, atm_transactions WHERE people.id = bank_accounts.person_id AND bank_accounts.account_number = atm_transactions.account_number AND atm_transactions.atm_location = '{user_input}' AND atm_transactions.year = 2023 AND atm_transactions.month = 7 AND atm_transactions.day = 28"
+cursor.execute(query)
+print(cursor.fetchall())</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> String interpolation (<code>f"..."</code>) permits severe SQL injection attacks if <code>user_input</code> contains malicious quotes. Furthermore, comma-separated table listing creates massive Cartesian products before filtering, trashing database memory.</p>
+                <p><strong>Pristine Solution:</strong> Deploy explicit <code>INNER JOIN</code> conditions to utilize foreign-key indexes, and enforce strict parameterized tuple bindings (<code>?</code>).</p>
+
+<pre># Corrected Production-Grade Implementation
+import sqlite3
+import logging
+
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [+] %(message)s")
+
+def secure_fiftyville_investigation(target_location: str):
+    conn = sqlite3.connect("fiftyville.db")
+    cursor = conn.cursor()
+
+    # Optimized explicit JOIN syntax with secure parameterized execution (?)
+    secure_query = """
+        SELECT DISTINCT people.name 
+        FROM people
+        JOIN bank_accounts ON people.id = bank_accounts.person_id
+        JOIN atm_transactions ON bank_accounts.account_number = atm_transactions.account_number
+        WHERE atm_transactions.atm_location = ? 
+          AND atm_transactions.year = 2023 
+          AND atm_transactions.month = 7 
+          AND atm_transactions.day = 28
+    """
+    
+    cursor.execute(secure_query, (target_location,))
+    suspects = cursor.fetchall()
+    
+    logging.info(f"Secure investigation complete. Suspects identified: {suspects}")
+    conn.close()
+    return suspects
+
+if __name__ == "__main__":
+    secure_fiftyville_investigation("Leggett Street")</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 7 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w7', 'status-w7', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w7', 'status-w7', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w7', 'status-w7', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w7', 'status-w7', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w7', 'CS50_Week7_Solution.json', 'application/json', 'status-w7', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w7', 'CS50_Week7_Solution.txt', 'text/plain', 'status-w7', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w7', 'CS50_Week7_Solution.html', 'text/html', 'status-w7', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w7', 'CS50_Week7_Solution.md', 'text/markdown', 'status-w7', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w7" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 8: WEB -->
+    <div id="tab-w8" class="content-panel">
+        <h2>🌐 Week 8: HTML, CSS, JavaScript &amp; DOM Security Exams</h2>
+        <p>Expert examination problems testing event delegation, asynchronous JavaScript execution, and DOM render lifecycle management.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 8: The Unresponsive DOM Script (Render Lifecycle)</h3>
+                <div>
+                    <span class="question-badge">CS50 Web Quiz</span>
+                    <span class="diff-badge">Difficulty: Medium</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> A developer injects a JavaScript snippet into the <code>&lt;head&gt;</code> of an HTML document to attach click event listeners to a button. However, the script throws a <code>TypeError: Cannot read properties of null (reading 'addEventListener')</code> and fails to operate. Identify the architectural bug and provide the corrected implementation.</p>
+
+<pre>&lt;!-- Flawed Examination Code --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;script&gt;
+        // Flawed: Executes immediately before the DOM tree is parsed!
+        document.getElementById("submit-btn").addEventListener("click", function() {
+            alert("Submitted!");
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;button id="submit-btn"&gt;Submit&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> Scripts located in the <code>&lt;head&gt;</code> execute synchronously before the browser parses the <code>&lt;body&gt;</code>. Thus, <code>document.getElementById("submit-btn")</code> returns <code>null</code> because the button does not yet exist in the DOM tree.</p>
+                <p><strong>Pristine Solution:</strong> Wrap the logic inside a <code>DOMContentLoaded</code> event listener, or append the <code>defer</code> attribute to external script declarations.</p>
+
+<pre>&lt;!-- Corrected Production-Grade Implementation --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Secure DOM Architecture&lt;/title&gt;
+    &lt;script&gt;
+        // Safely defers execution until the entire DOM tree is constructed
+        document.addEventListener("DOMContentLoaded", function() {
+            const btn = document.getElementById("submit-btn");
+            if (btn) {
+                btn.addEventListener("click", function() {
+                    alert("Submitted securely!");
+                });
+            }
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;button id="submit-btn"&gt;Submit&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 8 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w8', 'status-w8', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w8', 'status-w8', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w8', 'status-w8', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w8', 'status-w8', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w8', 'CS50_Week8_Solution.json', 'application/json', 'status-w8', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w8', 'CS50_Week8_Solution.txt', 'text/plain', 'status-w8', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w8', 'CS50_Week8_Solution.html', 'text/html', 'status-w8', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w8', 'CS50_Week8_Solution.md', 'text/markdown', 'status-w8', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w8" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 9: FLASK -->
+    <div id="tab-w9" class="content-panel">
+        <h2>server Week 9: Flask, Session Hijacking &amp; XSS Security Exams</h2>
+        <p>Expert examination problems targeting web application vulnerabilities, Flask session management, cross-site scripting (XSS), and secure routing.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 9: The Flawed Ledger (Flask Session Hijacking &amp; XSS)</h3>
+                <div>
+                    <span class="question-badge">CS50 Web Final Exam</span>
+                    <span class="diff-badge">Difficulty: Hard</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> A CS50 student builds a Flask financial app where users can transfer funds. However, the route lacks session authentication checks and renders unescaped user transaction notes directly into the HTML response, opening the citadel to Session Hijacking and Stored XSS. Provide the fully fortified Flask routing implementation.</p>
+
+<pre># Flawed Examination Code
+@app.route("/transfer", methods=["POST"])
+def transfer():
+    recipient = request.form.get("recipient")
+    amount = int(request.form.get("amount"))
+    note = request.form.get("note") # Unescaped note containing potential <script> tags
+    
+    # Missing session verification! Anyone can hit this endpoint directly
+    db.execute("UPDATE accounts SET balance = balance - ? WHERE user_id = ?", amount, session["user_id"])
+    db.execute("UPDATE accounts SET balance = balance + ? WHERE username = ?", amount, recipient)
+    
+    return f"&lt;h1&gt;Transfer Success!&lt;/h1&gt;&lt;p&gt;Note: {note}&lt;/p&gt;"</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> Missing <code>@login_required</code> wrappers allow unauthenticated external POST requests to execute state-changing database operations. Returning raw unescaped strings (<code>f"...{note}..."</code>) allows injected JavaScript to execute in the victim's browser (XSS).</p>
+                <p><strong>Pristine Solution:</strong> Implement strict session checking, enforce database transaction atomicity (<code>BEGIN/COMMIT</code>), and utilize Jinja2 template rendering which automatically escapes malicious HTML entities.</p>
+
+<pre># Corrected Production-Grade Implementation
+from flask import Flask, request, render_template, session, redirect, url_for, flash
+from functools import wraps
+import sqlite3
+
+app = Flask(__name__)
+app.secret_key = "AEL_SOVEREIGN_SUPER_SECRET_SESSION_KEY"
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route("/secure_transfer", methods=["POST"])
+@login_required
+def secure_transfer():
+    recipient = request.form.get("recipient")
+    try:
+        amount = int(request.form.get("amount", 0))
+    except ValueError:
+        return render_template("error.html", message="Invalid amount."), 400
+
+    if amount &lt;= 0:
+        return render_template("error.html", message="Amount must be positive."), 400
+
+    note = request.form.get("note", "")
+
+    conn = sqlite3.connect("finance.db")
+    cursor = conn.cursor()
+    
+    # Enforce database atomicity via explicit transaction handling
+    try:
+        cursor.execute("BEGIN TRANSACTION")
+        cursor.execute("UPDATE accounts SET balance = balance - ? WHERE user_id = ?", (amount, session["user_id"]))
+        cursor.execute("UPDATE accounts SET balance = balance + ? WHERE username = ?", (amount, recipient))
+        conn.commit()
+    except sqlite3.Error:
+        conn.rollback()
+        return render_template("error.html", message="Transaction failed."), 500
+    finally:
+        conn.close()
+
+    # Renders via Jinja2 template to automatically escape XSS payloads
+    flash("Transfer completed successfully!")
+    return render_template("transfer_success.html", recipient=recipient, amount=amount, note=note)</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 9 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w9', 'status-w9', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w9', 'status-w9', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w9', 'status-w9', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w9', 'status-w9', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w9', 'CS50_Week9_Solution.json', 'application/json', 'status-w9', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w9', 'CS50_Week9_Solution.txt', 'text/plain', 'status-w9', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w9', 'CS50_Week9_Solution.html', 'text/html', 'status-w9', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w9', 'CS50_Week9_Solution.md', 'text/markdown', 'status-w9', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w9" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- WEEK 10: THE END -->
+    <div id="tab-w10" class="content-panel">
+        <h2>👑 Week 10: The End, Final Project Architecture &amp; Zero-Trust Exams</h2>
+        <p>Master examination problems testing cryptographic timing attacks, constant-time HMAC validation, and system integrity maintenance.</p>
+
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-file-circle-question"></i> Exam Problem 10: The Unverified Microservice (Timing Attacks)</h3>
+                <div>
+                    <span class="question-badge">CS50 Final Master Project</span>
+                    <span class="diff-badge">Difficulty: Apex Master</span>
+                </div>
+            </div>
+            <p><strong>Problem Statement:</strong> A student builds a backend microservice in Python that authenticates incoming webhook requests by comparing an HMAC signature using the standard equality operator <code>==</code>. However, security auditors identify that this implementation is highly vulnerable to Cryptographic Timing Side-Channel Attacks. Provide the fully fortified Python implementation utilizing constant-time comparison.</p>
+
+<pre># Flawed Examination Code
+import hmac
+import hashlib
+
+MASTER_KEY = b"SECRET_KEY"
+
+def verify_webhook(payload: bytes, incoming_signature: str) -> bool:
+    expected_signature = hmac.new(MASTER_KEY, payload, hashlib.sha256).hexdigest()
+    # Flawed: Standard equality (==) compares byte-by-byte and exits early on mismatch!
+    # This allows attackers to guess the signature via microsecond timing measurements.
+    return expected_signature == incoming_signature</pre>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-circle-check"></i> AEL Sovereign Expert Solution &amp; Architectural Analysis</h4>
+                <p><strong>Architectural Diagnosis:</strong> The standard equality operator <code>==</code> compares strings character-by-character and terminates immediately upon finding the first mismatch. An attacker can measure the execution time in microseconds to determine exactly how many characters of their forged signature were correct, systematically cracking the HMAC.</p>
+                <p><strong>Pristine Solution:</strong> Utilize <code>hmac.compare_digest</code>, which executes in constant time \(O(1)\) regardless of where the mismatch occurs, completely neutralizing timing side-channel attacks.</p>
+
+<pre># Corrected Production-Grade Implementation
+import hmac
+import hashlib
+import logging
+
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [+] %(message)s")
+
+class AELZeroTrustMicroservice:
+    def __init__(self, master_key: bytes):
+        self.master_key = master_key
+
+    def verify_webhook_constant_time(self, payload: bytes, incoming_signature: str) -&gt; bool:
+        """Thwarts timing side-channel attacks by comparing digests in strict constant time."""
+        expected_signature = hmac.new(self.master_key, payload, hashlib.sha256).hexdigest()
+        
+        # Enforce constant-time cryptographic verification
+        if hmac.compare_digest(expected_signature, incoming_signature):
+            logging.info("🔒 [VERIFICATION SUCCESS] Constant-time HMAC match. Payload trusted.")
+            return True
+        else:
+            logging.warning("🚨 [DEFENSE ACTIVE] HMAC mismatch detected! Dropping malicious webhook.")
+            return False
+
+if __name__ == "__main__":
+    service = AELZeroTrustMicroservice(b"AEL_ULTIMATE_SOVEREIGN_KEY_2026")
+    sample_data = b"DEPLOY_SOVEREIGN_CITADEL"
+    valid_hmac = hmac.new(b"AEL_ULTIMATE_SOVEREIGN_KEY_2026", sample_data, hashlib.sha256).hexdigest()
+    
+    # Executing protected verification
+    service.verify_webhook_constant_time(sample_data, valid_hmac)</pre>
+            </div>
+        </div>
+
+        <!-- RAW FORMATS HUB -->
+        <div class="raw-formats-hub">
+            <div class="raw-hub-header">
+                <div>
+                    <div class="raw-hub-title"><i class="fas fa-box-open"></i> Raw Formats Hub (Week 10 Solutions)</div>
+                    <div class="raw-hub-subtitle">Instant one-click clipboard copying and direct file downloading across all four pure architectural formats</div>
+                </div>
+                <div class="directive-badge" style="margin:0;">⚡ INSTANT COPY &amp; DOWNLOAD ENGINE</div>
+            </div>
+            <div class="action-group-title"><i class="fas fa-copy"></i> Instant Copy</div>
+            <div class="format-buttons-grid">
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-json-w10', 'status-w10', 'Pure JSON copied successfully!')"><i class="fas fa-copy"></i> Pure JSON</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-text-w10', 'status-w10', 'Pure Plain Text copied successfully!')"><i class="fas fa-copy"></i> Pure Plain Text</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-html-w10', 'status-w10', 'Pure HTML copied successfully!')"><i class="fas fa-copy"></i> Pure HTML</button>
+                <button class="format-copy-btn" onclick="copyExamFormat('raw-md-w10', 'status-w10', 'Pure Markdown copied successfully!')"><i class="fas fa-copy"></i> Pure Markdown</button>
+            </div>
+            <div class="action-group-title" style="margin-top: 24px;"><i class="fas fa-download"></i> Instant Download</div>
+            <div class="format-buttons-grid">
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-json-w10', 'CS50_Week10_Solution.json', 'application/json', 'status-w10', 'Pure JSON downloaded successfully!')"><i class="fas fa-file-export"></i> Pure JSON</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-text-w10', 'CS50_Week10_Solution.txt', 'text/plain', 'status-w10', 'Pure Plain Text downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Plain Text</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-html-w10', 'CS50_Week10_Solution.html', 'text/html', 'status-w10', 'Pure HTML downloaded successfully!')"><i class="fas fa-file-export"></i> Pure HTML</button>
+                <button class="format-download-btn" onclick="downloadExamFormat('raw-md-w10', 'CS50_Week10_Solution.md', 'text/markdown', 'status-w10', 'Pure Markdown downloaded successfully!')"><i class="fas fa-file-export"></i> Pure Markdown</button>
+            </div>
+            <div id="status-w10" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- MASTER INTERACTIVE SIMULATOR (WEEKS 0 - 10) -->
+    <div id="tab-sim" class="content-panel">
+        <h2>🏛️ Master Interactive CS50x Exam Simulator (Weeks 0–10)</h2>
+        <p>Test your cognitive depth instantly across the entire Harvard curriculum. Click an option below to evaluate your architectural mastery.</p>
+
+        <!-- QUIZ 0 (SCRATCH) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q0 (Week 0): Scratch Broadcast Mechanics</h3>
+                <span class="question-badge">CS50 Quiz 0</span>
+            </div>
+            <p>In Scratch 3.0, what is the primary architectural distinction between <code>broadcast</code> and <code>broadcast and wait</code> when triggering custom event scripts?</p>
+            <div class="quiz-options" id="quiz0-options">
+                <div class="quiz-option" onclick="selectQuizOption(0, false, this)"><span>A) broadcast consumes less memory but cannot pass variables</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(0, true, this)"><span>B) broadcast and wait halts the calling script until all receiving scripts complete execution</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(0, false, this)"><span>C) broadcast operates asynchronously only on stage backdrops</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz0-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 1 (C) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q1 (Week 1): Stack vs Heap</h3>
+                <span class="question-badge">CS50 Midterm Examination</span>
+            </div>
+            <p>When a C function returns a pointer to a local variable declared inside its scope, what fatal memory flaw occurs upon function termination?</p>
+            <div class="quiz-options" id="quiz1-options">
+                <div class="quiz-option" onclick="selectQuizOption(1, true, this)"><span>A) Dangling Pointer / Stack Frame Pop</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(1, false, this)"><span>B) Heap Buffer Overflow</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(1, false, this)"><span>C) Memory Leak via missing free()</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz1-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 2 (ARRAYS) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q2 (Week 2): Vigenere Math</h3>
+                <span class="question-badge">CS50 Midterm Examination</span>
+            </div>
+            <p>To ensure a polyalphabetic cipher wraps correctly around the 26-letter English alphabet, what mathematical operator is mandated?</p>
+            <div class="quiz-options" id="quiz2-options">
+                <div class="quiz-option" onclick="selectQuizOption(2, false, this)"><span>A) Bitwise AND (&amp; 26)</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(2, true, this)"><span>B) Modulo Arithmetic (% 26)</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(2, false, this)"><span>C) Integer Division (/ 26)</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz2-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 3 (ALGORITHMS) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q3 (Week 3): Asymptotic Complexity</h3>
+                <span class="question-badge">CS50 Midterm Examination</span>
+            </div>
+            <p>Which sorting algorithm exhibits an unyielding worst-case time complexity of \(\Theta(n \log n)\) and relies on an auxiliary memory requirement of \(O(n)\)?</p>
+            <div class="quiz-options" id="quiz3-options">
+                <div class="quiz-option" onclick="selectQuizOption(3, false, this)"><span>A) Bubble Sort</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(3, false, this)"><span>B) Selection Sort</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(3, true, this)"><span>C) Merge Sort</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz3-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 4 (MEMORY) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q4 (Week 4): Valgrind Forensics</h3>
+                <span class="question-badge">CS50 Final Examination</span>
+            </div>
+            <p>When executing a C application that parses raw memory blocks via <code>fread</code>, what diagnostic utility is globally mandated within CS50 to trace memory leaks?</p>
+            <div class="quiz-options" id="quiz4-options">
+                <div class="quiz-option" onclick="selectQuizOption(4, true, this)"><span>A) Valgrind</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(4, false, this)"><span>B) GDB (GNU Debugger)</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(4, false, this)"><span>C) Wireshark</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz4-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 5 (DATA STRUCTURES) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q5 (Week 5): Trie vs Hash Table</h3>
+                <span class="question-badge">CS50 Final Examination</span>
+            </div>
+            <p>What is the definitive asymptotic lookup time complexity for searching a word of length \(K\) inside an AEL Quantum Trie data structure?</p>
+            <div class="quiz-options" id="quiz5-options">
+                <div class="quiz-option" onclick="selectQuizOption(5, false, this)"><span>A) O(log N)</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(5, true, this)"><span>B) O(1) constant time relative to total dictionary size N</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(5, false, this)"><span>C) O(N) linear time</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz5-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 6 (PYTHON) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q6 (Week 6): Python Memory Handling</h3>
+                <span class="question-badge">CS50 Final Examination</span>
+            </div>
+            <p>Unlike C, how does Python manage the deallocation of objects in memory when they are no longer referenced by active variables?</p>
+            <div class="quiz-options" id="quiz6-options">
+                <div class="quiz-option" onclick="selectQuizOption(6, false, this)"><span>A) Explicitly via the del operator</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(6, true, this)"><span>B) Automatic Reference Counting (ARC) and Cyclic Garbage Collection</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(6, false, this)"><span>C) System heap flushing upon interpreter exit</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz6-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 7 (SQL) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q7 (Week 7): SQL Injection Protection</h3>
+                <span class="question-badge">CS50 Final Examination</span>
+            </div>
+            <p>Which implementation strategy completely eradicates SQL Injection vulnerabilities in Python SQLite applications?</p>
+            <div class="quiz-options" id="quiz7-options">
+                <div class="quiz-option" onclick="selectQuizOption(7, false, this)"><span>A) Stripping whitespace via .strip()</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(7, false, this)"><span>B) Escaping single quotes manually via .replace()</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(7, true, this)"><span>C) Parameterized tuple binding using placeholders (?)</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz7-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 8 (WEB) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q8 (Week 8): DOM Render Lifecycle</h3>
+                <span class="question-badge">CS50 Web Quiz</span>
+            </div>
+            <p>Why must JavaScript event listeners querying DOM elements be wrapped inside a <code>DOMContentLoaded</code> listener?</p>
+            <div class="quiz-options" id="quiz8-options">
+                <div class="quiz-option" onclick="selectQuizOption(8, true, this)"><span>A) To prevent querying elements before the browser parses the HTML body tree</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(8, false, this)"><span>B) To compress JavaScript file sizes dynamically</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(8, false, this)"><span>C) To bypass CORS restrictions</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz8-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 9 (FLASK) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q9 (Week 9): Stored XSS Prevention</h3>
+                <span class="question-badge">CS50 Web Final Exam</span>
+            </div>
+            <p>In Flask web applications, how does the Jinja2 templating engine safeguard the citadel against Cross-Site Scripting (XSS)?</p>
+            <div class="quiz-options" id="quiz9-options">
+                <div class="quiz-option" onclick="selectQuizOption(9, false, this)"><span>A) By encrypting session cookies</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(9, true, this)"><span>B) By automatically escaping HTML syntax entities (&lt;, &gt;, &amp;) in template variables</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(9, false, this)"><span>C) By blocking external IP addresses</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz9-feedback" class="quiz-feedback"></div>
+        </div>
+
+        <!-- QUIZ 10 (THE END) -->
+        <div class="exam-card">
+            <div class="exam-question-header">
+                <h3><i class="fas fa-question-circle"></i> Simulator Q10 (Week 10): Cryptographic Timing Attacks</h3>
+                <span class="question-badge">CS50 Master Project Exam</span>
+            </div>
+            <p>Why is comparing HMAC cryptographic signatures using the standard equality operator <code>==</code> considered a severe architectural vulnerability?</p>
+            <div class="quiz-options" id="quiz10-options">
+                <div class="quiz-option" onclick="selectQuizOption(10, true, this)"><span>A) It exits immediately upon first byte mismatch, permitting timing side-channel attacks</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(10, false, this)"><span>B) It consumes excessive heap memory</span><i class="fas fa-circle"></i></div>
+                <div class="quiz-option" onclick="selectQuizOption(10, false, this)"><span>C) It requires root user privileges to execute</span><i class="fas fa-circle"></i></div>
+            </div>
+            <div id="quiz10-feedback" class="quiz-feedback"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Built for CS50x 2026-2027 &middot; Sovereign Complete Master Exams Citadel (Weeks 0–10)</div>
+    </footer>
+</div>
+
+<!-- RAW DATA HUBS (JSON, TXT, HTML, MD) FOR ALL WEEKS -->
+<script id="raw-json-w0" type="text/plain">
+{
+  "week": 0,
+  "topic": "Scratch",
+  "bug": "Unthrottled broadcast flooding VM stack.",
+  "solution": "Use event_broadcastandwait to safely synchronize execution stack."
+}
+</script>
+<script id="raw-text-w0" type="text/plain">
+WEEK 0: SCRATCH SOLUTIONS
+=========================
+Problem 0 Solution:
+Use event_broadcastandwait to safely synchronize execution stack and prevent VM freezing.
+</script>
+<script id="raw-html-w0" type="text/plain">
+<div class="cs50-solution"><h2>Week 0 Solution</h2><p>Use <code>event_broadcastandwait</code> to safely synchronize execution stack.</p></div>
+</script>
+<script id="raw-md-w0" type="text/plain">
+# 🎮 Week 0: Scratch Solutions
+**Architectural Diagnosis:** Unthrottled broadcast flooding VM stack.
+```json
+"control_if_touching": {
+  "opcode": "control_if",
+  "inputs": {
+    "CONDITION": [2, "sensing_touchingobject"],
+    "SUBSTACK": [2, "event_broadcastandwait"]
+  }
+}
+```
+</script>
+
+<script id="raw-json-w1" type="text/plain">
+{
+  "week": 1,
+  "topic": "C Programming",
+  "bug": "Dangling pointer returning invalid local stack address.",
+  "solution_code": "#include <stdio.h>\n#include <stdlib.h>\nint* get_secret_code(void) { int* secret = (int*)malloc(3*sizeof(int)); secret[0]=42; secret[1]=101; secret[2]=50; return secret; }\nint main(void) { int* code = get_secret_code(); printf(\"%d %d %d\\n\", code[0], code[1], code[2]); free(code); return 0; }"
+}
+</script>
+<script id="raw-text-w1" type="text/plain">
+WEEK 1: C PROGRAMMING SOLUTIONS
+================================
+Problem 1 Solution:
+#include <stdio.h>
+#include <stdlib.h>
+int* get_secret_code(void) {
+    int* secret = (int*)malloc(3 * sizeof(int));
+    secret[0] = 42; secret[1] = 101; secret[2] = 50;
+    return secret;
+}
+int main(void) {
+    int* code = get_secret_code();
+    printf("Secret Code: %d %d %d\n", code[0], code[1], code[2]);
+    free(code);
+    return 0;
+}
+</script>
+<script id="raw-html-w1" type="text/plain">
+<div class="cs50-solution">
+    <h2>Week 1 C Solution</h2>
+    <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int* get_secret_code(void) {
+    int* secret = (int*)malloc(3 * sizeof(int));
+    secret[0] = 42; secret[1] = 101; secret[2] = 50;
+    return secret;
+}
+int main(void) {
+    int* code = get_secret_code();
+    printf("Secret Code: %d %d %d\n", code[0], code[1], code[2]);
+    free(code);
+    return 0;
+}</code></pre>
+</div>
+</script>
+<script id="raw-md-w1" type="text/plain">
+# 🧱 Week 1: C Programming Solutions
+**Architectural Diagnosis:** Dangling Pointer / Stack Frame Pop.
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int* get_secret_code(void) {
+    int* secret = (int*)malloc(3 * sizeof(int));
+    if (secret == NULL) return NULL;
+    secret[0] = 42; secret[1] = 101; secret[2] = 50;
+    return secret;
+}
+
+int main(void) {
+    int* code = get_secret_code();
+    printf("Secret Code: %d %d %d\n", code[0], code[1], code[2]);
+    free(code);
+    return 0;
+}
+```
+</script>
+
+<script id="raw-json-w2" type="text/plain">
+{
+  "week": 2,
+  "topic": "Arrays & Vigenere",
+  "bug": "Buffer overflow on key indexing and unverified argc count.",
+  "solution": "Full C Vigenere implementation with strict isalpha validation and modulo arithmetic."
+}
+</script>
+<script id="raw-text-w2" type="text/plain">
+WEEK 2: ARRAYS SOLUTIONS
+=========================
+Problem 2 Solution:
+Full C Vigenere implementation with strict isalpha validation and modulo arithmetic (% key_len).
+</script>
+<script id="raw-html-w2" type="text/plain">
+<div class="cs50-solution"><h2>Week 2 Solution</h2><p>Full C Vigenere implementation with strict isalpha validation and modulo arithmetic.</p></div>
+</script>
+<script id="raw-md-w2" type="text/plain">
+# 🔠 Week 2: Arrays Solutions
+**Architectural Diagnosis:** Buffer overflow on key indexing and unverified argc count.
+```c
+// Use modulo arithmetic for safe wrapping
+ciphertext[i] = (c - base + key_char) % 26 + base;
+```
+</script>
+
+<script id="raw-json-w3" type="text/plain">
+{
+  "week": 3,
+  "topic": "Algorithms & Runoff",
+  "bug": "Incorrect >= majority condition allowing ties to declare multiple winners.",
+  "solution": "Enforce strict majority > total_votes / 2 and implement explicit is_tie loop."
+}
+</script>
+<script id="raw-text-w3" type="text/plain">
+WEEK 3: ALGORITHMS SOLUTIONS
+============================
+Problem 3 Solution:
+Enforce strict majority > total_votes / 2 and implement explicit is_tie loop.
+</script>
+<script id="raw-html-w3" type="text/plain">
+<div class="cs50-solution"><h2>Week 3 Solution</h2><p>Enforce strict majority > total_votes / 2 and implement explicit is_tie loop.</p></div>
+</script>
+<script id="raw-md-w3" type="text/plain">
+# 🔄 Week 3: Algorithms Solutions
+**Architectural Diagnosis:** Incorrect >= majority condition allowing ties to declare multiple winners.
+```c
+if (!candidates[i].eliminated && candidates[i].votes > majority) {
+    printf("%s\n", candidates[i].name);
+    return true;
+}
+```
+</script>
+
+<script id="raw-json-w4" type="text/plain">
+{
+  "week": 4,
+  "topic": "Memory Forensics",
+  "solution": "Bitwise XOR with 0xFF inverts all 8 bits instantly."
+}
+</script>
+<script id="raw-text-w4" type="text/plain">
+WEEK 4: MEMORY SOLUTIONS
+========================
+Problem 4 Solution:
+image[i][j].rgbtBlue ^= 0xFF; image[i][j].rgbtGreen ^= 0xFF; image[i][j].rgbtRed ^= 0xFF;
+</script>
+<script id="raw-html-w4" type="text/plain">
+<div class="cs50-solution"><h2>Week 4 Solution</h2><p>Bitwise XOR with 0xFF inverts all 8 bits instantly.</p></div>
+</script>
+<script id="raw-md-w4" type="text/plain">
+# 💾 Week 4: Memory Solutions
+```c
+image[i][j].rgbtBlue  ^= 0xFF;
+image[i][j].rgbtGreen ^= 0xFF;
+image[i][j].rgbtRed   ^= 0xFF;
+```
+</script>
+
+<script id="raw-json-w5" type="text/plain">
+{
+  "week": 5,
+  "topic": "Data Structures",
+  "bug": "Case-sensitive strcmp and raw hash lookups failing on capitalized words.",
+  "solution": "Standardize word to lowercase before hashing and deploy strcasecmp."
+}
+</script>
+<script id="raw-text-w5" type="text/plain">
+WEEK 5: DATA STRUCTURES SOLUTIONS
+==================================
+Problem 5 Solution:
+Standardize word to lowercase before hashing and deploy strcasecmp.
+</script>
+<script id="raw-html-w5" type="text/plain">
+<div class="cs50-solution"><h2>Week 5 Solution</h2><p>Standardize word to lowercase before hashing and deploy strcasecmp.</p></div>
+</script>
+<script id="raw-md-w5" type="text/plain">
+# 🌲 Week 5: Data Structures Solutions
+```c
+while (cursor != NULL) {
+    if (strcasecmp(cursor->word, word) == 0) return true;
+    cursor = cursor->next;
+}
+```
+</script>
+
+<script id="raw-json-w6" type="text/plain">
+{
+  "week": 6,
+  "topic": "Python & DNA",
+  "bug": "Static slice window causing infinite loop.",
+  "solution": "Dynamically advance slice start index based on repeat count."
+}
+</script>
+<script id="raw-text-w6" type="text/plain">
+WEEK 6: PYTHON SOLUTIONS
+========================
+Problem 6 Solution:
+Dynamically advance slice start index based on repeat count.
+</script>
+<script id="raw-html-w6" type="text/plain">
+<div class="cs50-solution"><h2>Week 6 Solution</h2><p>Dynamically advance slice start index based on repeat count.</p></div>
+</script>
+<script id="raw-md-w6" type="text/plain">
+# 🐍 Week 6: Python Solutions
+```python
+start = i + count * subsequence_length
+end = start + subsequence_length
+if sequence[start:end] == subsequence:
+    count += 1
+```
+</script>
+
+<script id="raw-json-w7" type="text/plain">
+{
+  "week": 7,
+  "topic": "SQL & AI",
+  "bug": "SQL Injection vulnerability via f-strings and slow Cartesian WHERE clause.",
+  "solution": "Use parameterized queries (?) and explicit INNER JOINs."
+}
+</script>
+<script id="raw-text-w7" type="text/plain">
+WEEK 7: SQL SOLUTIONS
+=====================
+Problem 7 Solution:
+Use parameterized queries (?) and explicit INNER JOINs.
+</script>
+<script id="raw-html-w7" type="text/plain">
+<div class="cs50-solution"><h2>Week 7 Solution</h2><p>Use parameterized queries (?) and explicit INNER JOINs.</p></div>
+</script>
+<script id="raw-md-w7" type="text/plain">
+# 🗄️ Week 7: SQL Solutions
+```python
+secure_query = """
+    SELECT DISTINCT people.name FROM people
+    JOIN bank_accounts ON people.id = bank_accounts.person_id
+    JOIN atm_transactions ON bank_accounts.account_number = atm_transactions.account_number
+    WHERE atm_transactions.atm_location = ?
+"""
+cursor.execute(secure_query, (target_location,))
+```
+</script>
+
+<script id="raw-json-w8" type="text/plain">
+{
+  "week": 8,
+  "topic": "Web Development",
+  "bug": "Script executing before DOM body tree is parsed.",
+  "solution": "Wrap logic inside DOMContentLoaded event listener."
+}
+</script>
+<script id="raw-text-w8" type="text/plain">
+WEEK 8: WEB SOLUTIONS
+=====================
+Problem 8 Solution:
+Wrap logic inside DOMContentLoaded event listener.
+</script>
+<script id="raw-html-w8" type="text/plain">
+<div class="cs50-solution"><h2>Week 8 Solution</h2><p>Wrap logic inside DOMContentLoaded event listener.</p></div>
+</script>
+<script id="raw-md-w8" type="text/plain">
+# 🌐 Week 8: Web Solutions
+```javascript
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("submit-btn");
+    if (btn) btn.addEventListener("click", () => alert("Success"));
+});
+```
+</script>
+
+<script id="raw-json-w9" type="text/plain">
+{
+  "week": 9,
+  "topic": "Flask & Security",
+  "bug": "Missing session authorization and unescaped XSS vulnerability in transaction notes.",
+  "solution": "Use @login_required decorator, explicit DB transactions, and Jinja2 escaping."
+}
+</script>
+<script id="raw-text-w9" type="text/plain">
+WEEK 9: FLASK SOLUTIONS
+=======================
+Problem 9 Solution:
+Use @login_required decorator, explicit DB transactions, and Jinja2 escaping.
+</script>
+<script id="raw-html-w9" type="text/plain">
+<div class="cs50-solution"><h2>Week 9 Solution</h2><p>Use @login_required decorator, explicit DB transactions, and Jinja2 escaping.</p></div>
+</script>
+<script id="raw-md-w9" type="text/plain">
+# server Week 9: Flask Solutions
+```python
+@app.route("/secure_transfer", methods=["POST"])
+@login_required
+def secure_transfer():
+    # Enforce atomic DB operations and return via Jinja2 templates
+    return render_template("transfer_success.html", recipient=recipient, amount=amount, note=note)
+```
+</script>
+
+<script id="raw-json-w10" type="text/plain">
+{
+  "week": 10,
+  "topic": "Final Project & Zero Trust",
+  "bug": "Standard equality (==) allowing cryptographic timing side-channel attacks.",
+  "solution": "Utilize hmac.compare_digest for constant-time O(1) verification."
+}
+</script>
+<script id="raw-text-w10" type="text/plain">
+WEEK 10: THE END SOLUTIONS
+==========================
+Problem 10 Solution:
+Utilize hmac.compare_digest for constant-time O(1) verification.
+</script>
+<script id="raw-html-w10" type="text/plain">
+<div class="cs50-solution"><h2>Week 10 Solution</h2><p>Utilize hmac.compare_digest for constant-time O(1) verification.</p></div>
+</script>
+<script id="raw-md-w10" type="text/plain">
+# 👑 Week 10: The End Solutions
+```python
+import hmac
+# Thwarts timing side-channel attacks by comparing digests in strict constant time
+if hmac.compare_digest(expected_signature, incoming_signature):
+    return True
+```
+</script>
+
+<!-- JAVASCRIPT ENGINE -->
+<script>
+    function switchExamTab(tabId) {
+        document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        const targetPanel = tabId === 'sim' ? 'tab-sim' : `tab-${tabId}`;
+        document.getElementById(targetPanel).classList.add('active');
+        event.currentTarget.classList.add('active');
+        window.scrollTo({ top: 450, behavior: 'smooth' });
+    }
+
+    function selectQuizOption(quizNum, isCorrect, elem) {
+        const optionsContainer = document.getElementById(`quiz${quizNum}-options`);
+        optionsContainer.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.classList.remove('correct', 'incorrect');
+            opt.style.pointerEvents = 'none'; // Lock in answer
+        });
+
+        const feedback = document.getElementById(`quiz${quizNum}-feedback`);
+        feedback.className = 'quiz-feedback';
+
+        if (isCorrect) {
+            elem.classList.add('correct');
+            elem.querySelector('i').className = 'fas fa-check-circle';
+            feedback.classList.add('success');
+            if (quizNum === 0) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] broadcast and wait</strong> halts the execution of the calling script until all event receiver scripts complete, ensuring synchronized VM execution.';
+            } else if (quizNum === 1) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] Dangling Pointer</strong> occurs because local stack variables are popped upon return, leaving the pointer referencing invalidated memory.';
+            } else if (quizNum === 2) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] Modulo Arithmetic (% 26)</strong> safely wraps any alphabetical offset back within the 0–25 index boundary.';
+            } else if (quizNum === 3) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] Merge Sort</strong> divides the array in \(\log n\) steps and merges them linearly (\(n\)), resulting in \(\Theta(n \log n)\).';
+            } else if (quizNum === 4) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] Valgrind</strong> intercepts memory allocations to trace leaks and invalid pointer dereferences.';
+            } else if (quizNum === 5) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] O(1) constant time</strong> because lookup depends entirely on word length K (capped at 45) and is completely independent of dictionary size N.';
+            } else if (quizNum === 6) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] Automatic Reference Counting &amp; GC</strong> tracks active pointers and sweeps cyclic memory islands automatically.';
+            } else if (quizNum === 7) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] Parameterized Queries (?)</strong> instruct the SQLite engine to treat inputs strictly as values, never as executable code.';
+            } else if (quizNum === 8) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] DOMContentLoaded</strong> guarantees the browser has parsed the entire body tree before scripts attempt to attach event listeners.';
+            } else if (quizNum === 9) {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] Jinja2 escaping</strong> converts potentially malicious characters like <code>&lt;script&gt;</code> into harmless HTML entities.';
+            } else {
+                feedback.innerHTML = '<strong><i class="fas fa-check-circle"></i> [CORRECT] Standard equality (==)</strong> compares byte-by-byte and exits immediately upon mismatch, allowing attackers to measure microsecond differences to crack HMACs.';
+            }
+        } else {
+            elem.classList.add('incorrect');
+            elem.querySelector('i').className = 'fas fa-times-circle';
+            feedback.classList.add('error');
+            feedback.innerHTML = '<strong><i class="fas fa-times-circle"></i> [INCORRECT]</strong> That option represents an incorrect architectural assumption. Review the AEL Sovereign expert solution above for the precise concept.';
+        }
+    }
+
+    function copyExamFormat(contentId, statusElemId, successMsg) {
+        const contentElem = document.getElementById(contentId);
+        if (!contentElem) return;
+        
+        const textToCopy = contentElem.innerText || contentElem.textContent;
+        navigator.clipboard.writeText(textToCopy.trim()).then(() => {
+            const statusElem = document.getElementById(statusElemId);
+            if (statusElem) {
+                statusElem.style.display = 'flex';
+                statusElem.innerHTML = `<i class="fas fa-check-circle"></i> <span>${successMsg}</span>`;
+                setTimeout(() => {
+                    statusElem.style.display = 'none';
+                }, 4000);
+            }
+        }).catch(err => console.error('Copy failed:', err));
+    }
+
+    function downloadExamFormat(contentId, filename, mimeType, statusElemId, successMsg) {
+        const contentElem = document.getElementById(contentId);
+        if (!contentElem) return;
+        
+        const textContent = contentElem.innerText || contentElem.textContent;
+        const blob = new Blob([textContent.trim()], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        const statusElem = document.getElementById(statusElemId);
+        if (statusElem) {
+            statusElem.style.display = 'flex';
+            statusElem.innerHTML = `<i class="fas fa-file-export"></i> <span>${successMsg}</span>`;
+            setTimeout(() => {
+                statusElem.style.display = 'none';
+            }, 4000);
+        }
+    }
+
+    // AEL Sovereign Biometric & Integrity Verification Engine (SHA-256)
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function verifySystemIntegrity() {
+        const content = document.documentElement.outerHTML;
+        const currentHash = await sha256(content);
+        const baseline = localStorage.getItem('AEL_EXAMS_COMPLETE_BASELINE');
+        const badge = document.getElementById('integrity-badge');
+        
+        if (!badge) return;
+
+        if (!baseline) {
+            localStorage.setItem('AEL_EXAMS_COMPLETE_BASELINE', currentHash);
+            badge.innerHTML = '<i class="fas fa-circle"></i> SYSTEM SEALED & VERIFIED';
+            badge.style.borderColor = '#00E699';
+            badge.style.color = '#00E699';
+        } else if (currentHash === baseline) {
+            badge.innerHTML = '<i class="fas fa-circle"></i> SYSTEM INTEGRITY INTACT';
+            badge.style.borderColor = '#00E699';
+            badge.style.color = '#00E699';
+        } else {
+            badge.innerHTML = '<i class="fas fa-triangle-exclamation"></i> ⚠️ SYSTEM TAMPERED';
+            badge.style.borderColor = '#FF4444';
+            badge.style.color = '#FF4444';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', verifySystemIntegrity);
+</script>
+
+</body>
+</html>

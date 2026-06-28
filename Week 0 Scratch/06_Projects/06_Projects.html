@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEL CS Encyclopedia™ – 06_Projects</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #020814;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aab2;
+            --primary-accent: #0074FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(0, 116, 255, 0.35);
+            --glass-border-hover: rgba(0, 116, 255, 0.75);
+            --border-radius: 24px;
+            --warning-color: #ff9800;
+            --success-color: #00ff64;
+            --danger-color: #ff4757;
+            --panel-bg: rgba(5, 15, 35, 0.75);
+            --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* Sovereign Identity Card (Header) */
+        .ael-identity-card {
+            width: 100%;
+            margin: 20px auto 50px auto;
+            padding: 42px;
+            border-radius: 36px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            border: 1px solid var(--glass-border-hover);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 116, 255, 0.18), inset 0 0 25px rgba(0, 116, 255, 0.06);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .ael-identity-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%);
+            opacity: 0.5;
+        }
+
+        .ael-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 28px;
+            border-bottom: 1px dashed rgba(0, 116, 255, 0.55);
+            flex-wrap: wrap;
+        }
+
+        .ael-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .ael-logo {
+            width: 82px;
+            height: 82px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 16px rgba(0, 116, 255, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .ael-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .ael-title {
+            color: #f1f6ff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-subtitle {
+            margin-top: 8px;
+            color: #8db7ff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .directive-badge {
+            background: rgba(0, 116, 255, 0.12);
+            color: #0074FF;
+            border: 1px solid var(--glass-border-hover);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 116, 255, 0.2);
+            align-self: center;
+        }
+
+        .ael-owner {
+            margin-top: 36px;
+            padding-left: 24px;
+            border-left: 5px solid var(--primary-accent);
+        }
+
+        .ael-owner-name {
+            color: #ffffff;
+            font-size: 54px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-owner-role {
+            margin-top: 18px;
+            color: #c7d8ff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Sovereign Seal Box */
+        .ael-seal-box {
+            margin-top: 40px;
+            padding: 32px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72));
+            border: 1px solid rgba(0, 116, 255, 0.55);
+            box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08);
+        }
+
+        .ael-seal-title {
+            color: #6da8ff;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code {
+            padding: 24px;
+            border-radius: 20px;
+            background: #020b18;
+            border: 1px solid rgba(0, 116, 255, 0.7);
+            color: #d9ebff;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: auto;
+            box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .breadcrumb { font-size: 1.1rem; color: #8b949e; }
+        .breadcrumb a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
+
+        .tabs { display: flex; gap: 1rem; }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover { border-color: var(--primary-accent); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--primary-accent); color: #fff; border-color: var(--primary-accent); box-shadow: 0 0 15px rgba(0,116,255,0.4); }
+
+        .content-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 4rem;
+            box-shadow: var(--shadow-gloss);
+            display: none;
+        }
+        .content-panel.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
+        .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
+
+        h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
+        h3 { font-size: 1.6rem; color: #87bffd; margin: 2rem 0 1rem 0; }
+        h4 { font-size: 1.3rem; color: var(--text-primary); margin: 1.5rem 0 0.8rem 0; }
+        p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #b1bac4; }
+        
+        ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
+        ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
+        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
+        ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
+        .panel-ar ul li::before { left: auto; right: 0; }
+
+        .content-panel pre {
+            background: #020b18;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.05rem;
+            margin: 2rem 0;
+            color: #79c0ff;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .alert-box {
+            background: rgba(13, 27, 42, 0.8);
+            border-left: 4px solid var(--primary-accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            border: 1px solid var(--glass-border);
+        }
+        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
+        .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
+
+        .file-link-bar {
+            background: #050f23;
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-link-bar a { color: var(--primary-accent); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .file-link-bar a:hover { text-decoration: underline; }
+
+        /* File Links List */
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .file-card {
+            background: rgba(2, 11, 24, 0.7);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+        }
+        .panel-ar .file-card { text-align: right; }
+
+        .file-card:hover {
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 10px 30px rgba(0, 116, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .file-card h4 { color: #ffffff; font-size: 1.2rem; margin: 0 0 10px 0; display: flex; align-items: center; gap: 10px; }
+        .file-card p { color: #8db7ff; font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; }
+
+        .file-btn {
+            background: var(--primary-accent);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            align-self: flex-start;
+            transition: all 0.2s ease;
+        }
+        .panel-ar .file-btn { align-self: flex-end; }
+        .file-btn:hover { background: #ffffff; color: var(--primary-accent); box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
+
+        /* Footer */
+        .ael-footer {
+            margin-top: 50px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0, 116, 255, 0.45);
+            display: flex;
+            justify-content: space-between;
+            gap: 34px;
+            flex-wrap: wrap;
+            color: #c6dcff;
+            font-size: 16px;
+        }
+
+        @media(max-width: 768px) {
+            .ael-identity-card { padding: 28px; border-radius: 28px; }
+            .ael-owner-name { font-size: 38px; }
+            .ael-title { font-size: 24px; }
+            .content-panel { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- AEL Sovereign Identity Block (Header) -->
+    <div class="ael-identity-card">
+        <div class="ael-header">
+            <div class="ael-logo-group">
+                <svg class="ael-logo" viewBox="0 0 226.77 226.77" aria-label="AEL Logo">
+                    <g fill="#0074FF" stroke="none">
+                        <path d="m97.19,48.59v16.2h-32.4v-16.2c0-8.94-7.25-16.2-16.2-16.2s-16.2,7.25-16.2,16.2v16.2H0v-16.2c0-5.68.98-11.13,2.76-16.2C9.44,13.52,27.44,0,48.59,0s39.16,13.52,45.83,32.4c1.79,5.07,2.76,10.52,2.76,16.2Z" style="fill:#ffffff;"></path>
+                        <rect y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="32.4" width="32.4" height="32.4"></rect>
+                        <rect y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="32.4" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="97.19" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="194.38" width="32.4" height="32.4"></rect>
+                    </g>
+                </svg>
+                <div>
+                    <div class="ael-title">AEL COMPUTER SCIENCE ENCYCLOPEDIA</div>
+                    <div class="ael-subtitle">06_Projects &middot; Sovereign Documentation</div>
+                </div>
+            </div>
+            <div class="directive-badge">⚡ 100% SILICON & COGNITIVE DEPTH</div>
+        </div>
+
+        <div class="ael-owner">
+            <div class="ael-owner-name">AYMAN ELMASRY</div>
+            <div class="ael-owner-role">
+                Computational Creative Director &middot; AI Prompt Engineer<br>
+                Founder of Ayman Elmasry LLC
+            </div>
+        </div>
+
+        <div class="ael-seal-box">
+            <div class="ael-seal-title">🔒 ⚡ AEL Sovereign Seal (Active Verification)</div>
+            <div class="ael-code">
+<pre>{
+  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
+  "owner": "Ayman Elmasry",
+  "legal_entities": [
+    "Ayman Elmasry LLC (UAE)",
+    "Ayman Elmasry Advertising & Marketing (Egypt)"
+  ],
+  "section": "06_Projects",
+  "syllabus_source": "Harvard CS50x (Deep Internal Analysis)",
+  "capstone_projects": [
+    "Oscartime.sb3 (Freefall Physics & Mutators)",
+    "Ivy's Hardest Game.sb3 (Collision Engine & Bounds)"
+  ],
+  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
+  "system_version": "v3.0"
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <div class="breadcrumb">
+            <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>06_Projects</span>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
+            <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
+        </div>
+    </div>
+
+    <!-- ARABIC PANEL -->
+    <div id="panel-ar" class="content-panel panel-ar active">
+        <div class="file-link-bar">
+            <span>الملف المصدري المباشر: <code>Week_0_Project_Scratch_Design_AR.md</code></span>
+            <a href="Week_0_Project_Scratch_Design_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
+        </div>
+        
+        <h2>🚀 مشاريع التخرج المصغرة في مجلد src0 (Cartesian Physics & System Execution)</h2>
+        <p>يستعرض ديفيد مالان في المجلد المصدر <code>src0</code> التطور المعماري الكامل لبناء لعبتين متكاملتين خطوة بخطوة. في منهجية AEL، نعتبر هذه الألعاب تطبيقاً حرفياً لمعمارية المستشعرات، ومحاكاة الفيزياء، والمستوى الديكارتي (Cartesian Coordinates Plane).</p>
+
+<pre>
+[ Canvas Plane ] ──> [ X: -240 to 240 / Y: -180 to 180 ] ──> [ Collision Engine (Sensing) ]
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>📂 تحميل وفحص ملفات مشاريع التخرج من src0</h2>
+        
+        <div class="file-grid">
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-gamepad"></i> Oscartime - 0 (Malan).sb3</h4>
+                    <p>تهيئة الكائن وسقوطه الرأسي الأولي بمقدار ثابت.</p>
+                </div>
+                <a href="../src0/Oscartime%20-%200%20(Malan).sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-trash"></i> Oscartime - 3 (Malan).sb3</h4>
+                    <p>إضافة كاشف الاصطدام بسلة المهملات <code>touching trash can?</code>.</p>
+                </div>
+                <a href="../src0/Oscartime%20-%203%20(Malan).sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-trophy"></i> Oscartime.sb3</h4>
+                    <p>النسخة المجمعة بالكامل مع نظام احتساب النقاط (Score Variable).</p>
+                </div>
+                <a href="../src0/Oscartime.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-play-circle"></i> Ivy's Hardest Game - Harvard 0.sb3</h4>
+                    <p>تهيئة حركة اللاعب عبر كتل المفاتيح الاتجاهية.</p>
+                </div>
+                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard%200.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-cogs"></i> Ivy's Hardest Game - Harvard 2.sb3</h4>
+                    <p>بناء الكتل المخصصة <code>listen for keyboard</code> و <code>feel for walls</code>.</p>
+                </div>
+                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard%202.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-flag-checkered"></i> Ivy's Hardest Game - Harvard.sb3</h4>
+                    <p>المشروع العملاق النهائي مع العوائق المتحركة ونظام الخسارة.</p>
+                </div>
+                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
+            </div>
+        </div>
+
+        <div class="alert-box">
+            <h4>🔬 تشريح هندسة الوظائف المخصصة (Modular Sub-Routines)</h4>
+            <p>بدلاً من حشو حلقة الـ <code>forever</code> بـ 20 شرطاً متداخلاً، يقدم مالان تصميماً معمارياً شديد النظافة قائماً على فصل الاهتمامات (Separation of Concerns). روتين <code>listen for keyboard</code> يتولى مدخلات الأسهم، بينما روتين <code>feel for walls</code> يعكس اتجاه الكائن لحظياً عند الاصطدام لمنع اختراق الجدران!</p>
+        </div>
+    </div>
+
+    <!-- ENGLISH PANEL -->
+    <div id="panel-en" class="content-panel panel-en">
+        <div class="file-link-bar">
+            <span>Source Markdown File: <code>Week_0_Project_Scratch_Design_EN.md</code></span>
+            <a href="Week_0_Project_Scratch_Design_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
+        </div>
+        
+        <h2>🚀 Benchmark Capstone Projects in src0 (Cartesian Physics & System Execution)</h2>
+        <p>In the <code>src0</code> master asset directory, David Malan supplies the step-by-step architectural source code for two complete game systems. In the AEL engineering paradigm, we evaluate these projects as a masterclass in sensor mechanics, physics loops, and Cartesian coordinate orchestration.</p>
+
+<pre>
+[ Canvas Plane ] ──> [ X: -240 to 240 / Y: -180 to 180 ] ──> [ Collision Engine (Sensing) ]
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>📂 Direct Source Capstone Files in src0</h2>
+        
+        <div class="file-grid">
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-gamepad"></i> Oscartime - 0 (Malan).sb3</h4>
+                    <p>Foundational sprite initialization and initial vertical drop vector.</p>
+                </div>
+                <a href="../src0/Oscartime%20-%200%20(Malan).sb3" class="file-btn"><i class="fas fa-download"></i> Download / Inspect</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-trash"></i> Oscartime - 3 (Malan).sb3</h4>
+                    <p>Implementation of the bounding box collision sensor <code>touching trash can?</code>.</p>
+                </div>
+                <a href="../src0/Oscartime%20-%203%20(Malan).sb3" class="file-btn"><i class="fas fa-download"></i> Download / Inspect</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-trophy"></i> Oscartime.sb3</h4>
+                    <p>The final master game package incorporating dynamic scoring memory allocation.</p>
+                </div>
+                <a href="../src0/Oscartime.sb3" class="file-btn"><i class="fas fa-download"></i> Download / Inspect</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-play-circle"></i> Ivy's Hardest Game - Harvard 0.sb3</h4>
+                    <p>Preliminary player motion configuration via key binding blocks.</p>
+                </div>
+                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard%200.sb3" class="file-btn"><i class="fas fa-download"></i> Download / Inspect</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-cogs"></i> Ivy's Hardest Game - Harvard 2.sb3</h4>
+                    <p>Construction of custom procedural sub-routines <code>listen for keyboard</code> and <code>feel for walls</code>.</p>
+                </div>
+                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard%202.sb3" class="file-btn"><i class="fas fa-download"></i> Download / Inspect</a>
+            </div>
+            <div class="file-card">
+                <div>
+                    <h4><i class="fas fa-flag-checkered"></i> Ivy's Hardest Game - Harvard.sb3</h4>
+                    <p>The massive master bundle featuring dynamic moving obstacles and failure triggers.</p>
+                </div>
+                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard.sb3" class="file-btn"><i class="fas fa-download"></i> Download / Inspect</a>
+            </div>
+        </div>
+
+        <div class="alert-box">
+            <h4>🔬 Deconstructing Modular Sub-Routines</h4>
+            <p>Rather than saturating the primary <code>forever</code> loop with 20 convoluted nested conditional statements, Malan introduces an exceptionally clean architectural model rooted in the Separation of Concerns. <code>listen for keyboard</code> handles input polling, while <code>feel for walls</code> immediately inverts motion vectors upon collision to prevent sprite clipping!</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Built for CS50x 2026-2027 &middot; Sovereign Architecture</div>
+    </footer>
+</div>
+
+<script>
+    function switchTab(lang) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
+        
+        if (lang === 'ar') {
+            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+            document.getElementById('panel-ar').classList.add('active');
+        } else {
+            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+            document.getElementById('panel-en').classList.add('active');
+        }
+    }
+</script>
+
+</body>
+</html>

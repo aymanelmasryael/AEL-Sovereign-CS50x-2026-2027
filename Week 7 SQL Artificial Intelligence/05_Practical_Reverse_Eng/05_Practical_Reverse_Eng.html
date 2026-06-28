@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 SQL & AI – 05_Practical_Reverse_Eng | AEL CS Encyclopedia</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #020814;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aab2;
+            --primary-accent: #0074FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(0, 116, 255, 0.35);
+            --glass-border-hover: rgba(0, 116, 255, 0.75);
+            --border-radius: 24px;
+            --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 1350px; margin: 0 auto; }
+
+        /* Nav Bar */
+        .master-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            padding: 18px 36px; border-radius: 20px; margin-bottom: 40px;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-gloss);
+        }
+        .nav-brand { display: flex; align-items: center; gap: 16px; color: var(--text-primary); font-weight: 700; font-size: 20px; text-decoration: none; font-family: 'Inter', sans-serif; }
+        .nav-brand i { color: var(--primary-accent); font-size: 24px; }
+        .back-btn { background: rgba(0, 116, 255, 0.15); border: 1px solid var(--primary-accent); color: #ffffff; padding: 10px 22px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s ease; }
+        .back-btn:hover { background: var(--primary-accent); box-shadow: 0 0 15px rgba(0, 116, 255, 0.4); }
+
+        /* Sovereign Identity Card (Header) */
+        .ael-identity-card {
+            width: 100%; margin: 20px auto 50px auto; padding: 42px; border-radius: 36px; position: relative;
+            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            border: 1px solid var(--glass-border-hover);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 116, 255, 0.18), inset 0 0 25px rgba(0, 116, 255, 0.06); box-sizing: border-box; overflow: hidden;
+        }
+        .ael-identity-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%); opacity: 0.5; }
+        .ael-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding-bottom: 28px; border-bottom: 1px dashed rgba(0, 116, 255, 0.55); flex-wrap: wrap; }
+        .ael-logo-group { display: flex; align-items: center; gap: 24px; }
+        .ael-logo { width: 82px; height: 82px; flex-shrink: 0; filter: drop-shadow(0 0 16px rgba(0, 116, 255, 0.5)); transition: transform 0.3s ease; }
+        .ael-logo:hover { transform: scale(1.05) rotate(5deg); }
+        .ael-title { color: #f1f6ff; font-size: 32px; font-weight: 700; letter-spacing: 2px; line-height: 1.2; font-family: 'Inter', sans-serif; }
+        .ael-subtitle { margin-top: 8px; color: #8db7ff; font-size: 16px; letter-spacing: 1px; font-family: 'Share Tech Mono', monospace; }
+        .directive-badge { background: rgba(0, 116, 255, 0.12); color: #0074FF; border: 1px solid var(--glass-border-hover); padding: 0.6rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; box-shadow: 0 0 20px rgba(0, 116, 255, 0.2); align-self: center; }
+        .ael-owner { margin-top: 36px; padding-left: 24px; border-left: 5px solid var(--primary-accent); }
+        .ael-owner-name { color: #ffffff; font-size: 48px; font-weight: 700; letter-spacing: 1px; line-height: 1; font-family: 'Inter', sans-serif; }
+        .ael-owner-role { margin-top: 18px; color: #c7d8ff; font-size: 18px; line-height: 1.6; }
+        .ael-seal-box { margin-top: 40px; padding: 32px; border-radius: 28px; background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72)); border: 1px solid rgba(0, 116, 255, 0.55); box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08); }
+        .ael-seal-title { color: #6da8ff; font-size: 17px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-family: 'Share Tech Mono', monospace; }
+        .ael-code { padding: 24px; border-radius: 20px; background: #020b18; border: 1px solid rgba(0, 116, 255, 0.7); color: #d9ebff; font-size: 14px; line-height: 1.5; overflow: auto; box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08); font-family: 'Share Tech Mono', monospace; }
+        .ael-code pre { margin: 0; white-space: pre-wrap; word-break: break-word; }
+
+        /* Document Switcher */
+        .switcher-container { display: flex; justify-content: center; gap: 24px; margin-bottom: 50px; }
+        .switch-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 16px 36px; border-radius: 18px; color: var(--text-secondary); font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); font-family: 'Cairo', 'Inter', sans-serif; }
+        .switch-btn.active, .switch-btn:hover { background: var(--primary-accent); color: #ffffff; border-color: var(--primary-accent); box-shadow: 0 0 25px rgba(0, 116, 255, 0.5); transform: translateY(-3px); }
+
+        /* Main Display Portal */
+        .content-portal { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 56px; border-radius: 36px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); }
+        .doc-view { display: none; } .doc-view.active { display: block; }
+        .doc-title { font-size: 34px; color: var(--text-primary); margin-bottom: 24px; font-weight: 700; border-bottom: 2px solid var(--primary-accent); padding-bottom: 16px; display: inline-block; }
+        .doc-section { margin-bottom: 48px; }
+        .sec-title { font-size: 26px; color: #8db7ff; margin-bottom: 18px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .sec-title i { color: var(--primary-accent); }
+        .doc-text { font-size: 17px; line-height: 1.8; margin-bottom: 20px; }
+        ul { list-style-type: none; padding-left: 0; }
+        ul li { position: relative; padding-left: 28px; margin-bottom: 14px; font-size: 16px; color: #c5d4e3; }
+        ul li::before { content: "\f111"; font-family: 'FontAwesome'; position: absolute; left: 0; top: 4px; font-size: 10px; color: var(--primary-accent); }
+
+        /* RTL specific overrides for Arabic */
+        .doc-view[dir="rtl"] ul li { padding-left: 0; padding-right: 28px; }
+        .doc-view[dir="rtl"] ul li::before { left: auto; right: 0; }
+        .doc-view[dir="rtl"] .ael-owner { padding-left: 0; padding-right: 24px; border-left: none; border-right: 5px solid var(--primary-accent); }
+
+        .portal-diagram { background: #01060e; border: 1px solid rgba(0, 116, 255, 0.4); padding: 24px; border-radius: 20px; font-family: 'Share Tech Mono', monospace; color: #64ffda; margin: 28px 0; overflow-x: auto; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+
+        /* Footer */
+        .ael-footer { margin-top: 70px; padding-top: 32px; border-top: 1px solid rgba(0, 116, 255, 0.45); display: flex; justify-content: space-between; gap: 34px; flex-wrap: wrap; color: #c6dcff; font-size: 16px; }
+        @media(max-width: 768px) { .ael-identity-card, .content-portal { padding: 28px; border-radius: 28px; } .ael-owner-name { font-size: 38px; } .ael-title { font-size: 24px; } .switcher-container { flex-direction: column; gap: 16px; } .master-nav { padding: 14px 22px; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Top Master Nav -->
+    <nav class="master-nav">
+        <a href="../../../docs.html" class="nav-brand">
+            <i class="fas fa-shield-halved"></i> AEL CS Encyclopedia
+        </a>
+        <a href="../../../docs.html" class="back-btn">
+            <i class="fas fa-chevron-left" style="margin-right: 8px;"></i> Master Dashboard
+        </a>
+    </nav>
+
+    <!-- AEL Sovereign Identity Block (Header) -->
+    <div class="ael-identity-card">
+        <div class="ael-header">
+            <div class="ael-logo-group">
+                <svg class="ael-logo" viewBox="0 0 226.77 226.77" aria-label="AEL Logo">
+                    <g fill="#0074FF" stroke="none">
+                        <path d="m97.19,48.59v16.2h-32.4v-16.2c0-8.94-7.25-16.2-16.2-16.2s-16.2,7.25-16.2,16.2v16.2H0v-16.2c0-5.68.98-11.13,2.76-16.2C9.44,13.52,27.44,0,48.59,0s39.16,13.52,45.83,32.4c1.79,5.07,2.76,10.52,2.76,16.2Z" style="fill:#ffffff;"></path>
+                        <rect y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="32.4" width="32.4" height="32.4"></rect>
+                        <rect y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="32.4" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="97.19" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="194.38" width="32.4" height="32.4"></rect>
+                    </g>
+                </svg>
+                <div>
+                    <div class="ael-title">05_PRACTICAL_REVERSE_ENG PORTAL</div>
+                    <div class="ael-subtitle">Week 7 SQL & AI &middot; Dual Sovereign Core (AR / EN)</div>
+                </div>
+            </div>
+            <div class="directive-badge">⚡ QUERY EXECUTION PLANS & INDEX SCANS</div>
+        </div>
+
+        <div class="ael-owner">
+            <div class="ael-owner-name">AYMAN ELMASRY</div>
+            <div class="ael-owner-role">
+                Computational Creative Director &middot; AI Prompt Engineer<br>
+                Founder of Ayman Elmasry LLC
+            </div>
+        </div>
+
+        <div class="ael-seal-box">
+            <div class="ael-seal-title">🔒 ⚡ AEL Sovereign Seal (Active Master Verification)</div>
+            <div class="ael-code">
+<pre>{
+  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
+  "owner": "Ayman Elmasry",
+  "legal_entities": [
+    "Ayman Elmasry LLC (UAE)",
+    "Ayman Elmasry Advertising & Marketing (Egypt)"
+  ],
+  "syllabus_source": "Harvard CS50x 2026-2027",
+  "domain": "Week 7 SQL & Artificial Intelligence: Query Execution Plans & Index Scans",
+  "document_type": "05_Practical_Reverse_Eng",
+  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
+  "system_version": "v3.0"
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Document Switcher -->
+    <div class="switcher-container">
+        <button class="switch-btn active" onclick="switchDoc('ar')">
+            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
+        </button>
+        <button class="switch-btn" onclick="switchDoc('en')">
+            <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
+        </button>
+    </div>
+
+    <!-- Content Display Portal -->
+    <main class="content-portal">
+        
+        <!-- ARABIC VIEW -->
+        <section id="portal-ar" class="doc-view active" dir="rtl">
+            <h1 class="doc-title">الهندسة العكسية التطبيقية: تفكيك خطط التنفيذ (EXPLAIN QUERY PLAN)</h1>
+            
+            <div class="doc-section">
+                <h2 class="sec-title"><i class="fas fa-unlock-alt"></i> تشريح أمر EXPLAIN QUERY PLAN</h2>
+                <p class="doc-text">
+                    في الهندسة العكسية لقواعد البيانات، لا نكتفي بمعرفة أن الاستعلام يعمل، بل نسعى لمعرفة كيف ينفذ محرك قاعدة البيانات الاستعلام خلف الكواليس، وأي الطرق يسلكها في فحص الجداول.
+                </p>
+                <div class="portal-diagram">
+<pre>===================================================================================
+                   EXPLAIN QUERY PLAN REVERSE ENGINE TOPOLOGY
+===================================================================================
+
+  [ EXPLAIN QUERY PLAN SELECT * FROM movies WHERE title = 'Inception'; ]
+  
+  ├── Case A (Unindexed) : SCAN TABLE movies (Worst Case O(N))
+  └── Case B (Indexed)   : SEARCH TABLE movies USING COVERING INDEX (Optimal O(log N))
+
+===================================================================================</pre>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2 class="sec-title"><i class="fas fa-search-plus"></i> الفروق الجوهرية في استراتيجيات الفحص</h2>
+                <ul>
+                    <li><strong>المسح الشامل للجدول (SCAN TABLE / Seq Scan)</strong>: يعني أن محرك قاعدة البيانات سيفتح ملف قاعدة البيانات ويقرأ كل صفحة من البداية إلى النهاية. إذا كان الجدول يضم 10 ملايين سجل، سيتم إجراء 10 ملايين فحص.</li>
+                    <li><strong>فحص الفهرس (SEARCH TABLE USING INDEX / Index Scan)</strong>: يشير إلى أن المحرك سيتخطى الجدول الفعلي ويتجه مباشرة إلى شجرة B-Tree الخاصة بالفهرس، ويقفز للورقة المطابقة في بضع حركات فقط.</li>
+                    <li><strong>الفهرس المغطي (COVERING INDEX)</strong>: الحالة الأكثر كفاءة على الإطلاق. تحدث عندما يحتوي الفهرس نفسه على كل الأعمدة المطلوبة في جملة SELECT، مما يلغي الحاجة للرجوع إلى الجدول الأصلي تماماً.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ENGLISH VIEW -->
+        <section id="portal-en" class="doc-view" dir="ltr">
+            <h1 class="doc-title">Practical Reverse Engineering: Deconstructing Query Plans (EXPLAIN QUERY PLAN)</h1>
+            
+            <div class="doc-section">
+                <h2 class="sec-title"><i class="fas fa-unlock-alt"></i> The Anatomy of EXPLAIN QUERY PLAN</h2>
+                <p class="doc-text">
+                    In database reverse engineering, confirming that a complex SQL query yields correct results is merely the baseline. The true objective is reverse engineering the underlying query execution planner to dissect how the engine traverses structural data blocks.
+                </p>
+                <div class="portal-diagram">
+<pre>===================================================================================
+                   EXPLAIN QUERY PLAN REVERSE ENGINE TOPOLOGY
+===================================================================================
+
+  [ EXPLAIN QUERY PLAN SELECT * FROM movies WHERE title = 'Inception'; ]
+  
+  ├── Case A (Unindexed) : SCAN TABLE movies (Worst Case O(N))
+  └── Case B (Indexed)   : SEARCH TABLE movies USING COVERING INDEX (Optimal O(log N))
+
+===================================================================================</pre>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2 class="sec-title"><i class="fas fa-search-plus"></i> Architectural Dichotomy of Engine Scans</h2>
+                <ul>
+                    <li><strong>SCAN TABLE (Sequential Scan)</strong>: Indicates that the engine will perform a raw, unindexed read across every allocated physical page of the target table. If a table houses 10 million rows, the engine executes 10 million distinct comparisons.</li>
+                    <li><strong>SEARCH TABLE USING INDEX (Index Scan)</strong>: Highlights that the engine bypasses raw table reads entirely, steering straight into a balanced B-Tree index to isolate the target row pointer in O(log N) logarithmic hops.</li>
+                    <li><strong>COVERING INDEX</strong>: The absolute apex of query performance. Occurs when the B-Tree index structure explicitly stores every attribute requested within the SELECT clause, allowing the engine to return results directly from the index blocks without ever fetching the primary table page.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Built for CS50x 2026-2027 &middot; Sovereign Architecture</div>
+    </footer>
+</div>
+
+<script>
+    function switchDoc(lang) {
+        document.querySelectorAll('.doc-view').forEach(view => view.classList.remove('active'));
+        document.querySelectorAll('.switch-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(`portal-${lang}`).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

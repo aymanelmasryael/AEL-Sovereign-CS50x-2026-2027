@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEL CS Encyclopedia™ – 05_Practical_Reverse_Eng (Week 1 C)</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #020814;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aab2;
+            --primary-accent: #0074FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(0, 116, 255, 0.35);
+            --glass-border-hover: rgba(0, 116, 255, 0.75);
+            --border-radius: 24px;
+            --warning-color: #ff9800;
+            --success-color: #00ff64;
+            --danger-color: #ff4757;
+            --panel-bg: rgba(5, 15, 35, 0.75);
+            --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* Sovereign Identity Card (Header) */
+        .ael-identity-card {
+            width: 100%;
+            margin: 20px auto 50px auto;
+            padding: 42px;
+            border-radius: 36px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            border: 1px solid var(--glass-border-hover);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 116, 255, 0.18), inset 0 0 25px rgba(0, 116, 255, 0.06);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .ael-identity-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%);
+            opacity: 0.5;
+        }
+
+        .ael-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 28px;
+            border-bottom: 1px dashed rgba(0, 116, 255, 0.55);
+            flex-wrap: wrap;
+        }
+
+        .ael-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .ael-logo {
+            width: 82px;
+            height: 82px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 16px rgba(0, 116, 255, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .ael-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .ael-title {
+            color: #f1f6ff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-subtitle {
+            margin-top: 8px;
+            color: #8db7ff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .directive-badge {
+            background: rgba(0, 116, 255, 0.12);
+            color: #0074FF;
+            border: 1px solid var(--glass-border-hover);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 116, 255, 0.2);
+            align-self: center;
+        }
+
+        .ael-owner {
+            margin-top: 36px;
+            padding-left: 24px;
+            border-left: 5px solid var(--primary-accent);
+        }
+
+        .ael-owner-name {
+            color: #ffffff;
+            font-size: 54px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-owner-role {
+            margin-top: 18px;
+            color: #c7d8ff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Sovereign Seal Box */
+        .ael-seal-box {
+            margin-top: 40px;
+            padding: 32px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72));
+            border: 1px solid rgba(0, 116, 255, 0.55);
+            box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08);
+        }
+
+        .ael-seal-title {
+            color: #6da8ff;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code {
+            padding: 24px;
+            border-radius: 20px;
+            background: #020b18;
+            border: 1px solid rgba(0, 116, 255, 0.7);
+            color: #d9ebff;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: auto;
+            box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .breadcrumb { font-size: 1.1rem; color: #8b949e; }
+        .breadcrumb a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
+
+        .tabs { display: flex; gap: 1rem; }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover { border-color: var(--primary-accent); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--primary-accent); color: #fff; border-color: var(--primary-accent); box-shadow: 0 0 15px rgba(0,116,255,0.4); }
+
+        .content-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 4rem;
+            box-shadow: var(--shadow-gloss);
+            display: none;
+        }
+        .content-panel.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
+        .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
+
+        h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
+        h3 { font-size: 1.6rem; color: #87bffd; margin: 2rem 0 1rem 0; }
+        h4 { font-size: 1.3rem; color: var(--text-primary); margin: 1.5rem 0 0.8rem 0; }
+        p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #b1bac4; }
+        
+        ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
+        ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
+        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
+        ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
+        .panel-ar ul li::before { left: auto; right: 0; }
+
+        .content-panel pre {
+            background: #020b18;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.05rem;
+            margin: 2rem 0;
+            color: #79c0ff;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .alert-box {
+            background: rgba(13, 27, 42, 0.8);
+            border-left: 4px solid var(--primary-accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            border: 1px solid var(--glass-border);
+        }
+        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
+        .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
+
+        .file-link-bar {
+            background: #050f23;
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-link-bar a { color: var(--primary-accent); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .file-link-bar a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .ael-footer {
+            margin-top: 50px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0, 116, 255, 0.45);
+            display: flex;
+            justify-content: space-between;
+            gap: 34px;
+            flex-wrap: wrap;
+            color: #c6dcff;
+            font-size: 16px;
+        }
+
+        @media(max-width: 768px) {
+            .ael-identity-card { padding: 28px; border-radius: 28px; }
+            .ael-owner-name { font-size: 38px; }
+            .ael-title { font-size: 24px; }
+            .content-panel { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- AEL Sovereign Identity Block (Header) -->
+    <div class="ael-identity-card">
+        <div class="ael-header">
+            <div class="ael-logo-group">
+                <svg class="ael-logo" viewBox="0 0 226.77 226.77" aria-label="AEL Logo">
+                    <g fill="#0074FF" stroke="none">
+                        <path d="m97.19,48.59v16.2h-32.4v-16.2c0-8.94-7.25-16.2-16.2-16.2s-16.2,7.25-16.2,16.2v16.2H0v-16.2c0-5.68.98-11.13,2.76-16.2C9.44,13.52,27.44,0,48.59,0s39.16,13.52,45.83,32.4c1.79,5.07,2.76,10.52,2.76,16.2Z" style="fill:#ffffff;"></path>
+                        <rect y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="32.4" width="32.4" height="32.4"></rect>
+                        <rect y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="32.4" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="97.19" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="194.38" width="32.4" height="32.4"></rect>
+                    </g>
+                </svg>
+                <div>
+                    <div class="ael-title">AEL COMPUTER SCIENCE ENCYCLOPEDIA</div>
+                    <div class="ael-subtitle">05_Practical_Reverse_Eng (Week 1 C) &middot; Sovereign Documentation</div>
+                </div>
+            </div>
+            <div class="directive-badge">⚡ 100% SILICON & COGNITIVE DEPTH</div>
+        </div>
+
+        <div class="ael-owner">
+            <div class="ael-owner-name">AYMAN ELMASRY</div>
+            <div class="ael-owner-role">
+                Computational Creative Director &middot; AI Prompt Engineer<br>
+                Founder of Ayman Elmasry LLC
+            </div>
+        </div>
+
+        <div class="ael-seal-box">
+            <div class="ael-seal-title">🔒 ⚡ AEL Sovereign Seal (Active Verification)</div>
+            <div class="ael-code">
+<pre>{
+  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
+  "owner": "Ayman Elmasry",
+  "legal_entities": [
+    "Ayman Elmasry LLC (UAE)",
+    "Ayman Elmasry Advertising & Marketing (Egypt)"
+  ],
+  "section": "05_Practical_Reverse_Eng (Week 1 C)",
+  "syllabus_source": "Harvard CS50x (Practical Reverse Engineering)",
+  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
+  "system_version": "v3.0"
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <div class="breadcrumb">
+            <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>05_Practical_Reverse_Eng (Week 1 C)</span>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
+            <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
+        </div>
+    </div>
+
+    <!-- ARABIC PANEL -->
+    <div id="panel-ar" class="content-panel panel-ar active">
+        <div class="file-link-bar">
+            <span>الملف المصدري المباشر: <code>Week_1_Binary_Forensics_AR.md</code></span>
+            <a href="Week_1_Binary_Forensics_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
+        </div>
+        
+        <h2>🏛️ التشريح الجنائي للملفات التنفيذية (Binary Forensics)</h2>
+        <p>في هذا القسم من الهندسة العكسية التطبيقية، لن نكتفي بكتابة الكود المصدري <code>hello.c</code> وتشغيله، بل سنقوم بدور <strong>المحقق الجنائي الرقمي (Binary Forensic Investigator)</strong> لنفكك الملفات الثنائية الناتجة (<code>hello.o</code> و <code>hello</code>) ونفهم كيف يراها المعالج ونظام التشغيل.</p>
+
+<pre>
+===================================================================================
+                       THE REVERSE ENGINEERING TOOLBOX
+===================================================================================
+
+  [ Executable Binary: ./hello ]
+            │
+            ├─► $ strings hello    ──> Extracts ASCII Literals ("hello, world")
+            ├─► $ nm hello         ──> Inspects Symbol Table (_main, _printf)
+            ├─► $ objdump -d hello ──> Disassembles Machine Code to Assembly
+            └─► $ strace / dtruss  ──> Traces Kernel System Calls (write)
+
+===================================================================================
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🔬 أدوات التفكيك الاستقصائية (The Disassembly Suite)</h2>
+
+        <h3>1. استخراج النصوص المضمنة (The strings Command)</h3>
+        <p>عندما يتم تجميع البرنامج، أين تذهب الجملة النصية <code>"hello, world\n"</code>؟ يتم تخزين السلاسل النصية الثابتة (<code>String Literals</code>) في قسم مخصص داخل الملف التنفيذي يسمى <strong>قسم البيانات القراءة فقط (.rodata - Read-Only Data)</strong>. باستخدام أداة <code>strings</code>، يمكننا فحص الملف الثنائي واستخراج كافة النصوص القابلة للقراءة البشرية دون تشغيل البرنامج:</p>
+<pre>
+$ strings hello
+...
+hello, world
+What's your name? 
+hello, %s
+...
+</pre>
+
+        <h3>2. فحص جدول الرموز والعناوين (The nm Command)</h3>
+        <p>يحتوي الملف التنفيذي على جدول رموز (<code>Symbol Table</code>) يربط أسماء الدوال بعناوينها في الذاكرة. أداة <code>nm</code> تكشف لنا الدوال التي تم تعريفها داخلياً (مثل <code>main</code>) والدوال التي تم جلبها من مكتبات خارجية (مثل <code>printf</code> و <code>get_string</code>):</p>
+<pre>
+$ nm hello
+0000000100003f50 T _main
+                 U _printf
+                 U _get_string
+</pre>
+        <ul>
+            <li><strong>حرف T:</strong> يعني أن الدالة <code>_main</code> موجودة ومعرفة في قسم النصوص (<code>Text Section</code>) الخاص بملفنا.</li>
+            <li><strong>حرف U:</strong> يعني أن الدالة <code>_printf</code> و <code>_get_string</code> غير معرفة داخلياً (<code>Undefined / External</code>) وتم ربطها ديناميكياً بمكتبة <code>C</code> القياسية (<code>libc</code>) ومكتبة <code>cs50</code>.</li>
+        </ul>
+
+        <h3>3. التفكيك العكسي إلى لغة التجميع (The objdump Command)</h3>
+        <p>تحويل الأكواد الثنائية الصفرية (<code>0s &amp; 1s</code>) في الملف التنفيذي رجوعاً إلى تعليمات لغة التجميع (<code>Assembly</code>):</p>
+<pre>
+$ objdump -d hello
+hello:  file format Mach-O 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+_main:
+100003f50: 55                    pushq %rbp
+100003f51: 48 89 e5              movq  %rsp, %rbp
+100003f54: 48 8d 3d 55 00 00 00  leaq  85(%rip), %rdi  # loading "hello, world" string
+100003f5b: e8 12 00 00 00        callq _printf
+100003f60: 31 c0                 xorl  %eax, %eax
+100003f62: 5d                    popq  %rbp
+100003f63: c3                    retq
+</pre>
+        <ul>
+            <li><code>pushq %rbp</code> و <code>movq</code>: إعداد إطار التكدس (<code>Stack Frame</code>) لدالة <code>main</code>.</li>
+            <li><code>leaq</code>: تحميل عنوان السلسلة النصية <code>"hello, world\n"</code> إلى مسجل المعالج <code>%rdi</code> (وهو المسجل المسؤول عن تمرير المعامل الأول للدوال في أنظمة x86_64).</li>
+            <li><code>callq _printf</code>: استدعاء دالة الطباعة الصريحة.</li>
+            <li><code>xorl %eax, %eax</code>: تصفير المسجل <code>%eax</code> (وهو ما يعادل العبارة الضمنية <code>return 0;</code> في نجاح البرنامج).</li>
+        </ul>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>⚙️ تتبع نداءات النظام ونواة التشغيل (Tracing Kernel Syscalls)</h2>
+        <p>تعتبر دالة <code>printf</code> في لغة C مجرد واجهة تجريدية عالية المستوى. المعالج نفسه لا يعرف كيف يطبع نصاً على شاشة الطرفية. هنا يأتي دور <strong>نداءات النظام (System Calls)</strong>.</p>
+
+<pre>
+===================================================================================
+                       KERNEL SYSTEM CALL PATHWAY
+===================================================================================
+
+  [ Application: printf("hello, world\n") ]
+            │
+            ▼
+  [ C Standard Library: libc (Buffers output) ]
+            │
+            ▼  (User Mode -> Kernel Mode Switch)
+  ┌────────────────────────────────────────────────────────┐
+  │ [ OS Kernel Call: write(1, "hello, world\n", 13) ]     │ ──> Writes to File Descriptor 1 (stdout)
+  └────────────────────────────────────────────────────────┘
+            │
+            ▼
+  [ Hardware Device / Terminal Display ]
+
+===================================================================================
+</pre>
+
+        <div class="alert-box">
+            <h4>💡 تشريح مسار الطباعة في النواة</h4>
+            <p>عند استدعاء <code>printf("hello, world\n")</code>، تقوم مكتبة C القياسية بطلب مساعدة نواة نظام التشغيل (<code>OS Kernel</code>) عبر نداء نظام قياسي يسمى <code>write</code>.</p>
+            <p><strong>على أنظمة لينكس (strace):</strong> أداة <code>strace ./hello</code> تعترض هذا النداء وتظهره حرفياً: <code>write(1, "hello, world\n", 13) = 13</code>.</p>
+            <p><strong>على أنظمة ماك (dtruss):</strong> باستخدام <code>sudo dtruss ./hello</code>، نرى أن البرنامج يخاطب النواة طالباً كتابة <code>13</code> بايت (طول الجملة بالإضافة لرمز <code>\n</code>) إلى واصف الملف رقم <code>1</code> (<code>File Descriptor 1</code>) وهو ما يمثل شاشة المخرجات القياسية <code>stdout</code>.</p>
+        </div>
+    </div>
+
+    <!-- ENGLISH PANEL -->
+    <div id="panel-en" class="content-panel panel-en">
+        <div class="file-link-bar">
+            <span>Source Markdown File: <code>Week_1_Binary_Forensics_EN.md</code></span>
+            <a href="Week_1_Binary_Forensics_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
+        </div>
+        
+        <h2>🏛️ Binary Forensics &amp; Architectural Inspection</h2>
+        <p>In this dedicated Practical Reverse Engineering wing, we transcend the conventional developer workflow of merely authoring and compiling <code>hello.c</code>. Here, we adopt the exacting rigor of a <strong>Binary Forensic Investigator</strong>, dissecting the resultant binary artifacts (<code>hello.o</code> and <code>hello</code>) to analyze precisely how they are parsed and executed by the bare-metal CPU and operating system kernel.</p>
+
+<pre>
+===================================================================================
+                       THE REVERSE ENGINEERING TOOLBOX
+===================================================================================
+
+  [ Executable Binary: ./hello ]
+            │
+            ├─► $ strings hello    ──> Extracts ASCII Literals ("hello, world")
+            ├─► $ nm hello         ──> Inspects Symbol Table (_main, _printf)
+            ├─► $ objdump -d hello ──> Disassembles Machine Code to Assembly
+            └─► $ strace / dtruss  ──> Traces Kernel System Calls (write)
+
+===================================================================================
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🔬 The Analytical Disassembly Suite</h2>
+
+        <h3>1. Extracting Static ASCII Assets (The strings Command)</h3>
+        <p>When a C source file is transformed into machine code, where exactly does the literal string <code>"hello, world\n"</code> reside? Static ASCII text strings (<code>String Literals</code>) are archived within a specialized section of the compiled binary image known as the <strong>Read-Only Data Section (.rodata - Read-Only Data)</strong>. By deploying the <code>strings</code> utility, we can scan the raw binary file to extract all human-readable character sequences without executing the underlying code:</p>
+<pre>
+$ strings hello
+...
+hello, world
+What's your name? 
+hello, %s
+...
+</pre>
+
+        <h3>2. Inspecting the Symbol Table (The nm Command)</h3>
+        <p>An executable binary houses a comprehensive Symbol Table (<code>Symbol Table</code>), mapping function identifiers to exact physical memory offsets. The <code>nm</code> diagnostic tool identifies internal function declarations (e.g., <code>main</code>) alongside dynamically linked external dependencies (e.g., <code>printf</code> and <code>get_string</code>):</p>
+<pre>
+$ nm hello
+0000000100003f50 T _main
+                 U _printf
+                 U _get_string
+</pre>
+        <ul>
+            <li><strong>Prefix T:</strong> Signifies that the function <code>_main</code> resides directly within the binary's text code section (<code>Text Section</code>).</li>
+            <li><strong>Prefix U:</strong> Denotes that <code>_printf</code> and <code>_get_string</code> are undefined within the local binary scope (<code>Undefined / External</code>), relying on dynamic runtime linkage to the C Standard Library (<code>libc</code>) and the CS50 dynamic library.</li>
+        </ul>
+
+        <h3>3. Disassembling Machine Code to Assembly (The objdump Command)</h3>
+        <p>Reverse-translates raw binary opcode sequences (<code>0s &amp; 1s</code>) back into human-readable Assembly language mnemonics:</p>
+<pre>
+$ objdump -d hello
+hello:  file format Mach-O 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+_main:
+100003f50: 55                    pushq %rbp
+100003f51: 48 89 e5              movq  %rsp, %rbp
+100003f54: 48 8d 3d 55 00 00 00  leaq  85(%rip), %rdi  # loading "hello, world" string
+100003f5b: e8 12 00 00 00        callq _printf
+100003f60: 31 c0                 xorl  %eax, %eax
+100003f62: 5d                    popq  %rbp
+100003f63: c3                    retq
+</pre>
+        <ul>
+            <li><code>pushq %rbp</code> &amp; <code>movq</code>: Standard function prologue establishing the Stack Frame (<code>Stack Frame</code>) for <code>main</code>.</li>
+            <li><code>leaq</code>: Loads the exact memory address of the <code>"hello, world\n"</code> string literal into processor register <code>%rdi</code> (the dedicated architectural register for passing the first argument to functions in x86_64 calling conventions).</li>
+            <li><code>callq _printf</code>: Executes the direct function invocation to the pre-linked <code>printf</code> symbol.</li>
+            <li><code>xorl %eax, %eax</code>: Zeroes out register <code>%eax</code>, representing the implicit return code <code>return 0;</code> signaling successful execution.</li>
+        </ul>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>⚙️ Tracing Kernel System Calls (Syscalls)</h2>
+        <p>In high-level systems architecture, <code>printf</code> is merely an elegant user-space wrapper. The physical CPU architecture possesses no native instruction for printing characters to a physical monitor. This is where <strong>Kernel System Calls (Syscalls)</strong> bridge the gap.</p>
+
+<pre>
+===================================================================================
+                       KERNEL SYSTEM CALL PATHWAY
+===================================================================================
+
+  [ Application: printf("hello, world\n") ]
+            │
+            ▼
+  [ C Standard Library: libc (Buffers output) ]
+            │
+            ▼  (User Mode -> Kernel Mode Switch)
+  ┌────────────────────────────────────────────────────────┐
+  │ [ OS Kernel Call: write(1, "hello, world\n", 13) ]     │ ──> Writes to File Descriptor 1 (stdout)
+  └────────────────────────────────────────────────────────┘
+            │
+            ▼
+  [ Hardware Device / Terminal Display ]
+
+===================================================================================
+</pre>
+
+        <div class="alert-box">
+            <h4>💡 Deconstructing the Kernel Output Pathway</h4>
+            <p>When <code>printf("hello, world\n")</code> is executed, the C Standard Library issues a formal request to the Operating System Kernel via an explicit system call named <code>write</code>.</p>
+            <p><strong>On Linux Environments (strace):</strong> Executing <code>strace ./hello</code> intercepts the kernel trap, logging the explicit operational arguments: <code>write(1, "hello, world\n", 13) = 13</code>.</p>
+            <p><strong>On macOS Environments (dtruss):</strong> Utilizing <code>sudo dtruss ./hello</code> demonstrates that the application requests the OS kernel to push exactly <code>13</code> bytes (the length of the string plus the <code>\n</code> character) into File Descriptor <code>1</code> (<code>File Descriptor 1</code>), representing the standard output stream <code>stdout</code>.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Built for CS50x 2026-2027 &middot; Sovereign Architecture</div>
+    </footer>
+</div>
+
+<script>
+    function switchTab(lang) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
+        
+        if (lang === 'ar') {
+            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+            document.getElementById('panel-ar').classList.add('active');
+        } else {
+            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+            document.getElementById('panel-en').classList.add('active');
+        }
+    }
+</script>
+
+</body>
+</html>

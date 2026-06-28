@@ -1,0 +1,46 @@
+# AEL Sovereign Master Gitignore
+# Designed by Ayman Elmasry for pristine Git & GitHub Actions CI/CD deployment
+
+# macOS & OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor & IDE Configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Log Files & Temporary Databases
+*.log
+*.sqlite3-journal
+*.db-journal
+fiftyville.db-journal
+
+# Compiled Binaries & Build Artifacts
+*.out
+*.exe
+*.o
+*.a
+*.dll
+*.so
+*.dylib
+dist/
+build/
+*.pyc
+__pycache__/
+.pytest_cache/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.production
+secret_keys.json

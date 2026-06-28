@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 HTML, CSS, JavaScript – 06_Projects | AEL CS Encyclopedia</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #020814;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aab2;
+            --primary-accent: #0074FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(0, 116, 255, 0.35);
+            --glass-border-hover: rgba(0, 116, 255, 0.75);
+            --border-radius: 24px;
+            --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 1350px; margin: 0 auto; }
+
+        /* Nav Bar */
+        .master-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            padding: 18px 36px; border-radius: 20px; margin-bottom: 40px;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-gloss);
+        }
+        .nav-brand { display: flex; align-items: center; gap: 16px; color: var(--text-primary); font-weight: 700; font-size: 20px; text-decoration: none; font-family: 'Inter', sans-serif; }
+        .nav-brand i { color: var(--primary-accent); font-size: 24px; }
+        .back-btn { background: rgba(0, 116, 255, 0.15); border: 1px solid var(--primary-accent); color: #ffffff; padding: 10px 22px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s ease; }
+        .back-btn:hover { background: var(--primary-accent); box-shadow: 0 0 15px rgba(0, 116, 255, 0.4); }
+
+        /* Sovereign Identity Card (Header) */
+        .ael-identity-card {
+            width: 100%; margin: 20px auto 50px auto; padding: 42px; border-radius: 36px; position: relative;
+            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            border: 1px solid var(--glass-border-hover);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 116, 255, 0.18), inset 0 0 25px rgba(0, 116, 255, 0.06); box-sizing: border-box; overflow: hidden;
+        }
+        .ael-identity-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%); opacity: 0.5; }
+        .ael-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding-bottom: 28px; border-bottom: 1px dashed rgba(0, 116, 255, 0.55); flex-wrap: wrap; }
+        .ael-logo-group { display: flex; align-items: center; gap: 24px; }
+        .ael-logo { width: 82px; height: 82px; flex-shrink: 0; filter: drop-shadow(0 0 16px rgba(0, 116, 255, 0.5)); transition: transform 0.3s ease; }
+        .ael-logo:hover { transform: scale(1.05) rotate(5deg); }
+        .ael-title { color: #f1f6ff; font-size: 32px; font-weight: 700; letter-spacing: 2px; line-height: 1.2; font-family: 'Inter', sans-serif; }
+        .ael-subtitle { margin-top: 8px; color: #8db7ff; font-size: 16px; letter-spacing: 1px; font-family: 'Share Tech Mono', monospace; }
+        .directive-badge { background: rgba(0, 116, 255, 0.12); color: #0074FF; border: 1px solid var(--glass-border-hover); padding: 0.6rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; box-shadow: 0 0 20px rgba(0, 116, 255, 0.2); align-self: center; }
+        .ael-owner { margin-top: 36px; padding-left: 24px; border-left: 5px solid var(--primary-accent); }
+        .ael-owner-name { color: #ffffff; font-size: 48px; font-weight: 700; letter-spacing: 1px; line-height: 1; font-family: 'Inter', sans-serif; }
+        .ael-owner-role { margin-top: 18px; color: #c7d8ff; font-size: 18px; line-height: 1.6; }
+        .ael-seal-box { margin-top: 40px; padding: 32px; border-radius: 28px; background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72)); border: 1px solid rgba(0, 116, 255, 0.55); box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08); }
+        .ael-seal-title { color: #6da8ff; font-size: 17px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-family: 'Share Tech Mono', monospace; }
+        .ael-code { padding: 24px; border-radius: 20px; background: #020b18; border: 1px solid rgba(0, 116, 255, 0.7); color: #d9ebff; font-size: 14px; line-height: 1.5; overflow: auto; box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08); font-family: 'Share Tech Mono', monospace; }
+        .ael-code pre { margin: 0; white-space: pre-wrap; word-break: break-word; }
+
+        /* Document Switcher */
+        .switcher-container { display: flex; justify-content: center; gap: 24px; margin-bottom: 50px; }
+        .switch-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 16px 36px; border-radius: 18px; color: var(--text-secondary); font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); font-family: 'Cairo', 'Inter', sans-serif; }
+        .switch-btn.active, .switch-btn:hover { background: var(--primary-accent); color: #ffffff; border-color: var(--primary-accent); box-shadow: 0 0 25px rgba(0, 116, 255, 0.5); transform: translateY(-3px); }
+
+        /* Main Display Portal */
+        .content-portal { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 56px; border-radius: 36px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); }
+        .doc-view { display: none; } .doc-view.active { display: block; }
+        .doc-title { font-size: 34px; color: var(--text-primary); margin-bottom: 24px; font-weight: 700; border-bottom: 2px solid var(--primary-accent); padding-bottom: 16px; display: inline-block; }
+        .doc-section { margin-bottom: 48px; }
+        .sec-title { font-size: 26px; color: #8db7ff; margin-bottom: 18px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .sec-title i { color: var(--primary-accent); }
+        .doc-text { font-size: 17px; line-height: 1.8; margin-bottom: 20px; }
+        ul { list-style-type: none; padding-left: 0; }
+        ul li { position: relative; padding-left: 28px; margin-bottom: 14px; font-size: 16px; color: #c5d4e3; }
+        ul li::before { content: "\f111"; font-family: 'FontAwesome'; position: absolute; left: 0; top: 4px; font-size: 10px; color: var(--primary-accent); }
+
+        /* RTL specific overrides for Arabic */
+        .doc-view[dir="rtl"] ul li { padding-left: 0; padding-right: 28px; }
+        .doc-view[dir="rtl"] ul li::before { left: auto; right: 0; }
+        .doc-view[dir="rtl"] .ael-owner { padding-left: 0; padding-right: 24px; border-left: none; border-right: 5px solid var(--primary-accent); }
+
+        .portal-diagram { background: #01060e; border: 1px solid rgba(0, 116, 255, 0.4); padding: 24px; border-radius: 20px; font-family: 'Share Tech Mono', monospace; color: #64ffda; margin: 28px 0; overflow-x: auto; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+
+        .launch-action-card { background: rgba(0, 116, 255, 0.1); border: 1px solid #0074FF; padding: 32px; border-radius: 24px; display: flex; align-items: center; justify-content: space-between; margin-top: 40px; }
+        .launch-action-card h3 { margin: 0 0 10px 0; color: #fff; font-size: 24px; }
+        .launch-action-card p { margin: 0; color: #a0aab2; font-size: 16px; }
+        .launch-btn { background: #0074FF; color: #fff; padding: 14px 32px; border-radius: 16px; font-weight: 700; text-decoration: none; font-size: 18px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 0 20px rgba(0,116,255,0.4); }
+        .launch-btn:hover { background: #005ebb; transform: scale(1.05); box-shadow: 0 0 30px rgba(0,116,255,0.7); }
+
+        /* Footer */
+        .ael-footer { margin-top: 70px; padding-top: 32px; border-top: 1px solid rgba(0, 116, 255, 0.45); display: flex; justify-content: space-between; gap: 34px; flex-wrap: wrap; color: #c6dcff; font-size: 16px; }
+        @media(max-width: 768px) { .ael-identity-card, .content-portal { padding: 28px; border-radius: 28px; } .ael-owner-name { font-size: 38px; } .ael-title { font-size: 24px; } .switcher-container { flex-direction: column; gap: 16px; } .master-nav { padding: 14px 22px; } .launch-action-card { flex-direction: column; gap: 20px; text-align: center; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Top Master Nav -->
+    <nav class="master-nav">
+        <a href="../../docs.html" class="nav-brand">
+            <i class="fas fa-shield-halved"></i> AEL CS Encyclopedia
+        </a>
+        <a href="../../docs.html" class="back-btn">
+            <i class="fas fa-chevron-left" style="margin-right: 8px;"></i> Master Dashboard
+        </a>
+    </nav>
+
+    <!-- AEL Sovereign Identity Block (Header) -->
+    <div class="ael-identity-card">
+        <div class="ael-header">
+            <div class="ael-logo-group">
+                <svg class="ael-logo" viewBox="0 0 226.77 226.77" aria-label="AEL Logo">
+                    <g fill="#0074FF" stroke="none">
+                        <path d="m97.19,48.59v16.2h-32.4v-16.2c0-8.94-7.25-16.2-16.2-16.2s-16.2,7.25-16.2,16.2v16.2H0v-16.2c0-5.68.98-11.13,2.76-16.2C9.44,13.52,27.44,0,48.59,0s39.16,13.52,45.83,32.4c1.79,5.07,2.76,10.52,2.76,16.2Z" style="fill:#ffffff;"></path>
+                        <rect y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="32.4" width="32.4" height="32.4"></rect>
+                        <rect y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="32.4" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="97.19" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="194.38" width="32.4" height="32.4"></rect>
+                    </g>
+                </svg>
+                <div>
+                    <div class="ael-title">06_PROJECTS (HTML, CSS, JS)</div>
+                    <div class="ael-subtitle">Week 8 DOM Architecture &middot; Dual Sovereign Core (AR / EN)</div>
+                </div>
+            </div>
+            <div class="directive-badge">⚡ SOVEREIGN PROPRIETARY VAULT: AEL DOM MATRIX & GLASSMORPHISM SUITE</div>
+        </div>
+
+        <div class="ael-owner">
+            <div class="ael-owner-name">AYMAN ELMASRY</div>
+            <div class="ael-owner-role">
+                Computational Creative Director &middot; AI Prompt Engineer<br>
+                Founder of Ayman Elmasry LLC
+            </div>
+        </div>
+
+        <div class="ael-seal-box">
+            <div class="ael-seal-title">🔒 ⚡ AEL Sovereign Seal (Active Master Verification)</div>
+            <div class="ael-code">
+<pre>{
+  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
+  "owner": "Ayman Elmasry",
+  "legal_entities": [
+    "Ayman Elmasry LLC (UAE)",
+    "Ayman Elmasry Advertising & Marketing (Egypt)"
+  ],
+  "syllabus_source": "Harvard CS50x 2026-2027",
+  "domain": "Week 8 (HTML, CSS, JavaScript): DOM Architecture, Event Loops & UI Glassmorphism",
+  "document_type": "06_Projects",
+  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
+  "system_version": "v3.0"
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Document Switcher -->
+    <div class="switcher-container">
+        <button class="switch-btn active" onclick="switchDoc('ar')">
+            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
+        </button>
+        <button class="switch-btn" onclick="switchDoc('en')">
+            <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
+        </button>
+    </div>
+
+    <!-- Content Display Portal -->
+    <main class="content-portal">
+        
+        <!-- ARABIC VIEW -->
+        <section id="portal-ar" class="doc-view active" dir="rtl">
+            <h1 class="doc-title">استعراض المشاريع السيادية: خزنة ael_src8 والتطبيق التفاعلي (AEL DOM Matrix)</h1>
+            
+            <div class="doc-section">
+                <h2 class="sec-title"><i class="fas fa-rocket"></i> تطبيق AEL DOM Matrix & Glassmorphism Web Suite</h2>
+                <p class="doc-text">
+                    استمراراً لمبدأ الاستقلالية المطلقة وتجنب النسخ التقليدية لملفات CS50، تم بناء نظام حصري متكامل داخل مجلد ael_src8 يجمع بين الهيكل المتقدم، والتصميم العصري، والديناميكية الفائقة.
+                </p>
+                
+                <h3 style="color: var(--primary-accent); margin-top: 30px;">المميزات التقنية المطبقة</h3>
+                <ul>
+                    <li><strong>محاكي حلقات الأحداث (Event Loop Simulator)</strong>: يوضح كيف تعمل المهام غير المتزامنة (Async Tasks) في الخلفية مع عدادات حية.</li>
+                    <li><strong>بناء العقد ديناميكياً (Dynamic Card Instantiation)</strong>: أزرار تفاعلية لإنشاء بطاقات زجاجية جديدة داخل شجرة الـ DOM في الوقت الفعلي مع القدرة على حذفها.</li>
+                    <li><strong>محاكاة جلب البيانات (Mock Virtual Fetch API)</strong>: نظام جلب وهمي يحاكي استجابة الخادم لطلبات حزم الـ JSON ويعرض النتيجة فوراً داخل لوحة التفتيش.</li>
+                    <li><strong>التصميم المذهل (State-of-the-Art Aesthetics)</strong>: تأثير الـ Glassmorphism الزجاجي مع تفاعلات حية وتأثيرات صوتية وحركية ناعمة.</li>
+                </ul>
+                
+                <div class="portal-diagram">
+<pre>===================================================================================
+                   AEL DOM MATRIX WEB SUITE ARCHITECTURE
+===================================================================================
+
+     ┌───────────────────────────────────────────────────────────────────────┐
+     │  [MASTER HEADER]  AEL Sovereign DOM Matrix v3.0            [STATUS: OK]│
+     ├───────────────────────────────────┬───────────────────────────────────┤
+     │  DYNAMIC NODE MANAGER             │  VIRTUAL FETCH API (AJAX)         │
+     │  [+ Spawn New Glass Card]         │  [Request Internal JSON Payload]  │
+     ├───────────────────────────────────┴───────────────────────────────────┤
+     │  REAL-TIME EVENT LOOP INSPECTOR (Call Stack vs Task Queue simulation) │
+     └───────────────────────────────────────────────────────────────────────┘
+
+===================================================================================</pre>
+                </div>
+
+                <div class="launch-action-card">
+                    <div>
+                        <h3>⚡ الدخول إلى غرفة التحكم المركزية ael_src8</h3>
+                        <p>تصفح التطبيق التفاعلي المباشر واختبر أداء DOM Matrix على متصفحك</p>
+                    </div>
+                    <a href="../ael_src8/ael_src8.html" class="launch-btn">
+                        <i class="fas fa-play"></i> تشغيل ael_src8
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ENGLISH VIEW -->
+        <section id="portal-en" class="doc-view" dir="ltr">
+            <h1 class="doc-title">Sovereign Projects Review: ael_src8 Vault & AEL DOM Matrix Suite</h1>
+            
+            <div class="doc-section">
+                <h2 class="sec-title"><i class="fas fa-rocket"></i> AEL DOM Matrix & Glassmorphism Web Suite</h2>
+                <p class="doc-text">
+                    Continuing our uncompromising mandate of strict sovereignty and zero carbon copying of legacy CS50 assignment files, a fully original enterprise web suite has been engineered within the ael_src8 directory.
+                </p>
+                
+                <h3 style="color: var(--primary-accent); margin-top: 30px;">Engineered Technical Marvels</h3>
+                <ul>
+                    <li><strong>Live Event Loop Simulator</strong>: Real-time visual metrics illustrating exactly how asynchronous background tasks fire across the event queue versus the active call stack.</li>
+                    <li><strong>Dynamic Node Instantiation</strong>: Interactive trigger mechanisms enabling users to dynamically spawn new Glassmorphism DOM cards into the visual tree on the fly, complete with garbage collection cleanup routines.</li>
+                    <li><strong>Mock Virtual Fetch API</strong>: A fully operational simulated AJAX fetch subsystem that executes asynchronous JSON payload requests and streams the structural response straight into a live inspection panel.</li>
+                    <li><strong>State-of-the-Art Aesthetics</strong>: Stunning Glassmorphism frosted-glass UI cards, deep dark-mode contrasts, vibrant neon accents, and elite micro-animations.</li>
+                </ul>
+                
+                <div class="portal-diagram">
+<pre>===================================================================================
+                   AEL DOM MATRIX WEB SUITE ARCHITECTURE
+===================================================================================
+
+     ┌───────────────────────────────────────────────────────────────────────┐
+     │  [MASTER HEADER]  AEL Sovereign DOM Matrix v3.0            [STATUS: OK]│
+     ├───────────────────────────────────┬───────────────────────────────────┤
+     │  DYNAMIC NODE MANAGER             │  VIRTUAL FETCH API (AJAX)         │
+     │  [+ Spawn New Glass Card]         │  [Request Internal JSON Payload]  │
+     ├───────────────────────────────────┴───────────────────────────────────┤
+     │  REAL-TIME EVENT LOOP INSPECTOR (Call Stack vs Task Queue simulation) │
+     └───────────────────────────────────────────────────────────────────────┘
+
+===================================================================================</pre>
+                </div>
+
+                <div class="launch-action-card">
+                    <div>
+                        <h3>⚡ Inspect ael_src8 Subsystem</h3>
+                        <p>Launch the interactive web matrix and audit the high-performance DOM suite</p>
+                    </div>
+                    <a href="../ael_src8/ael_src8.html" class="launch-btn">
+                        <i class="fas fa-play"></i> Inspect ael_src8
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Built for CS50x 2026-2027 &middot; Sovereign Architecture</div>
+    </footer>
+</div>
+
+<script>
+    function switchDoc(lang) {
+        document.querySelectorAll('.doc-view').forEach(view => view.classList.remove('active'));
+        document.querySelectorAll('.switch-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(`portal-${lang}`).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

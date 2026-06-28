@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEL Flask MVC Core | Master Dashboard</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Static Stylesheet Injection -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='ael_style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Top Master Nav -->
+    <nav class="master-nav">
+        <a href="/" class="nav-brand">
+            <i class="fas fa-cubes"></i> AEL Flask MVC Core Suite
+        </a>
+        <div style="display: flex; gap: 16px;">
+            <a href="/reset" class="action-btn" style="border-color: #ff3366; color: #ff3366; background: rgba(255, 51, 102, 0.1);">
+                <i class="fas fa-trash-alt" style="margin-right: 8px;"></i> Reset Vault
+            </a>
+            <a href="ael_src9.html" class="action-btn">
+                <i class="fas fa-file-shield" style="margin-right: 8px;"></i> View Vault Specs
+            </a>
+        </div>
+    </nav>
+
+    <!-- Status Alert Bar -->
+    {% if status_message %}
+    <div class="status-alert">
+        <i class="fas fa-bolt"></i>
+        <div><strong>Session Telemetry Message:</strong> {{ status_message }}</div>
+    </div>
+    {% endif %}
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+        
+        <!-- Form View (Controller Submission) -->
+        <div class="portal-card">
+            <h2 class="card-title"><i class="fas fa-plus-circle"></i> Inject Telemetry</h2>
+            <form action="/" method="POST" class="telemetry-form">
+                <div class="form-group">
+                    <label for="directive">SOVEREIGN DIRECTIVE ID</label>
+                    <input type="text" id="directive" name="directive" placeholder="e.g. DIRECTIVE_04" required>
+                </div>
+                <div class="form-group">
+                    <label for="payload">DEEP SECURE PAYLOAD</label>
+                    <textarea id="payload" name="payload" rows="4" placeholder="Enter custom secure string or dictionary payload..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-satellite-dish" style="margin-right: 8px;"></i> Broadcast Payload
+                </button>
+            </form>
+        </div>
+
+        <!-- Rendered Records View (Model Presentation) -->
+        <div class="portal-card">
+            <h2 class="card-title"><i class="fas fa-database"></i> Live SQLite Vault Stream</h2>
+            <div class="telemetry-table-wrapper">
+                <table class="telemetry-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Directive ID</th>
+                            <th>Secure Payload</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>#{{ item.id }}</td>
+                            <td><strong>{{ item.directive }}</strong></td>
+                            <td>{{ item.payload }}</td>
+                            <td>{{ item.timestamp }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #a0aab2;">No telemetry directives recorded in active SQLite vault.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Engineered via Jinja2 &middot; SQLite Dynamic Integration</div>
+    </footer>
+
+</div>
+
+</body>
+</html>

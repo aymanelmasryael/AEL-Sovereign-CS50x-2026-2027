@@ -1,0 +1,95 @@
+{
+  "targets": [
+    {
+      "isStage": true,
+      "name": "Stage",
+      "variables": {
+        "`jEk@4|i[#Fk?(8x)AV.-my variable": ["My Variable", 0]
+      },
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {},
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "name": "backdrop1",
+          "bitmapResolution": 1,
+          "dataFormat": "svg",
+          "assetId": "cd21514d0531fdffb22204e0ec5ed84a",
+          "md5ext": "cd21514d0531fdffb22204e0ec5ed84a.svg"
+        }
+      ],
+      "sounds": [],
+      "volume": 100
+    },
+    {
+      "isStage": false,
+      "name": "CS50_Cat",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "event_whenflagclicked_1": {
+          "opcode": "event_whenflagclicked",
+          "next": "motion_movesteps_1",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 100,
+          "y": 100
+        },
+        "motion_movesteps_1": {
+          "opcode": "motion_movesteps",
+          "next": "looks_sayforsecs_1",
+          "parent": "event_whenflagclicked_1",
+          "inputs": {
+            "STEPS": [1, [4, "10"]]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "looks_sayforsecs_1": {
+          "opcode": "looks_sayforsecs",
+          "next": null,
+          "parent": "motion_movesteps_1",
+          "inputs": {
+            "MESSAGE": [1, [2, "Hello CS50x 2026-2027!"]],
+            "SECS": [1, [4, "2"]]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "name": "cat-a",
+          "bitmapResolution": 1,
+          "dataFormat": "svg",
+          "assetId": "b7853f557e4426412e64bb3da6531a99",
+          "md5ext": "b7853f557e4426412e64bb3da6531a99.svg"
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "visible": true,
+      "x": 0,
+      "y": 0,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    }
+  ],
+  "meta": {
+    "semver": "3.0.0",
+    "vm": "0.2.0",
+    "agent": "AEL Sovereign Engine v3.0"
+  }
+}

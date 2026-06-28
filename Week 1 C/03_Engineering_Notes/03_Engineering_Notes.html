@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEL CS Encyclopedia™ – 03_Engineering_Notes (Week 1 C)</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #020814;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aab2;
+            --primary-accent: #0074FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(0, 116, 255, 0.35);
+            --glass-border-hover: rgba(0, 116, 255, 0.75);
+            --border-radius: 24px;
+            --warning-color: #ff9800;
+            --success-color: #00ff64;
+            --danger-color: #ff4757;
+            --panel-bg: rgba(5, 15, 35, 0.75);
+            --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* Sovereign Identity Card (Header) */
+        .ael-identity-card {
+            width: 100%;
+            margin: 20px auto 50px auto;
+            padding: 42px;
+            border-radius: 36px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            border: 1px solid var(--glass-border-hover);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 116, 255, 0.18), inset 0 0 25px rgba(0, 116, 255, 0.06);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .ael-identity-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%);
+            opacity: 0.5;
+        }
+
+        .ael-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 28px;
+            border-bottom: 1px dashed rgba(0, 116, 255, 0.55);
+            flex-wrap: wrap;
+        }
+
+        .ael-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .ael-logo {
+            width: 82px;
+            height: 82px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 16px rgba(0, 116, 255, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .ael-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .ael-title {
+            color: #f1f6ff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-subtitle {
+            margin-top: 8px;
+            color: #8db7ff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .directive-badge {
+            background: rgba(0, 116, 255, 0.12);
+            color: #0074FF;
+            border: 1px solid var(--glass-border-hover);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 116, 255, 0.2);
+            align-self: center;
+        }
+
+        .ael-owner {
+            margin-top: 36px;
+            padding-left: 24px;
+            border-left: 5px solid var(--primary-accent);
+        }
+
+        .ael-owner-name {
+            color: #ffffff;
+            font-size: 54px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-owner-role {
+            margin-top: 18px;
+            color: #c7d8ff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Sovereign Seal Box */
+        .ael-seal-box {
+            margin-top: 40px;
+            padding: 32px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72));
+            border: 1px solid rgba(0, 116, 255, 0.55);
+            box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08);
+        }
+
+        .ael-seal-title {
+            color: #6da8ff;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code {
+            padding: 24px;
+            border-radius: 20px;
+            background: #020b18;
+            border: 1px solid rgba(0, 116, 255, 0.7);
+            color: #d9ebff;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: auto;
+            box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .breadcrumb { font-size: 1.1rem; color: #8b949e; }
+        .breadcrumb a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
+
+        .tabs { display: flex; gap: 1rem; }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover { border-color: var(--primary-accent); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--primary-accent); color: #fff; border-color: var(--primary-accent); box-shadow: 0 0 15px rgba(0,116,255,0.4); }
+
+        .content-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 4rem;
+            box-shadow: var(--shadow-gloss);
+            display: none;
+        }
+        .content-panel.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
+        .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
+
+        h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
+        h3 { font-size: 1.6rem; color: #87bffd; margin: 2rem 0 1rem 0; }
+        h4 { font-size: 1.3rem; color: var(--text-primary); margin: 1.5rem 0 0.8rem 0; }
+        p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #b1bac4; }
+        
+        ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
+        ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
+        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
+        ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
+        .panel-ar ul li::before { left: auto; right: 0; }
+
+        .content-panel pre {
+            background: #020b18;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.05rem;
+            margin: 2rem 0;
+            color: #79c0ff;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .alert-box {
+            background: rgba(13, 27, 42, 0.8);
+            border-left: 4px solid var(--primary-accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            border: 1px solid var(--glass-border);
+        }
+        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
+        .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
+
+        .file-link-bar {
+            background: #050f23;
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-link-bar a { color: var(--primary-accent); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .file-link-bar a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .ael-footer {
+            margin-top: 50px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0, 116, 255, 0.45);
+            display: flex;
+            justify-content: space-between;
+            gap: 34px;
+            flex-wrap: wrap;
+            color: #c6dcff;
+            font-size: 16px;
+        }
+
+        @media(max-width: 768px) {
+            .ael-identity-card { padding: 28px; border-radius: 28px; }
+            .ael-owner-name { font-size: 38px; }
+            .ael-title { font-size: 24px; }
+            .content-panel { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- AEL Sovereign Identity Block (Header) -->
+    <div class="ael-identity-card">
+        <div class="ael-header">
+            <div class="ael-logo-group">
+                <svg class="ael-logo" viewBox="0 0 226.77 226.77" aria-label="AEL Logo">
+                    <g fill="#0074FF" stroke="none">
+                        <path d="m97.19,48.59v16.2h-32.4v-16.2c0-8.94-7.25-16.2-16.2-16.2s-16.2,7.25-16.2,16.2v16.2H0v-16.2c0-5.68.98-11.13,2.76-16.2C9.44,13.52,27.44,0,48.59,0s39.16,13.52,45.83,32.4c1.79,5.07,2.76,10.52,2.76,16.2Z" style="fill:#ffffff;"></path>
+                        <rect y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="32.4" width="32.4" height="32.4"></rect>
+                        <rect y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="32.4" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="97.19" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="194.38" width="32.4" height="32.4"></rect>
+                    </g>
+                </svg>
+                <div>
+                    <div class="ael-title">AEL COMPUTER SCIENCE ENCYCLOPEDIA</div>
+                    <div class="ael-subtitle">03_Engineering_Notes (Week 1 C) &middot; Sovereign Documentation</div>
+                </div>
+            </div>
+            <div class="directive-badge">⚡ 100% SILICON & COGNITIVE DEPTH</div>
+        </div>
+
+        <div class="ael-owner">
+            <div class="ael-owner-name">AYMAN ELMASRY</div>
+            <div class="ael-owner-role">
+                Computational Creative Director &middot; AI Prompt Engineer<br>
+                Founder of Ayman Elmasry LLC
+            </div>
+        </div>
+
+        <div class="ael-seal-box">
+            <div class="ael-seal-title">🔒 ⚡ AEL Sovereign Seal (Active Verification)</div>
+            <div class="ael-code">
+<pre>{
+  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
+  "owner": "Ayman Elmasry",
+  "legal_entities": [
+    "Ayman Elmasry LLC (UAE)",
+    "Ayman Elmasry Advertising & Marketing (Egypt)"
+  ],
+  "section": "03_Engineering_Notes (Week 1 C)",
+  "syllabus_source": "Harvard CS50x (Deep Internal Analysis)",
+  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
+  "system_version": "v3.0"
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <div class="breadcrumb">
+            <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>03_Engineering_Notes (Week 1 C)</span>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
+            <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
+        </div>
+    </div>
+
+    <!-- ARABIC PANEL -->
+    <div id="panel-ar" class="content-panel panel-ar active">
+        <div class="file-link-bar">
+            <span>الملف المصدري المباشر: <code>Week_1_Engineering_Rosetta_AR.md</code></span>
+            <a href="Week_1_Engineering_Rosetta_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
+        </div>
+        
+        <h2>🏛️ حجر رشيد الهندسي: من اللبنات البصرية إلى النص</h2>
+        <p>يعتبر الانتقال من لغة البرمجة الرسومية <code>Scratch</code> إلى لغة <code>C</code> النصية نقلة جوهرية في بناء التفكير الهندسي. يوضح هذا الجدول المقارن كيف أن المفاهيم التأسيسية ثابتة تماماً (<code>Concept Constancy</code>)، بينما تتغير الصياغة النحوية (<code>Syntax</code>) لتمنح المبرمج تحكماً مباشراً في موارد النظام.</p>
+
+<pre>
+===================================================================================
+                   THE ROSETTA STONE: SCRATCH VS. C PARADIGMS
+===================================================================================
+
+  [ Scratch Visual Block ]                   [ C Textual Syntax ]
+  ───────────────────────────────────────────────────────────────────────────────
+  say [hello, world]                         printf("hello, world\n");
+  ask [What's your name?] and wait           string answer = get_string("What's your name? ");
+  set [counter] to (0)                       int counter = 0;
+  change [counter] by (1)                    counter++;
+  repeat (3) [ ... ]                         for (int i = 0; i &lt; 3; i++) { ... }
+  forever [ ... ]                            while (true) { ... }
+  if &lt; x &lt; y &gt; then [ ... ]                  if (x &lt; y) { ... }
+  define meow (n)                            void meow(int n) { ... }
+
+===================================================================================
+</pre>
+
+        <h3>🔍 تحليل التكافؤ المعماري</h3>
+        <ul>
+            <li><strong>دوال الإخراج والإدخال (Say &amp; Ask vs. printf &amp; get_string):</strong> في سكراتش، تظهر النصوص في فقاعات حوارية. في C، يتم إرسال المخرجات إلى نافذة الطرفية (<code>Terminal</code>) عبر <code>printf</code>. ولتجنب التحام المخرجات بسطر الأوامر، نستخدم رمز الهروب الصريح <code>\n</code> لفرض سطر جديد.</li>
+            <li><strong>حلقة الأبدية وإشارات التوقف (Forever vs. while(true)):</strong> كتلة <code>forever</code> الرسومية تقابلها برمجياً حلقة <code>while (true)</code>. في سطر الأوامر، إذا دخل النظام في حلقة لا نهائية وفقدت السيطرة، يتم استخدام اختصار لوحة المفاتيح <code>Ctrl + C</code> لإرسال إشارة المقاطعة الصريحة <code>SIGINT</code> وإجبار البرنامج على إنهاء التنفيذ.</li>
+        </ul>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>📐 محاور التقييم الهندسية الثلاثة (The Three Axes of Code Evaluation)</h2>
+        <p>كتابة كود يعمل ليست سوى البداية. في المعايير الهندسية الصارمة لجامعة هارفارد، يتم تقييم كل تطبيق برمجي على ثلاثة محاور رئيسية:</p>
+
+<pre>
+               ▲ 1. Correctness (check50)
+              ╱ ╲
+             ╱   ╲
+            ╱     ╲
+           ╱_______╲
+2. Design (design50)  3. Style (style50)
+</pre>
+
+        <h3>1. الصحة والموثوقية (Correctness - check50)</h3>
+        <p>هل يعمل البرنامج كما هو متوقع؟ هل يتعامل بشكل صحيح مع المدخلات الصريحة والحرجة؟ أداة <code>check50</code> هي نظام فحص مؤتمت يقوم بإجراء سلسلة من اختبارات الوحدة (<code>Unit Tests</code>) للتحقق من المخرجات الدقيقة مقارنة بالمتطلبات.</p>
+
+        <h3>2. التصميم والكفاءة الهندسية (Design - design50)</h3>
+        <p>هل تم تصميم الكود بكفاءة؟ هل يحتوي على عمليات تكرارية لا داعي لها؟ على سبيل المثال، استبدال الشروط المستقلة المتتالية <code>if</code> بكتل <code>if-else if-else</code> المتصلة لمنع التحقق غير الضروري، أو إلغاء المتغيرات المؤقتة الزائدة (مثل حساب <code>x + y</code> مباشرة داخل <code>printf</code> بدلاً من تخزينه في متغير ثالث <code>z</code>).</p>
+
+        <h3>3. الأناقة والاتساق البصري (Style - style50)</h3>
+        <p>هل الكود مريح للعين وقابل للقراءة من قبل المهندسين الآخرين؟ يشمل ذلك المسافات البادئة القياسية (<code>Indentation</code>)، ومواضع الأقواس <code>{}</code>، واستخدام التعليقات التوضيحية <code>//</code>.</p>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🚨 كوارث الذاكرة وأنواع البيانات (Memory Pitfalls &amp; Hardware Disasters)</h2>
+        <p>توفر لغة C تحكماً هائلاً في الذاكرة، ولكن هذا التحكم يتطلب إدراكاً عميقاً للحدود الفيزيائية للعتاد (<code>Hardware Limits</code>).</p>
+
+        <div class="alert-box">
+            <h4>💡 طفح الأعداد الصحيحة (Integer Overflow)</h4>
+            <p>المتغير من نوع <code>int</code> في لغة C له حجم ثابت محجوز في الذاكرة (غالباً 32 بت). الحد الأقصى لرقم صحيح موجب ذو إشارة هو <code>2,147,483,647</code>. عند مضاعفة مبلغ بالدولار بشكل مستمر <code>dollars *= 2</code>، يتجاوز الرقم سعة التخزين القصوى للبتات المتاحة، مما يؤدي إلى "الطفح" (<code>Overflow</code>) وانقلاب القيمة فجأة إلى أرقام سالبة أو أصفار.</p>
+            <p><strong>الحل الهندسي:</strong> استخدام نوع البيانات <code>long</code> ذو الـ 64 بت (ومحدد التنسيق <code>%li</code>)، مما يؤجل الوصول إلى الحد الأقصى بشكل كبير.</p>
+        </div>
+
+        <h3>1. الاقتطاع في القسمة الصريحة (Integer Division Truncation)</h3>
+        <p>عند قسمة عددين صحيحين <code>int</code> (مثلاً <code>7 / 2</code>)، تقوم لغة C بعملية قسمة صحيحة بحتة، حيث يتم التخلص تماماً من أي كسور عشرية (<code>Truncation</code>)، ليصبح الناتج <code>3</code> وليس <code>3.5</code>. لحل هذه المعضلة، يتم تحويل أحد المتغيرين قسرياً إلى نوع عشري قبل إتمام العملية: <code>(float) x / y</code>.</p>
+
+        <h3>2. القصور الكسري (Floating-Point Imprecision)</h3>
+        <p>أجهزة الكمبيوتر تعمل بنظام ثنائي (أصفار وآحاد). بعض الكسور العشرية (مثل <code>1/3</code> أو <code>0.1</code>) لا يمكن تمثيلها بشكل دقيق تماماً داخل مساحة ذاكرة محدودة. عند محاولة طباعة عدد عشري حتى 50 خانة عشرية <code>%.50f</code>، تظهر أرقام غريبة وغير متوقعة في النهايات. هذا ليس عطلاً، بل هو تجسيد لقصور الدقة في تمثيل الأرقام العشرية بالبتات.</p>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>⚙️ صيانة النطاق ونماذج الدوال (Variable Scope &amp; Functions)</h2>
+        <p>في لغة C، تحكم قواعد صارمة نطاق رؤية المتغيرات (<code>Variable Scope</code>). المتغير المعرف داخل دالة <code>main</code> لا يمكن رؤيته داخل دالة أخرى مثل <code>meow</code>.</p>
+
+<pre>
+// Demonstrates pass-by-value and variable scope
+#include &lt;stdio.h&gt;
+
+void meow(int n); // Prototype
+
+int main(void)
+{
+    int n = 3; // Variable n exists ONLY within main's scope
+    meow(n);   // A COPY of n's value is passed to meow
+}
+
+void meow(int n)
+{
+    // This 'n' is a separate copy in memory
+    for (int i = 0; i &lt; n; i++)
+    {
+        printf("meow\n");
+    }
+}
+</pre>
+        <p><strong>التمرير بالقيم (Pass by Value):</strong> عندما نمرر المتغير <code>n</code> من <code>main</code> إلى <code>meow</code>، لا يتم إعطاء الدالة حق الوصول إلى المتغير الأصلي، بل يتم إنشاء "نسخة مستقلة" من القيمة داخل ذاكرة الدالة الجديدة.</p>
+    </div>
+
+    <!-- ENGLISH PANEL -->
+    <div id="panel-en" class="content-panel panel-en">
+        <div class="file-link-bar">
+            <span>Source Markdown File: <code>Week_1_Engineering_Rosetta_EN.md</code></span>
+            <a href="Week_1_Engineering_Rosetta_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
+        </div>
+        
+        <h2>🏛️ The Engineering Rosetta Stone: From Visual Blocks to Textual Rigor</h2>
+        <p>Transitioning from the visual, drag-and-drop mechanics of <code>Scratch</code> to the uncompromising, character-precise syntax of <code>C</code> represents a profound evolutionary leap in computational thinking. This comparative table establishes that foundational logic remains completely unchanged (<code>Concept Constancy</code>), whereas the syntactic formulation evolves to grant direct bare-metal control over system memory.</p>
+
+<pre>
+===================================================================================
+                   THE ROSETTA STONE: SCRATCH VS. C PARADIGMS
+===================================================================================
+
+  [ Scratch Visual Block ]                   [ C Textual Syntax ]
+  ───────────────────────────────────────────────────────────────────────────────
+  say [hello, world]                         printf("hello, world\n");
+  ask [What's your name?] and wait           string answer = get_string("What's your name? ");
+  set [counter] to (0)                       int counter = 0;
+  change [counter] by (1)                    counter++;
+  repeat (3) [ ... ]                         for (int i = 0; i &lt; 3; i++) { ... }
+  forever [ ... ]                            while (true) { ... }
+  if &lt; x &lt; y &gt; then [ ... ]                  if (x &lt; y) { ... }
+  define meow (n)                            void meow(int n) { ... }
+
+===================================================================================
+</pre>
+
+        <h3>🔍 Deconstructing Architectural Equivalence</h3>
+        <ul>
+            <li><strong>Output and Input Operations (Say &amp; Ask vs. printf &amp; get_string):</strong> In Scratch, characters output text via graphical speech bubbles. In C, output streams directly to the terminal window via <code>printf</code>. To prevent the command-line prompt (<code>$</code>) from colliding with program output, we append the explicit newline escape character <code>\n</code>.</li>
+            <li><strong>Infinite Iteration &amp; Terminal Interruption (Forever vs. while(true)):</strong> The visual <code>forever</code> block maps directly to the boolean loop <code>while (true)</code>. In a command-line interface, if an infinite loop seizes control of the active terminal session, the programmer hits <code>Ctrl + C</code> on the keyboard to send a fatal <code>SIGINT</code> (Signal Interrupt) to forcefully terminate the underlying process.</li>
+        </ul>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>📐 The Three Axes of Code Evaluation</h2>
+        <p>Writing code that merely functions is only the starting baseline. Under Harvard's rigorous engineering rubrics, every programmatic submission is evaluated across three distinct axes:</p>
+
+<pre>
+               ▲ 1. Correctness (check50)
+              ╱ ╲
+             ╱   ╲
+            ╱     ╲
+           ╱_______╲
+2. Design (design50)  3. Style (style50)
+</pre>
+
+        <h3>1. Correctness &amp; Reliability (Correctness - check50)</h3>
+        <p>Does the code execute exactly as intended? Does it successfully navigate critical edge cases and handle unexpected inputs robustly? <code>check50</code> is an automated testing suite that subjects student source code to comprehensive unit tests (<code>Unit Tests</code>), validating exact output against formal problem specifications.</p>
+
+        <h3>2. Architectural Elegance (Design - design50)</h3>
+        <p>How efficiently is the code structured? Does it avoid redundant logic and unnecessary calculations? Examples include replacing mutually exclusive <code>if</code> statements with interconnected <code>if-else if-else</code> blocks to bypass redundant conditional evaluations, or eliminating superfluous temporary variables (such as performing <code>x + y</code> directly within <code>printf</code> rather than allocating a third variable <code>z</code>).</p>
+
+        <h3>3. Visual Aesthetic &amp; Consistency (Style - style50)</h3>
+        <p>Is the code visually clean, beautifully indented, and readable for fellow software engineers? This encompasses standard brace placement <code>{ }</code>, consistent indentation (<code>4 spaces</code>), and informative code comments (<code>//</code>).</p>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🚨 Memory Pitfalls &amp; Hardware Disasters</h2>
+        <p>While C grants immense power over low-level memory allocation, this authority requires a deep awareness of underlying physical hardware constraints (<code>Hardware Limits</code>).</p>
+
+        <div class="alert-box">
+            <h4>💡 Integer Overflow</h4>
+            <p>An <code>int</code> variable in C occupies a fixed chunk of memory (typically 32 bits). The maximum positive value for a signed 32-bit integer is <code>2,147,483,647</code>. When repeatedly doubling a dollar amount (<code>dollars *= 2</code>), the binary calculation eventually exceeds the maximum storage capacity of the allocated bits. This causes the value to "overflow," wrapping around unpredictably to negative numbers or zero.</p>
+            <p><strong>Architectural Solution:</strong> Upgrading the data type to a 64-bit <code>long</code> (and utilizing the <code>%li</code> format specifier), which exponentially delays the threshold of overflow.</p>
+        </div>
+
+        <h3>1. Integer Division Truncation</h3>
+        <p>When dividing two integers (<code>int</code> values like <code>7 / 2</code>), C strictly performs integer division. It completely discards (truncates) any decimal fraction, resulting in <code>3</code> rather than <code>3.5</code>. To preserve fractional precision, at least one integer must be explicitly cast to a floating-point data type prior to the division operation: <code>(float) x / y</code>.</p>
+
+        <h3>2. Floating-Point Imprecision</h3>
+        <p>Computers operate entirely in binary (<code>0s and 1s</code>). Certain decimal fractions (such as <code>1/3</code> or <code>0.1</code>) cannot be represented with perfect mathematical precision inside a finite number of bits. When instructing <code>printf</code> to display a floating-point division out to 50 decimal places (<code>%.50f</code>), unexpected and seemingly random digits appear at the tail end. This is not a hardware glitch; it is the fundamental limitation of floating-point binary representation.</p>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>⚙️ Variable Scope &amp; Function Architecture</h2>
+        <p>In C, strict boundaries govern the visibility of variables (<code>Variable Scope</code>). A variable instantiated inside <code>main</code> cannot be directly read or modified by another custom function like <code>meow</code>.</p>
+
+<pre>
+// Demonstrates pass-by-value and variable scope
+#include &lt;stdio.h&gt;
+
+void meow(int n); // Prototype
+
+int main(void)
+{
+    int n = 3; // Variable n exists ONLY within main's scope
+    meow(n);   // A COPY of n's value is passed to meow
+}
+
+void meow(int n)
+{
+    // This 'n' is a separate copy in memory
+    for (int i = 0; i &lt; n; i++)
+    {
+        printf("meow\n");
+    }
+}
+</pre>
+        <p><strong>Pass by Value:</strong> When passing <code>n</code> from <code>main</code> to <code>meow</code>, the compiler does not grant <code>meow</code> access to the original variable in memory. Instead, it places an independent duplicate copy of the value into <code>meow</code>'s execution frame.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Built for CS50x 2026-2027 &middot; Sovereign Architecture</div>
+    </footer>
+</div>
+
+<script>
+    function switchTab(lang) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
+        
+        if (lang === 'ar') {
+            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+            document.getElementById('panel-ar').classList.add('active');
+        } else {
+            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+            document.getElementById('panel-en').classList.add('active');
+        }
+    }
+</script>
+
+</body>
+</html>

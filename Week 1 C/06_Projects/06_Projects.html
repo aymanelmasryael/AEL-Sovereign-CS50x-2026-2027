@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEL CS Encyclopedia™ – 06_Projects (Week 1 C)</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #020814;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aab2;
+            --primary-accent: #0074FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(0, 116, 255, 0.35);
+            --glass-border-hover: rgba(0, 116, 255, 0.75);
+            --border-radius: 24px;
+            --warning-color: #ff9800;
+            --success-color: #00ff64;
+            --danger-color: #ff4757;
+            --panel-bg: rgba(5, 15, 35, 0.75);
+            --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* Sovereign Identity Card (Header) */
+        .ael-identity-card {
+            width: 100%;
+            margin: 20px auto 50px auto;
+            padding: 42px;
+            border-radius: 36px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            border: 1px solid var(--glass-border-hover);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 116, 255, 0.18), inset 0 0 25px rgba(0, 116, 255, 0.06);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .ael-identity-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%);
+            opacity: 0.5;
+        }
+
+        .ael-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 28px;
+            border-bottom: 1px dashed rgba(0, 116, 255, 0.55);
+            flex-wrap: wrap;
+        }
+
+        .ael-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .ael-logo {
+            width: 82px;
+            height: 82px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 16px rgba(0, 116, 255, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .ael-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .ael-title {
+            color: #f1f6ff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-subtitle {
+            margin-top: 8px;
+            color: #8db7ff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .directive-badge {
+            background: rgba(0, 116, 255, 0.12);
+            color: #0074FF;
+            border: 1px solid var(--glass-border-hover);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 116, 255, 0.2);
+            align-self: center;
+        }
+
+        .ael-owner {
+            margin-top: 36px;
+            padding-left: 24px;
+            border-left: 5px solid var(--primary-accent);
+        }
+
+        .ael-owner-name {
+            color: #ffffff;
+            font-size: 54px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ael-owner-role {
+            margin-top: 18px;
+            color: #c7d8ff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Sovereign Seal Box */
+        .ael-seal-box {
+            margin-top: 40px;
+            padding: 32px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72));
+            border: 1px solid rgba(0, 116, 255, 0.55);
+            box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08);
+        }
+
+        .ael-seal-title {
+            color: #6da8ff;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code {
+            padding: 24px;
+            border-radius: 20px;
+            background: #020b18;
+            border: 1px solid rgba(0, 116, 255, 0.7);
+            color: #d9ebff;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: auto;
+            box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .ael-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .breadcrumb { font-size: 1.1rem; color: #8b949e; }
+        .breadcrumb a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
+
+        .tabs { display: flex; gap: 1rem; }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover { border-color: var(--primary-accent); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--primary-accent); color: #fff; border-color: var(--primary-accent); box-shadow: 0 0 15px rgba(0,116,255,0.4); }
+
+        .content-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 4rem;
+            box-shadow: var(--shadow-gloss);
+            display: none;
+        }
+        .content-panel.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
+        .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
+
+        h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
+        h3 { font-size: 1.6rem; color: #87bffd; margin: 2rem 0 1rem 0; }
+        h4 { font-size: 1.3rem; color: var(--text-primary); margin: 1.5rem 0 0.8rem 0; }
+        p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #b1bac4; }
+        
+        ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
+        ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
+        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
+        ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
+        .panel-ar ul li::before { left: auto; right: 0; }
+
+        .content-panel pre {
+            background: #020b18;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.05rem;
+            margin: 2rem 0;
+            color: #79c0ff;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .alert-box {
+            background: rgba(13, 27, 42, 0.8);
+            border-left: 4px solid var(--primary-accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            border: 1px solid var(--glass-border);
+        }
+        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
+        .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
+
+        .file-link-bar {
+            background: #050f23;
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-link-bar a { color: var(--primary-accent); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .file-link-bar a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .ael-footer {
+            margin-top: 50px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0, 116, 255, 0.45);
+            display: flex;
+            justify-content: space-between;
+            gap: 34px;
+            flex-wrap: wrap;
+            color: #c6dcff;
+            font-size: 16px;
+        }
+
+        @media(max-width: 768px) {
+            .ael-identity-card { padding: 28px; border-radius: 28px; }
+            .ael-owner-name { font-size: 38px; }
+            .ael-title { font-size: 24px; }
+            .content-panel { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- AEL Sovereign Identity Block (Header) -->
+    <div class="ael-identity-card">
+        <div class="ael-header">
+            <div class="ael-logo-group">
+                <svg class="ael-logo" viewBox="0 0 226.77 226.77" aria-label="AEL Logo">
+                    <g fill="#0074FF" stroke="none">
+                        <path d="m97.19,48.59v16.2h-32.4v-16.2c0-8.94-7.25-16.2-16.2-16.2s-16.2,7.25-16.2,16.2v16.2H0v-16.2c0-5.68.98-11.13,2.76-16.2C9.44,13.52,27.44,0,48.59,0s39.16,13.52,45.83,32.4c1.79,5.07,2.76,10.52,2.76,16.2Z" style="fill:#ffffff;"></path>
+                        <rect y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="97.19" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="32.4" width="32.4" height="32.4"></rect>
+                        <rect y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="32.4" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="64.79" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="97.19" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="129.58" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="161.98" y="194.38" width="32.4" height="32.4"></rect>
+                        <rect x="194.38" y="194.38" width="32.4" height="32.4"></rect>
+                    </g>
+                </svg>
+                <div>
+                    <div class="ael-title">AEL COMPUTER SCIENCE ENCYCLOPEDIA</div>
+                    <div class="ael-subtitle">06_Projects (Week 1 C) &middot; Sovereign Documentation</div>
+                </div>
+            </div>
+            <div class="directive-badge">⚡ 100% SILICON & COGNITIVE DEPTH</div>
+        </div>
+
+        <div class="ael-owner">
+            <div class="ael-owner-name">AYMAN ELMASRY</div>
+            <div class="ael-owner-role">
+                Computational Creative Director &middot; AI Prompt Engineer<br>
+                Founder of Ayman Elmasry LLC
+            </div>
+        </div>
+
+        <div class="ael-seal-box">
+            <div class="ael-seal-title">🔒 ⚡ AEL Sovereign Seal (Active Verification)</div>
+            <div class="ael-code">
+<pre>{
+  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
+  "owner": "Ayman Elmasry",
+  "legal_entities": [
+    "Ayman Elmasry LLC (UAE)",
+    "Ayman Elmasry Advertising & Marketing (Egypt)"
+  ],
+  "section": "06_Projects (Week 1 C)",
+  "syllabus_source": "Harvard CS50x (Projects Architectural Design)",
+  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
+  "system_version": "v3.0"
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <div class="breadcrumb">
+            <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>06_Projects (Week 1 C)</span>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
+            <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
+        </div>
+    </div>
+
+    <!-- ARABIC PANEL -->
+    <div id="panel-ar" class="content-panel panel-ar active">
+        <div class="file-link-bar">
+            <span>الملف المصدري المباشر: <code>Week_1_Projects_Design_AR.md</code></span>
+            <a href="Week_1_Projects_Design_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
+        </div>
+        
+        <h2>🏛️ تشريح المشاريع التطبيقية (Classic CS50 Problem Sets)</h2>
+        <p>تمثل مشاريع الأسبوع الأول في لغة <code>C</code> أول احتكاك حقيقي للطالب بهندسة البرمجيات القائمة على حل المشكلات (<code>Problem-Solving Architecture</code>). في هذا المجلد، نقوم بتشريح الأساليب الخوارزمية والتصميمية لثلاثة مشاريع كلاسيكية في مسار <code>CS50x</code>:</p>
+
+<pre>
+===================================================================================
+                       WEEK 1 C - PROJECTS ARCHITECTURE
+===================================================================================
+
+  ┌────────────────────────────────────────────────────────┐
+  │ 1. MARIO (Less &amp; More Comfortable)                     │ ──> Nested Loops &amp; Alignment
+  ├────────────────────────────────────────────────────────┤
+  │ 2. CASH (Less Comfortable)                             │ ──> The Greedy Algorithm
+  ├────────────────────────────────────────────────────────┤
+  │ 3. CREDIT (More Comfortable)                           │ ──> Luhn's Algorithm &amp; Modulo Math
+  └────────────────────────────────────────────────────────┘
+
+===================================================================================
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🧱 1. مشروع هرم ماريو (Mario - Less &amp; More Comfortable)</h2>
+        <p>يستلهم هذا المشروع من لعبة <code>Super Mario Bros</code> لبناء أهرامات متدرجة من كتل الطوب <code>#</code> في نافذة سطر الأوامر. الهدف الهندسي هو إتقان الحلقات التكرارية المتداخلة (<code>Nested Loops</code>) وإجبار المستخدم على إدخال قيم صحيحة (<code>Input Validation</code>).</p>
+
+        <h3>هرم Mario - Less Comfortable (الهرم الأيمن)</h3>
+        <p>بناء هرم واحد يرتفع لليمين، بارتفاع يتراوح بين 1 و 8. لأي سطر <code>i</code> (من <code>0</code> إلى <code>height - 1</code>)، عدد المسافات <code>spaces = height - i - 1</code> وعدد الطوب <code>hashes = i + 1</code>.</p>
+<pre>
+   #  (3 spaces, 1 hash)
+  ##  (2 spaces, 2 hashes)
+ ###  (1 space,  3 hashes)
+####  (0 spaces, 4 hashes)
+</pre>
+
+        <h3>هرم Mario - More Comfortable (الهرم المزدوج)</h3>
+        <p>بناء هرمين متقابلين تفصل بينهما مسافتان ثابتتان <code>  </code>.</p>
+<pre>
+#include &lt;cs50.h&gt;
+#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int height;
+    // 1. Input Validation (1 to 8)
+    do
+    {
+        height = get_int("Height: ");
+    }
+    while (height &lt; 1 || height &gt; 8);
+
+    // 2. Master Loop for Rows
+    for (int i = 0; i &lt; height; i++)
+    {
+        // Print leading spaces
+        for (int spaces = 0; spaces &lt; height - i - 1; spaces++)
+        {
+            printf(" ");
+        }
+
+        // Print left pyramid hashes
+        for (int hashes = 0; hashes &lt;= i; hashes++)
+        {
+            printf("#");
+        }
+
+        // Print middle static gap
+        printf("  ");
+
+        // Print right pyramid hashes
+        for (int hashes = 0; hashes &lt;= i; hashes++)
+        {
+            printf("#");
+        }
+
+        // Move to next row
+        printf("\n");
+    }
+}
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🪙 2. مشروع آلة الصرافة وخوارزمية النهم (Cash - The Greedy Algorithm)</h2>
+        <p>في مشروع <code>Cash</code>، يطلب من المبرمج تصميم نظام يحسب أقل عدد ممكن من العملات المعدنية اللازمة لإعطاء الباقي للعميل.</p>
+
+<pre>
+===================================================================================
+                       THE GREEDY ALGORITHM PIPELINE
+===================================================================================
+
+  [ Cents Input: e.g., 68¢ ]
+            │
+            ├─► Quarters (25¢) ──> 68 / 25 = 2 (Remainder: 18¢)
+            ├─► Dimes (10¢)    ──> 18 / 10 = 1 (Remainder: 8¢)
+            ├─► Nickels (5¢)   ──> 8 / 5   = 1 (Remainder: 3¢)
+            └─► Pennies (1¢)   ──> 3 / 1   = 3 (Remainder: 0¢)
+            
+  [ Total Minimum Coins = 2 + 1 + 1 + 3 = 7 Coins ]
+
+===================================================================================
+</pre>
+
+        <div class="alert-box">
+            <h4>💡 تشريح خوارزمية النهم (Greedy Algorithm)</h4>
+            <p>تقوم الخوارزمية الجشعة أو النهمة باختيار "أفضل وأكبر خيار متاح حالياً" في كل مرحلة دون النظر إلى المستقبل. في حالة العملات القياسية الأمريكية (25, 10, 5, 1)، ثبت رياضياً أن هذه الخوارزمية تنتج دائماً الحل الأمثل.</p>
+        </div>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>💳 3. مشروع التحقق من بطاقات الائتمان (Credit - Luhn's Algorithm)</h2>
+        <p>مشروع <code>Credit</code> هو تحدي معماري متقدم يتطلب التحقق من صحة أرقام بطاقات الائتمان (<code>Visa, MasterCard, American Express</code>) باستخدام <strong>خوارزمية لونه (Luhn's Algorithm)</strong>.</p>
+
+<pre>
+===================================================================================
+                       LUHN'S CARD VERIFICATION ALGORITHM
+===================================================================================
+
+  [ Card Number: e.g., 4 0 1 2 8 8 8 8 8 8 8 8 8 8 8 3 ] (Length 16, Starts 4 -> Visa)
+            │
+            ├─► 1. Multiply every second digit from right by 2 (Add product digits)
+            ├─► 2. Add sum of digits that weren't multiplied
+            └─► 3. If total modulo 10 == 0, Card is VALID.
+
+===================================================================================
+</pre>
+
+        <h3>1. تصنيف البطاقات حسب المعايير الدولية</h3>
+        <ul>
+            <li><strong>American Express (AMEX):</strong> الطول <code>15</code> رقماً، وتبدأ بالرقمين <code>34</code> أو <code>37</code>.</li>
+            <li><strong>MasterCard:</strong> الطول <code>16</code> رقماً، وتبدأ بالأرقام من <code>51</code> إلى <code>55</code>.</li>
+            <li><strong>Visa:</strong> الطول <code>13</code> أو <code>16</code> رقماً، وتبدأ بالرقم <code>4</code>.</li>
+        </ul>
+
+        <h3>2. تشريح خوارزمية لونه (Luhn's Algorithm)</h3>
+        <ol style="margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8;">
+            <li><strong>الخطوة الأولى:</strong> البدء من الرقم الأخير، وتجاوز الرقم الأول نحو اليسار، وضرب كل رقم ثاني في <code>2</code>. (إذا ناتج الضرب تشكل من رقمين مثل <code>6 * 2 = 12</code>، لا نجمع <code>12</code>، بل نجمع أرقام الناتج <code>1 + 2 = 3</code>).</li>
+            <li><strong>الخطوة الثانية:</strong> جمع كافة الأرقام الأخرى التي لم يتم ضربها.</li>
+            <li><strong>الخطوة الثالثة:</strong> جمع الناتجين. إذا كان المجموع الكلي ينتهي بصفر (أي <code>total_sum % 10 == 0</code>)، فإن بطاقة الائتمان سليمة.</li>
+        </ol>
+
+        <h3>3. تقنيات المعالجة الرياضية (Modulo &amp; Division Math)</h3>
+        <p>في لغة C، نظراً لعدم إمكانية تحويل الرقم إلى سلسلة نصية بسهولة في البداية، يتم انتزاع الأرقام واحداً تلو الآخر باستخدام باقي القسمة <code>card % 10</code>، ثم إزالتها كلياً بالقسمة <code>card /= 10</code>. ونظراً لطول رقم البطاقة (حتى 16 رقماً)، يتم استخدام نوع البيانات <code>long</code> لتجنب الطفح (<code>Overflow</code>).</p>
+    </div>
+
+    <!-- ENGLISH PANEL -->
+    <div id="panel-en" class="content-panel panel-en">
+        <div class="file-link-bar">
+            <span>Source Markdown File: <code>Week_1_Projects_Design_EN.md</code></span>
+            <a href="Week_1_Projects_Design_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
+        </div>
+        
+        <h2>🏛️ Architecture of Classic CS50 Problem Sets</h2>
+        <p>The problem sets of Week 1 in <code>C</code> represent the student's primary rite of passage into bare-metal, algorithmically intensive software engineering (<code>Problem-Solving Architecture</code>). In this wing, we deconstruct the underlying algorithmic paradigms and execution strategies for three seminal projects within the <code>CS50x</code> curriculum:</p>
+
+<pre>
+===================================================================================
+                       WEEK 1 C - PROJECTS ARCHITECTURE
+===================================================================================
+
+  ┌────────────────────────────────────────────────────────┐
+  │ 1. MARIO (Less &amp; More Comfortable)                     │ ──> Nested Loops &amp; Alignment
+  ├────────────────────────────────────────────────────────┤
+  │ 2. CASH (Less Comfortable)                             │ ──> The Greedy Algorithm
+  ├────────────────────────────────────────────────────────┤
+  │ 3. CREDIT (More Comfortable)                           │ ──> Luhn's Algorithm &amp; Modulo Math
+  └────────────────────────────────────────────────────────┘
+
+===================================================================================
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🧱 1. The Mario Pyramid Architecture (Mario - Less &amp; More Comfortable)</h2>
+        <p>Inspired by the structural brick blocks of <code>Super Mario Bros</code>, this project requires students to print ascending and descending text-based pyramids in the console terminal. The core architectural goals are mastering the geometric arithmetic of nested loops (<code>Nested Loops</code>) and enforcing strict user input validation (<code>Input Validation</code>).</p>
+
+        <h3>Mario - Less Comfortable (Single Right-Aligned Pyramid)</h3>
+        <p>Construct a single right-aligned pyramid with a user-defined height spanning between 1 and 8. For any zero-indexed row <code>i</code>, leading spaces is <code>spaces = height - i - 1</code> and hashes is <code>hashes = i + 1</code>.</p>
+<pre>
+   #  (3 spaces, 1 hash)
+  ##  (2 spaces, 2 hashes)
+ ###  (1 space,  3 hashes)
+####  (0 spaces, 4 hashes)
+</pre>
+
+        <h3>Mario - More Comfortable (Double Adjacent Pyramids)</h3>
+        <p>Construct two adjacent, opposing pyramids separated by a fixed static gap of exactly two spaces <code>  </code>.</p>
+<pre>
+#include &lt;cs50.h&gt;
+#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int height;
+    // 1. Input Validation (Enforce integer between 1 and 8)
+    do
+    {
+        height = get_int("Height: ");
+    }
+    while (height &lt; 1 || height &gt; 8);
+
+    // 2. Master Loop for Rows
+    for (int i = 0; i &lt; height; i++)
+    {
+        // Print leading spaces
+        for (int spaces = 0; spaces &lt; height - i - 1; spaces++)
+        {
+            printf(" ");
+        }
+
+        // Print left pyramid hashes
+        for (int hashes = 0; hashes &lt;= i; hashes++)
+        {
+            printf("#");
+        }
+
+        // Print middle static gap
+        printf("  ");
+
+        // Print right pyramid hashes
+        for (int hashes = 0; hashes &lt;= i; hashes++)
+        {
+            printf("#");
+        }
+
+        // Move to next row
+        printf("\n");
+    }
+}
+</pre>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>🪙 2. The Change Machine &amp; The Greedy Algorithm (Cash)</h2>
+        <p>In the <code>Cash</code> problem set, engineers architect an optimized coin-dispensation engine calculated to return the absolute minimum number of coins to a customer.</p>
+
+<pre>
+===================================================================================
+                       THE GREEDY ALGORITHM PIPELINE
+===================================================================================
+
+  [ Cents Input: e.g., 68¢ ]
+            │
+            ├─► Quarters (25¢) ──> 68 / 25 = 2 (Remainder: 18¢)
+            ├─► Dimes (10¢)    ──> 18 / 10 = 1 (Remainder: 8¢)
+            ├─► Nickels (5¢)   ──> 8 / 5   = 1 (Remainder: 3¢)
+            └─► Pennies (1¢)   ──> 3 / 1   = 3 (Remainder: 0¢)
+            
+  [ Total Minimum Coins = 2 + 1 + 1 + 3 = 7 Coins ]
+
+===================================================================================
+</pre>
+
+        <div class="alert-box">
+            <h4>💡 Deconstructing the Greedy Paradigm (Greedy Algorithm)</h4>
+            <p>A greedy algorithm executes the local optimal decision at each distinct stage of execution, without concern for long-term algorithmic implications. For standard American coin denominations (<code>25¢, 10¢, 5¢, 1¢</code>), mathematical proofs demonstrate that this greedy heuristic reliably achieves the global optimum.</p>
+        </div>
+
+        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
+
+        <h2>💳 3. Verification Engine: Luhn's Algorithm (Credit)</h2>
+        <p>The <code>Credit</code> problem set represents an advanced engineering challenge requiring the architectural verification of credit card numbers (<code>Visa, MasterCard, American Express</code>) utilizing <strong>Luhn's Checksum Algorithm (Luhn's Algorithm)</strong>.</p>
+
+<pre>
+===================================================================================
+                       LUHN'S CARD VERIFICATION ALGORITHM
+===================================================================================
+
+  [ Card Number: e.g., 4 0 1 2 8 8 8 8 8 8 8 8 8 8 8 3 ] (Length 16, Starts 4 -> Visa)
+            │
+            ├─► 1. Multiply every second digit from right by 2 (Add product digits)
+            ├─► 2. Add sum of digits that weren't multiplied
+            └─► 3. If total modulo 10 == 0, Card is VALID.
+
+===================================================================================
+</pre>
+
+        <h3>1. Standard Enterprise Industry Classifications</h3>
+        <ul>
+            <li><strong>American Express (AMEX):</strong> Exactly <code>15</code> digits in length; starts with prefixes <code>34</code> or <code>37</code>.</li>
+            <li><strong>MasterCard:</strong> Exactly <code>16</code> digits in length; starts with prefixes spanning <code>51</code> through <code>55</code>.</li>
+            <li><strong>Visa:</strong> Exactly <code>13</code> or <code>16</code> digits in length; starts with prefix <code>4</code>.</li>
+        </ul>
+
+        <h3>2. Deconstructing Luhn's Architectural Checksum</h3>
+        <ol style="margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8;">
+            <li><strong>Stage One:</strong> Commencing from the second-to-last digit and traversing leftward, multiply every second digit by <code>2</code>. (If the resulting product yields a two-digit number e.g., <code>6 * 2 = 12</code>, do not add <code>12</code> to the sum. Instead, split the product and sum its individual digits <code>1 + 2 = 3</code>).</li>
+            <li><strong>Stage Two:</strong> Sum all remaining digits that were skipped (not multiplied by 2).</li>
+            <li><strong>Stage Three:</strong> Combine both sums. If the terminal digit of the aggregate total equals zero (<code>total_sum % 10 == 0</code>), the checksum is mathematically validated.</li>
+        </ol>
+
+        <h3>3. Modulo Math &amp; Low-Level Extraction</h3>
+        <p>Because high-level string manipulation is restricted in early C problem sets, engineers must parse card digits directly from numerical types. By executing modulo division <code>card % 10</code>, the system extracts the trailing rightmost digit. Executing standard division <code>card /= 10</code> permanently truncates the trailing digit. Given the 16-digit magnitude of credit card numbers, developers must allocate 64-bit <code>long</code> variables to prevent catastrophic overflow (<code>Overflow</code>).</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ael-footer">
+        <div>&copy; Ayman Elmasry — AEL Digital Studio™ &middot; All Rights Reserved.</div>
+        <div>Built for CS50x 2026-2027 &middot; Sovereign Architecture</div>
+    </footer>
+</div>
+
+<script>
+    function switchTab(lang) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
+        
+        if (lang === 'ar') {
+            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+            document.getElementById('panel-ar').classList.add('active');
+        } else {
+            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+            document.getElementById('panel-en').classList.add('active');
+        }
+    }
+</script>
+
+</body>
+</html>
