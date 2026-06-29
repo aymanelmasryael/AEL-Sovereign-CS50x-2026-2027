@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-ael-framework="v3.0" data-ael-system="optimized">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>ميثاق التخاطب السيادي مع GitHub | AEL Sovereign Protocol</title>
+    <meta name="description" content="ميثاق التخاطب السيادي والدليل المعماري الشامل لأوامر Git و GitHub CLI الخاصة بنظم Ayman Elmasry.">
+    <meta name="author" content="Ayman Elmasry">
+    <meta name="theme-color" content="#0B1220">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Noto+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ========================================
+           AEL SOVEREIGN DESIGN SYSTEM v3.0
+           ======================================== */
+        :root {
+            --ael-primary: #0074FF;
+            --ael-primary-rgb: 0, 116, 255;
+            --ael-bg-deep: #0B1220;
+            --ael-bg-card: rgba(19, 28, 42, 0.75);
+            --ael-text-primary: #E6EEF8;
+            --ael-text-muted: #94A3B8;
+            --ael-border-light: rgba(0, 116, 255, 0.2);
+            --ael-border-glow: rgba(0, 116, 255, 0.5);
+            --ael-font-ar: 'Noto Sans Arabic', 'Inter', system-ui, -apple-system, sans-serif;
+            --ael-font-code: 'Fira Code', 'Courier New', Courier, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--ael-font-ar);
+            background-color: var(--ael-bg-deep);
+            color: var(--ael-text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 116, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 116, 255, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Navigation */
+        .ael-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(11, 18, 32, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--ael-border-light);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .ael-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ael-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--ael-text-primary);
+            text-decoration: none;
+        }
+
+        .ael-logo i {
+            color: var(--ael-primary);
+            font-size: 1.8rem;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .ael-nav-badge {
+            background: rgba(0, 116, 255, 0.15);
+            color: var(--ael-primary);
+            border: 1px solid var(--ael-primary);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hero Section */
+        .ael-hero {
+            padding: 9rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .ael-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #E6EEF8 30%, var(--ael-primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ael-hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--ael-text-muted);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+        }
+
+        /* Container & Layout */
+        .ael-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        /* Command Cards (Glassmorphism) */
+        .ael-card {
+            background: var(--ael-bg-card);
+            border: 1px solid var(--ael-border-light);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ael-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--ael-border-glow);
+            box-shadow: 0 15px 40px rgba(0, 116, 255, 0.2);
+        }
+
+        .ael-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--ael-border-light);
+            padding-bottom: 1rem;
+        }
+
+        .ael-card-header i {
+            font-size: 2rem;
+            color: var(--ael-primary);
+        }
+
+        .ael-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ael-text-primary);
+        }
+
+        .ael-card-desc {
+            color: var(--ael-text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Terminal Window */
+        .ael-terminal {
+            background: #060A14;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .ael-terminal-top {
+            background: #0B1220;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: var(--ael-font-code);
+            font-size: 0.9rem;
+            color: var(--ael-text-muted);
+        }
+
+        .ael-terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .ael-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .ael-dot-red { background: #FF5F56; }
+        .ael-dot-yellow { background: #FFBD2E; }
+        .ael-dot-green { background: #27C93F; }
+
+        .ael-copy-btn {
+            background: rgba(0, 116, 255, 0.15);
+            color: var(--ael-primary);
+            border: 1px solid var(--ael-primary);
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: var(--ael-font-ar);
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .ael-copy-btn:hover {
+            background: var(--ael-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .ael-terminal-body {
+            padding: 1.5rem;
+            font-family: var(--ael-font-code);
+            font-size: 1rem;
+            color: #10B981; /* Terminal Green */
+            line-height: 1.7;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .ael-terminal-body .comment {
+            color: #6B7280;
+            font-style: italic;
+        }
+        .ael-terminal-body .prompt {
+            color: var(--ael-primary);
+            font-weight: bold;
+        }
+        .ael-terminal-body .command {
+            color: #E6EEF8;
+        }
+
+        /* Seal / Footer */
+        .ael-footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--ael-border-light);
+            background: #070C16;
+        }
+
+        .ael-seal {
+            font-size: 0.95rem;
+            color: var(--ael-text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Animations */
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(0,116,255,0.5)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(0,116,255,0.8)); }
+        }
+
+        /* Notification Toast */
+        .ael-toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #10B981;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            z-index: 9999;
+            transform: translateY(150%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ael-toast.show {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Notification Toast -->
+    <div id="aelToast" class="ael-toast">
+        <i class="fas fa-check-circle"></i>
+        <span>تم نسخ الأوامر بنجاح إلى الحافظة!</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="ael-navbar">
+        <div class="ael-nav-container">
+            <a href="#" class="ael-logo">
+                <i class="fab fa-github"></i>
+                <span>AEL Sovereign Docs</span>
+            </a>
+            <div class="ael-nav-badge">
+                ✓ GitHub Operations Protocol
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="ael-hero">
+        <h1>ميثاق التخاطب السيادي مع GitHub</h1>
+        <p>دليل هندسي فاخر وموثق لكافة الأوامر السحابية والمحلية الخاصة بإدارة مستودعات AEL السيادية بأسلوب كبار مهندسي النظم.</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="ael-container">
+
+        <!-- Section 1: Initialization -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-folder-plus"></i>
+                <h2 class="ael-card-title">1. التهيئة والإضافة المحلية (Local Initialization)</h2>
+            </div>
+            <p class="ael-card-desc">الأوامر المستخدمة لتهيئة القلعة المحلية داخل مجلد المشروع وتجهيز الملفات الجديدة للرفع.</p>
+            
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - local_init</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code1')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code1">
+<span class="comment"># 1. تهيئة المستودع المحلي داخل مجلد مشروعك</span>
+<span class="prompt">$</span> <span class="command">git init</span>
+
+<span class="comment"># 2. فحص حالة الملفات ومعرفة ما تم تعديله</span>
+<span class="prompt">$</span> <span class="command">git status</span>
+
+<span class="comment"># 3. إضافة كافة الملفات والأنظمة إلى منصة التجهيز</span>
+<span class="prompt">$</span> <span class="command">git add .</span>
+
+<span class="comment"># (أو إضافة ملفات محددة بدقة ذرية)</span>
+<span class="prompt">$</span> <span class="command">git add server_check50_execution.py ael_supabase_connector.js</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Commits -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-file-signature"></i>
+                <h2 class="ael-card-title">2. التوثيق وختم الملكية (Enterprise Commits)</h2>
+            </div>
+            <p class="ael-card-desc">اعتماد العناوين المعمارية الصارمة والرموز التعبيرية (Emojis) لتوثيق هوية الإصدارات بدقة.</p>
+            
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - commit</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code2')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code2">
+<span class="comment"># إنشاء وثيقة الحفظ (Commit) مع وصف احترافي للنسخة</span>
+<span class="prompt">$</span> <span class="command">git commit -m "🚀 [v4.0] Full-Stack Enterprise Upgrade: Adding Isolated Docker Execution Engine & Supabase Cloud Persistence Connector"</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Linking & Direct Push -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h2 class="ael-card-title">3. الربط السحابي والرفع المباشر (Direct Push)</h2>
+            </div>
+            <p class="ael-card-desc">إنشاء جسر الاتصال الأولي بالمستودع السحابي الرسمي على GitHub ودفع الكود قبل تفعيل درع الحماية.</p>
+            
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - remote_push</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code3')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code3">
+<span class="comment"># 1. ربط مستودعك المحلي بالمستودع السحابي الرسمي على GitHub</span>
+<span class="prompt">$</span> <span class="command">git remote add origin https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
+
+<span class="comment"># 2. إعادة تسمية الفرع الرئيسي ليكون بالاسم المعتمد عالمياً</span>
+<span class="prompt">$</span> <span class="command">git branch -M main</span>
+
+<span class="comment"># 3. دفع الكود إلى السحاب مع حفظ مسار الاتصال الدائم</span>
+<span class="prompt">$</span> <span class="command">git push -u origin main</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: gh CLI Advanced -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-terminal"></i>
+                <h2 class="ael-card-title">4. الضبط المعماري المتقدم عبر `gh CLI`</h2>
+            </div>
+            <p class="ael-card-desc">السطر الذهبي الخارق لضبط إعدادات المستودع السحابي، تفعيل النقاشات (Discussions)، وفرض أسلوب الدمج النظيف (Squash Merge).</p>
+            
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - gh_repo_edit</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code4')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code4">
+<span class="comment"># ضبط إعدادات المستودع السحابي مباشرة من الطرفية</span>
+<span class="prompt">$</span> <span class="command">gh repo edit aymanelmasryael/AEL-Sovereign-CS50x-2026-2027 --delete-branch-on-merge --enable-discussions --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Pull Request Workflow -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-code-branch"></i>
+                <h2 class="ael-card-title">5. سير عمل النخبة (Zero-Trust PR Workflow)</h2>
+            </div>
+            <p class="ael-card-desc">الأسلوب المتبع بعد تفعيل درع حماية الفرع الرئيسي (Branch Protection)، لرفع صورة الغلاف والتعديلات عبر الفروع الجانبية وطلبات السحب.</p>
+            
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - pull_request</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code5')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code5">
+<span class="comment"># 1. إنشاء فرع جانبي جديد والانتقال إليه فوراً</span>
+<span class="prompt">$</span> <span class="command">git checkout -b add-hero-banner</span>
+
+<span class="comment"># 2. رفع الفرع الجانبي إلى خوادم GitHub</span>
+<span class="prompt">$</span> <span class="command">git push -u origin add-hero-banner</span>
+
+<span class="comment"># 3. فتح طلب سحب رسمي (Pull Request) من داخل موجه الأوامر مباشرة</span>
+<span class="prompt">$</span> <span class="command">gh pr create --title "🎨 [UI/UX] Showcasing AEL Sovereign Cover Banner in Repository Root & README" --body "Adding the magnificent hero cover image banner to establish canonical visual authority."</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Live Telemetry -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-satellite-dish"></i>
+                <h2 class="ael-card-title">6. المراقبة والاتصال الحي بسيرفرات `GitHub Actions`</h2>
+            </div>
+            <p class="ael-card-desc">أوامر الرادار السحابي لمراقبة خطوط الأنابيب (Pipelines) وبناء صور Docker ونشر الموقع في الوقت الفعلي.</p>
+            
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - gh_run</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code6')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code6">
+<span class="comment"># 1. استعراض قائمة أحدث عمليات البناء والفحص الجارية في السحاب</span>
+<span class="prompt">$</span> <span class="command">gh run list --limit 3</span>
+
+<span class="comment"># 2. سحب تقرير الحالة الحية لعملية فحص محددة ومعرفة تفاصيلها</span>
+<span class="prompt">$</span> <span class="command">gh run view 28381788686</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Canonical Footer -->
+    <footer class="ael-footer">
+        <div class="ael-seal">
+            AEL Digital Framework — © Ayman Elmasry — AEL Digital Studio. All rights reserved under AEL Prompt IP System v1.0.
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        function copyCode(elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            
+            // Clean up text for copying (remove prompts and comments)
+            let lines = el.innerText.split('\n');
+            let cleanCode = lines
+                .filter(line => !line.trim().startsWith('#'))
+                .map(line => line.replace('$', '').trim())
+                .filter(line => line.length > 0)
+                .join('\n');
+                
+            navigator.clipboard.writeText(cleanCode).then(() => {
+                const toast = document.getElementById('aelToast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
