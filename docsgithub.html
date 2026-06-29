@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>ميثاق التخاطب السيادي مع GitHub | AEL Sovereign Protocol</title>
-    <meta name="description" content="ميثاق التخاطب السيادي والدليل المعماري الشامل لأوامر Git و GitHub CLI الخاصة بنظم Ayman Elmasry.">
+    <title>الموسوعة الكبرى لأوامر Git و GitHub CLI | AEL Sovereign Encyclopedia</title>
+    <meta name="description" content="الدليل المعماري الشامل وموسوعة الأوامر الكبرى لإدارة مستودعات Ayman Elmasry وفق معايير النظم السيادية.">
     <meta name="author" content="Ayman Elmasry">
     <meta name="theme-color" content="#0B1220">
     
@@ -82,10 +82,15 @@
             text-decoration: none;
         }
 
-        .ael-logo i {
-            color: var(--ael-primary);
-            font-size: 1.8rem;
-            animation: pulseGlow 3s infinite;
+        .ael-logo img {
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 0 10px rgba(0,116,255,0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .ael-logo:hover img {
+            transform: scale(1.1);
         }
 
         .ael-nav-badge {
@@ -97,6 +102,9 @@
             font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         /* Hero Section */
@@ -122,6 +130,36 @@
             max-width: 800px;
             margin: 0 auto 2rem;
             font-weight: 400;
+        }
+
+        /* Sovereign Identity Box */
+        .ael-owner-box {
+            background: rgba(0, 116, 255, 0.05);
+            border: 1px solid var(--ael-primary);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 25px rgba(0, 116, 255, 0.2);
+            text-align: center;
+        }
+
+        .ael-owner-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--ael-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .ael-owner-details {
+            font-size: 0.95rem;
+            color: var(--ael-text-primary);
+            line-height: 1.6;
         }
 
         /* Container & Layout */
@@ -267,16 +305,11 @@
         .ael-seal {
             font-size: 0.95rem;
             color: var(--ael-text-muted);
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
             font-weight: 600;
             letter-spacing: 0.5px;
-        }
-
-        /* Animations */
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(0,116,255,0.5)); }
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(0,116,255,0.8)); }
+            line-height: 1.8;
         }
 
         /* Notification Toast */
@@ -315,31 +348,45 @@
     <nav class="ael-navbar">
         <div class="ael-nav-container">
             <a href="#" class="ael-logo">
-                <i class="fab fa-github"></i>
+                <img src="AEL Logo.svg" alt="AEL Logo" onerror="this.style.display='none'">
                 <span>AEL Sovereign Docs</span>
             </a>
             <div class="ael-nav-badge">
-                ✓ GitHub Operations Protocol
+                <i class="fas fa-shield-alt"></i>
+                <span>AEL Universal Protocol v3.0</span>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="ael-hero">
-        <h1>ميثاق التخاطب السيادي مع GitHub</h1>
-        <p>دليل هندسي فاخر وموثق لكافة الأوامر السحابية والمحلية الخاصة بإدارة مستودعات AEL السيادية بأسلوب كبار مهندسي النظم.</p>
+        <h1>الموسوعة الكبرى لأوامر Git و GitHub CLI</h1>
+        <p>الدليل المعماري الشامل والمرجع السيادي الدائم لإدارة مستودعات AEL بأسلوب كبار مهندسي النظم.</p>
+        
+        <!-- Sovereign Owner Box -->
+        <div class="ael-owner-box">
+            <div class="ael-owner-title">
+                <i class="fas fa-crown"></i>
+                <span>Canonical Owner & IP System</span>
+            </div>
+            <div class="ael-owner-details">
+                <strong>Ayman Elmasry</strong> — Computational Creative Director & AI Prompt Engineer<br>
+                <em>Ayman Elmasry LLC (UAE) | Ayman Elmasry Advertising & Marketing (Egypt)</em><br>
+                <span style="color: var(--ael-primary); font-weight: 600; margin-top: 0.5rem; display: block;">AEL Digital Framework — AEL Prompt IP System v1.0</span>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
     <main class="ael-container">
 
-        <!-- Section 1: Initialization -->
+        <!-- Section 1: Setup & Configuration -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-folder-plus"></i>
-                <h2 class="ael-card-title">1. التهيئة والإضافة المحلية (Local Initialization)</h2>
+                <i class="fas fa-user-shield"></i>
+                <h2 class="ael-card-title">1. التهيئة وضبط الهوية السيادية (Setup & Configuration)</h2>
             </div>
-            <p class="ael-card-desc">الأوامر المستخدمة لتهيئة القلعة المحلية داخل مجلد المشروع وتجهيز الملفات الجديدة للرفع.</p>
+            <p class="ael-card-desc">الأوامر الأساسية لتعريف هويتك كمهندس نظم وتهيئة المستودعات المحلية واستنساخ المشاريع.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -348,34 +395,73 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - local_init</span>
+                    <span>zsh - config_setup</span>
                     <button class="ael-copy-btn" onclick="copyCode('code1')">
                         <i class="fas fa-copy"></i> نسخ
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code1">
-<span class="comment"># 1. تهيئة المستودع المحلي داخل مجلد مشروعك</span>
+<span class="comment"># 1. ضبط اسم المالك السيادي عالمياً في جهازك</span>
+<span class="prompt">$</span> <span class="command">git config --global user.name "Ayman Elmasry"</span>
+
+<span class="comment"># 2. ضبط البريد الإلكتروني الرسمي للمالك</span>
+<span class="prompt">$</span> <span class="command">git config --global user.email "info@aymanelmasry.com"</span>
+
+<span class="comment"># 3. فحص إعدادات الهوية الحالية للتأكد من صحتها</span>
+<span class="prompt">$</span> <span class="command">git config --list</span>
+
+<span class="comment"># 4. تهيئة مستودع محلي جديد داخل أي مجلد</span>
 <span class="prompt">$</span> <span class="command">git init</span>
 
-<span class="comment"># 2. فحص حالة الملفات ومعرفة ما تم تعديله</span>
-<span class="prompt">$</span> <span class="command">git status</span>
-
-<span class="comment"># 3. إضافة كافة الملفات والأنظمة إلى منصة التجهيز</span>
-<span class="prompt">$</span> <span class="command">git add .</span>
-
-<span class="comment"># (أو إضافة ملفات محددة بدقة ذرية)</span>
-<span class="prompt">$</span> <span class="command">git add server_check50_execution.py ael_supabase_connector.js</span>
+<span class="comment"># 5. استنساخ مستودع سحابي قائم إلى جهازك المحلي</span>
+<span class="prompt">$</span> <span class="command">git clone https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: Commits -->
+        <!-- Section 2: Inspection & Auditing -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-file-signature"></i>
-                <h2 class="ael-card-title">2. التوثيق وختم الملكية (Enterprise Commits)</h2>
+                <i class="fas fa-search-location"></i>
+                <h2 class="ael-card-title">2. الفحص، المراقبة، والمقارنة الذرية (Inspection & Auditing)</h2>
             </div>
-            <p class="ael-card-desc">اعتماد العناوين المعمارية الصارمة والرموز التعبيرية (Emojis) لتوثيق هوية الإصدارات بدقة.</p>
+            <p class="ael-card-desc">أوامر الرادار البرمجي لمعرفة حالة الكود وتتبع التعديلات وسجلات الحفظ بدقة متناهية.</p>
+            
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - inspection</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code2')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code2">
+<span class="comment"># 1. فحص حالة الملفات ومعرفة ما تم تعديله أو إضافته</span>
+<span class="prompt">$</span> <span class="command">git status</span>
+
+<span class="comment"># 2. عرض الفروقات البرمجية الدقيقة (السطور التي تم تعديلها قبل حفظها)</span>
+<span class="prompt">$</span> <span class="command">git diff</span>
+
+<span class="comment"># 3. عرض سجل الحفظ (Commits) بأسلوب معماري ناصع ومختصر</span>
+<span class="prompt">$</span> <span class="command">git log --oneline --graph --all</span>
+
+<span class="comment"># 4. عرض تفاصيل آخر عملية حفظ تمت في المستودع</span>
+<span class="prompt">$</span> <span class="command">git show HEAD</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Staging & Committing -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-file-contract"></i>
+                <h2 class="ael-card-title">3. التجهيز والتوثيق السيادي (Staging & Committing)</h2>
+            </div>
+            <p class="ael-card-desc">أوامر تجهيز الملفات وختمها بالسجلات البيروقراطية المنظمة وتعديل وثائق الحفظ.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -385,57 +471,33 @@
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
                     <span>zsh - commit</span>
-                    <button class="ael-copy-btn" onclick="copyCode('code2')">
-                        <i class="fas fa-copy"></i> نسخ
-                    </button>
-                </div>
-                <div class="ael-terminal-body" id="code2">
-<span class="comment"># إنشاء وثيقة الحفظ (Commit) مع وصف احترافي للنسخة</span>
-<span class="prompt">$</span> <span class="command">git commit -m "🚀 [v4.0] Full-Stack Enterprise Upgrade: Adding Isolated Docker Execution Engine & Supabase Cloud Persistence Connector"</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: Linking & Direct Push -->
-        <section class="ael-card">
-            <div class="ael-card-header">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <h2 class="ael-card-title">3. الربط السحابي والرفع المباشر (Direct Push)</h2>
-            </div>
-            <p class="ael-card-desc">إنشاء جسر الاتصال الأولي بالمستودع السحابي الرسمي على GitHub ودفع الكود قبل تفعيل درع الحماية.</p>
-            
-            <div class="ael-terminal">
-                <div class="ael-terminal-top">
-                    <div class="ael-terminal-dots">
-                        <div class="ael-dot ael-dot-red"></div>
-                        <div class="ael-dot ael-dot-yellow"></div>
-                        <div class="ael-dot ael-dot-green"></div>
-                    </div>
-                    <span>zsh - remote_push</span>
                     <button class="ael-copy-btn" onclick="copyCode('code3')">
                         <i class="fas fa-copy"></i> نسخ
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code3">
-<span class="comment"># 1. ربط مستودعك المحلي بالمستودع السحابي الرسمي على GitHub</span>
-<span class="prompt">$</span> <span class="command">git remote add origin https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
+<span class="comment"># 1. إضافة كافة الملفات والتعديلات إلى منصة التجهيز (Staging)</span>
+<span class="prompt">$</span> <span class="command">git add .</span>
 
-<span class="comment"># 2. إعادة تسمية الفرع الرئيسي ليكون بالاسم المعتمد عالمياً</span>
-<span class="prompt">$</span> <span class="command">git branch -M main</span>
+<span class="comment"># 2. إضافة ملفات محددة بدقة</span>
+<span class="prompt">$</span> <span class="command">git add README.md AEL-Sovereign-CS50x-2026-2027.png</span>
 
-<span class="comment"># 3. دفع الكود إلى السحاب مع حفظ مسار الاتصال الدائم</span>
-<span class="prompt">$</span> <span class="command">git push -u origin main</span>
+<span class="comment"># 3. إنشاء وثيقة حفظ (Commit) مع عنوان معماري احترافي</span>
+<span class="prompt">$</span> <span class="command">git commit -m "🚀 [v1.0] Sovereign System Architect Initialization"</span>
+
+<span class="comment"># 4. تعديل آخر وثيقة حفظ (في حال أردت تغيير الوصف أو إضافة ملف نسيته)</span>
+<span class="prompt">$</span> <span class="command">git commit --amend -m "🚀 [v1.0] Sovereign System Architect Initialization (Updated)"</span>
                 </div>
             </div>
         </section>
 
-        <!-- Section 4: gh CLI Advanced -->
+        <!-- Section 4: Branching & Workflows -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-terminal"></i>
-                <h2 class="ael-card-title">4. الضبط المعماري المتقدم عبر `gh CLI`</h2>
+                <i class="fas fa-code-branch"></i>
+                <h2 class="ael-card-title">4. إدارة الفروع وسير عمل البيئات المحمية (Branching & Workflows)</h2>
             </div>
-            <p class="ael-card-desc">السطر الذهبي الخارق لضبط إعدادات المستودع السحابي، تفعيل النقاشات (Discussions)، وفرض أسلوب الدمج النظيف (Squash Merge).</p>
+            <p class="ael-card-desc">الأسلوب المتبع للتعامل مع الفروع الجانبية والبيئات ذات قواعد الحماية الصارمة (Branch Protection).</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -444,25 +506,37 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - gh_repo_edit</span>
+                    <span>zsh - branching</span>
                     <button class="ael-copy-btn" onclick="copyCode('code4')">
                         <i class="fas fa-copy"></i> نسخ
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code4">
-<span class="comment"># ضبط إعدادات المستودع السحابي مباشرة من الطرفية</span>
-<span class="prompt">$</span> <span class="command">gh repo edit aymanelmasryael/AEL-Sovereign-CS50x-2026-2027 --delete-branch-on-merge --enable-discussions --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false</span>
+<span class="comment"># 1. عرض قائمة الفروع المحلية المتاحة في جهازك</span>
+<span class="prompt">$</span> <span class="command">git branch</span>
+
+<span class="comment"># 2. إعادة تسمية الفرع الحالي ليكون بالاسم القياسي المعتمد (main)</span>
+<span class="prompt">$</span> <span class="command">git branch -M main</span>
+
+<span class="comment"># 3. إنشاء فرع جانبي جديد والانتقال إليه فوراً (الأسلوب المفضل لطلبات السحب)</span>
+<span class="prompt">$</span> <span class="command">git checkout -b feature-sovereign-upgrade</span>
+
+<span class="comment"># 4. الانتقال السلس بين الفروع المتاحة</span>
+<span class="prompt">$</span> <span class="command">git switch main</span>
+
+<span class="comment"># 5. حذف فرع محلي بعد الانتهاء منه</span>
+<span class="prompt">$</span> <span class="command">git branch -d feature-sovereign-upgrade</span>
                 </div>
             </div>
         </section>
 
-        <!-- Section 5: Pull Request Workflow -->
+        <!-- Section 5: Remote Synchronization -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-code-branch"></i>
-                <h2 class="ael-card-title">5. سير عمل النخبة (Zero-Trust PR Workflow)</h2>
+                <i class="fas fa-cloud-sync"></i>
+                <h2 class="ael-card-title">5. التزامن السحابي والمحاذاة الصارمة (Remote Synchronization)</h2>
             </div>
-            <p class="ael-card-desc">الأسلوب المتبع بعد تفعيل درع حماية الفرع الرئيسي (Branch Protection)، لرفع صورة الغلاف والتعديلات عبر الفروع الجانبية وطلبات السحب.</p>
+            <p class="ael-card-desc">أوامر التخاطب المباشر مع الخوادم لرفع أو سحب الملفات ومحاذاة الفروع السحابية.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -471,31 +545,43 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - pull_request</span>
+                    <span>zsh - remote_sync</span>
                     <button class="ael-copy-btn" onclick="copyCode('code5')">
                         <i class="fas fa-copy"></i> نسخ
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code5">
-<span class="comment"># 1. إنشاء فرع جانبي جديد والانتقال إليه فوراً</span>
-<span class="prompt">$</span> <span class="command">git checkout -b add-hero-banner</span>
+<span class="comment"># 1. ربط مستودعك المحلي بالمستودع السحابي الرسمي</span>
+<span class="prompt">$</span> <span class="command">git remote add origin https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
 
-<span class="comment"># 2. رفع الفرع الجانبي إلى خوادم GitHub</span>
-<span class="prompt">$</span> <span class="command">git push -u origin add-hero-banner</span>
+<span class="comment"># 2. فحص روابط الاتصال السحابي الحالية</span>
+<span class="prompt">$</span> <span class="command">git remote -v</span>
 
-<span class="comment"># 3. فتح طلب سحب رسمي (Pull Request) من داخل موجه الأوامر مباشرة</span>
-<span class="prompt">$</span> <span class="command">gh pr create --title "🎨 [UI/UX] Showcasing AEL Sovereign Cover Banner in Repository Root & README" --body "Adding the magnificent hero cover image banner to establish canonical visual authority."</span>
+<span class="comment"># 3. سحب آخر التحديثات من الخادم دون دمجها (للفحص الأمني)</span>
+<span class="prompt">$</span> <span class="command">git fetch origin</span>
+
+<span class="comment"># 4. سحب التحديثات السحابية ودمجها بالفرع المحلي مباشرة</span>
+<span class="prompt">$</span> <span class="command">git pull origin main</span>
+
+<span class="comment"># 5. دفع الكود المحلي إلى السحاب مع تثبيت مسار الاتصال</span>
+<span class="prompt">$</span> <span class="command">git push -u origin main</span>
+
+<span class="comment"># 6. دفع فرع جانبي جديد إلى السحاب</span>
+<span class="prompt">$</span> <span class="command">git push -u origin feature-sovereign-upgrade</span>
+
+<span class="comment"># 7. حذف فرع جانبي من السحاب مباشرة</span>
+<span class="prompt">$</span> <span class="command">git push origin --delete feature-sovereign-upgrade</span>
                 </div>
             </div>
         </section>
 
-        <!-- Section 6: Live Telemetry -->
+        <!-- Section 6: Undoing & Emergency Resets -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-satellite-dish"></i>
-                <h2 class="ael-card-title">6. المراقبة والاتصال الحي بسيرفرات `GitHub Actions`</h2>
+                <i class="fas fa-history"></i>
+                <h2 class="ael-card-title">6. طوارئ النظام واستعادة النقاء التام (Undoing & Emergency Resets)</h2>
             </div>
-            <p class="ael-card-desc">أوامر الرادار السحابي لمراقبة خطوط الأنابيب (Pipelines) وبناء صور Docker ونشر الموقع في الوقت الفعلي.</p>
+            <p class="ael-card-desc">أوامر الصيانة الطارئة للتراجع عن الأخطاء وإعادة ضبط المستودع ليكون ناصع النظافة ومطابقاً للسحاب 100%.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -504,16 +590,73 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - gh_run</span>
+                    <span>zsh - emergency_reset</span>
                     <button class="ael-copy-btn" onclick="copyCode('code6')">
                         <i class="fas fa-copy"></i> نسخ
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code6">
-<span class="comment"># 1. استعراض قائمة أحدث عمليات البناء والفحص الجارية في السحاب</span>
-<span class="prompt">$</span> <span class="command">gh run list --limit 3</span>
+<span class="comment"># 1. إلغاء تعديلات ملف لم يتم حفظه وإعادته لحالته السابقة</span>
+<span class="prompt">$</span> <span class="command">git restore server_check50_execution.py</span>
 
-<span class="comment"># 2. سحب تقرير الحالة الحية لعملية فحص محددة ومعرفة تفاصيلها</span>
+<span class="comment"># 2. إزالة ملف من منصة التجهيز (Staging) مع الحفاظ على التعديلات بداخله</span>
+<span class="prompt">$</span> <span class="command">git reset ael_supabase_connector.js</span>
+
+<span class="comment"># 3. حذف آخر عملية حفظ (Commit) محلياً والتخلص من تعديلاتها نهائياً</span>
+<span class="prompt">$</span> <span class="command">git reset --hard HEAD~1</span>
+
+<span class="comment"># 4. الأمر الصارم لمطابقة الكود المحلي بالسحاب 100% وإزالة أي أخطاء أو شوائب محلية</span>
+<span class="prompt">$</span> <span class="command">git reset --hard origin/main</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: gh CLI Advanced -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-terminal"></i>
+                <h2 class="ael-card-title">7. أوامر التحكم السحابي الخارق عبر `gh CLI`</h2>
+            </div>
+            <p class="ael-card-desc">الأسلحة المتقدمة التي تميز كبار مهندسي النظم، وتتيح التحكم بسيرفرات GitHub وطلبات السحب والأتمتة من الطرفية مباشرة.</p>
+            
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - gh_cli_elite</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code7')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code7">
+<span class="comment"># 1. المصادقة وتسجيل الدخول السحابي الآمن إلى حسابك في GitHub</span>
+<span class="prompt">$</span> <span class="command">gh auth login</span>
+
+<span class="comment"># 2. إنشاء مستودع سحابي جديد ورفع الكود إليه بضغطة زر واحدة</span>
+<span class="prompt">$</span> <span class="command">gh repo create aymanelmasryael/AEL-New-Project --public --source=. --remote=origin --push</span>
+
+<span class="comment"># 3. السطر الذهبي لضبط إعدادات المستودع (تفعيل النقاشات وفرض الدمج النظيف والحذف التلقائي)</span>
+<span class="prompt">$</span> <span class="command">gh repo edit aymanelmasryael/AEL-Sovereign-CS50x-2026-2027 --delete-branch-on-merge --enable-discussions --enable-squash-merge</span>
+
+<span class="comment"># 4. فتح طلب سحب رسمي (Pull Request) من موجه الأوامر</span>
+<span class="prompt">$</span> <span class="command">gh pr create --title "🎨 [UI/UX] Showcasing Master Architectural Banner" --body "Injecting master banner for canonical visual authority."</span>
+
+<span class="comment"># 5. عرض قائمة طلبات السحب المفتوحة حالياً في المستودع</span>
+<span class="prompt">$</span> <span class="command">gh pr list</span>
+
+<span class="comment"># 6. فحص تفاصيل وحالة طلب سحب محدد برقم الـ ID</span>
+<span class="prompt">$</span> <span class="command">gh pr view 2</span>
+
+<span class="comment"># 7. السطر الصارم لدمج طلب السحب أوتوماتيكياً بصلاحيات المالك العليا وحذف الفرع الجانبي</span>
+<span class="prompt">$</span> <span class="command">gh pr merge 2 --squash --delete-branch --admin</span>
+
+<span class="comment"># 8. استعراض قائمة أحدث عمليات الفحص والبناء الجارية في سيرفرات GitHub Actions</span>
+<span class="prompt">$</span> <span class="command">gh run list --limit 5</span>
+
+<span class="comment"># 9. سحب تقرير الحالة الحية لعملية فحص محددة ومعرفة تفاصيل النجاح أو الفشل</span>
 <span class="prompt">$</span> <span class="command">gh run view 28381788686</span>
                 </div>
             </div>
@@ -524,7 +667,9 @@
     <!-- Canonical Footer -->
     <footer class="ael-footer">
         <div class="ael-seal">
-            AEL Digital Framework — © Ayman Elmasry — AEL Digital Studio. All rights reserved under AEL Prompt IP System v1.0.
+            <i class="fas fa-crown" style="color: var(--ael-primary); margin-right: 0.5rem;"></i>
+            <strong>AEL Digital Framework — © Ayman Elmasry — AEL Digital Studio.</strong><br>
+            All rights reserved under AEL Prompt IP System v1.0.
         </div>
     </footer>
 
