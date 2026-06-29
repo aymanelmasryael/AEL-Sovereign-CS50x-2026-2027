@@ -43,7 +43,7 @@ jobs:
         with:
           context: .
           push: false # Set to true when publishing container publicly
-          tags: ghcr.io/${{ github.repository }}/ael-cs50x-citadel:latest
+          tags: ghcr.io/${{ github.repository_owner }}/ael-cs50x-citadel:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
