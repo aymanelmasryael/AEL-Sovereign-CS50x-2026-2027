@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>The Master Encyclopedia of Git & GitHub CLI | AEL Sovereign Architecture</title>
-    <meta name="description" content="The definitive architectural guide and master encyclopedia of Git and GitHub CLI commands for managing Ayman Elmasry's sovereign repositories.">
+    <meta name="description" content="The definitive architectural guide and master encyclopedia of Git and GitHub CLI commands, featuring the complete CS50 seminar transcript and elite engineering commentary.">
     <meta name="author" content="Ayman Elmasry">
     <meta name="theme-color" content="#0B1220">
     
@@ -208,10 +208,81 @@
             color: var(--ael-text-primary);
         }
 
-        .ael-card-desc {
+        /* Architect Box (Antigravity Commentary) */
+        .ael-architect-box {
+            background: rgba(0, 116, 255, 0.08);
+            border-left: 4px solid var(--ael-primary);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .ael-architect-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: var(--ael-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .ael-architect-body {
+            color: var(--ael-text-primary);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Transcript Dialogue Box */
+        .ael-transcript-box {
+            background: rgba(11, 18, 32, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ael-transcript-title {
+            font-size: 1.1rem;
+            font-weight: 700;
             color: var(--ael-text-muted);
             margin-bottom: 1.5rem;
-            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.8rem;
+        }
+
+        .ael-dialogue-block {
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid rgba(0, 116, 255, 0.3);
+        }
+
+        .ael-timestamp {
+            display: inline-block;
+            background: rgba(0, 116, 255, 0.15);
+            color: var(--ael-primary);
+            font-family: var(--ael-font-code);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-bottom: 0.4rem;
+        }
+
+        .ael-speaker {
+            font-weight: 700;
+            color: #E6EEF8;
+            margin-right: 0.5rem;
+        }
+
+        .ael-text {
+            color: var(--ael-text-muted);
+            font-size: 1rem;
+            line-height: 1.8;
         }
 
         /* Terminal Window */
@@ -221,6 +292,7 @@
             border-radius: 12px;
             overflow: hidden;
             margin-top: 1rem;
+            margin-bottom: 1rem;
         }
 
         .ael-terminal-top {
@@ -361,7 +433,7 @@
     <!-- Hero Section -->
     <header class="ael-hero">
         <h1>The Master Encyclopedia of Git & GitHub CLI</h1>
-        <p>The comprehensive architectural guide and permanent sovereign reference for managing AEL repositories with enterprise-grade precision.</p>
+        <p>The definitive architectural manual uniting elite command-line execution with the full CS50 seminar masterclass.</p>
         
         <!-- Sovereign Owner Box -->
         <div class="ael-owner-box">
@@ -380,46 +452,105 @@
     <!-- Main Content -->
     <main class="ael-container">
 
-        <!-- Intro Section: The 4 Superpowers -->
+        <!-- Chapter 1: Introduction & What is Git? -->
         <section class="ael-card" style="border-color: var(--ael-primary);">
             <div class="ael-card-header">
-                <i class="fas fa-gem"></i>
-                <h2 class="ael-card-title">Architectural Prologue: The 4 Superpowers of Git</h2>
+                <i class="fas fa-network-wired"></i>
+                <h2 class="ael-card-title">Chapter 1: The Core Philosophy of Git & Version Control</h2>
             </div>
-            <p class="ael-card-desc">In the legendary CS50 seminar <em>"It's going to be about Git and GitHub"</em>, Senior Software Engineer Brian Yu demonstrates that Git is far more than a file backup tool. It is an advanced version control engine that grants system architects four profound superpowers:</p>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
-                    <i class="fas fa-history" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">1. Historical Auditing</h4>
-                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">Maintains an immutable ledger of every code modification (who made it, when, and why), turning complex debugging into a deterministic certainty.</p>
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-code-branch"></i>
+                    <span>Antigravity Architectural Commentary</span>
                 </div>
-                <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
-                    <i class="fas fa-sync-alt" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">2. Team Synchronization</h4>
-                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">Seamlessly merges parallel workflows across multiple engineers via cloud repositories (GitHub), ensuring everyone operates on the freshest master branch.</p>
+                <div class="ael-architect-body">
+                    Git is fundamentally a decentralized cryptographic tree structure designed to track file revisions with atomic precision. Unlike manual backup strategies (such as renaming files to <code>project_old.c</code>), Git empowers system architects with four undeniable superpowers: immutable historical tracking, multi-user cloud synchronization, safe sandbox experimentation, and instantaneous disaster recovery.
                 </div>
-                <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
-                    <i class="fas fa-flask" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">3. Sandbox Experimentation</h4>
-                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">Eliminates messy legacy habits of duplicating files like <code>project_old.c</code>. Git allows you to rapidly prototype new features without risking stable production code.</p>
+            </div>
+
+            <!-- Official Seminar Transcript -->
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: Introduction & What is Git?</span>
                 </div>
-                <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
-                    <i class="fas fa-undo-alt" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">4. Instant Reversion</h4>
-                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">Grants the absolute power to roll back time to any stable commit snapshot instantly if new experimental changes break the runtime environment.</p>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">0:00</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">All right, welcome to this seminar. It's going to be about Git and GitHub, which are technologies that you can use to do what's called version control, keeping track of different versions of your program, testing out new changes, et cetera.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">0:12</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">All right, so before we get started, we'll do a quick introduction into kind of what Git and GitHub it is all about, and what it can be used for, and then we'll go more specifically into of the command line commands that you would use in order to use some of this technology and leverage it for projects that you're working on, or projects that you're collaborating on with other people. So first of all, what is Git?</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">0:30</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">What can it do? The first, and one of the most important features for Git, is that it can keep track of changes to your code. So if you have code, you create a file, and maybe you're making changes, Git will keep track of all of the different changes that you've made to your code such that, at any point, you can kind of go back and see the history of whatever it is that you've been working on to see what were your earlier changes and when did you make those changes. And that can sometimes help when you're going back, and trying to debug, and figure out what went wrong at some stage in the code process.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">0:57</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So that's one thing that Git can be useful for. Another thing that it can be useful for is synchronizing code between different people. Especially when you're collaborating with other people, Git is valuable for trying to make sure that your code potentially matches the code that someone else is working on. And at any point, absolutely feel free to interrupt me if you have questions. If something doesn't make sense, I'd be happy to field questions as we go. So imagine that you and a collaborator are both trying to work together on the same piece of code at the same time. So maybe that code lives somewhere on some server, and there are a whole bunch of servers that can host what we call git repositories, just folders that contain files that are tracked via Git. GitHub is one example of that.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">1:42</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So maybe both you and your partner need access to the same file. Maybe you both make changes to that same file. And what Git allows you to do is Git makes it very easy to then take those changes that you both have made independently and then kind of merge them back together when you push them back online to the same file and then pull those back down to your own computers. So that you both have the latest changes, not only what you've changed on your file, but also what a potential collaborator has made changes to as well. And you both have the most recent, up to date version of the code. And so synchronizing code between different people is another really valuable thing that Git can be used for.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">2:15</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">A third valuable thing that git can be fantastic for is to test changes your code without losing the original. It's all too common that, before I started using Git, would try making changes to code to try to make it better and then suddenly find out that the code no longer works. And so my original solution to this was to do something like make a copy of my original file, save the old one and then make changes so that, if it messed up, I could go back to the original one and not lose the original. And that ends up getting very, very messy. Especially if you get into larger projects, and working with multiple people, you'll end up with a lot of different old versions and it might be hard to keep track of. So Git makes it very easy to save an original version of your code, test out new changes that you might want to add, and, only when you're sure that you like these changes, that they work that you want to what's called merge them back in with your original file, can you merge them back with the original file that you were working on in the first place.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">3:03</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And the fourth and very valuable thing that Git can be useful for is for reverting back changes to older versions of your code. Say you made a change to your code somewhere along the way and realized later on that that's not the change that you actually wanted to make, and that you would want to go back to an older version. Git makes it very easy. As long as you know which version you want to go back to, you can just go back to that old version and kind of start over from wherever you were previously. So that's sort of an overview of kind of what Git is and the things that Git can do for you if you leverage its functionality well. And now we'll begin to go into the actual commands that you would need to use and need to type in order to make all of this kind of work. Questions Before we go on? OK, fantastic.</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 1: Setup & Configuration -->
+        <!-- Chapter 2: git clone -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-user-shield"></i>
-                <h2 class="ael-card-title">1. Sovereign Identity Setup & Repository Initialization</h2>
+                <i class="fas fa-cloud-download-alt"></i>
+                <h2 class="ael-card-title">Chapter 2: Initializing Environments & `git clone`</h2>
             </div>
-            <p class="ael-card-desc">Foundational commands to establish your canonical identity, initialize local tracking environments, and clone cloud infrastructure to local machines (such as CS50 IDE or macOS).</p>
             
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-server"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    Before executing version control operations, a developer must configure their cryptographic signature (`user.name` and `user.email`). Once established, `git clone` acts as an infrastructure replication command, pulling down the full commit graph and working tree from a remote GitHub upstream server directly into the local execution environment (such as macOS or CS50 IDE).
+                </div>
+            </div>
+
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
                     <div class="ael-terminal-dots">
@@ -427,38 +558,70 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - config_setup</span>
-                    <button class="ael-copy-btn" onclick="copyCode('code1')">
+                    <span>zsh - setup_and_clone</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code_clone')">
                         <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
-                <div class="ael-terminal-body" id="code1">
-<span class="comment"># 1. Set the canonical owner's name globally across the operating system</span>
+                <div class="ael-terminal-body" id="code_clone">
+<span class="comment"># 1. Establish the canonical owner's identity globally</span>
 <span class="prompt">$</span> <span class="command">git config --global user.name "Ayman Elmasry"</span>
 
-<span class="comment"># 2. Set the official enterprise email for commit attribution</span>
+<span class="comment"># 2. Assign the official enterprise email address</span>
 <span class="prompt">$</span> <span class="command">git config --global user.email "info@aymanelmasry.com"</span>
 
-<span class="comment"># 3. Verify current identity configuration credentials</span>
+<span class="comment"># 3. Verify active credentials</span>
 <span class="prompt">$</span> <span class="command">git config --list</span>
 
-<span class="comment"># 4. Initialize a pristine local Git repository in an empty directory</span>
+<span class="comment"># 4. Initialize an empty local repository from scratch</span>
 <span class="prompt">$</span> <span class="command">git init</span>
 
-<span class="comment"># 5. Clone an existing cloud repository (git clone): Downloads the full history and working tree to your machine</span>
+<span class="comment"># 5. Replicate a cloud repository to your local machine (git clone)</span>
 <span class="prompt">$</span> <span class="command">git clone https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
                 </div>
             </div>
+
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: git clone</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">3:47</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So first command that will be really valuable to know is what's called git clone. git clone is a command you would type at the command line, and I'll show you how this works in a moment. And essentially, what git clone does is you type git clone followed by some git URL where that URL is the address of some GitHub repository-- and remember a repository is just a collection of files and folders that are being tracked by Git-- and it'll make a copy of that repository that lives somewhere on the internet, potentially on GitHub, but there are also other services that do similar things. And it will make a copy of that repository on your computer. So you can begin to make changes on your own computer.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">4:25</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And side note, you can also do something called creating a fork of a repository, where if someone else owns a repository online somewhere, you can fork it, which just means you create kind of your own copy of that repository that also lives online. But we'll get to that potentially later. So if this is Github, imagine this being some kind of server, and this is a file that's being tracked via Git in some Git repository. If I were to type git clone followed by the URL of that repository, then this file, I would clone it, and it would make a copy of the entire repository that is now saved on my own computer. Make sense? OK, fantastic.</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- Section 2: Inspection & Auditing -->
+        <!-- Chapter 3: git add -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-search-location"></i>
-                <h2 class="ael-card-title">2. System Inspection, Diff Auditing, & Atomic Tracking</h2>
+                <i class="fas fa-file-export"></i>
+                <h2 class="ael-card-title">Chapter 3: The Staging Area & `git add`</h2>
             </div>
-            <p class="ael-card-desc">Codebase radar commands demonstrated in the CS50 seminar to verify working tree status, audit exact character diffs, and traverse commit logs with sub-silicon accuracy.</p>
             
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    Git enforces a rigorous two-tier commit workflow. Before modifications are stamped into the immutable ledger, they must be explicitly transferred from the working directory into the Index (Staging Area) using `git add`. This deliberate separation allows system architects to curate clean, atomic commits even if multiple unrelated files were modified simultaneously.
+                </div>
+            </div>
+
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
                     <div class="ael-terminal-dots">
@@ -466,38 +629,80 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - inspection</span>
-                    <button class="ael-copy-btn" onclick="copyCode('code2')">
+                    <span>zsh - staging</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code_add')">
                         <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
-                <div class="ael-terminal-body" id="code2">
-<span class="comment"># 1. Inspect repository state (git status): Shows current branch (e.g. master), modified files, and commits ahead of origin</span>
-<span class="prompt">$</span> <span class="command">git status</span>
-
-<span class="comment"># 2. Audit exact code deltas (git diff): Displays uncommitted additions in green and deletions in red</span>
+                <div class="ael-terminal-body" id="code_add">
+<span class="comment"># 1. Audit active uncommitted changes before staging (shows additions in green)</span>
 <span class="prompt">$</span> <span class="command">git diff</span>
 
-<span class="comment"># 3. View the full commit history (git log): Lists commit hashes, author attribution, timestamps, and messages</span>
-<span class="prompt">$</span> <span class="command">git log</span>
+<span class="comment"># 2. Stage a specific modified file (e.g. swap.c) into the staging index</span>
+<span class="prompt">$</span> <span class="command">git add swap.c</span>
 
-<span class="comment"># 4. Display commit log in an elegant architectural graph format (one line per commit with ASCII branch topology)</span>
-<span class="prompt">$</span> <span class="command">git log --oneline --graph --all</span>
+<span class="comment"># 3. Stage all modified and untracked files within the current directory hierarchy</span>
+<span class="prompt">$</span> <span class="command">git add .</span>
+                </div>
+            </div>
 
-<span class="comment"># 5. Inspect the exact code changes and metadata of the most recent commit (HEAD)</span>
-<span class="prompt">$</span> <span class="command">git show HEAD</span>
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: git add</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">5:04</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">The next thing that's important to know is a command called git add. So git add is what you would do after you've cloned a repository and so now you have a copy of that repository on your computer and say you're making changes to that repository, changing the files, changing the code, and now you want to say that the next time that git saves a change to this repository, you want git to save the change that you made to that file. So let's show you what I mean by this. Let's say that we've just cloned this file. So this file now exists on your computer. It's being tracked by a repository. If I make a change to the code, maybe add a line to that code, and I want to say that, the next time you save a change to this repository, I want you to track that change, you would say git add followed by the name of the file, whatever that file happens to be named. And then, it would say change is to be committed. And it would track that this is a change that you now want to make to that code.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">5:59</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So let me show you what that looks like really quickly. I have here GitHub repository. So they usually live at some link, like github.com, slash some user name-- my user name is BrianU28, slash whatever the name of the GitHub repository is. In this case, this repository is just called seminar. Up in the upper right hand corner, you'll see a button that says clone or download. And if you click on that link, it will give you a link that you can copy in order to clone this repository to my own computer. And so I could copy this. And then I could go in to CS50 IDE. And then, if I were to type git clone followed by that URL, it would clone the repository and save it to my computer. In this case, I've already done it, so I'm not going to do it again. But you'll see, here, I have this folder called seminar. And that folder is just my copy of the repository that exists on GitHub.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">6:51</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So we'll take a look at the file that's in here. There's two files in here. But swap.c is the one that I'm interested in. You might recognize this file from a previous lecture. It was just the file where we kind of set two variables equal to two different numbers in C, and we want to swap them. But what you'll notice here is that this code is incomplete. It says swapping right now, but we don't actually swap the values just yet. So what I'd like to do now is I'm going to change this code so that it actually swaps the two numbers. And then I want to git add those changes so that git knows that this is a new version of the file that I want to save. So I'll just quickly add the necessary code, and those three lines are going to swap the file.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">7:39</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And so now if I cd into the seminar directory, what I can do is I can add the changes that I just made, and git will then track those changes so I can save them in the future. And in fact, one kind of little tip that might be helpful is that if I ever type git diff at the command line, it will show me all of the changes that I've made that I haven't tracked yet. So I type git diff, and it shows me down here that these are the three lines highlighted in green that I've added. I added this int temp equals x, x equals y, and y equals temp. And those are now changes that, the next time I add a file, they're going to be tracked by git. So I can do something like git add swap.c, and that will add the swap.c file as a file that I now want to track the next time I save a change. So git add swap.c. And so that now has been added to the changes that I want to track.</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: Staging & Committing -->
+        <!-- Chapter 4: git commit -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-file-contract"></i>
-                <h2 class="ael-card-title">3. Sovereign Staging & Snapshot Commits</h2>
+                <i class="fas fa-cube"></i>
+                <h2 class="ael-card-title">Chapter 4: Immutable Snapshots & `git commit`</h2>
             </div>
-            <p class="ael-card-desc">The two-stage cryptographic commit pipeline: pre-staging files in the staging area first, then sealing them into the permanent ledger with professional architectural commit messages.</p>
             
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-stamp"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    A commit generates a cryptographically secure SHA-1 / SHA-256 hash representing the absolute tree state of your project at a specific point in time. Accompanying each commit is a message which serves as the architectural justification for the change. Utilizing descriptive, enterprise-grade commit titles ensures that subsequent team audits via `git log` remain highly legible and professional.
+                </div>
+            </div>
+
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
                     <div class="ael-terminal-dots">
@@ -506,53 +711,222 @@
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
                     <span>zsh - commit</span>
-                    <button class="ael-copy-btn" onclick="copyCode('code3')">
+                    <button class="ael-copy-btn" onclick="copyCode('code_commit')">
                         <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
-                <div class="ael-terminal-body" id="code3">
-<span class="comment"># 1. Stage all currently modified and new files in the working directory</span>
-<span class="prompt">$</span> <span class="command">git add .</span>
+                <div class="ael-terminal-body" id="code_commit">
+<span class="comment"># 1. Seal staged files into a permanent commit snapshot with an explicit message</span>
+<span class="prompt">$</span> <span class="command">git commit -m "✨ actually swap the values"</span>
 
-<span class="comment"># 2. Stage specific target files precisely (e.g. swap.c as highlighted in the CS50 seminar)</span>
-<span class="prompt">$</span> <span class="command">git add swap.c</span>
+<span class="comment"># 2. Elite fast-track command: Combine staging and committing for previously tracked files</span>
+<span class="prompt">$</span> <span class="command">git commit -am "✨ actually swap the values in swap.c"</span>
 
-<span class="comment"># 3. Seal staged changes into a commit snapshot with a clean architectural title</span>
-<span class="prompt">$</span> <span class="command">git commit -m "🚀 [v1.0] Sovereign System Architect Initialization"</span>
+<span class="comment"># 3. Amend the previous commit directly (replaces the last commit snapshot without cluttering history)</span>
+<span class="prompt">$</span> <span class="command">git commit --amend -m "✨ actually swap the values (updated message)"</span>
+                </div>
+            </div>
 
-<span class="comment"># 4. The elite fast-track command (git commit -am): Combines staging (add) and committing into a single step for tracked files</span>
-<span class="prompt">$</span> <span class="command">git commit -am "✨ Actually swap the values in swap.c"</span>
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: git commit</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">8:28</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So what's the next step? The next step is called git commit. Once I've added all the files that I now want to save, now I need to actually make the save. So git commit you might think of as the equivalent of telling git to save a version of this repository. So the syntax looks something like this. You would type git commit followed by -m, and then, in quotation marks, some message. And that message is just going to be usually some summary of the changes that you've made in this particular change so that if anyone were to go back and look at what we call the commit history, they would be able to see all the changes, and when you made those changes, and what changes you made at any given stage in this program. So that's what git commit is. And it saves those new revisions of a repository and kind of records a message along with it.</span>
+                    </div>
+                </div>
 
-<span class="comment"># 5. Modify the previous commit directly (e.g. updating the commit message or including a forgotten file without creating a new commit hash)</span>
-<span class="prompt">$</span> <span class="command">git commit --amend -m "🚀 [v1.0] Sovereign System Architect Initialization (Updated)"</span>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">9:15</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And just as a side note, if you'd like to combine the adding and committing steps together into one step, this command right here git commit -am, a for all, or a for add, will automatically add all the files that you've changed, and also commit it with a commit message. So you can combine both of these steps together. So I'll show you what this looks like. When I type git commit and follow it by kind of a message suggesting what it is that I've changed, then what git will do is it will take my file, and it will save kind of a new version of it. It'll save this version, which says that I've added a line. It saves the message along with the commit. But it also still remembers that old version. Such that if I ever wanted to go back to that old version, I could still do that. So I'll show you what that looks like right now.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">9:55</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So I'm back here, and I've made these changes. I've already added them. So I can do git commit -m. And then, in quotation marks, actually swap the values. And that's going to be my message saying, here's the change that I made when I just made these changes to the code. And so I see this what's called a commit hash, which is just an identifier about the commit. And it says I've changed one file and added three lines, which is indeed true. I added three lines to this file in swap.c, and those are the changes that I have just now saved.</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 4: Merge Conflicts (NEW) -->
+        <!-- Chapter 5: git status & git push -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-satellite-dish"></i>
+                <h2 class="ael-card-title">Chapter 5: System Inspection & Cloud Push (`git status` & `git push`)</h2>
+            </div>
+            
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    `git status` functions as an enterprise situational radar, revealing your exact local branch topology and indicating whether your local ledger is ahead of or behind the remote upstream server (`origin/master`). Once verified, `git push` executes the secure transport of your local commit graph up to GitHub, making your sovereign architectural modifications globally accessible.
+                </div>
+            </div>
+
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - status_push</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code_push')">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code_push">
+<span class="comment"># 1. Check local repository status and verify commit divergence against origin</span>
+<span class="prompt">$</span> <span class="command">git status</span>
+
+<span class="comment"># 2. Push local commits up to the remote GitHub master branch</span>
+<span class="prompt">$</span> <span class="command">git push</span>
+
+<span class="comment"># 3. Explicit push command specifying remote destination and target branch</span>
+<span class="prompt">$</span> <span class="command">git push origin master</span>
+                </div>
+            </div>
+
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: git status & git push</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">10:28</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So what can I do now? git status is a helpful command, where, at any stage in working on a git repository, if you ever want to see kind of what's currently going on in the git repository, you can use git status to gain some kind of insight into what's currently happening, what are the changes that I've made to my current repository. And so the way that works is that if I were to type git status into the command line, I would see a message show up that says, what is the current status of my repository, and the message might look something like on branch master, and git has a feature which we'll get to in a moment called branching, which basically lets you keep track of different versions of your code, so you can have kind of different separate tracks of your codes. So if you want to test changes, or try to implement new features, you can do that separately from kind of the main part of your code, where master we consider to be kind of the default code.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">11:20</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And the second line here says, your branch is ahead of origin master by one commit, which is just kind of a fancy way of saying that, that version up here on the server, this version that we have is one commit, or one version, ahead of that version. So we've saved one change that the server up on GitHub doesn't yet know about. Clear so far? OK. And I'll show you exactly what that looks like. I can type git status right now, and it will tell me that exact same thing. I'm currently on branch master, and CS50 IDE is really nice in that it actually tells me, right here in my prompt, what branch I'm currently on. I'm on the master branch. And it says that I'm ahead of origin master, which is the version that lives up on GitHub by one commit. So one revision ahead.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">12:04</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So now, now that I'm one revision ahead, how do I then take those changes and, what we call, push them back up to GitHub so that the online version that can be accessible by anyone looking online, or accessible by collaborators who are also using the same online repository, can then see? And git push is the command that we would use. And so the syntax for that is just git push, which will send whatever committed changes we've made up to the remote repository up on GitHub. I can be very explicit and state exactly what branch I want to push to, as in git push origin master, meaning push these changes to the master branch. But generally, you wouldn't need to do this for normal purposes. So I would say something like git push, and then this new change, the change that I made on my computer, would then get pushed up to GitHub so that anyone looking online would then be able to see those changes that I just made.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">12:57</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And so I'll show you what that looks like right now. If I go back here. So again, I did git status. I'm ahead by 1 commit because right now I've added these three lines that actually perform the swap. And on GitHub, if I were to look at swap.c, this is online on GitHub, swap.c doesn't have those lines right now. On the online GitHub version, it just says swapping. But if I go back into CS50 IDE, and I type in git push, those will push those changes back up to GitHub. And if I go back to GitHub and refresh the page now, I'll see that, indeed, these three lines that I just added have now been pushed up online. And if you actually go to github.com slash brianu28 slash this whole link, you'll be able to see this exact same thing because this repository is public. So those changes have now been pushed online. Questions on how that worked? Fantastic. OK.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 6: git pull -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-sync"></i>
+                <h2 class="ael-card-title">Chapter 6: Cloud Synchronization (`git pull`)</h2>
+            </div>
+            
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-download"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    `git pull` operates as the direct inverse of `git push`. When upstream cloud repositories receive commits from parallel enterprise collaborators, your local working tree becomes outdated. Executing `git pull` fetches the remote delta graph and automatically fast-forward merges the incoming alterations directly into your active working directory.
+                </div>
+            </div>
+
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - pull</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code_pull')">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code_pull">
+<span class="comment"># 1. Fetch and fast-forward merge upstream cloud changes into the local branch</span>
+<span class="prompt">$</span> <span class="command">git pull</span>
+
+<span class="comment"># 2. Explicit pull command specifying remote server and upstream branch name</span>
+<span class="prompt">$</span> <span class="command">git pull origin master</span>
+                </div>
+            </div>
+
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: git pull</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">13:48</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So now git pull is another valuable command. git pull is kind of the opposite of git push. If git push means I made changes on my computer, and I want to send them up to GitHub so that the online version knows about it, git pull is GitHub contains a more recent version of the repository than I have on my computer. And I'd like to take those changes from online and pull them down onto my computer so that I can see the most recent version of the repository that's currently reflected on GitHub. And so the way that would work is, if someone were to make a third change to this repository, and my computer only had these two revisions to the repository, I could say something like git pull, and this third change to the repository that was added would then be pulled down onto my computer so that my computer now has all the versions that are matched on GitHub.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">14:31</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So I've actually set up a second IDE workspace. So this version has all the changes we just made. In this version of my workspace over here, which is a completely different workspace, inside swap.c, I haven't updated it to the latest changes yet. Because I haven't done a git pull. So it still says swapping, and it doesn't have the latest version of the code. So if I want to pull from GitHub, get the latest version, I would cd into the seminar directory. And then I could say git pull. And so it will pull the latest changes from GitHub. And you'll see that it says, fast forwarding this swap.c file. It changed one file, added three lines. And indeed, if I go to swap.c now, that file that I just changed, you'll see that those three lines that were on GitHub but weren't on my computer before are now on my computer because I did git pull, and so those changes are now reflected there. Clear on that? Fantastic.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 7: Merge Conflicts -->
         <section class="ael-card" style="border-color: #FF5F56;">
             <div class="ael-card-header">
                 <i class="fas fa-code-pull-request" style="color: #FF5F56;"></i>
-                <h2 class="ael-card-title">4. Demystifying & Resolving Merge Conflicts</h2>
+                <h2 class="ael-card-title">Chapter 7: Demystifying & Resolving Merge Conflicts</h2>
             </div>
-            <p class="ael-card-desc">Merge conflicts often intimidate developers, but Brian Yu's CS50 seminar proves they are simple, highly logical occurrences. A conflict triggers when two developers (or two environments) modify the <strong>exact same line of code</strong> simultaneously (for example, you locally set <code>int x = 17;</code> while the remote GitHub master branch was updated to <code>int x = 51;</code>). When you pull (<code>git pull</code>), Git refuses to guess which version is correct and requests your explicit architectural decision.</p>
             
+            <div class="ael-architect-box" style="border-left-color: #FF5F56;">
+                <div class="ael-architect-header" style="color: #FF5F56;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    Merge conflicts are not system failures; they are a highly logical protective mechanism. When two diverging environments modify the <strong>exact same line of code</strong> concurrently (e.g., setting `int x = 17;` locally while the cloud contains `int x = 51;`), Git halts the automated merge to prevent silent data corruption. It injects explicit conflict markers (`<<<<<<< HEAD`, `=======`, `>>>>>>>`) and demands that the system architect manually refactor the block and commit the definitive resolution.
+                </div>
+            </div>
+
             <div style="background: #060A14; border: 1px solid rgba(255, 95, 86, 0.3); padding: 1.5rem; border-radius: 12px; font-family: var(--ael-font-code); direction: ltr; text-align: left; margin: 1.5rem 0;">
                 <div style="color: #FF5F56; font-weight: bold;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
-                <div style="color: #27C93F; padding-left: 1rem;">int x = 17; <span style="color: #6B7280; font-family: var(--ael-font-sans); float: right;">// Your current local working tree modification</span></div>
+                <div style="color: #27C93F; padding-left: 1rem;">int x = 17; <span style="color: #6B7280; font-family: var(--ael-font-sans); float: right;">// Your local unmerged modification</span></div>
                 <div style="color: #FFBD2E; font-weight: bold;">=======</div>
                 <div style="color: #0074FF; padding-left: 1rem;">int x = 51; <span style="color: #6B7280; font-family: var(--ael-font-sans); float: right;">// Incoming remote modification from GitHub</span></div>
                 <div style="color: #FF5F56; font-weight: bold;">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 4761626a8d9...</div>
             </div>
 
-            <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #E6EEF8;">🛠️ The Clean Architectural Resolution Protocol:</h4>
-            <ol style="list-style-position: inside; color: var(--ael-text-primary); line-height: 2; margin-bottom: 2rem; font-size: 0.95rem;">
-                <li>Open the conflicted target file (such as <code>swap.c</code>) in your code editor.</li>
-                <li>Completely delete the Git conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code>, <code>=======</code>, and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).</li>
-                <li>Refactor the code block into the final desired state (e.g. keeping your line, their line, or merging them to <code>int x = 34;</code>).</li>
-                <li>Execute the following staging and commit commands to finalize the conflict resolution:</li>
-            </ol>
-
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
                     <div class="ael-terminal-dots">
@@ -560,121 +934,128 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - merge_conflict_resolution</span>
+                    <span>zsh - conflict_resolution</span>
                     <button class="ael-copy-btn" onclick="copyCode('code_conflict')">
                         <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code_conflict">
-<span class="comment"># 1. Verify which files contain unresolved merge conflicts (listed as unmerged paths)</span>
+<span class="comment"># 1. View unmerged files experiencing active conflicts</span>
 <span class="prompt">$</span> <span class="command">git status</span>
 
-<span class="comment"># 2. Once the file is cleaned and resolved, commit the merged state directly</span>
+<span class="comment"># 2. After deleting conflict markers and setting the line to int x = 34;, commit the clean state</span>
 <span class="prompt">$</span> <span class="command">git commit -am "🔧 [Bugfix] Resolve merge conflict in swap.c by setting x to 34"</span>
 
-<span class="comment"># 3. Push the clean resolution up to the cloud server to synchronize the global ledger</span>
+<span class="comment"># 3. Push the resolved state up to the cloud server</span>
 <span class="prompt">$</span> <span class="command">git push</span>
                 </div>
             </div>
-        </section>
 
-        <!-- Section 5: Branching & Workflows -->
-        <section class="ael-card">
-            <div class="ael-card-header">
-                <i class="fas fa-code-branch"></i>
-                <h2 class="ael-card-title">5. Advanced Branching & Pull Request Workflows</h2>
-            </div>
-            <p class="ael-card-desc">Branches provide fully isolated sandboxes to develop experimental features (such as building a dedicated <code>swap()</code> function) without destabilizing the production <code>master</code> or <code>main</code> branch. When you switch between branches (<code>git checkout</code>), the underlying filesystem (macOS Finder or CS50 IDE) instantly re-aligns all files to match the target branch!</p>
-            
-            <div class="ael-terminal">
-                <div class="ael-terminal-top">
-                    <div class="ael-terminal-dots">
-                        <div class="ael-dot ael-dot-red"></div>
-                        <div class="ael-dot ael-dot-yellow"></div>
-                        <div class="ael-dot ael-dot-green"></div>
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: Merge Conflicts</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">15:32</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">All right, let's talk about merge conflicts. This is the part of git that can often scare a lot of people. But don't worry. It's actually quite manageable. So here comes the question of, Git seems to be very good at automatically tracking what changes I've made to a file-- where I've added new files, where I've removed lines, I've added new lines to code. But what happens if I'm working on code, on a particular line, and I make a change to line 28, say, and some collaborator also makes a change to that same line, and we both try and push that code up to GitHub? Git's not going to be able to know what to do about that situation because it doesn't know which version of the code to believe, so to speak.</span>
                     </div>
-                    <span>zsh - branching_pr</span>
-                    <button class="ael-copy-btn" onclick="copyCode('code4')">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
                 </div>
-                <div class="ael-terminal-body" id="code4">
-<span class="comment"># 1. List all local branches (the active branch is highlighted in green with a leading star)</span>
-<span class="prompt">$</span> <span class="command">git branch</span>
 
-<span class="comment"># 2. Create a new experimental branch and switch to it instantly (the standard Pull Request workflow)</span>
-<span class="prompt">$</span> <span class="command">git checkout -b feature-swap-function</span>
-
-<span class="comment"># 3. Switch seamlessly between existing branches (return to the primary main branch)</span>
-<span class="prompt">$</span> <span class="command">git switch main</span>
-
-<span class="comment"># 4. Merge changes from the experimental branch into the active main branch</span>
-<span class="prompt">$</span> <span class="command">git merge feature-swap-function</span>
-
-<span class="comment"># 5. Delete the local feature branch once its changes are successfully merged</span>
-<span class="prompt">$</span> <span class="command">git branch -D feature-swap-function</span>
-                </div>
-            </div>
-
-            <div style="background: rgba(0, 116, 255, 0.05); border: 1px solid var(--ael-primary); padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
-                <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--ael-primary);"><i class="fas fa-handshake"></i> The Philosophy of Pull Requests (PRs)</h4>
-                <p style="font-size: 0.95rem; color: var(--ael-text-primary); line-height: 1.8;">A Pull Request is an enterprise governance mechanism that requests maintainers to merge code from an isolated feature branch or a forked repository into the primary baseline. It provides a formal staging ground for code reviews, architectural discussions, and automated CI/CD security checks prior to final administrative approval.</p>
-            </div>
-        </section>
-
-        <!-- Section 6: Remote Synchronization -->
-        <section class="ael-card">
-            <div class="ael-card-header">
-                <i class="fas fa-cloud-sync"></i>
-                <h2 class="ael-card-title">6. Cloud Synchronization & Zero-Trust Alignment</h2>
-            </div>
-            <p class="ael-card-desc">Commands for direct communication with remote cloud servers to push local snapshots, fetch upstream changes, and maintain precise alignment between local environments and GitHub infrastructure.</p>
-            
-            <div class="ael-terminal">
-                <div class="ael-terminal-top">
-                    <div class="ael-terminal-dots">
-                        <div class="ael-dot ael-dot-red"></div>
-                        <div class="ael-dot ael-dot-yellow"></div>
-                        <div class="ael-dot ael-dot-green"></div>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">16:13</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So this creates what we call a merge conflict, when, in trying to combine two different versions of the repository, there's some sort of problem that Git can't automatically resolve. And so you, the programmer, need to figure out how to resolve that conflict. And so here's what that might look like. Maybe if you try and git pull, and you're pulling in new changes from GitHub, but those changes conflict with changes that you've made on your computer, you might get a message that looks like this-- conflict, the merge conflict failed. You need to fix the conflicts and then commit the result. And so this might be what your file would look like after you get this merge conflict. You might get a situation where you have a whole bunch of lines of code, and then this weird kind of series of less than signs followed by head, a bunch of equal signs, and then a bunch of greater than signs, followed by some weird sequence of numbers and letters. This is what a merge conflict might actually look like.</span>
                     </div>
-                    <span>zsh - remote_sync</span>
-                    <button class="ael-copy-btn" onclick="copyCode('code5')">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
                 </div>
-                <div class="ael-terminal-body" id="code5">
-<span class="comment"># 1. Connect your local repository to a remote GitHub upstream destination</span>
-<span class="prompt">$</span> <span class="command">git remote add origin https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
 
-<span class="comment"># 2. Verify active remote connection URLs (fetch and push endpoints)</span>
-<span class="prompt">$</span> <span class="command">git remote -v</span>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">17:06</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And just to break this down for you, here's what all this means. Everything between head and the set of equal signs are all of the changes that you made that are in conflict. So changes that you've made on your computer. Everything between all of these equal signs and this series of greater than signs are all of the changes from GitHub that you're trying to pull down that are in conflict. So what happened here seems to be that the online version seems to have said int b equals 0, but my version, on my computer, I've committed, that b should be equal to 2. And those were the same line. So when git tried to merge those two together, it didn't know which line to go with. And so that's why we're getting this conflict. And this random sequence of numbers and letters right there is the conflicting commit. Every single commit gets a unique identifier, just a sequence of numbers and letters, and so this is telling me which is the commit from GitHub that is causing this conflict, that is the reason why I'm not able to merge these two together.</span>
+                    </div>
+                </div>
 
-<span class="comment"># 3. Fetch latest upstream updates from the server without modifying the local working tree (for security auditing)</span>
-<span class="prompt">$</span> <span class="command">git fetch origin</span>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">18:04</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And so what do you do in a situation like this? To resolve this merge conflict, all you need to do is get rid of this head line, the equal line, the greater than line, and then figure out what to do about these conflicting lines. You might delete one set and only use the other. You might somehow find a way to combine the two, but, in some way, you need to tell git what the actual version of the code should look like. So in this case, we might get rid of all the lines except for b equals 2 because b equals 2 is the version that I know that I want. You can get rid of the extra space there. And after that, I could commit this file, and now that would be the version that's saved. I've now resolved the merge conflict by specifically telling Git which version of the code that I want to use.</span>
+                    </div>
+                </div>
 
-<span class="comment"># 4. Fetch and immediately fast-forward merge upstream cloud changes into your active local branch (git pull)</span>
-<span class="prompt">$</span> <span class="command">git pull origin main</span>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">18:50</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So let's try and create a merge conflict right now so we can see what that looks like. In one version of my IDE, I'm going to take this x, which is right now 28, and I'm going to set it to-- pick a number, any number. 51. 51. And I'm going to git commit -am. And I'll say, what I'm doing here is I'm adding this change that I just made and committing it, saying I'm going to change x to 51. So I've made that commit. It notes that I've only changed one file. It says one insertion, one deletion. What that means is I deleted the line that says int x equals 28, and I added the line that says int x equals 51. It doesn't know that I changed two characters. It knows that I got rid of a line and replaced it with a line. I can git push now. And so that change pushing changing x to 51 is now online. So if I go to GitHub, and I refresh this, right now x is 28. Now I see that x is 51 because that's the change that I just pushed.</span>
+                    </div>
+                </div>
 
-<span class="comment"># 5. Push local commits to the cloud server and establish upstream branch tracking (git push)</span>
-<span class="prompt">$</span> <span class="command">git push -u origin main</span>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">19:41</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">Now, in this other version of the repository, where x is still 28-- why don't you pick a different number?</span>
+                    </div>
+                </div>
 
-<span class="comment"># 6. Push a newly created feature branch to the cloud server to initiate a Pull Request</span>
-<span class="prompt">$</span> <span class="command">git push -u origin feature-swap-function</span>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">19:48</div>
+                    <div>
+                        <span class="ael-speaker">AUDIENCE:</span>
+                        <span class="ael-text">17.</span>
+                    </div>
+                </div>
 
-<span class="comment"># 7. Delete a remote feature branch directly from the GitHub server</span>
-<span class="prompt">$</span> <span class="command">git push origin --delete feature-swap-function</span>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">19:54</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">17. And I'm going to say git commit -am "change x to 17". So I'm saving that change. And let's say now I wanted to pull the changes from GitHub, make sure I have the latest version of the code. I've changed x to 17 here. The version on GitHub has a recent change that says, we've changed x to be 51. So when I git pull, watch what's going to happen. I'll close this file for now, but I press git pull. And it says conflict, merge conflict in swap.c. The automatic merge failed, so git couldn't merge these two files automatically. I need to fix the conflicts and then commit the results. So let's open up swap.c and see what's going on.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">20:35</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And you'll see, oh, and CS50 IDE actually adds some nice little markers that help us understand what's going on. But we see this head, and we see this commit hash, and we see what the different versions are. This is my version that says int x equals 17. And this is their version that says int x equals 51. That's the version that we just pulled down from GitHub. So I need to decide kind of which version of the code that I actually want to use. Maybe I don't know. And maybe I just want to go with, I don't know, the average of the two. We'll do like, what is it, 34? And then I would get rid of these lines that are conflicting. I'm not too used to the syntax, but-- oh here we go. So I would just say int x equals 34.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">21:24</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And I'll get rid of all those extra lines. And so I've now changed this code, gotten rid of all those excess lines, and just replaced it with kind of the line that I actually want-- in this case, the one that says int x equals 34. At this point, I can do git status, just to see what's going on. It says that I have unmerged paths. I need to fix the conflicts and run git commit. I will do git commit -am, and I'll say, I'm going to commit these changes. I just fixed the merge conflicts. So now it says I fixed it. I can now git push, which takes these changes I just fixed the merge conflicts. I'm going to push them back up to GitHub. I git push. And now, after that's done, I can go back to GitHub, refresh the page, and x is now 34. And this is my resolution to this merge conflict. Kind of a lot of stuff happening simultaneously, but that makes sense? Any questions on how that merge conflict happened, why it happened, or what we were able to do in order to fix it? All good? Fantastic. OK. Let's move on then.</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 7: Undoing & Emergency Resets -->
+        <!-- Chapter 8: git reset & git log -->
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-history"></i>
-                <h2 class="ael-card-title">7. Emergency Recovery & Pure State Resets</h2>
+                <h2 class="ael-card-title">Chapter 8: Auditing History & Emergency Recovery (`git log` & `git reset`)</h2>
             </div>
-            <p class="ael-card-desc">Emergency recovery commands demonstrated by Brian Yu to undo unintended alterations, discard experimental failures, and forcefully reset the local environment to perfectly match the pristine cloud state.</p>
             
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    `git log` provides the complete cryptographic chain of custody for your repository. If an experimental implementation destabilizes the environment, `git reset --hard` grants the system architect the ultimate power to instantly roll back the filesystem to a known stable commit hash or forcefully match the remote upstream baseline (`origin/master`).
+                </div>
+            </div>
+
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
                     <div class="ael-terminal-dots">
@@ -682,38 +1063,72 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - emergency_reset</span>
-                    <button class="ael-copy-btn" onclick="copyCode('code6')">
+                    <span>zsh - log_reset</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code_reset')">
                         <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
-                <div class="ael-terminal-body" id="code6">
-<span class="comment"># 1. Discard uncommitted modifications in a target file and restore it to the last committed state</span>
-<span class="prompt">$</span> <span class="command">git restore swap.c</span>
+                <div class="ael-terminal-body" id="code_reset">
+<span class="comment"># 1. View the full chronological ledger of all commits and author attribution</span>
+<span class="prompt">$</span> <span class="command">git log</span>
 
-<span class="comment"># 2. Unstage a file from the staging area while preserving its local working tree modifications</span>
-<span class="prompt">$</span> <span class="command">git reset swap.c</span>
-
-<span class="comment"># 3. Forcefully undo the last local commit and permanently discard its file modifications</span>
-<span class="prompt">$</span> <span class="command">git reset --hard HEAD~1</span>
-
-<span class="comment"># 4. Roll back time to a specific target commit hash (providing the first 6-7 characters of the hash is sufficient)</span>
+<span class="comment"># 2. Forcefully roll back the local working tree to a specific commit hash (the first 7 chars suffice)</span>
 <span class="prompt">$</span> <span class="command">git reset --hard 4761626</span>
 
-<span class="comment"># 5. The absolute zero-trust reset: Forcefully overwrite local files to perfectly match the cloud master branch 100%</span>
-<span class="prompt">$</span> <span class="command">git reset --hard origin/main</span>
+<span class="comment"># 3. Absolute zero-trust reset: Overwrite local modifications to perfectly match the remote master branch</span>
+<span class="prompt">$</span> <span class="command">git reset --hard origin/master</span>
+                </div>
+            </div>
+
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: git log & git reset</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">22:28</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">git log is another very useful feature. And git log's job is, basically, it will tell you kind of the history of all of the commits that you have made previously. So it shows the history of the commits and their messages. So if I do something like git log, and type that into my terminal, then something like this will show up, where it will show me a history of all the commits that I've made. It will show me the kind of commit ID, or the commit hash, that identifies that commit. It will tell me who made that commit. So if multiple people are collaborating together, it will tell you who made the change, when they made the change, on a particular date, and then this message here is whatever you said was the commit message. So that's why a commit message can be very, very important. Because when you use git log, you'll see all the changes that were made, and the message is a very good indicator as to what was changed in this particular version. So make sure you use good commit messages if you're going to use git. Questions on git log? I'll show you what that looks like in the actual terminal. I can type in git log at the terminal. And it will show me all these changes that I've made. So I added the swap file, changed x to 17, fixed these merge conflicts. Those are all the changes, and you can see kind of when I made those changes and who made those changes. Clear? Fantastic.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">23:45</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">All right, so now let's say I made a change, but I didn't mean to make that change, and I want to kind of go back to a previous version of the code. That's what git reset is for. That allows me to kind of roll back, these changes didn't work, I want to go back to an older version. And here's how that works. So recall that every one of our commits has a commit hash, some unique identifier that says this is how we identify this particular change. And down here, next to the commit messages, I've included the first couple characters of those commit hashes. If I type git reset --hard, followed by some commit hash-- and usually you don't need to include the entire commit hash because usually it's dozens upon dozens of characters. Usually just a couple of characters, at least enough to uniquely identify that commit so that no other commit has those same initial characters is sufficient-- if you type that, it will revert your code back to that previous version, and you will lose all of the changes that you've made since that version. So do this only if you were sure that you want to go back to the previous version.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">24:50</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">In addition to going back to a previous version in your commit history, you can also go back to the version that currently exists on GitHub. So if there were a version on GitHub, which is our origin, in this case, the origin of the repository, and we've made changes on our computer, and now we realize those changes really don't work, and really want to go back, you can use git reset --hard origin/master, to go back to the version that's on GitHub and its master branch. And again, we've only been working on the master branch so far, so that's the only thing that we really have to work with. So I can type git reset --hard followed by 4761626, where that is the beginning of the commit hash for this version of the repository. And again, if I don't know what the identifier is, I can always use git log, that code, that command that shows me the history of all the commits that I've made along with when I made any particular commit and what changes were made in that commit. So that can give me the identifier, and if I do git reset, then these changes that I've made after that file will kind of go away, and I'll be left with this being the most recent version. And so that's what I'm going to have left over. Any questions on that?</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 8: gh CLI Advanced -->
+        <!-- Chapter 9: Branching & git branch & git merge -->
         <section class="ael-card">
             <div class="ael-card-header">
-                <i class="fas fa-terminal"></i>
-                <h2 class="ael-card-title">8. Elite Cloud Management via `gh CLI`</h2>
+                <i class="fas fa-code-branch"></i>
+                <h2 class="ael-card-title">Chapter 9: Isolated Sandboxes & Branching (`git branch`, `checkout`, `merge`)</h2>
             </div>
-            <p class="ael-card-desc">Advanced terminal armaments utilized by elite system architects to manage GitHub infrastructure, automate Pull Requests, and trigger CI/CD pipelines directly from the command line.</p>
             
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    Branching enables the creation of fully isolated parallel dimensions within a single repository. System architects can safely construct experimental features (such as encapsulating logic into a dedicated `swap()` function) in a separate branch without threatening the stability of `master`. When switching branches via `git checkout`, the host operating system instantly restructures the live filesystem to match the target branch topology.
+                </div>
+            </div>
+
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
                     <div class="ael-terminal-dots">
@@ -721,58 +1136,234 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - gh_cli_elite</span>
-                    <button class="ael-copy-btn" onclick="copyCode('code7')">
+                    <span>zsh - branching</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code_branch')">
                         <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
-                <div class="ael-terminal-body" id="code7">
-<span class="comment"># 1. Authenticate and establish a secure terminal session with your GitHub enterprise account</span>
-<span class="prompt">$</span> <span class="command">gh auth login</span>
+                <div class="ael-terminal-body" id="code_branch">
+<span class="comment"># 1. List active local branches (current branch is highlighted in green with a star)</span>
+<span class="prompt">$</span> <span class="command">git branch</span>
 
-<span class="comment"># 2. Create a new cloud repository and push current local code instantly in a single execution</span>
-<span class="prompt">$</span> <span class="command">gh repo create aymanelmasryael/AEL-New-Project --public --source=. --remote=origin --push</span>
+<span class="comment"># 2. Create a new feature branch (e.g. function)</span>
+<span class="prompt">$</span> <span class="command">git branch function</span>
 
-<span class="comment"># 3. Configure strict repository governance rules (enable discussions, enforce squash-merging, and auto-delete branches)</span>
-<span class="prompt">$</span> <span class="command">gh repo edit aymanelmasryael/AEL-Sovereign-CS50x-2026-2027 --delete-branch-on-merge --enable-discussions --enable-squash-merge</span>
+<span class="comment"># 3. Switch active working tree to the newly created branch</span>
+<span class="prompt">$</span> <span class="command">git checkout function</span>
 
-<span class="comment"># 4. Initiate an official Pull Request directly from the terminal prompt</span>
-<span class="prompt">$</span> <span class="command">gh pr create --title "🎨 [UI/UX] Showcasing Master Architectural Banner" --body "Injecting master banner for canonical visual authority."</span>
+<span class="comment"># 4. Elite fast-track command: Create and checkout a new branch simultaneously</span>
+<span class="prompt">$</span> <span class="command">git checkout -b feature-swap-function</span>
 
-<span class="comment"># 5. List all active open Pull Requests inside the current repository</span>
-<span class="prompt">$</span> <span class="command">gh pr list</span>
+<span class="comment"># 5. Switch back to the primary master branch</span>
+<span class="prompt">$</span> <span class="command">git checkout master</span>
 
-<span class="comment"># 6. Inspect status, diffs, and validation checks for a specific Pull Request ID</span>
-<span class="prompt">$</span> <span class="command">gh pr view 2</span>
+<span class="comment"># 6. Merge changes from the experimental branch into the active master branch</span>
+<span class="prompt">$</span> <span class="command">git merge function</span>
 
-<span class="comment"># 7. Execute automated PR merging with administrative overrides and auto-delete the underlying feature branch</span>
-<span class="prompt">$</span> <span class="command">gh pr merge 2 --squash --delete-branch --admin</span>
+<span class="comment"># 7. Delete the feature branch once its changes are cleanly merged</span>
+<span class="prompt">$</span> <span class="command">git branch -D function</span>
+                </div>
+            </div>
 
-<span class="comment"># 8. List the 5 most recent active GitHub Actions workflow executions in the cloud CI/CD pipeline</span>
-<span class="prompt">$</span> <span class="command">gh run list --limit 5</span>
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: Branching, Checkout & Merge</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">25:57</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">OK, let's get into talking about branching. So branching is a very, very valuable feature in git that basically allows you, in a single repository, to have a couple different kind of versions of the code that are going on simultaneously. So maybe you have one version of your code, your master branch, that's generally the one that works perfectly, or that does what you need it to do, and maybe you want to add new features to your program, or you want to add something brand new to your code, but you don't want to potentially mess up the master branch because that one you know works. So one thing you can do is you can kind of branch off, creating a new branch that you're making new changes to, testing out new features, while keeping your original master branch identical. And then you can make commits to this new branch. You can roll back those commits and do all the same things that we were just talking about previously in the seminar. And then only when you feel ready that this new branch has all the things that you want it to have and is ready to kind of become the official version, can you then merge it back into the master branch so that you then have the one working version.</span>
+                    </div>
+                </div>
 
-<span class="comment"># 9. Fetch live logging status and debugging diagnostics for a specific workflow run ID</span>
-<span class="prompt">$</span> <span class="command">gh run view 28381788686</span>
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">27:10</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So git branch is the command that you would use in order to create a new branch. So if I just type git branch, it will show me all of the current branches that I have on the repository. But if I want to create a new branch, I would type git branch followed by the name of the branch. And I could just make up any branch name I want, so long as it's not a name that already exists as a branch. And then, once I've created a new branch, if I want to switch to that new branch, I would use git checkout. So git checkout, followed by the name of the branch, will switch me to that new branch that are going to be working on that other branch. And side note, if you want to kind of combine these two steps to check out a new branch and create it at the same time, you can use git checkout -b, and then followed by a new branch name, and that will both create a new branch, and it will switch you to it. That can just be a little time saving feature.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">28:35</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">git merge is the command that we would use to merge two different branches together, and the way that works is like this. git merge, followed by some branch name, merges that branch with whatever branch I am currently on. So what that means is that if I am currently on the master branch, and the tests branch now has kind of a whole bunch of versions to the code that have been made so it's got a whole bunch of files that have been changed, and I now want to take those changes and say, I want to bring them into the master branch. Then the command that I would use here would be something like git merge tests. And that would take all these changes to the test branch. And it would merge them with the master branch so that the master branch now reflects all of those changes.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">30:00</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So as you can see, right now, I'm on the master branch of this repository. And I can see this even more clearly, if your terminal doesn't display what branch you're on, just by typing git branch, and that will tell me that there is only one branch in this repository, and it is called master. So let's say I want to create a new branch. Let's say I want to separate out this code, the code that does the swapping, into its own function. But that seems like it has the potential to go wrong. It might not necessarily work. So I don't want to just change this file. I want to create a new branch that will let me test out those changes without worrying about whatever is happening in master. So I'm going to create a new branch via git branch, and I'll call it function just because the purpose of this branch is I'm going to be creating a new function in order to perform the swap. So I type git branch function.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">30:51</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And now, if I were to type git branch, you'll see that I have two branches going here. I've got a master branch, and it's green, so that says that's the branch I'm on right now. But there's also a function branch that appears now. That's the branch that I've just created. And if I want to switch to that branch, I would type something like git checkout function. And it says, switched to branch function. And so now, if I type git branch, I would see there are two branches still, function and master, but function is now the green one with the star next to it. That's the branch that I'm currently on. So now I'm on this function branch, and I can add this swap function, void swap, int star A, int star B, and int temp equals star a, star a equals star b, and star b equals temp. And I can now replace this with just swap address of x, address of y. That should work, right? Hopefully, it works. I'm going to commit those changes. I'm going to say add a swap function.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">32:16</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">If I were to check out the master branch, git checkout master, what you'll notice is that swap.c changes. It changed back to the version that's on the master branch because the master branch doesn't have the new function. It just has these three lines of code that are right inside the main function. Watch again, if I git checkout back to the function branch, watch what happens to swap.c. It will just immediately show me, here's the version that's on the function branch. And so those are those changes. Question?</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">32:51</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">Yeah, so on the Mac Finder, if you do a git checkout, and maybe this new branch has a file that didn't exist on the other branch, that file will appear in your file system. So it absolutely works. And so now maybe I'm happy with those changes, and I want to-- let's actually make sure it works. Fantastic. That did in fact work. So now I feel comfortable merging those changes back into the master branch. So I'm going to go to the master branch via git checkout master, and notice, once again, this is the version that's currently in the master branch, and my function branch has that new commit that I want to merge in. If I type git merge function, what that's going to do is it's going to take the changes on the function branch, and it will merge them into the master branch so that that new commit, that version where I made the new function, will now become part of master. And there shouldn't be any merge conflicts because I haven't changed master. So I press Return. It makes those changes. And now this is my master branch, and I have that swap function.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">33:52</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And you can see, if I type git branch, I'm still on the master branch. But that new function that I created in the function branch now exists in master. And at this point, if I wanted to, I could delete the function branch, because I no longer need it. And the command to do that is git branch -D, capital D for delete, followed by the name of the branch. So git branch -D function deleted branch function. So now, if I type git branch again, I only have the master branch, and if I were to git log to look at all the commits that I've made, I would see that add a swap function is now there as a commit in the master branch because I merged those commits into that particular branch. Any questions on how that works? And so merging and having branches is a very, very powerful tool. And I would highly recommend it when you're working on your final projects. Because if you want to kind of be a little bit ambitious and potentially test new changes to the code, this can be a good way of making sure that you still hold on to the original while still allowing yourself the creative freedom to experiment, and make changes, and mess with the stuff that you've already written.</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 9: submit50 Behind the Scenes (NEW) -->
+        <!-- Chapter 10: Pull Requests -->
+        <section class="ael-card">
+            <div class="ael-card-header">
+                <i class="fas fa-handshake"></i>
+                <h2 class="ael-card-title">Chapter 10: Enterprise Governance & Pull Requests</h2>
+            </div>
+            
+            <div class="ael-architect-box">
+                <div class="ael-architect-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    A Pull Request (PR) is the quintessential mechanism for enterprise repository governance and open-source collaboration. When developing within a dedicated feature branch or an external forked repository, a Pull Request formally petitions the core maintainers to review, discuss, and execute automated CI/CD security checks before merging the proposed delta into the canonical master branch.
+                </div>
+            </div>
+
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - gh_pull_requests</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code_pr')">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code_pr">
+<span class="comment"># 1. Initiate an official Pull Request from the command line via GitHub CLI</span>
+<span class="prompt">$</span> <span class="command">gh pr create --title "🎨 [Feature] Encapsulate swap logic in function" --body "Isolated testing verified in feature branch."</span>
+
+<span class="comment"># 2. List all active open Pull Requests inside the repository</span>
+<span class="prompt">$</span> <span class="command">gh pr list</span>
+
+<span class="comment"># 3. Merge a specific Pull Request using squash-merge and automatically delete the feature branch</span>
+<span class="prompt">$</span> <span class="command">gh pr merge 1 --squash --delete-branch --admin</span>
+                </div>
+            </div>
+
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: Pull Requests</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">35:00</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">All right, and last thing I'll kind of briefly touch on but won't do a demonstration of is something called pull requests. This happens very frequently in open source projects, especially. But if you've made a change to a repository, either in a separate branch or potentially in a fork, like I mentioned earlier, where a fork is just kind of your version of someone else's repository, sometimes you may want to request to kind of merge those changes back into the original version. And so this would be when you would submit a pull request, as the terminology goes. And so if you hear that, know that all that means is that you've made changes to some repository, either in a different branch, or in a different forked repository altogether, and you would like to then kind of merge it back into whatever the original version was. And this is typically done via a pull request. And GitHub has functionality built into it to allow for pull requests to happen and to allow for whoever owns the repository to kind of review pull requests, look at the changes that people have made, and either decide to approve or reject those changes.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">35:57</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">So once again, Git is a very valuable tool that helps you keep track of different changes to your code, makes sure different collaborators can work together on the same repository, makes sure you can be ambitious and test new changes without losing the original copy of your code, and also allows you to, if you ever do make a mistake, to go back to a previous version. So as long as you are kind of frequently making commits, saving the work that you're doing, this can be a very, very valuable tool for keeping track of the different versions of your code and making sure that your project is under control. I'll take any questions now, but that's what I had for you today. All good? All right, fantastic thank you both for coming.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 11: submit50 Behind the Scenes -->
         <section class="ael-card" style="border-color: #27C93F; margin-bottom: 0;">
             <div class="ael-card-header">
                 <i class="fas fa-server" style="color: #27C93F;"></i>
-                <h2 class="ael-card-title">9. CS50 Underlying Architecture: How `submit50` Actually Works</h2>
+                <h2 class="ael-card-title">Chapter 11: CS50 Underlying Architecture (`submit50` Behind the Scenes)</h2>
             </div>
-            <p class="ael-card-desc">Senior Software Engineer Brian Yu concludes the CS50 seminar by unveiling the magnificent architectural secret behind the famous academic submission tool <code>submit50</code>. The utility is actually an intelligent terminal wrapper that executes automated Git and GitHub commands on behalf of the student via a seamless CI/CD pipeline:</p>
             
-            <div style="background: rgba(39, 201, 63, 0.08); border: 1px solid rgba(39, 201, 63, 0.3); padding: 2rem; border-radius: 12px; margin-top: 1.5rem;">
-                <h4 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; color: #27C93F;"><i class="fas fa-cogs"></i> The Automated submit50 Pipeline:</h4>
-                <ul style="list-style-type: none; padding: 0; margin: 0; line-height: 2.2; color: var(--ael-text-primary); font-size: 1rem;">
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>Dedicated Student Repositories:</strong> Upon registration, an isolated repository is provisioned on GitHub servers under the enterprise namespace <code>github.com/submit50/username</code>.</li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>Isolated Problem Branching:</strong> When a student executes <code>submit50 pset7</code>, the wrapper silently checks out a dedicated target branch named after the specific assignment (e.g. <code>pset7</code>, <code>mario</code>, or <code>speller</code>).</li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>Automated Cloud Push:</strong> The wrapper executes a pre-formatted <code>git commit</code> on your active working files and immediately forces a <code>git push</code> up to that specific branch on your <code>submit50</code> remote.</li>
-                    <li><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>Version Freezing via Releases & Tagging:</strong> Once the cloud push completes, CS50's staff bots generate a formal Git Tag / Release to permanently freeze that precise commit snapshot, queuing it for automated test verification and final grading!</li>
-                </ul>
+            <div class="ael-architect-box" style="border-left-color: #27C93F;">
+                <div class="ael-architect-header" style="color: #27C93F;">
+                    <i class="fas fa-cogs"></i>
+                    <span>Antigravity Architectural Commentary</span>
+                </div>
+                <div class="ael-architect-body">
+                    The grand conclusion of the seminar unveils the architectural secret behind CS50's prominent submission utility, `submit50`. Rather than a proprietary transfer protocol, `submit50` is an elegant terminal wrapper that orchestrates standard Git and GitHub commands behind the scenes. It automates branch isolation (`pset7`, `mario`), forces cloud synchronization (`git commit` and `git push`), and leverages Git Tags / Releases to freeze exact commit snapshots for automated grading bots.
+                </div>
+            </div>
+
+            <div class="ael-transcript-box">
+                <div class="ael-transcript-title">
+                    <i class="fas fa-microphone-alt"></i>
+                    <span>CS50 Masterclass Transcript: submit50 Architecture</span>
+                </div>
+                
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">36:35</div>
+                    <div>
+                        <span class="ael-speaker">AUDIENCE:</span>
+                        <span class="ael-text">Oh, question. How does submit50 work?</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">36:42</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">Oh, yeah. So submit50 is-- OK, let me make sure I'm remembering this correctly. submit50 is, basically what is happening is, every time you submit50 something, you are submitting kind of a new branch to your submit50 repository. So when you type in something like submit50 pset7, what was happening is, behind the scenes, we were creating a new branch called pset7. And we were kind of pushing all of those changes to GitHub as a brand new branch. So if you were ever to go to github.com/submit50/yourusername, that, in itself, is a repository. Each student in the class has a repository. And within that repository, there are branches for each of the different times you submit50. So there's a submit50 for Mario, there's a submit50 for pset5, there's a submit50 for the test. And each one of those are just different branches that are named with whatever the name of the problem is and the name of the problem set, or the name of the test.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">37:35</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">And so whenever you do a submit50, it pushes those to a new branch. And then what we do is we tag those changes as a new release such that it makes it easy for us to kind of look at all of the changes that you've made. We didn't go into tagging and releases in this seminar. But it's just yet another way of kind of keeping track of different versions of code and keeping track of different changes to it.</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">37:55</div>
+                    <div>
+                        <span class="ael-speaker">AUDIENCE:</span>
+                        <span class="ael-text">So tagging is used for marking a specific version to be graded?</span>
+                    </div>
+                </div>
+
+                <div class="ael-dialogue-block">
+                    <div class="ael-timestamp">38:05</div>
+                    <div>
+                        <span class="ael-speaker">SPEAKER (Brian Yu):</span>
+                        <span class="ael-text">Yeah, yeah. That's typically what it would be used for. Exactly. And so when you submit something, that's kind of our semantic equivalent of saying that you've now supposedly gotten your problem set working, and this is the version that you want graded. And if so, we'll tag those. That's kind of the way it works. Good question, though. OK, thank you so much.</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -814,4 +1405,5 @@
     </script>
 </body>
 </html>
+
 
