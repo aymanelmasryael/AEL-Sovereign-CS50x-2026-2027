@@ -380,13 +380,45 @@
     <!-- Main Content -->
     <main class="ael-container">
 
+        <!-- Intro Section: The 4 Superpowers -->
+        <section class="ael-card" style="border-color: var(--ael-primary);">
+            <div class="ael-card-header">
+                <i class="fas fa-gem"></i>
+                <h2 class="ael-card-title">مقدمة معمارية: القوى الأربع الكبرى لنظام Git (The 4 Superpowers)</h2>
+            </div>
+            <p class="ael-card-desc">في ندوة CS50 التاريخية <em>"It's going to be about Git and GitHub"</em>، يوضح المهندس برايان يو (Brian Yu) أن نظام Git ليس مجرد أداة لحفظ الملفات، بل هو نظام متقدم للتحكم في الإصدارات (Version Control) يمنح مهندس النظم أربع قوى خارقة:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
+                    <i class="fas fa-history" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">1. تتبع السجل التاريخي</h4>
+                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">تسجيل دقيق لكل تعديل طرأ على الكود (من أضافه، متى، ولماذا)، مما يجعل اكتشاف الأخطاء وتتبع أسبابها (Debugging) أمراً حتمياً وموثوقاً.</p>
+                </div>
+                <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
+                    <i class="fas fa-sync-alt" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">2. المزامنة والتعاون</h4>
+                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">دمج جهود عدة مهندسين يعملون في ذات الوقت على نفس الملفات عبر مستودع سحابي (GitHub)، لضمان امتلاك الجميع لأحدث نسخة محدثة.</p>
+                </div>
+                <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
+                    <i class="fas fa-flask" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">3. التجربة الحرّة والآمنة</h4>
+                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">القضاء نهائياً على العادة الفوضوية القديمة بإنشاء نسخ متراكمة مثل <code>project_old.c</code>. يتيح لك Git اختبار أفكار جديدة دون المساس بالكود الأصلي السليم.</p>
+                </div>
+                <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
+                    <i class="fas fa-undo-alt" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">4. التراجع الفوري عن الأخطاء</h4>
+                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">القدرة المطلقة على العودة بالزمن إلى أي إصدار مستقر بضغطة زر واحدة، في حال أدت التعديلات الجديدة إلى كسر النظام أو تعطله.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Section 1: Setup & Configuration -->
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-user-shield"></i>
-                <h2 class="ael-card-title">1. التهيئة وضبط الهوية السيادية (Setup & Configuration)</h2>
+                <h2 class="ael-card-title">1. التهيئة، ضبط الهوية، واستنساخ المشاريع (Setup, Init & git clone)</h2>
             </div>
-            <p class="ael-card-desc">الأوامر الأساسية لتعريف هويتك كمهندس نظم وتهيئة المستودعات المحلية واستنساخ المشاريع.</p>
+            <p class="ael-card-desc">الأوامر التأسيسية لتعريف هويتك السيادية كمهندس نظم، تهيئة المستودعات المحلية، واستنساخ المشاريع السحابية لبيئتك المحلية (مثل CS50 IDE أو جهاز Mac).</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -410,10 +442,10 @@
 <span class="comment"># 3. فحص إعدادات الهوية الحالية للتأكد من صحتها</span>
 <span class="prompt">$</span> <span class="command">git config --list</span>
 
-<span class="comment"># 4. تهيئة مستودع محلي جديد داخل أي مجلد</span>
+<span class="comment"># 4. تهيئة مستودع محلي جديد داخل أي مجلد فارغ (تحويله إلى مستودع يتبعه Git)</span>
 <span class="prompt">$</span> <span class="command">git init</span>
 
-<span class="comment"># 5. استنساخ مستودع سحابي قائم إلى جهازك المحلي</span>
+<span class="comment"># 5. استنساخ مستودع سحابي قائم (git clone): ينشئ نسخة مطابقة للمستودع السحابي في جهازك المحلي</span>
 <span class="prompt">$</span> <span class="command">git clone https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
                 </div>
             </div>
@@ -423,9 +455,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-search-location"></i>
-                <h2 class="ael-card-title">2. الفحص، المراقبة، والمقارنة الذرية (Inspection & Auditing)</h2>
+                <h2 class="ael-card-title">2. الفحص، المراقبة، والمقارنة الذرية (git status, diff & log)</h2>
             </div>
-            <p class="ael-card-desc">أوامر الرادار البرمجي لمعرفة حالة الكود وتتبع التعديلات وسجلات الحفظ بدقة متناهية.</p>
+            <p class="ael-card-desc">أوامر الرادار البرمجي التي تشرحها ندوة CS50 لمعرفة حالة الكود وتتبع التعديلات وسجلات الحفظ بدقة متناهية قبل الإقدام على أي خطوة.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -440,16 +472,19 @@
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code2">
-<span class="comment"># 1. فحص حالة الملفات ومعرفة ما تم تعديله أو إضافته</span>
+<span class="comment"># 1. فحص حالة الكود (git status): يخبرك بالفرع الحالي (مثل master)، والملفات المعدلة، وعدد التوثيقات التي تسبق السحاب (ahead of origin)</span>
 <span class="prompt">$</span> <span class="command">git status</span>
 
-<span class="comment"># 2. عرض الفروقات البرمجية الدقيقة (السطور التي تم تعديلها قبل حفظها)</span>
+<span class="comment"># 2. عرض الفروقات البرمجية الدقيقة (git diff): يعرض السطور المضافة باللون الأخضر والمحذوفة بالأحمر (قبل حفظها)</span>
 <span class="prompt">$</span> <span class="command">git diff</span>
 
-<span class="comment"># 3. عرض سجل الحفظ (Commits) بأسلوب معماري ناصع ومختصر</span>
+<span class="comment"># 3. عرض سجل الحفظ (git log): يعرض تاريخ وثائق الحفظ، هوية أصحابها، التواريخ، ومعرف التوثيق الفريد (Commit Hash)</span>
+<span class="prompt">$</span> <span class="command">git log</span>
+
+<span class="comment"># 4. عرض سجل الحفظ بأسلوب معماري ناصع ومختصر (سطر واحد لكل توثيق مع رسم بياني)</span>
 <span class="prompt">$</span> <span class="command">git log --oneline --graph --all</span>
 
-<span class="comment"># 4. عرض تفاصيل آخر عملية حفظ تمت في المستودع</span>
+<span class="comment"># 5. عرض تفاصيل آخر عملية حفظ تمت في المستودع (بما في ذلك التعديلات الفعلية)</span>
 <span class="prompt">$</span> <span class="command">git show HEAD</span>
                 </div>
             </div>
@@ -459,9 +494,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-file-contract"></i>
-                <h2 class="ael-card-title">3. التجهيز والتوثيق السيادي (Staging & Committing)</h2>
+                <h2 class="ael-card-title">3. التجهيز والتوثيق السيادي (git add & git commit)</h2>
             </div>
-            <p class="ael-card-desc">أوامر تجهيز الملفات وختمها بالسجلات البيروقراطية المنظمة وتعديل وثائق الحفظ.</p>
+            <p class="ael-card-desc">عملية النقل الثنائية المعتمدة: تجهيز الملفات في منصة العرض (Staging) أولاً، ثم ختمها بالسجل الدائم (Commit) مع كتابة عنوان معماري يصف التعديل بدقة.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -476,28 +511,80 @@
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code3">
-<span class="comment"># 1. إضافة كافة الملفات والتعديلات إلى منصة التجهيز (Staging)</span>
+<span class="comment"># 1. إضافة كافة الملفات والتعديلات الحالية إلى منصة التجهيز (Staging)</span>
 <span class="prompt">$</span> <span class="command">git add .</span>
 
-<span class="comment"># 2. إضافة ملفات محددة بدقة</span>
-<span class="prompt">$</span> <span class="command">git add README.md AEL-Sovereign-CS50x-2026-2027.png</span>
+<span class="comment"># 2. إضافة ملفات محددة بدقة (مثل ملف swap.c كما في شرح ندوة CS50)</span>
+<span class="prompt">$</span> <span class="command">git add swap.c</span>
 
-<span class="comment"># 3. إنشاء وثيقة حفظ (Commit) مع عنوان معماري احترافي</span>
+<span class="comment"># 3. إنشاء وثيقة حفظ (Commit) مع عنوان معماري احترافي يصف التعديل بوضوح</span>
 <span class="prompt">$</span> <span class="command">git commit -m "🚀 [v1.0] Sovereign System Architect Initialization"</span>
 
-<span class="comment"># 4. تعديل آخر وثيقة حفظ (في حال أردت تغيير الوصف أو إضافة ملف نسيته)</span>
+<span class="comment"># 4. الأمر الذهبي السريع (git commit -am): يدمج خطوتي الإضافة (add) والحفظ (commit) معاً للملفات المتعقبة مسبقاً</span>
+<span class="prompt">$</span> <span class="command">git commit -am "✨ Actually swap the values in swap.c"</span>
+
+<span class="comment"># 5. تعديل آخر وثيقة حفظ (في حال أردت تغيير الوصف أو إضافة ملف نسيته دون إنشاء توثيق جديد)</span>
 <span class="prompt">$</span> <span class="command">git commit --amend -m "🚀 [v1.0] Sovereign System Architect Initialization (Updated)"</span>
                 </div>
             </div>
         </section>
 
-        <!-- Section 4: Branching & Workflows -->
+        <!-- Section 4: Merge Conflicts (NEW) -->
+        <section class="ael-card" style="border-color: #FF5F56;">
+            <div class="ael-card-header">
+                <i class="fas fa-code-pull-request" style="color: #FF5F56;"></i>
+                <h2 class="ael-card-title">4. فك تشفير وحل نزاعات الدمج (Demystifying Merge Conflicts)</h2>
+            </div>
+            <p class="ael-card-desc">تعتبر نزاعات الدمج (Merge Conflicts) من أكثر المواضيع التي تُرهق المبرمجين، ولكن ندوة CS50 توضح أنها عملية منطقية وبسيطة جداً. تحدث هذه النزاعات عندما يقوم شخصان (أو بيئتا عمل) بتعديل <strong>نفس السطر المصدري</strong> في ذات الوقت (مثلاً: قيامك محلياً بجعل <code>int x = 17;</code> بينما النسخة على GitHub تم تعديلها لتصبح <code>int x = 51;</code>). عند محاولة السحب (<code>git pull</code>)، يعجز Git عن اتخاذ القرار، فيطلب منك التدخل الحتمي.</p>
+            
+            <div style="background: #060A14; border: 1px solid rgba(255, 95, 86, 0.3); padding: 1.5rem; border-radius: 12px; font-family: var(--ael-font-code); direction: ltr; text-align: left; margin: 1.5rem 0;">
+                <div style="color: #FF5F56; font-weight: bold;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
+                <div style="color: #27C93F; padding-left: 1rem;">int x = 17; <span style="color: #6B7280; font-family: var(--ael-font-ar); float: right;">// نسختك المحلية الحالية (Your local change)</span></div>
+                <div style="color: #FFBD2E; font-weight: bold;">=======</div>
+                <div style="color: #0074FF; padding-left: 1rem;">int x = 51; <span style="color: #6B7280; font-family: var(--ael-font-ar); float: right;">// التعديل السحابي القادم من GitHub (Incoming remote change)</span></div>
+                <div style="color: #FF5F56; font-weight: bold;">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 4761626a8d9...</div>
+            </div>
+
+            <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #E6EEF8;">🛠️ خطوات الحل المعماري الصارم لنزاع الدمج:</h4>
+            <ol style="list-style-position: inside; color: var(--ael-text-primary); line-height: 2; margin-bottom: 2rem; font-size: 0.95rem;">
+                <li>افتح الملف المتنازع عليه (مثل <code>swap.c</code>) في محرر الأكواد.</li>
+                <li>احذف علامات النزاع الزائفة كلياً (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> و <code>=======</code> و <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).</li>
+                <li>قرر الكود النهائي المطلوب (مثلاً، الاحتفاظ بنسختك، أو نسخة السحاب، أو دمجهما معاً لتصبح <code>int x = 34;</code>).</li>
+                <li>نفذ أوامر التوثيق والدفع التالية لإغلاق النزاع نهائياً:</li>
+            </ol>
+
+            <div class="ael-terminal">
+                <div class="ael-terminal-top">
+                    <div class="ael-terminal-dots">
+                        <div class="ael-dot ael-dot-red"></div>
+                        <div class="ael-dot ael-dot-yellow"></div>
+                        <div class="ael-dot ael-dot-green"></div>
+                    </div>
+                    <span>zsh - merge_conflict_resolution</span>
+                    <button class="ael-copy-btn" onclick="copyCode('code_conflict')">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                </div>
+                <div class="ael-terminal-body" id="code_conflict">
+<span class="comment"># 1. فحص الملفات التي تحتوي على نزاعات دمج غير محلولة (unmerged paths)</span>
+<span class="prompt">$</span> <span class="command">git status</span>
+
+<span class="comment"># 2. بعد تنظيف الملف واختيار الكود النهائي، قم بتوثيق الحل مباشرة</span>
+<span class="prompt">$</span> <span class="command">git commit -am "🔧 [Bugfix] Resolve merge conflict in swap.c by setting x to 34"</span>
+
+<span class="comment"># 3. دفع الكود النظيف إلى الخادم السحابي لإنهاء النزاع عالمياً</span>
+<span class="prompt">$</span> <span class="command">git push</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Branching & Workflows -->
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-code-branch"></i>
-                <h2 class="ael-card-title">4. إدارة الفروع وسير عمل البيئات المحمية (Branching & Workflows)</h2>
+                <h2 class="ael-card-title">5. إدارة الفروع وطلبات السحب (Branching & Pull Requests)</h2>
             </div>
-            <p class="ael-card-desc">الأسلوب المتبع للتعامل مع الفروع الجانبية والبيئات ذات قواعد الحماية الصارمة (Branch Protection).</p>
+            <p class="ael-card-desc">تتيح لك الفروع (Branches) عزل الأكواد التجريبية (مثل إنشاء دالة جديدة <code>swap()</code>) دون المساس بالفرع الرئيسي المستقر (<code>master</code> أو <code>main</code>). وعند التبديل بين الفروع (<code>git checkout</code>)، يقوم نظام التشغيل فوراً بتحديث الملفات أمام عينيك في المجلدات لتطابق الفرع المحدد!</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -506,37 +593,42 @@
                         <div class="ael-dot ael-dot-yellow"></div>
                         <div class="ael-dot ael-dot-green"></div>
                     </div>
-                    <span>zsh - branching</span>
+                    <span>zsh - branching_pr</span>
                     <button class="ael-copy-btn" onclick="copyCode('code4')">
                         <i class="fas fa-copy"></i> نسخ
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code4">
-<span class="comment"># 1. عرض قائمة الفروع المحلية المتاحة في جهازك</span>
+<span class="comment"># 1. عرض قائمة الفروع المحلية (الفرع الأخضر المميز بنجمة هو الفرع الحالي)</span>
 <span class="prompt">$</span> <span class="command">git branch</span>
 
-<span class="comment"># 2. إعادة تسمية الفرع الحالي ليكون بالاسم القياسي المعتمد (main)</span>
-<span class="prompt">$</span> <span class="command">git branch -M main</span>
+<span class="comment"># 2. إنشاء فرع تجريبي جديد والانتقال إليه فوراً (الأسلوب المعماري لطلبات السحب)</span>
+<span class="prompt">$</span> <span class="command">git checkout -b feature-swap-function</span>
 
-<span class="comment"># 3. إنشاء فرع جانبي جديد والانتقال إليه فوراً (الأسلوب المفضل لطلبات السحب)</span>
-<span class="prompt">$</span> <span class="command">git checkout -b feature-sovereign-upgrade</span>
-
-<span class="comment"># 4. الانتقال السلس بين الفروع المتاحة</span>
+<span class="comment"># 3. الانتقال السلس بين الفروع المتاحة (العودة للفرع الرئيسي)</span>
 <span class="prompt">$</span> <span class="command">git switch main</span>
 
-<span class="comment"># 5. حذف فرع محلي بعد الانتهاء منه</span>
-<span class="prompt">$</span> <span class="command">git branch -d feature-sovereign-upgrade</span>
+<span class="comment"># 4. دمج الفرع التجريبي بالفرع الرئيسي (يتم تشغيله وأنت داخل الفرع الرئيسي main)</span>
+<span class="prompt">$</span> <span class="command">git merge feature-swap-function</span>
+
+<span class="comment"># 5. حذف الفرع المحلي والتخلص منه بعد الانتهاء من الدمج بنجاح</span>
+<span class="prompt">$</span> <span class="command">git branch -D feature-swap-function</span>
                 </div>
+            </div>
+
+            <div style="background: rgba(0, 116, 255, 0.05); border: 1px solid var(--ael-primary); padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
+                <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--ael-primary);"><i class="fas fa-handshake"></i> مفهوم طلبات السحب (Pull Requests)</h4>
+                <p style="font-size: 0.95rem; color: var(--ael-text-primary); line-height: 1.8;">طلب السحب هو آلية مؤسسية تتيح لك رفع التعديلات من فرعك الجانبي أو مستودعك المستنسخ (Fork) إلى المستودع الأصلي. يتيح ذلك لمالك المشروع فحص الأكواد، إجراء المراجعات الأمنية، والنقاش حول البنية الهندسية قبل الضغط على زر الدمج الرسمي (Merge) أو الرفض.</p>
             </div>
         </section>
 
-        <!-- Section 5: Remote Synchronization -->
+        <!-- Section 6: Remote Synchronization -->
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-cloud-sync"></i>
-                <h2 class="ael-card-title">5. التزامن السحابي والمحاذاة الصارمة (Remote Synchronization)</h2>
+                <h2 class="ael-card-title">6. التزامن السحابي والمحاذاة الصارمة (git push & git pull)</h2>
             </div>
-            <p class="ael-card-desc">أوامر التخاطب المباشر مع الخوادم لرفع أو سحب الملفات ومحاذاة الفروع السحابية.</p>
+            <p class="ael-card-desc">أوامر التخاطب المباشر مع الخوادم لرفع أو سحب الملفات ومحاذاة الفروع السحابية لضمان تطابق البيئة المحلية مع خوادم GitHub.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -560,28 +652,28 @@
 <span class="comment"># 3. سحب آخر التحديثات من الخادم دون دمجها (للفحص الأمني)</span>
 <span class="prompt">$</span> <span class="command">git fetch origin</span>
 
-<span class="comment"># 4. سحب التحديثات السحابية ودمجها بالفرع المحلي مباشرة</span>
+<span class="comment"># 4. سحب التحديثات السحابية ودمجها بالفرع المحلي مباشرة (git pull)</span>
 <span class="prompt">$</span> <span class="command">git pull origin main</span>
 
-<span class="comment"># 5. دفع الكود المحلي إلى السحاب مع تثبيت مسار الاتصال</span>
+<span class="comment"># 5. دفع الكود المحلي إلى السحاب مع تثبيت مسار الاتصال (git push)</span>
 <span class="prompt">$</span> <span class="command">git push -u origin main</span>
 
-<span class="comment"># 6. دفع فرع جانبي جديد إلى السحاب</span>
-<span class="prompt">$</span> <span class="command">git push -u origin feature-sovereign-upgrade</span>
+<span class="comment"># 6. دفع فرع جانبي جديد إلى السحاب لفتح طلب سحب</span>
+<span class="prompt">$</span> <span class="command">git push -u origin feature-swap-function</span>
 
 <span class="comment"># 7. حذف فرع جانبي من السحاب مباشرة</span>
-<span class="prompt">$</span> <span class="command">git push origin --delete feature-sovereign-upgrade</span>
+<span class="prompt">$</span> <span class="command">git push origin --delete feature-swap-function</span>
                 </div>
             </div>
         </section>
 
-        <!-- Section 6: Undoing & Emergency Resets -->
+        <!-- Section 7: Undoing & Emergency Resets -->
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-history"></i>
-                <h2 class="ael-card-title">6. طوارئ النظام واستعادة النقاء التام (Undoing & Emergency Resets)</h2>
+                <h2 class="ael-card-title">7. طوارئ النظام واستعادة النقاء التام (Undoing & git reset)</h2>
             </div>
-            <p class="ael-card-desc">أوامر الصيانة الطارئة للتراجع عن الأخطاء وإعادة ضبط المستودع ليكون ناصع النظافة ومطابقاً للسحاب 100%.</p>
+            <p class="ael-card-desc">أوامر الصيانة الطارئة التي استعرضها برايان يو للتراجع عن الأخطاء، التخلص من التجارب الفاشلة، وإعادة ضبط المستودع ليكون ناصع النظافة ومطابقاً للسحاب 100%.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -597,25 +689,28 @@
                 </div>
                 <div class="ael-terminal-body" id="code6">
 <span class="comment"># 1. إلغاء تعديلات ملف لم يتم حفظه وإعادته لحالته السابقة</span>
-<span class="prompt">$</span> <span class="command">git restore server_check50_execution.py</span>
+<span class="prompt">$</span> <span class="command">git restore swap.c</span>
 
 <span class="comment"># 2. إزالة ملف من منصة التجهيز (Staging) مع الحفاظ على التعديلات بداخله</span>
-<span class="prompt">$</span> <span class="command">git reset ael_supabase_connector.js</span>
+<span class="prompt">$</span> <span class="command">git reset swap.c</span>
 
-<span class="comment"># 3. حذف آخر عملية حفظ (Commit) محلياً والتخلص من تعديلاتها نهائياً</span>
+<span class="comment"># 3. التراجع الفوري عن آخر توثيق (Commit) محلي والتخلص من تعديلاته نهائياً</span>
 <span class="prompt">$</span> <span class="command">git reset --hard HEAD~1</span>
 
-<span class="comment"># 4. الأمر الصارم لمطابقة الكود المحلي بالسحاب 100% وإزالة أي أخطاء أو شوائب محلية</span>
+<span class="comment"># 4. التراجع بالزمن إلى توثيق محدد برمز الـ Hash (يكفي وضع أول 6-7 أحرف من معرف التوثيق)</span>
+<span class="prompt">$</span> <span class="command">git reset --hard 4761626</span>
+
+<span class="comment"># 5. الأمر الصارم لمطابقة الكود المحلي بالسحاب 100% وإزالة أي أخطاء أو شوائب محلية نهائياً</span>
 <span class="prompt">$</span> <span class="command">git reset --hard origin/main</span>
                 </div>
             </div>
         </section>
 
-        <!-- Section 7: gh CLI Advanced -->
+        <!-- Section 8: gh CLI Advanced -->
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-terminal"></i>
-                <h2 class="ael-card-title">7. أوامر التحكم السحابي الخارق عبر `gh CLI`</h2>
+                <h2 class="ael-card-title">8. أوامر التحكم السحابي الخارق عبر `gh CLI`</h2>
             </div>
             <p class="ael-card-desc">الأسلحة المتقدمة التي تميز كبار مهندسي النظم، وتتيح التحكم بسيرفرات GitHub وطلبات السحب والأتمتة من الطرفية مباشرة.</p>
             
@@ -659,6 +754,25 @@
 <span class="comment"># 9. سحب تقرير الحالة الحية لعملية فحص محددة ومعرفة تفاصيل النجاح أو الفشل</span>
 <span class="prompt">$</span> <span class="command">gh run view 28381788686</span>
                 </div>
+            </div>
+        </section>
+
+        <!-- Section 9: submit50 Behind the Scenes (NEW) -->
+        <section class="ael-card" style="border-color: #27C93F; margin-bottom: 0;">
+            <div class="ael-card-header">
+                <i class="fas fa-server" style="color: #27C93F;"></i>
+                <h2 class="ael-card-title">9. الأسرار التحتية لنظام CS50: كيف يعمل `submit50`؟ (Behind the Scenes)</h2>
+            </div>
+            <p class="ael-card-desc">يختتم المهندس برايان يو ندوة CS50 بالكشف عن السر الهندسي المذهل وراء أداة تسليم الواجبات الشهيرة <code>submit50</code>. يتضح أن الأداة ليست سوى غلاف ذكي (Smart Wrapper) يقوم بتنفيذ أوامر Git و GitHub بالنيابة عن الطالب عبر خط أنابيب أوتوماتيكي متقن:</p>
+            
+            <div style="background: rgba(39, 201, 63, 0.08); border: 1px solid rgba(39, 201, 63, 0.3); padding: 2rem; border-radius: 12px; margin-top: 1.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; color: #27C93F;"><i class="fas fa-cogs"></i> خط الأنابيب السري لأداة submit50:</h4>
+                <ul style="list-style-type: none; padding: 0; margin: 0; line-height: 2.2; color: var(--ael-text-primary); font-size: 1rem;">
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>مستودع لكل طالب:</strong> عند تسجيلك في الكورس، يتم إنشاء مستودع خاص بك على خوادم GitHub تحت النطاق <code>github.com/submit50/username</code>.</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>فرع مخصص لكل واجب (Isolated Branching):</strong> عندما تكتب في الطرفية أمراً مثل <code>submit50 pset7</code>، تقوم الأداة في الخلفية بإنشاء فرع جديد يحمل اسم الواجب <code>pset7</code> (أو <code>mario</code>، <code>speller</code>).</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>الدفع السحابي الأوتوماتيكي:</strong> تقوم الأداة بعمل <code>git commit</code> لملفاتك الحالية ثم تدفعها مباشرة <code>git push</code> إلى ذلك الفرع المخصص على حسابك في <code>submit50</code>.</li>
+                    <li><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>تجميد الإصدار للتصحيح (Releases & Tagging):</strong> بمجرد اكتمال الرفع، تقوم روبوتات تصحيح CS50 بإنشاء "علامة إصدار" (Git Tag / Release) لتجميد هذه النسخة المحددة واعتمادها للتصحيح الأوتوماتيكي وإصدار الدرجة النهائية!</li>
+                </ul>
             </div>
         </section>
 
