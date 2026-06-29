@@ -1,6 +1,10 @@
 # 🏛️ AEL Sovereign CS50x Citadel (2026-2027)
 **Sovereign Computer Science Encyclopedia & Multi-Wing Execution Engine**
 
+<p align="center">
+  <img src="AEL-Sovereign-CS50x-2026-2027.png" alt="AEL Sovereign CS50x 2026-2027 Hero Banner" width="100%">
+</p>
+
 ![Silicon & Cognitive Depth](https://img.shields.io/badge/AEL_Architecture-100%25_Silicon_%26_Cognitive_Depth-0074FF?style=for-the-badge)
 ![Deployment Status](https://img.shields.io/badge/CI%2FCD-GitHub_Actions_Active-00E699?style=for-the-badge)
 ![System Integrity](https://img.shields.io/badge/Integrity-SHA--256_Biometric_Verify-0074FF?style=for-the-badge)
