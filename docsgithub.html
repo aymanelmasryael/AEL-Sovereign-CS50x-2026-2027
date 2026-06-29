@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-ael-framework="v3.0" data-ael-system="optimized">
+<html lang="en" dir="ltr" data-ael-framework="v3.0" data-ael-system="optimized">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>الموسوعة الكبرى لأوامر Git و GitHub CLI | AEL Sovereign Encyclopedia</title>
-    <meta name="description" content="الدليل المعماري الشامل وموسوعة الأوامر الكبرى لإدارة مستودعات Ayman Elmasry وفق معايير النظم السيادية.">
+    <title>The Master Encyclopedia of Git & GitHub CLI | AEL Sovereign Architecture</title>
+    <meta name="description" content="The definitive architectural guide and master encyclopedia of Git and GitHub CLI commands for managing Ayman Elmasry's sovereign repositories.">
     <meta name="author" content="Ayman Elmasry">
     <meta name="theme-color" content="#0B1220">
     
     <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Noto+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -27,7 +27,7 @@
             --ael-text-muted: #94A3B8;
             --ael-border-light: rgba(0, 116, 255, 0.2);
             --ael-border-glow: rgba(0, 116, 255, 0.5);
-            --ael-font-ar: 'Noto Sans Arabic', 'Inter', system-ui, -apple-system, sans-serif;
+            --ael-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
             --ael-font-code: 'Fira Code', 'Courier New', Courier, monospace;
         }
 
@@ -38,7 +38,7 @@
         }
 
         body {
-            font-family: var(--ael-font-ar);
+            font-family: var(--ael-font-sans);
             background-color: var(--ael-bg-deep);
             color: var(--ael-text-primary);
             line-height: 1.8;
@@ -256,7 +256,7 @@
             padding: 0.4rem 1rem;
             border-radius: 6px;
             cursor: pointer;
-            font-family: var(--ael-font-ar);
+            font-family: var(--ael-font-sans);
             font-size: 0.9rem;
             font-weight: 600;
             display: flex;
@@ -341,7 +341,7 @@
     <!-- Notification Toast -->
     <div id="aelToast" class="ael-toast">
         <i class="fas fa-check-circle"></i>
-        <span>تم نسخ الأوامر بنجاح إلى الحافظة!</span>
+        <span>Commands successfully copied to clipboard!</span>
     </div>
 
     <!-- Navigation -->
@@ -360,8 +360,8 @@
 
     <!-- Hero Section -->
     <header class="ael-hero">
-        <h1>الموسوعة الكبرى لأوامر Git و GitHub CLI</h1>
-        <p>الدليل المعماري الشامل والمرجع السيادي الدائم لإدارة مستودعات AEL بأسلوب كبار مهندسي النظم.</p>
+        <h1>The Master Encyclopedia of Git & GitHub CLI</h1>
+        <p>The comprehensive architectural guide and permanent sovereign reference for managing AEL repositories with enterprise-grade precision.</p>
         
         <!-- Sovereign Owner Box -->
         <div class="ael-owner-box">
@@ -384,30 +384,30 @@
         <section class="ael-card" style="border-color: var(--ael-primary);">
             <div class="ael-card-header">
                 <i class="fas fa-gem"></i>
-                <h2 class="ael-card-title">مقدمة معمارية: القوى الأربع الكبرى لنظام Git (The 4 Superpowers)</h2>
+                <h2 class="ael-card-title">Architectural Prologue: The 4 Superpowers of Git</h2>
             </div>
-            <p class="ael-card-desc">في ندوة CS50 التاريخية <em>"It's going to be about Git and GitHub"</em>، يوضح المهندس برايان يو (Brian Yu) أن نظام Git ليس مجرد أداة لحفظ الملفات، بل هو نظام متقدم للتحكم في الإصدارات (Version Control) يمنح مهندس النظم أربع قوى خارقة:</p>
+            <p class="ael-card-desc">In the legendary CS50 seminar <em>"It's going to be about Git and GitHub"</em>, Senior Software Engineer Brian Yu demonstrates that Git is far more than a file backup tool. It is an advanced version control engine that grants system architects four profound superpowers:</p>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
                 <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
                     <i class="fas fa-history" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">1. تتبع السجل التاريخي</h4>
-                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">تسجيل دقيق لكل تعديل طرأ على الكود (من أضافه، متى، ولماذا)، مما يجعل اكتشاف الأخطاء وتتبع أسبابها (Debugging) أمراً حتمياً وموثوقاً.</p>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">1. Historical Auditing</h4>
+                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">Maintains an immutable ledger of every code modification (who made it, when, and why), turning complex debugging into a deterministic certainty.</p>
                 </div>
                 <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
                     <i class="fas fa-sync-alt" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">2. المزامنة والتعاون</h4>
-                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">دمج جهود عدة مهندسين يعملون في ذات الوقت على نفس الملفات عبر مستودع سحابي (GitHub)، لضمان امتلاك الجميع لأحدث نسخة محدثة.</p>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">2. Team Synchronization</h4>
+                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">Seamlessly merges parallel workflows across multiple engineers via cloud repositories (GitHub), ensuring everyone operates on the freshest master branch.</p>
                 </div>
                 <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
                     <i class="fas fa-flask" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">3. التجربة الحرّة والآمنة</h4>
-                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">القضاء نهائياً على العادة الفوضوية القديمة بإنشاء نسخ متراكمة مثل <code>project_old.c</code>. يتيح لك Git اختبار أفكار جديدة دون المساس بالكود الأصلي السليم.</p>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">3. Sandbox Experimentation</h4>
+                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">Eliminates messy legacy habits of duplicating files like <code>project_old.c</code>. Git allows you to rapidly prototype new features without risking stable production code.</p>
                 </div>
                 <div style="background: rgba(0,116,255,0.08); border: 1px solid var(--ael-border-light); padding: 1.5rem; border-radius: 12px;">
                     <i class="fas fa-undo-alt" style="color: var(--ael-primary); font-size: 1.8rem; margin-bottom: 1rem; display: block;"></i>
-                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">4. التراجع الفوري عن الأخطاء</h4>
-                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">القدرة المطلقة على العودة بالزمن إلى أي إصدار مستقر بضغطة زر واحدة، في حال أدت التعديلات الجديدة إلى كسر النظام أو تعطله.</p>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #E6EEF8;">4. Instant Reversion</h4>
+                    <p style="font-size: 0.95rem; color: var(--ael-text-muted);">Grants the absolute power to roll back time to any stable commit snapshot instantly if new experimental changes break the runtime environment.</p>
                 </div>
             </div>
         </section>
@@ -416,9 +416,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-user-shield"></i>
-                <h2 class="ael-card-title">1. التهيئة، ضبط الهوية، واستنساخ المشاريع (Setup, Init & git clone)</h2>
+                <h2 class="ael-card-title">1. Sovereign Identity Setup & Repository Initialization</h2>
             </div>
-            <p class="ael-card-desc">الأوامر التأسيسية لتعريف هويتك السيادية كمهندس نظم، تهيئة المستودعات المحلية، واستنساخ المشاريع السحابية لبيئتك المحلية (مثل CS50 IDE أو جهاز Mac).</p>
+            <p class="ael-card-desc">Foundational commands to establish your canonical identity, initialize local tracking environments, and clone cloud infrastructure to local machines (such as CS50 IDE or macOS).</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -429,23 +429,23 @@
                     </div>
                     <span>zsh - config_setup</span>
                     <button class="ael-copy-btn" onclick="copyCode('code1')">
-                        <i class="fas fa-copy"></i> نسخ
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code1">
-<span class="comment"># 1. ضبط اسم المالك السيادي عالمياً في جهازك</span>
+<span class="comment"># 1. Set the canonical owner's name globally across the operating system</span>
 <span class="prompt">$</span> <span class="command">git config --global user.name "Ayman Elmasry"</span>
 
-<span class="comment"># 2. ضبط البريد الإلكتروني الرسمي للمالك</span>
+<span class="comment"># 2. Set the official enterprise email for commit attribution</span>
 <span class="prompt">$</span> <span class="command">git config --global user.email "info@aymanelmasry.com"</span>
 
-<span class="comment"># 3. فحص إعدادات الهوية الحالية للتأكد من صحتها</span>
+<span class="comment"># 3. Verify current identity configuration credentials</span>
 <span class="prompt">$</span> <span class="command">git config --list</span>
 
-<span class="comment"># 4. تهيئة مستودع محلي جديد داخل أي مجلد فارغ (تحويله إلى مستودع يتبعه Git)</span>
+<span class="comment"># 4. Initialize a pristine local Git repository in an empty directory</span>
 <span class="prompt">$</span> <span class="command">git init</span>
 
-<span class="comment"># 5. استنساخ مستودع سحابي قائم (git clone): ينشئ نسخة مطابقة للمستودع السحابي في جهازك المحلي</span>
+<span class="comment"># 5. Clone an existing cloud repository (git clone): Downloads the full history and working tree to your machine</span>
 <span class="prompt">$</span> <span class="command">git clone https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
                 </div>
             </div>
@@ -455,9 +455,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-search-location"></i>
-                <h2 class="ael-card-title">2. الفحص، المراقبة، والمقارنة الذرية (git status, diff & log)</h2>
+                <h2 class="ael-card-title">2. System Inspection, Diff Auditing, & Atomic Tracking</h2>
             </div>
-            <p class="ael-card-desc">أوامر الرادار البرمجي التي تشرحها ندوة CS50 لمعرفة حالة الكود وتتبع التعديلات وسجلات الحفظ بدقة متناهية قبل الإقدام على أي خطوة.</p>
+            <p class="ael-card-desc">Codebase radar commands demonstrated in the CS50 seminar to verify working tree status, audit exact character diffs, and traverse commit logs with sub-silicon accuracy.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -468,23 +468,23 @@
                     </div>
                     <span>zsh - inspection</span>
                     <button class="ael-copy-btn" onclick="copyCode('code2')">
-                        <i class="fas fa-copy"></i> نسخ
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code2">
-<span class="comment"># 1. فحص حالة الكود (git status): يخبرك بالفرع الحالي (مثل master)، والملفات المعدلة، وعدد التوثيقات التي تسبق السحاب (ahead of origin)</span>
+<span class="comment"># 1. Inspect repository state (git status): Shows current branch (e.g. master), modified files, and commits ahead of origin</span>
 <span class="prompt">$</span> <span class="command">git status</span>
 
-<span class="comment"># 2. عرض الفروقات البرمجية الدقيقة (git diff): يعرض السطور المضافة باللون الأخضر والمحذوفة بالأحمر (قبل حفظها)</span>
+<span class="comment"># 2. Audit exact code deltas (git diff): Displays uncommitted additions in green and deletions in red</span>
 <span class="prompt">$</span> <span class="command">git diff</span>
 
-<span class="comment"># 3. عرض سجل الحفظ (git log): يعرض تاريخ وثائق الحفظ، هوية أصحابها، التواريخ، ومعرف التوثيق الفريد (Commit Hash)</span>
+<span class="comment"># 3. View the full commit history (git log): Lists commit hashes, author attribution, timestamps, and messages</span>
 <span class="prompt">$</span> <span class="command">git log</span>
 
-<span class="comment"># 4. عرض سجل الحفظ بأسلوب معماري ناصع ومختصر (سطر واحد لكل توثيق مع رسم بياني)</span>
+<span class="comment"># 4. Display commit log in an elegant architectural graph format (one line per commit with ASCII branch topology)</span>
 <span class="prompt">$</span> <span class="command">git log --oneline --graph --all</span>
 
-<span class="comment"># 5. عرض تفاصيل آخر عملية حفظ تمت في المستودع (بما في ذلك التعديلات الفعلية)</span>
+<span class="comment"># 5. Inspect the exact code changes and metadata of the most recent commit (HEAD)</span>
 <span class="prompt">$</span> <span class="command">git show HEAD</span>
                 </div>
             </div>
@@ -494,9 +494,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-file-contract"></i>
-                <h2 class="ael-card-title">3. التجهيز والتوثيق السيادي (git add & git commit)</h2>
+                <h2 class="ael-card-title">3. Sovereign Staging & Snapshot Commits</h2>
             </div>
-            <p class="ael-card-desc">عملية النقل الثنائية المعتمدة: تجهيز الملفات في منصة العرض (Staging) أولاً، ثم ختمها بالسجل الدائم (Commit) مع كتابة عنوان معماري يصف التعديل بدقة.</p>
+            <p class="ael-card-desc">The two-stage cryptographic commit pipeline: pre-staging files in the staging area first, then sealing them into the permanent ledger with professional architectural commit messages.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -507,23 +507,23 @@
                     </div>
                     <span>zsh - commit</span>
                     <button class="ael-copy-btn" onclick="copyCode('code3')">
-                        <i class="fas fa-copy"></i> نسخ
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code3">
-<span class="comment"># 1. إضافة كافة الملفات والتعديلات الحالية إلى منصة التجهيز (Staging)</span>
+<span class="comment"># 1. Stage all currently modified and new files in the working directory</span>
 <span class="prompt">$</span> <span class="command">git add .</span>
 
-<span class="comment"># 2. إضافة ملفات محددة بدقة (مثل ملف swap.c كما في شرح ندوة CS50)</span>
+<span class="comment"># 2. Stage specific target files precisely (e.g. swap.c as highlighted in the CS50 seminar)</span>
 <span class="prompt">$</span> <span class="command">git add swap.c</span>
 
-<span class="comment"># 3. إنشاء وثيقة حفظ (Commit) مع عنوان معماري احترافي يصف التعديل بوضوح</span>
+<span class="comment"># 3. Seal staged changes into a commit snapshot with a clean architectural title</span>
 <span class="prompt">$</span> <span class="command">git commit -m "🚀 [v1.0] Sovereign System Architect Initialization"</span>
 
-<span class="comment"># 4. الأمر الذهبي السريع (git commit -am): يدمج خطوتي الإضافة (add) والحفظ (commit) معاً للملفات المتعقبة مسبقاً</span>
+<span class="comment"># 4. The elite fast-track command (git commit -am): Combines staging (add) and committing into a single step for tracked files</span>
 <span class="prompt">$</span> <span class="command">git commit -am "✨ Actually swap the values in swap.c"</span>
 
-<span class="comment"># 5. تعديل آخر وثيقة حفظ (في حال أردت تغيير الوصف أو إضافة ملف نسيته دون إنشاء توثيق جديد)</span>
+<span class="comment"># 5. Modify the previous commit directly (e.g. updating the commit message or including a forgotten file without creating a new commit hash)</span>
 <span class="prompt">$</span> <span class="command">git commit --amend -m "🚀 [v1.0] Sovereign System Architect Initialization (Updated)"</span>
                 </div>
             </div>
@@ -533,24 +533,24 @@
         <section class="ael-card" style="border-color: #FF5F56;">
             <div class="ael-card-header">
                 <i class="fas fa-code-pull-request" style="color: #FF5F56;"></i>
-                <h2 class="ael-card-title">4. فك تشفير وحل نزاعات الدمج (Demystifying Merge Conflicts)</h2>
+                <h2 class="ael-card-title">4. Demystifying & Resolving Merge Conflicts</h2>
             </div>
-            <p class="ael-card-desc">تعتبر نزاعات الدمج (Merge Conflicts) من أكثر المواضيع التي تُرهق المبرمجين، ولكن ندوة CS50 توضح أنها عملية منطقية وبسيطة جداً. تحدث هذه النزاعات عندما يقوم شخصان (أو بيئتا عمل) بتعديل <strong>نفس السطر المصدري</strong> في ذات الوقت (مثلاً: قيامك محلياً بجعل <code>int x = 17;</code> بينما النسخة على GitHub تم تعديلها لتصبح <code>int x = 51;</code>). عند محاولة السحب (<code>git pull</code>)، يعجز Git عن اتخاذ القرار، فيطلب منك التدخل الحتمي.</p>
+            <p class="ael-card-desc">Merge conflicts often intimidate developers, but Brian Yu's CS50 seminar proves they are simple, highly logical occurrences. A conflict triggers when two developers (or two environments) modify the <strong>exact same line of code</strong> simultaneously (for example, you locally set <code>int x = 17;</code> while the remote GitHub master branch was updated to <code>int x = 51;</code>). When you pull (<code>git pull</code>), Git refuses to guess which version is correct and requests your explicit architectural decision.</p>
             
             <div style="background: #060A14; border: 1px solid rgba(255, 95, 86, 0.3); padding: 1.5rem; border-radius: 12px; font-family: var(--ael-font-code); direction: ltr; text-align: left; margin: 1.5rem 0;">
                 <div style="color: #FF5F56; font-weight: bold;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
-                <div style="color: #27C93F; padding-left: 1rem;">int x = 17; <span style="color: #6B7280; font-family: var(--ael-font-ar); float: right;">// نسختك المحلية الحالية (Your local change)</span></div>
+                <div style="color: #27C93F; padding-left: 1rem;">int x = 17; <span style="color: #6B7280; font-family: var(--ael-font-sans); float: right;">// Your current local working tree modification</span></div>
                 <div style="color: #FFBD2E; font-weight: bold;">=======</div>
-                <div style="color: #0074FF; padding-left: 1rem;">int x = 51; <span style="color: #6B7280; font-family: var(--ael-font-ar); float: right;">// التعديل السحابي القادم من GitHub (Incoming remote change)</span></div>
+                <div style="color: #0074FF; padding-left: 1rem;">int x = 51; <span style="color: #6B7280; font-family: var(--ael-font-sans); float: right;">// Incoming remote modification from GitHub</span></div>
                 <div style="color: #FF5F56; font-weight: bold;">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 4761626a8d9...</div>
             </div>
 
-            <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #E6EEF8;">🛠️ خطوات الحل المعماري الصارم لنزاع الدمج:</h4>
+            <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #E6EEF8;">🛠️ The Clean Architectural Resolution Protocol:</h4>
             <ol style="list-style-position: inside; color: var(--ael-text-primary); line-height: 2; margin-bottom: 2rem; font-size: 0.95rem;">
-                <li>افتح الملف المتنازع عليه (مثل <code>swap.c</code>) في محرر الأكواد.</li>
-                <li>احذف علامات النزاع الزائفة كلياً (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> و <code>=======</code> و <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).</li>
-                <li>قرر الكود النهائي المطلوب (مثلاً، الاحتفاظ بنسختك، أو نسخة السحاب، أو دمجهما معاً لتصبح <code>int x = 34;</code>).</li>
-                <li>نفذ أوامر التوثيق والدفع التالية لإغلاق النزاع نهائياً:</li>
+                <li>Open the conflicted target file (such as <code>swap.c</code>) in your code editor.</li>
+                <li>Completely delete the Git conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code>, <code>=======</code>, and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).</li>
+                <li>Refactor the code block into the final desired state (e.g. keeping your line, their line, or merging them to <code>int x = 34;</code>).</li>
+                <li>Execute the following staging and commit commands to finalize the conflict resolution:</li>
             </ol>
 
             <div class="ael-terminal">
@@ -562,17 +562,17 @@
                     </div>
                     <span>zsh - merge_conflict_resolution</span>
                     <button class="ael-copy-btn" onclick="copyCode('code_conflict')">
-                        <i class="fas fa-copy"></i> نسخ
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code_conflict">
-<span class="comment"># 1. فحص الملفات التي تحتوي على نزاعات دمج غير محلولة (unmerged paths)</span>
+<span class="comment"># 1. Verify which files contain unresolved merge conflicts (listed as unmerged paths)</span>
 <span class="prompt">$</span> <span class="command">git status</span>
 
-<span class="comment"># 2. بعد تنظيف الملف واختيار الكود النهائي، قم بتوثيق الحل مباشرة</span>
+<span class="comment"># 2. Once the file is cleaned and resolved, commit the merged state directly</span>
 <span class="prompt">$</span> <span class="command">git commit -am "🔧 [Bugfix] Resolve merge conflict in swap.c by setting x to 34"</span>
 
-<span class="comment"># 3. دفع الكود النظيف إلى الخادم السحابي لإنهاء النزاع عالمياً</span>
+<span class="comment"># 3. Push the clean resolution up to the cloud server to synchronize the global ledger</span>
 <span class="prompt">$</span> <span class="command">git push</span>
                 </div>
             </div>
@@ -582,9 +582,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-code-branch"></i>
-                <h2 class="ael-card-title">5. إدارة الفروع وطلبات السحب (Branching & Pull Requests)</h2>
+                <h2 class="ael-card-title">5. Advanced Branching & Pull Request Workflows</h2>
             </div>
-            <p class="ael-card-desc">تتيح لك الفروع (Branches) عزل الأكواد التجريبية (مثل إنشاء دالة جديدة <code>swap()</code>) دون المساس بالفرع الرئيسي المستقر (<code>master</code> أو <code>main</code>). وعند التبديل بين الفروع (<code>git checkout</code>)، يقوم نظام التشغيل فوراً بتحديث الملفات أمام عينيك في المجلدات لتطابق الفرع المحدد!</p>
+            <p class="ael-card-desc">Branches provide fully isolated sandboxes to develop experimental features (such as building a dedicated <code>swap()</code> function) without destabilizing the production <code>master</code> or <code>main</code> branch. When you switch between branches (<code>git checkout</code>), the underlying filesystem (macOS Finder or CS50 IDE) instantly re-aligns all files to match the target branch!</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -595,30 +595,30 @@
                     </div>
                     <span>zsh - branching_pr</span>
                     <button class="ael-copy-btn" onclick="copyCode('code4')">
-                        <i class="fas fa-copy"></i> نسخ
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code4">
-<span class="comment"># 1. عرض قائمة الفروع المحلية (الفرع الأخضر المميز بنجمة هو الفرع الحالي)</span>
+<span class="comment"># 1. List all local branches (the active branch is highlighted in green with a leading star)</span>
 <span class="prompt">$</span> <span class="command">git branch</span>
 
-<span class="comment"># 2. إنشاء فرع تجريبي جديد والانتقال إليه فوراً (الأسلوب المعماري لطلبات السحب)</span>
+<span class="comment"># 2. Create a new experimental branch and switch to it instantly (the standard Pull Request workflow)</span>
 <span class="prompt">$</span> <span class="command">git checkout -b feature-swap-function</span>
 
-<span class="comment"># 3. الانتقال السلس بين الفروع المتاحة (العودة للفرع الرئيسي)</span>
+<span class="comment"># 3. Switch seamlessly between existing branches (return to the primary main branch)</span>
 <span class="prompt">$</span> <span class="command">git switch main</span>
 
-<span class="comment"># 4. دمج الفرع التجريبي بالفرع الرئيسي (يتم تشغيله وأنت داخل الفرع الرئيسي main)</span>
+<span class="comment"># 4. Merge changes from the experimental branch into the active main branch</span>
 <span class="prompt">$</span> <span class="command">git merge feature-swap-function</span>
 
-<span class="comment"># 5. حذف الفرع المحلي والتخلص منه بعد الانتهاء من الدمج بنجاح</span>
+<span class="comment"># 5. Delete the local feature branch once its changes are successfully merged</span>
 <span class="prompt">$</span> <span class="command">git branch -D feature-swap-function</span>
                 </div>
             </div>
 
             <div style="background: rgba(0, 116, 255, 0.05); border: 1px solid var(--ael-primary); padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
-                <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--ael-primary);"><i class="fas fa-handshake"></i> مفهوم طلبات السحب (Pull Requests)</h4>
-                <p style="font-size: 0.95rem; color: var(--ael-text-primary); line-height: 1.8;">طلب السحب هو آلية مؤسسية تتيح لك رفع التعديلات من فرعك الجانبي أو مستودعك المستنسخ (Fork) إلى المستودع الأصلي. يتيح ذلك لمالك المشروع فحص الأكواد، إجراء المراجعات الأمنية، والنقاش حول البنية الهندسية قبل الضغط على زر الدمج الرسمي (Merge) أو الرفض.</p>
+                <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--ael-primary);"><i class="fas fa-handshake"></i> The Philosophy of Pull Requests (PRs)</h4>
+                <p style="font-size: 0.95rem; color: var(--ael-text-primary); line-height: 1.8;">A Pull Request is an enterprise governance mechanism that requests maintainers to merge code from an isolated feature branch or a forked repository into the primary baseline. It provides a formal staging ground for code reviews, architectural discussions, and automated CI/CD security checks prior to final administrative approval.</p>
             </div>
         </section>
 
@@ -626,9 +626,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-cloud-sync"></i>
-                <h2 class="ael-card-title">6. التزامن السحابي والمحاذاة الصارمة (git push & git pull)</h2>
+                <h2 class="ael-card-title">6. Cloud Synchronization & Zero-Trust Alignment</h2>
             </div>
-            <p class="ael-card-desc">أوامر التخاطب المباشر مع الخوادم لرفع أو سحب الملفات ومحاذاة الفروع السحابية لضمان تطابق البيئة المحلية مع خوادم GitHub.</p>
+            <p class="ael-card-desc">Commands for direct communication with remote cloud servers to push local snapshots, fetch upstream changes, and maintain precise alignment between local environments and GitHub infrastructure.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -639,29 +639,29 @@
                     </div>
                     <span>zsh - remote_sync</span>
                     <button class="ael-copy-btn" onclick="copyCode('code5')">
-                        <i class="fas fa-copy"></i> نسخ
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code5">
-<span class="comment"># 1. ربط مستودعك المحلي بالمستودع السحابي الرسمي</span>
+<span class="comment"># 1. Connect your local repository to a remote GitHub upstream destination</span>
 <span class="prompt">$</span> <span class="command">git remote add origin https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git</span>
 
-<span class="comment"># 2. فحص روابط الاتصال السحابي الحالية</span>
+<span class="comment"># 2. Verify active remote connection URLs (fetch and push endpoints)</span>
 <span class="prompt">$</span> <span class="command">git remote -v</span>
 
-<span class="comment"># 3. سحب آخر التحديثات من الخادم دون دمجها (للفحص الأمني)</span>
+<span class="comment"># 3. Fetch latest upstream updates from the server without modifying the local working tree (for security auditing)</span>
 <span class="prompt">$</span> <span class="command">git fetch origin</span>
 
-<span class="comment"># 4. سحب التحديثات السحابية ودمجها بالفرع المحلي مباشرة (git pull)</span>
+<span class="comment"># 4. Fetch and immediately fast-forward merge upstream cloud changes into your active local branch (git pull)</span>
 <span class="prompt">$</span> <span class="command">git pull origin main</span>
 
-<span class="comment"># 5. دفع الكود المحلي إلى السحاب مع تثبيت مسار الاتصال (git push)</span>
+<span class="comment"># 5. Push local commits to the cloud server and establish upstream branch tracking (git push)</span>
 <span class="prompt">$</span> <span class="command">git push -u origin main</span>
 
-<span class="comment"># 6. دفع فرع جانبي جديد إلى السحاب لفتح طلب سحب</span>
+<span class="comment"># 6. Push a newly created feature branch to the cloud server to initiate a Pull Request</span>
 <span class="prompt">$</span> <span class="command">git push -u origin feature-swap-function</span>
 
-<span class="comment"># 7. حذف فرع جانبي من السحاب مباشرة</span>
+<span class="comment"># 7. Delete a remote feature branch directly from the GitHub server</span>
 <span class="prompt">$</span> <span class="command">git push origin --delete feature-swap-function</span>
                 </div>
             </div>
@@ -671,9 +671,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-history"></i>
-                <h2 class="ael-card-title">7. طوارئ النظام واستعادة النقاء التام (Undoing & git reset)</h2>
+                <h2 class="ael-card-title">7. Emergency Recovery & Pure State Resets</h2>
             </div>
-            <p class="ael-card-desc">أوامر الصيانة الطارئة التي استعرضها برايان يو للتراجع عن الأخطاء، التخلص من التجارب الفاشلة، وإعادة ضبط المستودع ليكون ناصع النظافة ومطابقاً للسحاب 100%.</p>
+            <p class="ael-card-desc">Emergency recovery commands demonstrated by Brian Yu to undo unintended alterations, discard experimental failures, and forcefully reset the local environment to perfectly match the pristine cloud state.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -684,23 +684,23 @@
                     </div>
                     <span>zsh - emergency_reset</span>
                     <button class="ael-copy-btn" onclick="copyCode('code6')">
-                        <i class="fas fa-copy"></i> نسخ
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code6">
-<span class="comment"># 1. إلغاء تعديلات ملف لم يتم حفظه وإعادته لحالته السابقة</span>
+<span class="comment"># 1. Discard uncommitted modifications in a target file and restore it to the last committed state</span>
 <span class="prompt">$</span> <span class="command">git restore swap.c</span>
 
-<span class="comment"># 2. إزالة ملف من منصة التجهيز (Staging) مع الحفاظ على التعديلات بداخله</span>
+<span class="comment"># 2. Unstage a file from the staging area while preserving its local working tree modifications</span>
 <span class="prompt">$</span> <span class="command">git reset swap.c</span>
 
-<span class="comment"># 3. التراجع الفوري عن آخر توثيق (Commit) محلي والتخلص من تعديلاته نهائياً</span>
+<span class="comment"># 3. Forcefully undo the last local commit and permanently discard its file modifications</span>
 <span class="prompt">$</span> <span class="command">git reset --hard HEAD~1</span>
 
-<span class="comment"># 4. التراجع بالزمن إلى توثيق محدد برمز الـ Hash (يكفي وضع أول 6-7 أحرف من معرف التوثيق)</span>
+<span class="comment"># 4. Roll back time to a specific target commit hash (providing the first 6-7 characters of the hash is sufficient)</span>
 <span class="prompt">$</span> <span class="command">git reset --hard 4761626</span>
 
-<span class="comment"># 5. الأمر الصارم لمطابقة الكود المحلي بالسحاب 100% وإزالة أي أخطاء أو شوائب محلية نهائياً</span>
+<span class="comment"># 5. The absolute zero-trust reset: Forcefully overwrite local files to perfectly match the cloud master branch 100%</span>
 <span class="prompt">$</span> <span class="command">git reset --hard origin/main</span>
                 </div>
             </div>
@@ -710,9 +710,9 @@
         <section class="ael-card">
             <div class="ael-card-header">
                 <i class="fas fa-terminal"></i>
-                <h2 class="ael-card-title">8. أوامر التحكم السحابي الخارق عبر `gh CLI`</h2>
+                <h2 class="ael-card-title">8. Elite Cloud Management via `gh CLI`</h2>
             </div>
-            <p class="ael-card-desc">الأسلحة المتقدمة التي تميز كبار مهندسي النظم، وتتيح التحكم بسيرفرات GitHub وطلبات السحب والأتمتة من الطرفية مباشرة.</p>
+            <p class="ael-card-desc">Advanced terminal armaments utilized by elite system architects to manage GitHub infrastructure, automate Pull Requests, and trigger CI/CD pipelines directly from the command line.</p>
             
             <div class="ael-terminal">
                 <div class="ael-terminal-top">
@@ -723,35 +723,35 @@
                     </div>
                     <span>zsh - gh_cli_elite</span>
                     <button class="ael-copy-btn" onclick="copyCode('code7')">
-                        <i class="fas fa-copy"></i> نسخ
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <div class="ael-terminal-body" id="code7">
-<span class="comment"># 1. المصادقة وتسجيل الدخول السحابي الآمن إلى حسابك في GitHub</span>
+<span class="comment"># 1. Authenticate and establish a secure terminal session with your GitHub enterprise account</span>
 <span class="prompt">$</span> <span class="command">gh auth login</span>
 
-<span class="comment"># 2. إنشاء مستودع سحابي جديد ورفع الكود إليه بضغطة زر واحدة</span>
+<span class="comment"># 2. Create a new cloud repository and push current local code instantly in a single execution</span>
 <span class="prompt">$</span> <span class="command">gh repo create aymanelmasryael/AEL-New-Project --public --source=. --remote=origin --push</span>
 
-<span class="comment"># 3. السطر الذهبي لضبط إعدادات المستودع (تفعيل النقاشات وفرض الدمج النظيف والحذف التلقائي)</span>
+<span class="comment"># 3. Configure strict repository governance rules (enable discussions, enforce squash-merging, and auto-delete branches)</span>
 <span class="prompt">$</span> <span class="command">gh repo edit aymanelmasryael/AEL-Sovereign-CS50x-2026-2027 --delete-branch-on-merge --enable-discussions --enable-squash-merge</span>
 
-<span class="comment"># 4. فتح طلب سحب رسمي (Pull Request) من موجه الأوامر</span>
+<span class="comment"># 4. Initiate an official Pull Request directly from the terminal prompt</span>
 <span class="prompt">$</span> <span class="command">gh pr create --title "🎨 [UI/UX] Showcasing Master Architectural Banner" --body "Injecting master banner for canonical visual authority."</span>
 
-<span class="comment"># 5. عرض قائمة طلبات السحب المفتوحة حالياً في المستودع</span>
+<span class="comment"># 5. List all active open Pull Requests inside the current repository</span>
 <span class="prompt">$</span> <span class="command">gh pr list</span>
 
-<span class="comment"># 6. فحص تفاصيل وحالة طلب سحب محدد برقم الـ ID</span>
+<span class="comment"># 6. Inspect status, diffs, and validation checks for a specific Pull Request ID</span>
 <span class="prompt">$</span> <span class="command">gh pr view 2</span>
 
-<span class="comment"># 7. السطر الصارم لدمج طلب السحب أوتوماتيكياً بصلاحيات المالك العليا وحذف الفرع الجانبي</span>
+<span class="comment"># 7. Execute automated PR merging with administrative overrides and auto-delete the underlying feature branch</span>
 <span class="prompt">$</span> <span class="command">gh pr merge 2 --squash --delete-branch --admin</span>
 
-<span class="comment"># 8. استعراض قائمة أحدث عمليات الفحص والبناء الجارية في سيرفرات GitHub Actions</span>
+<span class="comment"># 8. List the 5 most recent active GitHub Actions workflow executions in the cloud CI/CD pipeline</span>
 <span class="prompt">$</span> <span class="command">gh run list --limit 5</span>
 
-<span class="comment"># 9. سحب تقرير الحالة الحية لعملية فحص محددة ومعرفة تفاصيل النجاح أو الفشل</span>
+<span class="comment"># 9. Fetch live logging status and debugging diagnostics for a specific workflow run ID</span>
 <span class="prompt">$</span> <span class="command">gh run view 28381788686</span>
                 </div>
             </div>
@@ -761,17 +761,17 @@
         <section class="ael-card" style="border-color: #27C93F; margin-bottom: 0;">
             <div class="ael-card-header">
                 <i class="fas fa-server" style="color: #27C93F;"></i>
-                <h2 class="ael-card-title">9. الأسرار التحتية لنظام CS50: كيف يعمل `submit50`؟ (Behind the Scenes)</h2>
+                <h2 class="ael-card-title">9. CS50 Underlying Architecture: How `submit50` Actually Works</h2>
             </div>
-            <p class="ael-card-desc">يختتم المهندس برايان يو ندوة CS50 بالكشف عن السر الهندسي المذهل وراء أداة تسليم الواجبات الشهيرة <code>submit50</code>. يتضح أن الأداة ليست سوى غلاف ذكي (Smart Wrapper) يقوم بتنفيذ أوامر Git و GitHub بالنيابة عن الطالب عبر خط أنابيب أوتوماتيكي متقن:</p>
+            <p class="ael-card-desc">Senior Software Engineer Brian Yu concludes the CS50 seminar by unveiling the magnificent architectural secret behind the famous academic submission tool <code>submit50</code>. The utility is actually an intelligent terminal wrapper that executes automated Git and GitHub commands on behalf of the student via a seamless CI/CD pipeline:</p>
             
             <div style="background: rgba(39, 201, 63, 0.08); border: 1px solid rgba(39, 201, 63, 0.3); padding: 2rem; border-radius: 12px; margin-top: 1.5rem;">
-                <h4 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; color: #27C93F;"><i class="fas fa-cogs"></i> خط الأنابيب السري لأداة submit50:</h4>
+                <h4 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; color: #27C93F;"><i class="fas fa-cogs"></i> The Automated submit50 Pipeline:</h4>
                 <ul style="list-style-type: none; padding: 0; margin: 0; line-height: 2.2; color: var(--ael-text-primary); font-size: 1rem;">
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>مستودع لكل طالب:</strong> عند تسجيلك في الكورس، يتم إنشاء مستودع خاص بك على خوادم GitHub تحت النطاق <code>github.com/submit50/username</code>.</li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>فرع مخصص لكل واجب (Isolated Branching):</strong> عندما تكتب في الطرفية أمراً مثل <code>submit50 pset7</code>، تقوم الأداة في الخلفية بإنشاء فرع جديد يحمل اسم الواجب <code>pset7</code> (أو <code>mario</code>، <code>speller</code>).</li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>الدفع السحابي الأوتوماتيكي:</strong> تقوم الأداة بعمل <code>git commit</code> لملفاتك الحالية ثم تدفعها مباشرة <code>git push</code> إلى ذلك الفرع المخصص على حسابك في <code>submit50</code>.</li>
-                    <li><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>تجميد الإصدار للتصحيح (Releases & Tagging):</strong> بمجرد اكتمال الرفع، تقوم روبوتات تصحيح CS50 بإنشاء "علامة إصدار" (Git Tag / Release) لتجميد هذه النسخة المحددة واعتمادها للتصحيح الأوتوماتيكي وإصدار الدرجة النهائية!</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>Dedicated Student Repositories:</strong> Upon registration, an isolated repository is provisioned on GitHub servers under the enterprise namespace <code>github.com/submit50/username</code>.</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>Isolated Problem Branching:</strong> When a student executes <code>submit50 pset7</code>, the wrapper silently checks out a dedicated target branch named after the specific assignment (e.g. <code>pset7</code>, <code>mario</code>, or <code>speller</code>).</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>Automated Cloud Push:</strong> The wrapper executes a pre-formatted <code>git commit</code> on your active working files and immediately forces a <code>git push</code> up to that specific branch on your <code>submit50</code> remote.</li>
+                    <li><i class="fas fa-check-circle" style="color: #27C93F; margin-left: 0.5rem;"></i> <strong>Version Freezing via Releases & Tagging:</strong> Once the cloud push completes, CS50's staff bots generate a formal Git Tag / Release to permanently freeze that precise commit snapshot, queuing it for automated test verification and final grading!</li>
                 </ul>
             </div>
         </section>
@@ -814,3 +814,4 @@
     </script>
 </body>
 </html>
+
