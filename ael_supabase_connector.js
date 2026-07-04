@@ -8,17 +8,28 @@
 
 class AELSovereignCloudConnector {
   constructor(options = {}) {
-    // Inject Supabase credentials from environment or fallback to production presets
-    this.supabaseUrl = options.supabaseUrl || 'https://YOUR_SUPABASE_PROJECT.supabase.co';
-    this.supabaseKey = options.supabaseKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...YOUR_ANON_KEY';
+    // Load Supabase credentials: options > env vars > localStorage > graceful fallback
+    const envUrl = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : null;
+    const envKey = typeof SUPABASE_ANON_KEY !== 'undefined' ? SUPABASE_ANON_KEY : null;
+    this.supabaseUrl = options.supabaseUrl || envUrl || localStorage.getItem('ael_supabase_url') || null;
+    this.supabaseKey = options.supabaseKey || envKey || localStorage.getItem('ael_supabase_key') || null;
     this.author = 'Ayman Elmasry';
     this.seal = 'AEL Sovereign Architecture';
     this.defaultUsername = options.username || 'aymanelmasryael';
     
-    // Check if official Supabase SDK library is loaded globally, otherwise use native REST Fetch
-    this.isNativeClient = typeof window !== 'undefined' && window.supabase;
-    if (this.isNativeClient) {
+    // Track whether real Supabase credentials are configured
+    this.isConfigured = !!(this.supabaseUrl && this.supabaseKey && 
+      this.supabaseUrl !== 'null' && this.supabaseKey !== 'null');
+    
+    if (!this.isConfigured) {
+      console.info('[AEL Cloud Connector] Supabase not configured — running in offline mode. Set SUPABASE_URL and SUPABASE_ANON_KEY env vars to enable cloud persistence.');
+    }
+    
+    if (this.isConfigured && typeof window !== 'undefined' && window.supabase) {
+      this.isNativeClient = true;
       this.client = window.supabase.createClient(this.supabaseUrl, this.supabaseKey);
+    } else {
+      this.isNativeClient = false;
     }
   }
 
@@ -34,6 +45,10 @@ class AELSovereignCloudConnector {
       'Prefer': 'return=representation'
     };
 
+    if (!this.isConfigured) {
+      console.info(`[AEL Cloud Connector] Offline mode — skipping ${method} ${table}`);
+      return { offline: true, message: 'Supabase not configured' };
+    }
     try {
       const response = await fetch(url, {
         method,
@@ -49,7 +64,7 @@ class AELSovereignCloudConnector {
       return await response.json();
     } catch (error) {
       console.error(`🚨 [AEL Cloud Connector] API Failure on table '${table}':`, error.message);
-      throw error;
+      return { offline: true, error: error.message };
     }
   }
 
@@ -58,6 +73,7 @@ class AELSovereignCloudConnector {
    * @param {Object} submissionData 
    */
   async logExamSubmission({ slug, sourceCode, language, score, passedChecks, executionTimeMs }) {
+    if (!this.isConfigured) return { offline: true, message: 'Cloud persistence not configured' };
     const payload = {
       username: this.defaultUsername,
       slug: slug || 'cs50/problems/2026/x/general',
@@ -68,23 +84,18 @@ class AELSovereignCloudConnector {
       execution_time_ms: executionTimeMs || 0.0,
       biometric_seal: this.seal
     };
-
-    console.log(`[AEL Cloud Connector] Pushing submission payload for slug '${slug}' to Supabase...`);
-
     if (this.isNativeClient) {
       const { data, error } = await this.client.from('exam_submissions').insert([payload]);
-      if (error) throw error;
-      return data;
-    } else {
-      return await this._request('exam_submissions', 'POST', payload);
+      return error ? { offline: true, error: error.message } : data;
     }
+    return await this._request('exam_submissions', 'POST', payload);
   }
 
   /**
    * 🛡️ Record Cryptographic DOM SHA-256 Integrity Verification Logs
-   * @param {Object} integrityData 
    */
   async logBiometricIntegrity({ domHash, isTampered, userAgent, violationDetails }) {
+    if (!this.isConfigured) return { offline: true, message: 'Cloud persistence not configured' };
     const payload = {
       dom_hash: domHash,
       is_tampered: isTampered || false,
@@ -92,33 +103,27 @@ class AELSovereignCloudConnector {
       violation_details: violationDetails || 'None. Flawless DOM validation.',
       inspected_by: this.author
     };
-
-    console.log(`[AEL Cloud Connector] Registering DOM Integrity Hash (${domHash.substring(0, 12)}...)`);
-
     if (this.isNativeClient) {
       const { data, error } = await this.client.from('biometric_integrity').insert([payload]);
-      if (error) throw error;
-      return data;
-    } else {
-      return await this._request('biometric_integrity', 'POST', payload);
+      return error ? { offline: true, error: error.message } : data;
     }
+    return await this._request('biometric_integrity', 'POST', payload);
   }
 
   /**
    * 📊 Fetch Real-Time Analytics & Grade Summaries for User
    */
   async fetchUserGradeSummary(username = this.defaultUsername) {
+    if (!this.isConfigured) return { offline: true, message: 'Cloud persistence not configured' };
     if (this.isNativeClient) {
       const { data, error } = await this.client
         .from('exam_submissions')
         .select('*')
         .eq('username', username)
         .order('created_at', { ascending: false });
-      if (error) throw error;
-      return data;
-    } else {
-      return await this._request('exam_submissions', 'GET', null, `?username=eq.${username}&order=created_at.desc`);
+      return error ? { offline: true, error: error.message } : data;
     }
+    return await this._request('exam_submissions', 'GET', null, `?username=eq.${username}&order=created_at.desc`);
   }
 
   /**
