@@ -1,86 +1,191 @@
-# 🏛️ AEL Sovereign CS50x Citadel (2026-2027)
-**Sovereign Computer Science Encyclopedia & Multi-Wing Execution Engine**
+# AEL | Sovereign CS50x Master Citadel — Computer Science Encyclopedia
 
-<p align="center">
-  <img src="AEL-Sovereign-CS50x-2026-2027.png" alt="AEL Sovereign CS50x 2026-2027 Hero Banner" width="100%">
-</p>
-
-![Silicon & Cognitive Depth](https://img.shields.io/badge/AEL_Architecture-100%25_Silicon_%26_Cognitive_Depth-0074FF?style=for-the-badge)
-![Deployment Status](https://img.shields.io/badge/CI%2FCD-GitHub_Actions_Active-00E699?style=for-the-badge)
-![System Integrity](https://img.shields.io/badge/Integrity-SHA--256_Biometric_Verify-0074FF?style=for-the-badge)
-![Owner](https://img.shields.io/badge/Architect-Ayman_Elmasry-00E699?style=for-the-badge)
+> **Advanced computational problem-solving and software architecture masterwork** developed for the Harvard CS50x 2026-2027 curriculum.  
+> A sovereign multi-wing execution engine integrating interactive exams, a live WebAssembly IDE, zero-trust AI prompt engineering, and cryptographic DOM verification.  
+> Built by Ayman Elmasry — AEL Digital Studio.
 
 ---
 
-## 🌟 Sovereign Executive Summary
-This enterprise repository represents the ultimate architectural synthesis of **Harvard CS50x 2026-2027** and the **AEL Sovereign Execution Paradigm** engineered by **Ayman Elmasry** (AI Prompt Engineer & Computational Creative Director). 
+## Preview
 
-Designed to operate as a high-performance single-page application (SPA) citadel, this platform integrates interactive academic assessment, real-time code sandboxing, zero-trust AI prompt engineering, and active cryptographic DOM verification.
-
----
-
-## 🏛️ Master Citadel Wings
-
-### 1. 🔘 Master Dashboard (`docs.html`)
-The root navigational hub of the entire encyclopedia. Fully mapped with restored absolute and relative bindings, persistent SHA-256 biometric integrity checking, and dynamic theme handling.
-
-### 2. 🎓 Master Exams & Solutions Citadel (`cs50x_exams_and_solutions.html`)
-Comprehensive coverage of all 11 weeks of the CS50x curriculum (**Week 0 Scratch to Week 10 The End**). Features:
-* **Flawless Expert Solutions:** Real CS50 exam bugs diagnosed with perfect production-grade C, Python, SQL, and Web corrections.
-* **Master Interactive Simulator:** 11 active simulation questions providing instantaneous JavaScript assessment and LaTeX-rendered asymptotic Big-Theta analysis.
-* **Raw Formats Hub:** One-click clipboard copy and direct download engine for all solutions across `Pure JSON`, `Pure Plain Text`, `Pure HTML`, and `Pure Markdown`.
-
-### 3. 💻 Live WebAssembly IDE (`cs50x_live_ide.html`)
-A fully embedded, zero-install execution playground:
-* **Pyodide Virtual Machine:** Compiles and executes Python 3 code directly inside the browser using WebAssembly.
-* **C & Valgrind Forensics Simulation:** Evaluates heap allocation, memory leak checks, and pointer arithmetic dynamically.
-* **Instant Presets:** Integrated quick-loaders for DNA sequencing loops and SQLite bank fraud investigations.
-
-### 4. 🤖 AI Prompt Engineering Wing (`cs50x_ai_prompt_engineering.html`)
-A professional showcase for elite artificial intelligence integration:
-* **Socratic Tutor System Prompt:** Enforces strict pedagogical guidelines preventing AI models from leaking direct code answers.
-* **Zero-Trust AI Firewall:** Hardened defense meta-instructions thwarting prompt injection attacks, roleplay jailbreaks (`DAN Mode`), and prompt leaking.
-* **AEL Quantum Hyperparameters:** Production JSON preset tuned to `temperature 0.15` and `top_p 0.85` for flawless analytical reasoning.
-
-### 5. ⚡ AI Command Palette (`ael_sovereign_cmd_k.js`)
-An elegant floating command launcher triggered instantly by pressing `Cmd + K` or `Ctrl + K`. Implements high-speed fuzzy search across the entire repository to navigate directly to specific exam wings or resources.
+![AEL Sovereign CS50x Citadel Preview](AEL-Sovereign-CS50x-2026-2027.png)
 
 ---
 
-## 🚀 CI/CD & Global Deployment Architecture
+## Table of Contents
 
-### Docker Production Container (`Dockerfile`)
-Built on a multi-stage **NGINX Alpine** image configured for extreme speed and security. Includes gzip compression and enterprise security headers (`Content-Security-Policy`, `X-Frame-Options`, `X-XSS-Protection`).
+- [Features](#features)
+- [How It Works](#how-it-works)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Master Citadel Wings](#master-citadel-wings)
+- [Technical Details](#technical-details)
+- [Credits](#credits)
+
+---
+
+## Features
+
+- **11 weeks of CS50x curriculum** — Week 0 Scratch through Week 10 The End — complete solutions and analysis
+- **Master dashboard** (`docs.html`) — root navigational hub with SHA-256 biometric integrity checking
+- **Interactive exam simulator** — 11 simulation questions with instant JavaScript assessment and LaTeX-rendered Big-Theta analysis
+- **Live WebAssembly IDE** (`cs50x_live_ide.html`) — Pyodide-powered Python execution in the browser
+- **C & Valgrind forensics** — heap allocation evaluation, memory leak checks, pointer arithmetic simulation
+- **AI Prompt Engineering Wing** — Socratic tutor system prompt with zero-trust AI firewall
+- **Command palette** (`Cmd+K` / `Ctrl+K`) — high-speed fuzzy search across the entire repository
+- **Multi-format export** — Pure JSON, Plain Text, HTML, and Markdown for all solutions
+- **Docker production container** — NGINX Alpine with gzip and enterprise security headers
+- **GitHub Actions CI/CD** — automated Docker validation and GitHub Pages deployment
+
+---
+
+## How It Works
+
+### Architecture
+
+The citadel operates as a high-performance single-page application (SPA) integrating five sovereign wings:
+
+```
+Master Dashboard → Wing Router → { Exams | IDE | AI Prompt | Command Palette }
+```
+
+### Security Model
+
+- **SHA-256 Biometric Verification** — every page load validates DOM integrity against a cryptographic hash
+- **Zero-Trust AI Firewall** — hardened defense meta-instructions prevent prompt injection, roleplay jailbreaks (DAN Mode), and prompt leaking
+- **Sovereign Identity Block** — AEL Digital Framework with cryptographic owner verification
+
+### Code Execution Pipeline
+
+The Live IDE uses Pyodide (Python compiled to WebAssembly) for sandboxed execution:
+
+```
+User Code → Pyodide VM → Python 3 Execution → stdout/stderr → Output Pane
+```
+
+For C code, a Valgrind simulation evaluates memory safety without native compilation.
+
+---
+
+## Project Structure
+
+```
+AEL-Sovereign-CS50x-2026-2027/
+├── index.html                           # Entry point
+├── docs.html                            # Master dashboard
+├── cs50x_exams_and_solutions.html       # All 11 weeks of exams and solutions
+├── cs50x_live_ide.html                  # WebAssembly IDE
+├── cs50x_ai_prompt_engineering.html     # AI prompt engineering wing
+├── ael_sovereign_docs.css               # Sovereign styles
+├── ael_sovereign_docs.js                # Core JavaScript engine
+├── ael_sovereign_cmd_k.js              # Command palette (Cmd+K)
+├── ael_supabase_connector.js           # Database connector
+├── db_schema.sql                        # Database schema
+├── Dockerfile                           # Production container
+├── server_check50_execution.py          # Server-side validation
+├── Week 0 Scratch/                      # Week 0 materials
+├── Week 1 C/                            # Week 1 materials
+├── ...                                  # Weeks 2–10
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### Run Locally
 
 ```bash
-# Build the production container locally
-docker build -t ael-cs50x-citadel .
+git clone https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027.git
+cd AEL-Sovereign-CS50x-2026-2027
+open index.html
+```
 
-# Run the containerized citadel on port 8080
+### Docker Deployment
+
+```bash
+docker build -t ael-cs50x-citadel .
 docker run -p 8080:80 ael-cs50x-citadel
 ```
 
-### GitHub Actions Deployment Pipeline
-This repository contains a dedicated continuous integration workflow (`.github/workflows/ael_sovereign_deploy.yml`) that automatically:
-1. Validates the Docker container build against NGINX standards.
-2. Deploys the static web root directly to **GitHub Pages** upon pushing to the `main` or `master` branch.
+### Prerequisites
+
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- Docker (optional — for containerized deployment)
+- No build tools, no package managers required for local use
 
 ---
 
-## 🔒 AEL Sovereign Seal & Legal Entities
-```json
-{
-  "ael_seal": "AEL CS Encyclopedia — © Ayman Elmasry",
-  "owner": "Ayman Elmasry",
-  "legal_entities": [
-    "Ayman Elmasry LLC (UAE)",
-    "Ayman Elmasry Advertising & Marketing (Egypt)"
-  ],
-  "syllabus_source": "Harvard CS50x 2026-2027",
-  "methodology": "8-Stage Sub-Silicon Execution Paradigm",
-  "system_version": "v3.0"
-}
-```
+## Usage
+
+### Master Dashboard
+- Open `docs.html` for the central navigation hub
+- Access all wings from the dashboard interface
+- Verify system integrity via the SHA-256 biometric checker
+
+### Exams & Solutions
+- Browse all 11 weeks of CS50x curriculum
+- View expert solutions with production-grade C, Python, SQL, and web code
+- Use the interactive simulator for real-time assessment
+- Export solutions in JSON, TXT, HTML, or Markdown
+
+### Live IDE
+- Write and execute Python 3 code in the browser via WebAssembly
+- Use C & Valgrind simulation for memory safety analysis
+- Load instant presets for DNA sequencing and SQLite bank fraud investigations
+
+### AI Prompt Engineering
+- Access the Socratic tutor system prompt
+- Explore zero-trust AI firewall configurations
+- Use AEL Quantum Hyperparameters preset (temperature 0.15, top_p 0.85)
+
+### Command Palette
+- Press `Cmd+K` (Mac) or `Ctrl+K` (Windows/Linux) anywhere
+- Type to fuzzy-search across all wings and resources
+- Navigate instantly to any exam, solution, or tool
 
 ---
-*Built with unyielding dedication to computational excellence by Ayman Elmasry.*
+
+## Master Citadel Wings
+
+| Wing | File | Purpose |
+|------|------|---------|
+| Master Dashboard | `docs.html` | Central navigation and integrity verification |
+| Exams & Solutions | `cs50x_exams_and_solutions.html` | 11 weeks of curriculum with interactive simulator |
+| Live IDE | `cs50x_live_ide.html` | Pyodide WebAssembly Python execution |
+| AI Prompt Engineering | `cs50x_ai_prompt_engineering.html` | Socratic tutor with zero-trust firewall |
+| Command Palette | `ael_sovereign_cmd_k.js` | Fuzzy search (`Cmd+K`) across the entire repo |
+
+---
+
+## Technical Details
+
+| Aspect | Detail |
+|--------|--------|
+| Architecture | Single-page application (SPA) |
+| Frontend | HTML5 + CSS3 + Vanilla JS |
+| Code execution | Pyodide (WebAssembly Python 3) |
+| Security | SHA-256 biometric verification, zero-trust AI firewall |
+| Containerization | Docker (NGINX Alpine) |
+| CI/CD | GitHub Actions |
+| Deployment | GitHub Pages + Docker |
+| Browser support | Chrome, Firefox, Safari, Edge (modern versions) |
+
+---
+
+## Credits
+
+**Created by:** Ayman Elmasry — AEL Digital Studio  
+**Website:** [aymanelmasry.com](https://aymanelmasry.com)  
+**Email:** [info@aymanelmasry.com](mailto:info@aymanelmasry.com)  
+**License:** © 2026 Ayman Elmasry — AEL Digital Studio. All rights reserved.
+
+### Connect
+
+[LinkedIn](https://linkedin.com/in/aymanelmasryael) · [Instagram](https://instagram.com/aymanelmasryael) · [X](https://x.com/aymanelmasryael) · [CodePen](https://codepen.io/aymanelmasryael) · [GitHub](https://github.com/aymanelmasryael) · [Behance](https://behance.net/aymanelmasryael)
+
+---
+
+*AEL Prompt IP System v1.0 — Sovereign Identity Block*  
+*AEL sovereign blockchain timestamp 2025*
