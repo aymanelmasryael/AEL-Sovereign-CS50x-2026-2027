@@ -135,11 +135,9 @@ class AELSovereignCloudConnector {
       return;
     }
 
-    console.log('[AEL Cloud Connector] Opening WebSocket subscription on table: exam_submissions');
     return this.client
       .channel('custom-all-channel')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'exam_submissions' }, payload => {
-        console.log('⚡ [AEL Real-Time Stream] Database modification detected:', payload);
         if (typeof callback === 'function') callback(payload);
       })
       .subscribe();
