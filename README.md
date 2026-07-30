@@ -6,6 +6,17 @@
 
 ---
 
+## 📚 Learning Metadata
+
+| | |
+|---|---|
+| **Learning Level** | Beginner to Intermediate (follows Harvard CS50x) |
+| **Estimated Duration** | 11 weeks (follows CS50x curriculum) |
+| **Prerequisites** | None (CS50x is introductory), basic computer literacy |
+| **Learning Outcomes** | After completing this course you will be able to master C, Python, SQL, data structures, algorithms, and web development |
+
+---
+
 ## Preview
 
 ![AEL Sovereign CS50x Citadel Preview](AEL-Sovereign-CS50x-2026-2027.png)
