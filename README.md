@@ -185,6 +185,15 @@ docker run -p 8080:80 ael-cs50x-citadel
 
 ---
 
+## 🔗 Related Resources
+
+- [AEL Learning Catalog](https://github.com/aymanelmasryael/ael-learning-catalog) — Central entry point to all AEL courses
+- [CS Academy](https://github.com/aymanelmasryael/cs-academy-v2) — 10,000 CS Q&A cards for computer science problem-solving
+- [Problem Solving Academy](https://github.com/aymanelmasryael/problem-solving-academy) — 256 problem-solving modules for C# and Unity
+- [Engineering Academy](https://github.com/aymanelmasryael/ael-engineering-academy) — Complete LLM engineering platform from zero to production
+
+---
+
 ## Credits
 
 **Created by:** Ayman Elmasry — AEL Digital Studio  
