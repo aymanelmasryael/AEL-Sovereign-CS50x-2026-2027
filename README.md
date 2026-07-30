@@ -179,7 +179,7 @@ docker run -p 8080:80 ael-cs50x-citadel
 **Created by:** Ayman Elmasry — AEL Digital Studio  
 **Website:** [aymanelmasry.com](https://aymanelmasry.com)  
 **Email:** [info@aymanelmasry.com](mailto:info@aymanelmasry.com)  
-**License:** © 2026 Ayman Elmasry — AEL Digital Studio. All rights reserved.
+**License:** MIT — Free for personal and commercial use.
 
 ### Connect
 
