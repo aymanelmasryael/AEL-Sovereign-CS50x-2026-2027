@@ -5,30 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AEL CS Encyclopedia™ – 02_Computer_Science_Notes</title>
     <!-- Google Fonts & FontAwesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-color: #020814;
+            --bg-color: #000000;
             --text-primary: #ffffff;
-            --text-secondary: #a0aab2;
+            --text-secondary: #A3A3A3;
             --primary-accent: #0074FF;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(0, 116, 255, 0.35);
-            --glass-border-hover: rgba(0, 116, 255, 0.75);
-            --border-radius: 24px;
-            --warning-color: #ff9800;
-            --success-color: #00ff64;
-            --danger-color: #ff4757;
-            --panel-bg: rgba(5, 15, 35, 0.75);
+            --color-violet: #6C47FF;
+            --color-teal: #00D4AA;
+            --color-pink: #FF4D8D;
+            --color-amber: #F59E0B;
+            --color-info: #3B82F6;
+            --glass-bg: rgba(17, 17, 17, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border-hover: rgba(255, 255, 255, 0.16);
+            --border-radius: 1rem;
+            --warning-color: #F59E0B;
+            --success-color: #10B981;
+            --danger-color: #EF4444;
+            --panel-bg: rgba(17, 17, 17, 0.75);
             --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-secondary);
-            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.7;
             margin: 0;
             padding: 40px 20px;
@@ -46,9 +51,9 @@
             width: 100%;
             margin: 20px auto 50px auto;
             padding: 42px;
-            border-radius: 36px;
+            border-radius: 1.25rem;
             position: relative;
-            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            background: linear-gradient(180deg, rgba(17, 17, 17, 0.88), rgba(17, 17, 17, 0.92));
             border: 1px solid var(--glass-border-hover);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -62,7 +67,7 @@
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 25%);
+            background: linear-gradient(135deg, rgba(17, 17, 17, 0.7), transparent 25%);
             opacity: 0.5;
         }
 
@@ -72,7 +77,7 @@
             justify-content: space-between;
             gap: 20px;
             padding-bottom: 28px;
-            border-bottom: 1px dashed rgba(0, 116, 255, 0.55);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.16);
             flex-wrap: wrap;
         }
 
@@ -95,7 +100,7 @@
         }
 
         .ael-title {
-            color: #f1f6ff;
+            color: #F5F5F5;
             font-size: 32px;
             font-weight: 700;
             letter-spacing: 2px;
@@ -105,10 +110,10 @@
 
         .ael-subtitle {
             margin-top: 8px;
-            color: #8db7ff;
+            color: #A3A3A3;
             font-size: 15px;
             letter-spacing: 1px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .directive-badge {
@@ -116,7 +121,7 @@
             color: #0074FF;
             border: 1px solid var(--glass-border-hover);
             padding: 0.6rem 1.2rem;
-            border-radius: 30px;
+            border-radius: 999px;
             font-size: 0.85rem;
             font-weight: 700;
             letter-spacing: 1px;
@@ -141,7 +146,7 @@
 
         .ael-owner-role {
             margin-top: 18px;
-            color: #c7d8ff;
+            color: #D4D4D4;
             font-size: 18px;
             line-height: 1.6;
         }
@@ -150,34 +155,34 @@
         .ael-seal-box {
             margin-top: 40px;
             padding: 32px;
-            border-radius: 28px;
-            background: linear-gradient(180deg, rgba(0, 25, 70, 0.52), rgba(0, 12, 32, 0.72));
-            border: 1px solid rgba(0, 116, 255, 0.55);
+            border-radius: 1.25rem;
+            background: linear-gradient(180deg, rgba(0, 50, 120, 0.45), rgba(0, 12, 32, 0.72));
+            border: 1px solid rgba(255, 255, 255, 0.16);
             box-shadow: inset 0 0 30px rgba(0, 116, 255, 0.08);
         }
 
         .ael-seal-title {
-            color: #6da8ff;
+            color: #A3A3A3;
             font-size: 17px;
             font-weight: 700;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .ael-code {
             padding: 24px;
-            border-radius: 20px;
-            background: #020b18;
-            border: 1px solid rgba(0, 116, 255, 0.7);
-            color: #d9ebff;
+            border-radius: 0.75rem;
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #D4D4D4;
             font-size: 14px;
             line-height: 1.5;
             overflow: auto;
             box-shadow: inset 0 0 18px rgba(0, 116, 255, 0.08);
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .ael-code pre {
@@ -195,7 +200,7 @@
             padding-bottom: 1.5rem;
         }
 
-        .breadcrumb { font-size: 1.1rem; color: #8b949e; }
+        .breadcrumb { font-size: 1.1rem; color: #A3A3A3; }
         .breadcrumb a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
 
         .tabs { display: flex; gap: 1rem; }
@@ -218,7 +223,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            border-radius: 1rem;
             padding: 4rem;
             box-shadow: var(--shadow-gloss);
             display: none;
@@ -230,29 +235,29 @@
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
-        h3 { font-size: 1.6rem; color: #87bffd; margin: 2rem 0 1rem 0; }
+        h3 { font-size: 1.6rem; color: #A3A3A3; margin: 2rem 0 1rem 0; }
         h4 { font-size: 1.3rem; color: var(--text-primary); margin: 1.5rem 0 0.8rem 0; }
-        p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #b1bac4; }
+        p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #A3A3A3; }
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
         .content-panel pre {
-            background: #020b18;
+            background: #000000;
             border: 1px solid var(--glass-border);
             padding: 1.5rem;
             border-radius: 12px;
             overflow-x: auto;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 1.05rem;
             margin: 2rem 0;
-            color: #79c0ff;
+            color: #A3A3A3;
             direction: ltr;
             text-align: left;
         }
 
         .alert-box {
-            background: rgba(13, 27, 42, 0.8);
+            background: rgba(17, 17, 17, 0.8);
             border-left: 4px solid var(--primary-accent);
             padding: 1.5rem 2rem;
             border-radius: 0 12px 12px 0;
@@ -262,7 +267,7 @@
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
-            background: #050f23;
+            background: #111111;
             border: 1px solid var(--glass-border);
             padding: 1rem 2rem;
             border-radius: 12px;
@@ -278,17 +283,17 @@
         .ael-footer {
             margin-top: 50px;
             padding-top: 32px;
-            border-top: 1px solid rgba(0, 116, 255, 0.45);
+            border-top: 1px solid rgba(255, 255, 255, 0.16);
             display: flex;
             justify-content: space-between;
             gap: 34px;
             flex-wrap: wrap;
-            color: #c6dcff;
+            color: #A3A3A3;
             font-size: 16px;
         }
 
         @media(max-width: 768px) {
-            .ael-identity-card { padding: 28px; border-radius: 28px; }
+            .ael-identity-card { padding: 28px; border-radius: 1.25rem; }
             .ael-owner-name { font-size: 38px; }
             .ael-title { font-size: 24px; }
             .content-panel { padding: 2rem; }

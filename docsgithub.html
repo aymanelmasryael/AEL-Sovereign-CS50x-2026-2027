@@ -6,7 +6,7 @@
     <title>The Master Encyclopedia of Git & GitHub CLI | AEL Sovereign Architecture</title>
     <meta name="description" content="The definitive architectural guide and master encyclopedia of Git and GitHub CLI commands, featuring the complete CS50 seminar transcript and elite engineering commentary.">
     <meta name="author" content="Ayman Elmasry">
-    <meta name="theme-color" content="#0B1220">
+    <meta name="theme-color" content="#000000">
     
     <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,14 +21,14 @@
         :root {
             --ael-primary: #0074FF;
             --ael-primary-rgb: 0, 116, 255;
-            --ael-bg-deep: #0B1220;
-            --ael-bg-card: rgba(19, 28, 42, 0.75);
-            --ael-text-primary: #E6EEF8;
-            --ael-text-muted: #94A3B8;
-            --ael-border-light: rgba(0, 116, 255, 0.2);
-            --ael-border-glow: rgba(0, 116, 255, 0.5);
+            --ael-bg-deep: #000000;
+            --ael-bg-card: rgba(17, 17, 17, 0.75);
+            --ael-text-primary: #F5F5F5;
+            --ael-text-muted: #A3A3A3;
+            --ael-border-light: rgba(255, 255, 255, 0.10);
+            --ael-border-glow: rgba(255, 255, 255, 0.16);
             --ael-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-            --ael-font-code: 'Fira Code', 'Courier New', Courier, monospace;
+            --ael-font-code: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
         }
 
         * {
@@ -54,7 +54,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(11, 18, 32, 0.85);
+            background: rgba(17, 17, 17, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--ael-border-light);
@@ -98,7 +98,7 @@
             color: var(--ael-primary);
             border: 1px solid var(--ael-primary);
             padding: 0.4rem 1rem;
-            border-radius: 20px;
+            border-radius: 0.75rem;
             font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -118,7 +118,7 @@
             font-size: clamp(2.2rem, 5vw, 3.5rem);
             font-weight: 800;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #E6EEF8 30%, var(--ael-primary) 100%);
+            background: linear-gradient(135deg, #F5F5F5 30%, var(--ael-primary) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -173,7 +173,7 @@
         .ael-card {
             background: var(--ael-bg-card);
             border: 1px solid var(--ael-border-light);
-            border-radius: 16px;
+            border-radius: 0.75rem;
             padding: 2.5rem;
             margin-bottom: 3rem;
             backdrop-filter: blur(20px);
@@ -236,7 +236,7 @@
 
         /* Transcript Dialogue Box */
         .ael-transcript-box {
-            background: rgba(11, 18, 32, 0.6);
+            background: rgba(17, 17, 17, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 2rem;
@@ -258,7 +258,7 @@
         .ael-dialogue-block {
             margin-bottom: 1.5rem;
             padding-left: 1rem;
-            border-left: 2px solid rgba(0, 116, 255, 0.3);
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .ael-timestamp {
@@ -275,7 +275,7 @@
 
         .ael-speaker {
             font-weight: 700;
-            color: #E6EEF8;
+            color: #F5F5F5;
             margin-right: 0.5rem;
         }
 
@@ -287,7 +287,7 @@
 
         /* Terminal Window */
         .ael-terminal {
-            background: #060A14;
+            background: #111111;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             overflow: hidden;
@@ -296,7 +296,7 @@
         }
 
         .ael-terminal-top {
-            background: #0B1220;
+            background: #000000;
             padding: 0.8rem 1.5rem;
             display: flex;
             justify-content: space-between;
@@ -317,9 +317,9 @@
             height: 12px;
             border-radius: 50%;
         }
-        .ael-dot-red { background: #FF5F56; }
-        .ael-dot-yellow { background: #FFBD2E; }
-        .ael-dot-green { background: #27C93F; }
+        .ael-dot-red { background: #EF4444; }
+        .ael-dot-yellow { background: #F59E0B; }
+        .ael-dot-green { background: #10B981; }
 
         .ael-copy-btn {
             background: rgba(0, 116, 255, 0.15);
@@ -363,7 +363,7 @@
             font-weight: bold;
         }
         .ael-terminal-body .command {
-            color: #E6EEF8;
+            color: #F5F5F5;
         }
 
         /* Seal / Footer */
@@ -371,7 +371,7 @@
             text-align: center;
             padding: 3rem 2rem;
             border-top: 1px solid var(--ael-border-light);
-            background: #070C16;
+            background: #111111;
         }
 
         .ael-seal {
@@ -903,14 +903,14 @@
         </section>
 
         <!-- Chapter 7: Merge Conflicts -->
-        <section class="ael-card" style="border-color: #FF5F56;">
+        <section class="ael-card" style="border-color: #EF4444;">
             <div class="ael-card-header">
-                <i class="fas fa-code-pull-request" style="color: #FF5F56;"></i>
+                <i class="fas fa-code-pull-request" style="color: #EF4444;"></i>
                 <h2 class="ael-card-title">Chapter 7: Demystifying & Resolving Merge Conflicts</h2>
             </div>
             
-            <div class="ael-architect-box" style="border-left-color: #FF5F56;">
-                <div class="ael-architect-header" style="color: #FF5F56;">
+            <div class="ael-architect-box" style="border-left-color: #EF4444;">
+                <div class="ael-architect-header" style="color: #EF4444;">
                     <i class="fas fa-exclamation-triangle"></i>
                     <span>Antigravity Architectural Commentary</span>
                 </div>
@@ -919,12 +919,12 @@
                 </div>
             </div>
 
-            <div style="background: #060A14; border: 1px solid rgba(255, 95, 86, 0.3); padding: 1.5rem; border-radius: 12px; font-family: var(--ael-font-code); direction: ltr; text-align: left; margin: 1.5rem 0;">
-                <div style="color: #FF5F56; font-weight: bold;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
-                <div style="color: #27C93F; padding-left: 1rem;">int x = 17; <span style="color: #6B7280; font-family: var(--ael-font-sans); float: right;">// Your local unmerged modification</span></div>
-                <div style="color: #FFBD2E; font-weight: bold;">=======</div>
+            <div style="background: #111111; border: 1px solid rgba(255, 95, 86, 0.3); padding: 1.5rem; border-radius: 12px; font-family: var(--ael-font-code); direction: ltr; text-align: left; margin: 1.5rem 0;">
+                <div style="color: #EF4444; font-weight: bold;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
+                <div style="color: #10B981; padding-left: 1rem;">int x = 17; <span style="color: #6B7280; font-family: var(--ael-font-sans); float: right;">// Your local unmerged modification</span></div>
+                <div style="color: #F59E0B; font-weight: bold;">=======</div>
                 <div style="color: #0074FF; padding-left: 1rem;">int x = 51; <span style="color: #6B7280; font-family: var(--ael-font-sans); float: right;">// Incoming remote modification from GitHub</span></div>
-                <div style="color: #FF5F56; font-weight: bold;">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 4761626a8d9...</div>
+                <div style="color: #EF4444; font-weight: bold;">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 4761626a8d9...</div>
             </div>
 
             <div class="ael-terminal">
@@ -1303,14 +1303,14 @@
         </section>
 
         <!-- Chapter 11: submit50 Behind the Scenes -->
-        <section class="ael-card" style="border-color: #27C93F; margin-bottom: 0;">
+        <section class="ael-card" style="border-color: #10B981; margin-bottom: 0;">
             <div class="ael-card-header">
-                <i class="fas fa-server" style="color: #27C93F;"></i>
+                <i class="fas fa-server" style="color: #10B981;"></i>
                 <h2 class="ael-card-title">Chapter 11: CS50 Underlying Architecture (`submit50` Behind the Scenes)</h2>
             </div>
             
-            <div class="ael-architect-box" style="border-left-color: #27C93F;">
-                <div class="ael-architect-header" style="color: #27C93F;">
+            <div class="ael-architect-box" style="border-left-color: #10B981;">
+                <div class="ael-architect-header" style="color: #10B981;">
                     <i class="fas fa-cogs"></i>
                     <span>Antigravity Architectural Commentary</span>
                 </div>
