@@ -1,15 +1,15 @@
         :root {
             --bg-color: #0B1220;
             --text-primary: #ffffff;
-            --text-secondary: #a0aab2;
+            --text-secondary: #6a8aaa;
             --primary-accent: #0074FF;
-            --success-color: #00E699;
+            --success-color: #00ff88;
             --warning-color: #FFB300;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(0, 116, 255, 0.35);
-            --glass-border-hover: rgba(0, 116, 255, 0.75);
-            --border-radius: 28px;
-            --panel-bg: rgba(5, 15, 35, 0.75);
+            --glass-bg: rgba(5, 12, 24, 0.55);
+            --glass-border: rgba(0, 116, 255, 0.25);
+            --glass-border-hover: rgba(0, 116, 255, 0.5);
+            --border-radius: 1.25rem;
+            --panel-bg: rgba(5, 12, 24, 0.75);
             --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
@@ -40,7 +40,7 @@
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             padding: 20px 40px;
-            border-radius: 24px;
+            border-radius: 1rem;
             margin-bottom: 40px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -62,11 +62,11 @@
         .nav-brand i { color: var(--primary-accent); font-size: 28px; }
 
         .live-badge {
-            background: rgba(0, 230, 153, 0.12);
+            background: rgba(0, 255, 136, 0.12);
             border: 1px solid var(--success-color);
             color: var(--success-color);
             padding: 8px 24px;
-            border-radius: 20px;
+            border-radius: 0.75rem;
             font-weight: 700;
             font-size: 14px;
             letter-spacing: 1px;
@@ -88,9 +88,9 @@
             width: 100%;
             margin: 20px auto 60px auto;
             padding: 56px;
-            border-radius: 40px;
+            border-radius: 1.5rem;
             position: relative;
-            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.95));
+            background: linear-gradient(180deg, rgba(10, 20, 35, 0.88), rgba(5, 12, 24, 0.95));
             border: 1px solid var(--glass-border-hover);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
@@ -104,7 +104,7 @@
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 30%);
+            background: linear-gradient(135deg, rgba(0, 116, 255, 0.05), transparent 30%);
             opacity: 0.6;
         }
 
@@ -137,7 +137,7 @@
         }
 
         .ael-title {
-            color: #f1f6ff;
+            color: #eef2ff;
             font-size: 38px;
             font-weight: 700;
             letter-spacing: 2px;
@@ -158,7 +158,7 @@
             color: #0074FF;
             border: 1px solid var(--glass-border-hover);
             padding: 0.8rem 1.6rem;
-            border-radius: 30px;
+            border-radius: 999px;
             font-size: 1rem;
             font-weight: 700;
             letter-spacing: 2px;
@@ -182,9 +182,9 @@
             background: rgba(0, 116, 255, 0.08);
             border: 1px solid rgba(0, 116, 255, 0.4);
             padding: 20px 32px;
-            border-radius: 24px;
+            border-radius: 1rem;
             font-family: 'JetBrains Mono', monospace;
-            color: #64ffda;
+            color: #00ff88;
             font-size: 15px;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
@@ -200,7 +200,7 @@
 
         .ael-owner-role {
             margin-top: 20px;
-            color: #c7d8ff;
+            color: #bdd3ff;
             font-size: 20px;
             line-height: 1.6;
             font-weight: 500;
@@ -230,11 +230,11 @@
 
         .system-path {
             font-family: 'JetBrains Mono', monospace;
-            color: #64ffda;
-            background: #020b18;
+            color: #00ff88;
+            background: #0B1220;
             border: 1px solid rgba(0, 116, 255, 0.5);
             padding: 10px 24px;
-            border-radius: 16px;
+            border-radius: 0.75rem;
             font-size: 15px;
         }
 
@@ -250,7 +250,7 @@
         .week-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 36px;
+            border-radius: 1.25rem;
             padding: 42px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -299,7 +299,7 @@
 
         .status-pill {
             padding: 8px 20px;
-            border-radius: 20px;
+            border-radius: 0.75rem;
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 1px;
@@ -309,10 +309,10 @@
         }
 
         .status-active {
-            background: rgba(0, 230, 153, 0.15);
+            background: rgba(0, 255, 136, 0.15);
             color: var(--success-color);
             border: 1px solid var(--success-color);
-            box-shadow: 0 0 15px rgba(0, 230, 153, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-pending {
@@ -324,7 +324,7 @@
 
         .week-desc {
             font-size: 16px;
-            color: #c6d6e5;
+            color: #bdd3ff;
             margin-bottom: 32px;
             line-height: 1.7;
         }
@@ -338,11 +338,11 @@
         }
 
         .triad-link {
-            background: rgba(2, 11, 24, 0.65);
+            background: rgba(5, 12, 24, 0.55);
             border: 1px solid rgba(0, 116, 255, 0.3);
             padding: 16px 22px;
-            border-radius: 20px;
-            color: #e2efff;
+            border-radius: 0.75rem;
+            color: #eef2ff;
             text-decoration: none;
             font-size: 15px;
             font-weight: 600;
@@ -366,10 +366,10 @@
 
         /* Custom ael_src Highlight Box */
         .ael-src-box {
-            background: linear-gradient(135deg, rgba(0, 35, 90, 0.45), rgba(0, 12, 35, 0.75));
+            background: linear-gradient(135deg, rgba(0, 50, 120, 0.45), rgba(5, 12, 24, 0.75));
             border: 1px solid var(--glass-border-hover);
             padding: 24px 30px;
-            border-radius: 24px;
+            border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -378,17 +378,17 @@
         }
 
         .ael-src-info { display: flex; align-items: center; gap: 18px; }
-        .ael-src-info i { font-size: 28px; color: #64ffda; }
+        .ael-src-info i { font-size: 28px; color: #00ff88; }
         
         .ael-src-title { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 4px; font-family: 'Inter', sans-serif; }
-        .ael-src-sub { font-size: 14px; color: #8cb5ff; font-family: 'JetBrains Mono', monospace; }
+        .ael-src-sub { font-size: 14px; color: #8db7ff; font-family: 'JetBrains Mono', monospace; }
 
         .src-action-btn {
-            background: rgba(0, 116, 255, 0.2);
-            border: 1px solid #64ffda;
-            color: #64ffda;
+            background: linear-gradient(135deg, #0074FF, #0055cc);
+            border: 1px solid rgba(0, 116, 255, 0.5);
+            color: #ffffff;
             padding: 10px 22px;
-            border-radius: 16px;
+            border-radius: 999px;
             text-decoration: none;
             font-weight: 700;
             font-size: 14px;
@@ -397,12 +397,13 @@
             align-items: center;
             gap: 8px;
             font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
 
         .src-action-btn:hover {
-            background: #64ffda;
-            color: #020814;
-            box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+            background: linear-gradient(135deg, #0055cc, #0074FF);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 116, 255, 0.35);
         }
 
         /* Expansion Banner for Pending Weeks */
@@ -410,9 +411,9 @@
             background: rgba(255, 179, 0, 0.08);
             border: 1px dashed var(--warning-color);
             padding: 24px;
-            border-radius: 22px;
+            border-radius: 1rem;
             text-align: center;
-            color: #ffe6a3;
+            color: #ffd700;
             font-weight: 700;
             font-size: 16px;
             letter-spacing: 1px;
@@ -424,24 +425,24 @@
 
         /* UI Document Switcher */
         .switcher-container { display: flex; justify-content: center; gap: 24px; margin-bottom: 50px; flex-wrap: wrap; }
-        .switch-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 16px 36px; border-radius: 18px; color: var(--text-secondary); font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); font-family: 'Inter', sans-serif; }
+        .switch-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 16px 36px; border-radius: 0.75rem; color: var(--text-secondary); font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); font-family: 'Inter', sans-serif; }
         .switch-btn.active, .switch-btn:hover { background: var(--primary-accent); color: #ffffff; border-color: var(--primary-accent); box-shadow: 0 0 25px rgba(0, 116, 255, 0.5); transform: translateY(-3px); }
 
         /* Main Tab Views & Docs Styling */
         .main-tab-view { display: none; } 
         .main-tab-view.active { display: block; }
         
-        .content-portal { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 56px; border-radius: 36px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); margin-bottom: 60px; }
+        .content-portal { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 56px; border-radius: 1.25rem; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); margin-bottom: 60px; }
         .doc-title { font-size: 38px; color: var(--text-primary); margin-bottom: 24px; font-weight: 700; border-bottom: 2px solid var(--primary-accent); padding-bottom: 16px; display: inline-block; font-family: 'Inter', sans-serif; }
         .doc-section { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
         .doc-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .sec-title { font-size: 28px; color: #8db7ff; margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 16px; font-family: 'Inter', sans-serif; }
         .sec-title i { color: var(--primary-accent); }
-        .doc-text { font-size: 17px; line-height: 1.8; margin-bottom: 24px; color: #c6d6e5; }
+        .doc-text { font-size: 17px; line-height: 1.8; margin-bottom: 24px; color: #bdd3ff; }
         .doc-sub { font-size: 22px; color: #ffffff; margin: 28px 0 16px 0; font-weight: 700; display: flex; align-items: center; gap: 12px; }
         .doc-sub i { color: var(--success-color); }
-        .example-box { background: #01060e; border: 1px solid rgba(0, 230, 153, 0.4); padding: 28px; border-radius: 22px; font-family: 'JetBrains Mono', monospace; color: #64ffda; margin: 28px 0; overflow-x: auto; box-shadow: inset 0 0 25px rgba(0,0,0,0.8); font-size: 15px; line-height: 1.6; }
-        .example-box-title { color: #00E699; font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+        .example-box { background: rgba(1, 5, 14, 0.7); border: 1px solid rgba(0, 255, 136, 0.4); padding: 28px; border-radius: 1rem; font-family: 'JetBrains Mono', monospace; color: #00ff88; margin: 28px 0; overflow-x: auto; box-shadow: inset 0 0 25px rgba(0,0,0,0.8); font-size: 15px; line-height: 1.6; }
+        .example-box-title { color: #00ff88; font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
 
         /* Footer */
         .ael-footer {
@@ -452,7 +453,7 @@
             justify-content: space-between;
             gap: 34px;
             flex-wrap: wrap;
-            color: #c6dcff;
+            color: #8db7ff;
             font-size: 16px;
             font-weight: 500;
         }
@@ -462,7 +463,7 @@
         }
 
         @media(max-width: 768px) {
-            .ael-identity-card, .week-card { padding: 28px; border-radius: 28px; }
+            .ael-identity-card, .week-card { padding: 28px; border-radius: 1.25rem; }
             .ael-owner-name { font-size: 40px; }
             .ael-title { font-size: 28px; }
             .master-nav { padding: 16px 24px; }
@@ -473,9 +474,9 @@
 
         /* Raw Formats Hub */
         .raw-formats-hub {
-            background: linear-gradient(135deg, rgba(2, 11, 24, 0.8), rgba(0, 35, 90, 0.45));
+            background: linear-gradient(135deg, rgba(5, 12, 24, 0.8), rgba(0, 50, 120, 0.45));
             border: 1px solid rgba(0, 116, 255, 0.4);
-            border-radius: 24px;
+            border-radius: 1rem;
             padding: 32px 36px;
             margin: 32px 0;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(0, 116, 255, 0.15);
@@ -511,7 +512,7 @@
 
         .raw-hub-subtitle {
             font-size: 15px;
-            color: #8cb5ff;
+            color: #8db7ff;
             margin-top: 4px;
             font-family: 'Inter', sans-serif;
         }
@@ -526,7 +527,7 @@
             background: rgba(0, 116, 255, 0.15);
             border: 1px solid rgba(0, 116, 255, 0.4);
             padding: 16px 22px;
-            border-radius: 18px;
+            border-radius: 0.75rem;
             color: #ffffff;
             font-size: 16px;
             font-weight: 700;
@@ -541,7 +542,7 @@
 
         .format-copy-btn i {
             font-size: 18px;
-            color: #00E699;
+            color: #00ff88;
             transition: transform 0.3s ease;
         }
 
@@ -560,7 +561,7 @@
         .action-group-title {
             font-size: 17px;
             font-weight: 700;
-            color: #64ffda;
+            color: #00ff88;
             margin-bottom: 16px;
             display: flex;
             align-items: center;
@@ -569,10 +570,10 @@
         }
 
         .format-download-btn {
-            background: rgba(0, 116, 255, 0.15);
-            border: 1px solid rgba(0, 116, 255, 0.4);
+            background: linear-gradient(135deg, #0074FF, #0055cc);
+            border: 1px solid rgba(0, 116, 255, 0.5);
             padding: 16px 22px;
-            border-radius: 18px;
+            border-radius: 0.75rem;
             color: #ffffff;
             font-size: 16px;
             font-weight: 700;
@@ -592,10 +593,8 @@
         }
 
         .format-download-btn:hover {
-            background: #0074FF;
-            color: #ffffff;
-            border-color: #0074FF;
-            box-shadow: 0 0 25px rgba(0, 116, 255, 0.5);
+            background: linear-gradient(135deg, #0055cc, #0074FF);
+            box-shadow: 0 6px 20px rgba(0, 116, 255, 0.35);
             transform: translateY(-3px);
         }
 
@@ -607,10 +606,10 @@
         .copy-status-message {
             margin-top: 20px;
             padding: 12px 24px;
-            background: rgba(0, 230, 153, 0.2);
-            border: 1px solid #00E699;
-            border-radius: 14px;
-            color: #64ffda;
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            border-radius: 0.625rem;
+            color: #00ff88;
             font-size: 16px;
             font-weight: 700;
             display: none;
