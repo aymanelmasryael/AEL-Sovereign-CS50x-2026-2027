@@ -3,60 +3,60 @@
 
 ---
 
-## 🏛️ الرؤية الهندسية والهدف المعماري (Vision & Architectural Goal)
+## 🏛️ Vision & Architectural Goal
 
-> **"سنعامل CS50x على أنه مشروع طويل لبناء فهم عميق لعلوم الحاسب، وليس مجرد دورة للحصول على شهادة."**
+> **"We treat CS50x as a long-term project to build a deep understanding of computer science, not merely a course to obtain a certificate."**
 
-في هذا الصرح الهندسي، يتم بناء **`AEL Computer Science Encyclopedia & Notes`** كمرجع دائم وشامل يربط بين المفاهيم الأكاديمية العميقة والتطبيقات الهندسية الحقيقية في كبرى الشركات العالمية (`Google`, `Apple`, `Linux Kernel`). 
+Within this engineering edifice, the **`AEL Computer Science Encyclopedia & Notes`** is built as a permanent, comprehensive reference that bridges deep academic concepts with real-world engineering applications at major global companies (`Google`, `Apple`, `Linux Kernel`).
 
 ---
 
-## 📐 المنهجية الهندسية الثابتة: المراحل الثمانية الصارمة (The 8-Stage Execution Paradigm)
+## 📐 The Fixed Engineering Methodology: The 8-Stage Execution Paradigm
 
-كل أسبوع وكل محاضرة في هذه الموسوعة يمر وجوباً عبر خط أنابيب صارم مكون من 8 مراحل لا تتغير:
+Every week and every lecture in this encyclopedia must pass through a rigid pipeline of 8 immutable stages:
 
 ```text
-[ المرحلة 1: الفهم ] ──> [ المرحلة 2: التحليل ] ──> [ المرحلة 3: التنفيذ الداخلي ] ──> [ المرحلة 4: الخوارزميات ]
+[ Stage 1: Understanding ] ──> [ Stage 2: Analysis ] ──> [ Stage 3: Under the Hood ] ──> [ Stage 4: Algorithms ]
        │
        ▼
-[ المرحلة 5: الكود ] ──> [ المرحلة 6: المشاريع ] ──> [ المرحلة 7: الربط بالأنظمة ] ──> [ المرحلة 8: ما وراء CS50 ]
+[ Stage 5: Code ] ──> [ Stage 6: Projects ] ──> [ Stage 7: Systems ] ──> [ Stage 8: Beyond CS50 ]
 ```
 
-### 1. المرحلة 1: الفهم (Comprehensive Understanding)
-*   شرح كامل ومفصل للمحاضرة باللغة العربية.
-*   الإبقاء الصارم على جميع المصطلحات التقنية باللغة الإنجليزية مع توفير ترجمتها ومقصدها الدقيق.
-*   تحليل المبررات التاريخية: لماذا ظهر هذا المفهوم تحديداً؟ ما هي المشكلة العميقة التي جاء لحلها؟
+### 1. Comprehensive Understanding
+*   Complete and detailed explanation of the lecture.
+*   Strict retention of all technical terms in English, with their precise meaning and intent provided.
+*   Analysis of historical rationale: why did this concept emerge? What deep problem did it come to solve?
 
-### 2. المرحلة 2: التحليل (Architectural Analysis)
-*   تفكيك كل جزء من المحاضرة إلى أسئلة جوهرية (مثل: لماذا استخدم ديفيد مالان هذا الكود التوضيحي بالذات؟).
-*   مناقشة كل كود وكل كتلة ظهرت في الشرح وتحليل بنيتها المنطقية.
+### 2. Architectural Analysis
+*   Deconstruction of every part of the lecture into fundamental questions (e.g., why did David Malan use this particular demonstration code?).
+*   Discussion of every code sample and block shown during the explanation, analyzing its logical structure.
 
-### 3. المرحلة 3: التنفيذ الداخلي (Under the Hood Execution)
-*   الغوص العميق في الذاكرة الصريحة (`Memory Hierarchy`).
-*   شرح وتتبع كيفية معالجة الحاسوب لكل تعليمة على المستوى المادي (من ذرات السيليكون والترانزستورات إلى الـ `Machine Code`).
-*   استخدام مقارنات الـ `Hex Editors` لتحليل الهياكل والتشفير (`Forensics`).
+### 3. Under the Hood Execution
+*   Deep dive into explicit memory (`Memory Hierarchy`).
+*   Explanation and tracing of how the computer processes every instruction at the physical level (from silicon atoms and transistors to `Machine Code`).
+*   Use of `Hex Editors` comparisons to analyze structures and encoding (`Forensics`).
 
-### 4. المرحلة 4: الخوارزميات (Algorithms & Efficiency)
-*   شرح خطوات الخوارزميات وتحليل تعقيدها الزمني والمكاني باستخدام أسلوب الـ `Big-O Notation` ($O(n), O(\log n), O(1)$).
+### 4. Algorithms & Efficiency
+*   Explanation of algorithm steps and analysis of their time and space complexity using `Big-O Notation` ($O(n), O(\log n), O(1)$).
 
-### 5. المرحلة 5: الكود (Code Specification)
-*   كتابة الأكواد بأسلوب احترافي متكامل ومنظم، مع شرح وتوثيق كل سطر برمجي عبر التعليقات (`Clean Code`).
+### 5. Code Specification
+*   Writing code in a complete, organized, professional style, with every line documented via comments (`Clean Code`).
 
-### 6. المرحلة 6: المشاريع (System Design Projects)
-*   عدم القفز للحل المباشر؛ بل المرور بالمراحل المعمارية الصارمة لبناء البرمجيات:
-    `[فهم المشكلة] ──> [تحليل المدخلات] ──> [تحليل المخرجات] ──> [تصميم الحل/المعمارية] ──> [الخوارزمية] ──> [التكويد] ──> [الاختبار] ──> [التحسين] ──> [مقارنة الحلول]`
+### 6. System Design Projects
+*   No jumping straight to the solution; instead passing through the strict architectural stages of software construction:
+    `[Understand Problem] ──> [Analyze Inputs] ──> [Analyze Outputs] ──> [Design Solution/Architecture] ──> [Algorithm] ──> [Code] ──> [Test] ──> [Optimize] ──> [Compare Solutions]`
 
-### 7. المرحلة 7: الربط بالأنظمة الحقيقية (Real World Systems Interconnect)
-*   ربط المفاهيم الأكاديمية بالأنظمة الإنتاجية الضخمة. كيف يطبق مهندسو `Google`, `Apple`, ونواة `Linux` هذه المبادئ في محركات مثل `V8`, `SQLite`، و `Git`؟
+### 7. Real World Systems Interconnect
+*   Connecting academic concepts to massive production systems. How do `Google`, `Apple`, and `Linux` kernel engineers apply these principles in engines such as `V8`, `SQLite`, and `Git`?
 
-### 8. المرحلة 8: ما وراء CS50 (Beyond CS50x)
-*   شرح المفاهيم المتقدمة التي لم يذكرها المنهج أو تجاوزها لضيق الوقت (مثل: `Cache Misses`, `Branch Prediction`, `Memory Alignment`).
+### 8. Beyond CS50x
+*   Explaining advanced concepts the syllabus did not mention or skipped due to time constraints (e.g., `Cache Misses`, `Branch Prediction`, `Memory Alignment`).
 
 ---
 
-## 📅 هيكل المنهج الشامل ومراحل الغوص (The Official 10-Week Syllabus)
+## 📅 The Official 10-Week Syllabus
 
-تم تصميم الهيكل التنظيمي للموسوعة ليطابق مسار كورس `CS50x` الرسمي بكامل محتوياته من البداية وحتى النهاية:
+The encyclopedia's organizational structure is designed to match the official `CS50x` course path in its entirety, from beginning to end:
 
 ```text
 ===================================================================================
@@ -81,15 +81,15 @@
 
 ---
 
-## 📂 المعمارية المجلدية الثابتة لكل أسبوع (Weekly Directory Structure)
+## 📂 Weekly Directory Structure
 
-كل أسبوع من الأسابيع العشرة يحتوي داخلياً على المجلدات الستة التالية لضمان التنظيم المعماري الصارم:
-1. `01_Lecture_Analysis/`: لتحليل افتتاحية المحاضرة وفلسفة ديفيد مالان.
-2. `02_Computer_Science_Notes/`: الملاحظات الهندسية الدائمة لعلوم الحاسب.
-3. `03_Engineering_Notes/`: جداول المقارنة وحجر رشيد البرمجي.
-4. `04_Deep_Internal_Analysis/`: التحليل التحت-سيليكوني وحركة الذاكرة.
-5. `05_Practical_Reverse_Eng/`: الهندسة العكسية وتحليل الهياكل الثنائية.
-6. `06_Projects/`: قوالب هندسة وتصميم المشاريع ومقارنة المعايير.
+Each of the ten weeks internally contains the following six folders to guarantee strict architectural organization:
+1. `01_Lecture_Analysis/`: analysis of the lecture opening and David Malan's philosophy.
+2. `02_Computer_Science_Notes/`: permanent engineering notes on computer science.
+3. `03_Engineering_Notes/`: comparison tables and the software Rosetta Stone.
+4. `04_Deep_Internal_Analysis/`: sub-silicon analysis and memory movement.
+5. `05_Practical_Reverse_Eng/`: reverse engineering and binary structure analysis.
+6. `06_Projects/`: project engineering and design templates with benchmark comparisons.
 
 ---
 **© Ayman Elmasry — AEL Digital Studio™ · All Rights Reserved.**

@@ -51,7 +51,7 @@
         }
     }
 
-    // نظام التحقق السيادي الحيوي
+    // Sovereign integrity verification engine
     async function sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
         const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -83,6 +83,6 @@
         }
     }
 
-    // تنفيذ التحقق عند تحميل الصفحة
+    // Run integrity verification on page load
     document.addEventListener('DOMContentLoaded', verifySystemIntegrity);
 </script>

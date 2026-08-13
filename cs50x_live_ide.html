@@ -5,31 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AEL Sovereign Live IDE™ – In-Browser WebAssembly Code Execution Engine</title>
     <!-- Google Fonts & FontAwesome & Pyodide -->
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     
     <style>
         :root {
-            --bg-color: #010611;
+            --bg-color: #000000;
             --text-primary: #ffffff;
-            --text-secondary: #a0aab2;
+            --text-secondary: #A3A3A3;
             --primary-accent: #0074FF;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(0, 116, 255, 0.35);
-            --glass-border-hover: rgba(0, 116, 255, 0.75);
-            --border-radius: 24px;
-            --warning-color: #ff9800;
-            --success-color: #00ff64;
-            --danger-color: #ff4757;
-            --panel-bg: rgba(5, 15, 35, 0.75);
+            --color-violet: #6C47FF;
+            --color-teal: #00D4AA;
+            --color-pink: #FF4D8D;
+            --color-amber: #F59E0B;
+            --color-info: #3B82F6;
+            --glass-bg: rgba(17, 17, 17, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border-hover: rgba(255, 255, 255, 0.16);
+            --border-radius: 1rem;
+            --warning-color: #F59E0B;
+            --success-color: #10B981;
+            --danger-color: #EF4444;
+            --panel-bg: rgba(17, 17, 17, 0.75);
             --shadow-gloss: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-secondary);
-            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.7;
             margin: 0;
             padding: 40px 20px;
@@ -46,9 +51,9 @@
             width: 100%;
             margin: 0 auto 40px auto;
             padding: 42px;
-            border-radius: 36px;
+            border-radius: 1.25rem;
             position: relative;
-            background: linear-gradient(180deg, rgba(5, 15, 35, 0.88), rgba(1, 7, 18, 0.92));
+            background: linear-gradient(180deg, rgba(17, 17, 17, 0.88), rgba(17, 17, 17, 0.92));
             border: 1px solid var(--glass-border-hover);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -63,7 +68,7 @@
             justify-content: space-between;
             gap: 20px;
             padding-bottom: 28px;
-            border-bottom: 1px dashed rgba(0, 116, 255, 0.55);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.16);
             flex-wrap: wrap;
         }
 
@@ -81,7 +86,7 @@
         }
 
         .ael-title {
-            color: #f1f6ff;
+            color: #F5F5F5;
             font-size: 32px;
             font-weight: 700;
             letter-spacing: 2px;
@@ -91,10 +96,10 @@
 
         .ael-subtitle {
             margin-top: 8px;
-            color: #8db7ff;
+            color: #A3A3A3;
             font-size: 15px;
             letter-spacing: 1px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .directive-badge {
@@ -102,7 +107,7 @@
             color: #0074FF;
             border: 1px solid var(--glass-border-hover);
             padding: 0.6rem 1.2rem;
-            border-radius: 30px;
+            border-radius: 999px;
             font-size: 0.85rem;
             font-weight: 700;
             letter-spacing: 1px;
@@ -127,7 +132,7 @@
 
         .ael-owner-role {
             margin-top: 12px;
-            color: #c7d8ff;
+            color: #D4D4D4;
             font-size: 17px;
         }
 
@@ -143,7 +148,7 @@
             gap: 20px;
         }
 
-        .breadcrumb { font-size: 1.1rem; color: #8b949e; }
+        .breadcrumb { font-size: 1.1rem; color: #A3A3A3; }
         .breadcrumb a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
 
         /* Workspace Grid */
@@ -160,7 +165,7 @@
         .panel {
             background: #040d21;
             border: 1px solid var(--glass-border);
-            border-radius: 28px;
+            border-radius: 1.25rem;
             padding: 32px;
             box-shadow: var(--shadow-gloss);
             display: flex;
@@ -172,7 +177,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
-            border-bottom: 1px solid rgba(0, 116, 255, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 16px;
         }
 
@@ -191,11 +196,11 @@
         }
 
         .btn-run {
-            background: #00E699;
-            color: #010611;
+            background: #10B981;
+            color: #000000;
             border: none;
             padding: 10px 24px;
-            border-radius: 14px;
+            border-radius: 0.625rem;
             font-weight: 700;
             font-size: 15px;
             cursor: pointer;
@@ -204,14 +209,14 @@
             align-items: center;
             gap: 8px;
         }
-        .btn-run:hover { background: #00ffaa; transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,230,153,0.4); }
+        .btn-run:hover { background: #10B981; transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,230,153,0.4); }
 
         .btn-preset {
             background: #0d1a33;
-            color: #8cb4ff;
+            color: #A3A3A3;
             border: 1px solid var(--glass-border);
             padding: 10px 18px;
-            border-radius: 14px;
+            border-radius: 0.625rem;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
@@ -222,12 +227,12 @@
         textarea.code-editor {
             width: 100%;
             height: 450px;
-            background: #010611;
+            background: #000000;
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 0.75rem;
             padding: 24px;
-            color: #79c0ff;
-            font-family: 'Share Tech Mono', monospace;
+            color: #A3A3A3;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 16px;
             line-height: 1.6;
             resize: vertical;
@@ -242,10 +247,10 @@
             height: 450px;
             background: #01050d;
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 0.75rem;
             padding: 24px;
-            color: #00ff64;
-            font-family: 'Share Tech Mono', monospace;
+            color: #10B981;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 15px;
             line-height: 1.6;
             overflow-y: auto;
@@ -259,7 +264,7 @@
             height: 20px;
             border: 3px solid rgba(0,230,153,0.3);
             border-radius: 50%;
-            border-top-color: #00E699;
+            border-top-color: #10B981;
             animation: spin 1s ease-in-out infinite;
             display: none;
         }
@@ -270,12 +275,12 @@
         .ael-footer {
             margin-top: 60px;
             padding-top: 32px;
-            border-top: 1px solid rgba(0, 116, 255, 0.45);
+            border-top: 1px solid rgba(255, 255, 255, 0.16);
             display: flex;
             justify-content: space-between;
             gap: 34px;
             flex-wrap: wrap;
-            color: #c6dcff;
+            color: #A3A3A3;
             font-size: 16px;
         }
     </style>
@@ -394,15 +399,15 @@ if __name__ == '__main__':
             pyodideInstance = await loadPyodide({
                 indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/"
             });
-            statusBadge.innerHTML = '<i class="fas fa-circle" style="color:#00E699;"></i> WEBASSEMBLY VM ACTIVE';
-            statusBadge.style.borderColor = '#00E699';
-            statusBadge.style.color = '#00E699';
-            terminal.innerHTML += '<br><span style="color:#00E699;">[+] Pyodide WebAssembly Virtual Machine loaded successfully! Ready for secure execution.</span><br>';
+            statusBadge.innerHTML = '<i class="fas fa-circle" style="color:#10B981;"></i> WEBASSEMBLY VM ACTIVE';
+            statusBadge.style.borderColor = '#10B981';
+            statusBadge.style.color = '#10B981';
+            terminal.innerHTML += '<br><span style="color:#10B981;">[+] Pyodide WebAssembly Virtual Machine loaded successfully! Ready for secure execution.</span><br>';
         } catch (err) {
             statusBadge.innerHTML = '<i class="fas fa-triangle-exclamation"></i> VM INITIALIZATION FAILED';
-            statusBadge.style.borderColor = '#FF4444';
-            statusBadge.style.color = '#FF4444';
-            terminal.innerHTML += `<br><span style="color:#ff4757;">[!] Fatal Error loading WebAssembly VM: ${err.message}</span><br>`;
+            statusBadge.style.borderColor = '#EF4444';
+            statusBadge.style.color = '#EF4444';
+            terminal.innerHTML += `<br><span style="color:#EF4444;">[!] Fatal Error loading WebAssembly VM: ${err.message}</span><br>`;
         }
     }
 
@@ -416,26 +421,26 @@ if __name__ == '__main__':
 
         // Check if code looks like C for simulated Valgrind execution
         if (code.trim().startsWith('#include')) {
-            terminal.innerHTML += `<br><span style="color:#8cb4ff;">[+] Initializing C Simulation Engine &amp; Valgrind Forensics...</span><br>`;
+            terminal.innerHTML += `<br><span style="color:#A3A3A3;">[+] Initializing C Simulation Engine &amp; Valgrind Forensics...</span><br>`;
             setTimeout(() => {
-                terminal.innerHTML += `<span style="color:#00E699;">[+] Compiling via clang -O3 -std=c17... SUCCESS</span><br>`;
-                terminal.innerHTML += `<span style="color:#00E699;">[+] Executing binary ./a.out...</span><br>`;
+                terminal.innerHTML += `<span style="color:#10B981;">[+] Compiling via clang -O3 -std=c17... SUCCESS</span><br>`;
+                terminal.innerHTML += `<span style="color:#10B981;">[+] Executing binary ./a.out...</span><br>`;
                 terminal.innerHTML += `<span style="color:#ffffff;">Secret Code: 42 101 50</span><br>`;
-                terminal.innerHTML += `<span style="color:#ff9800;">[+] VALGRIND MEMORY FORENSICS:</span><br>`;
-                terminal.innerHTML += `<span style="color:#00E699;">    All heap blocks were freed -- no leaks are possible</span><br>`;
-                terminal.innerHTML += `<span style="color:#00E699;">    ERROR SUMMARY: 0 errors from 0 contexts</span><br>`;
+                terminal.innerHTML += `<span style="color:#F59E0B;">[+] VALGRIND MEMORY FORENSICS:</span><br>`;
+                terminal.innerHTML += `<span style="color:#10B981;">    All heap blocks were freed -- no leaks are possible</span><br>`;
+                terminal.innerHTML += `<span style="color:#10B981;">    ERROR SUMMARY: 0 errors from 0 contexts</span><br>`;
                 terminal.scrollTop = terminal.scrollHeight;
             }, 1000);
             return;
         }
 
         if (!pyodideInstance) {
-            terminal.innerHTML += '<br><span style="color:#ff4757;">[!] WebAssembly VM is not ready yet. Please wait a moment.</span><br>';
+            terminal.innerHTML += '<br><span style="color:#EF4444;">[!] WebAssembly VM is not ready yet. Please wait a moment.</span><br>';
             return;
         }
 
         spinner.style.display = 'inline-block';
-        terminal.innerHTML += `<br><span style="color:#8cb4ff;">[+] Executing Python script via Pyodide VM...</span><br>`;
+        terminal.innerHTML += `<br><span style="color:#A3A3A3;">[+] Executing Python script via Pyodide VM...</span><br>`;
 
         try {
             // Capture standard output
@@ -452,11 +457,11 @@ sys.stderr = io.StringIO()
             const stderr = pyodideInstance.runPython("sys.stderr.getvalue()");
 
             if (stdout) terminal.innerHTML += `<span style="color:#ffffff;">${stdout.replace(/\n/g, '<br>')}</span>`;
-            if (stderr) terminal.innerHTML += `<span style="color:#ff4757;">${stderr.replace(/\n/g, '<br>')}</span>`;
-            terminal.innerHTML += `<span style="color:#00E699;">[+] Script finished successfully (exit code 0).</span><br>`;
+            if (stderr) terminal.innerHTML += `<span style="color:#EF4444;">${stderr.replace(/\n/g, '<br>')}</span>`;
+            terminal.innerHTML += `<span style="color:#10B981;">[+] Script finished successfully (exit code 0).</span><br>`;
         } catch (err) {
-            terminal.innerHTML += `<span style="color:#ff4757;">${err.message.replace(/\n/g, '<br>')}</span><br>`;
-            terminal.innerHTML += `<span style="color:#ff4757;">[!] Execution terminated with errors.</span><br>`;
+            terminal.innerHTML += `<span style="color:#EF4444;">${err.message.replace(/\n/g, '<br>')}</span><br>`;
+            terminal.innerHTML += `<span style="color:#EF4444;">[!] Execution terminated with errors.</span><br>`;
         } finally {
             spinner.style.display = 'none';
             terminal.scrollTop = terminal.scrollHeight;
