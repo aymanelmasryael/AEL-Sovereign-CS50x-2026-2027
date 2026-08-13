@@ -1,5 +1,5 @@
         :root {
-            --bg-color: #020814;
+            --bg-color: #0B1220;
             --text-primary: #ffffff;
             --text-secondary: #a0aab2;
             --primary-accent: #0074FF;
@@ -16,7 +16,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-secondary);
-            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.8;
             margin: 0;
             padding: 40px 20px;
@@ -150,7 +150,7 @@
             color: #8db7ff;
             font-size: 18px;
             letter-spacing: 1px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .directive-badge {
@@ -183,7 +183,7 @@
             border: 1px solid rgba(0, 116, 255, 0.4);
             padding: 20px 32px;
             border-radius: 24px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
             color: #64ffda;
             font-size: 15px;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
@@ -223,13 +223,13 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .section-title i { color: var(--primary-accent); }
 
         .system-path {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
             color: #64ffda;
             background: #020b18;
             border: 1px solid rgba(0, 116, 255, 0.5);
@@ -282,7 +282,7 @@
         .week-title-group { display: flex; flex-direction: column; gap: 6px; }
 
         .week-num {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
             color: var(--primary-accent);
             font-size: 16px;
             letter-spacing: 2px;
@@ -350,7 +350,7 @@
             align-items: center;
             gap: 14px;
             transition: all 0.3s ease;
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .triad-link i { color: var(--primary-accent); font-size: 18px; transition: transform 0.3s ease; }
@@ -381,7 +381,7 @@
         .ael-src-info i { font-size: 28px; color: #64ffda; }
         
         .ael-src-title { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 4px; font-family: 'Inter', sans-serif; }
-        .ael-src-sub { font-size: 14px; color: #8cb5ff; font-family: 'Share Tech Mono', monospace; }
+        .ael-src-sub { font-size: 14px; color: #8cb5ff; font-family: 'JetBrains Mono', monospace; }
 
         .src-action-btn {
             background: rgba(0, 116, 255, 0.2);
@@ -424,7 +424,7 @@
 
         /* UI Document Switcher */
         .switcher-container { display: flex; justify-content: center; gap: 24px; margin-bottom: 50px; flex-wrap: wrap; }
-        .switch-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 16px 36px; border-radius: 18px; color: var(--text-secondary); font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); font-family: 'Cairo', 'Inter', sans-serif; }
+        .switch-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 16px 36px; border-radius: 18px; color: var(--text-secondary); font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); font-family: 'Inter', sans-serif; }
         .switch-btn.active, .switch-btn:hover { background: var(--primary-accent); color: #ffffff; border-color: var(--primary-accent); box-shadow: 0 0 25px rgba(0, 116, 255, 0.5); transform: translateY(-3px); }
 
         /* Main Tab Views & Docs Styling */
@@ -432,15 +432,15 @@
         .main-tab-view.active { display: block; }
         
         .content-portal { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 56px; border-radius: 36px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: var(--shadow-gloss); margin-bottom: 60px; }
-        .doc-title { font-size: 38px; color: var(--text-primary); margin-bottom: 24px; font-weight: 700; border-bottom: 2px solid var(--primary-accent); padding-bottom: 16px; display: inline-block; font-family: 'Cairo', 'Inter', sans-serif; }
+        .doc-title { font-size: 38px; color: var(--text-primary); margin-bottom: 24px; font-weight: 700; border-bottom: 2px solid var(--primary-accent); padding-bottom: 16px; display: inline-block; font-family: 'Inter', sans-serif; }
         .doc-section { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
         .doc-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .sec-title { font-size: 28px; color: #8db7ff; margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 16px; font-family: 'Cairo', 'Inter', sans-serif; }
+        .sec-title { font-size: 28px; color: #8db7ff; margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 16px; font-family: 'Inter', sans-serif; }
         .sec-title i { color: var(--primary-accent); }
         .doc-text { font-size: 17px; line-height: 1.8; margin-bottom: 24px; color: #c6d6e5; }
         .doc-sub { font-size: 22px; color: #ffffff; margin: 28px 0 16px 0; font-weight: 700; display: flex; align-items: center; gap: 12px; }
         .doc-sub i { color: var(--success-color); }
-        .example-box { background: #01060e; border: 1px solid rgba(0, 230, 153, 0.4); padding: 28px; border-radius: 22px; font-family: 'Share Tech Mono', monospace; color: #64ffda; margin: 28px 0; overflow-x: auto; box-shadow: inset 0 0 25px rgba(0,0,0,0.8); font-size: 15px; line-height: 1.6; }
+        .example-box { background: #01060e; border: 1px solid rgba(0, 230, 153, 0.4); padding: 28px; border-radius: 22px; font-family: 'JetBrains Mono', monospace; color: #64ffda; margin: 28px 0; overflow-x: auto; box-shadow: inset 0 0 25px rgba(0,0,0,0.8); font-size: 15px; line-height: 1.6; }
         .example-box-title { color: #00E699; font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
 
         /* Footer */
@@ -501,7 +501,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .raw-hub-title i {
@@ -513,7 +513,7 @@
             font-size: 15px;
             color: #8cb5ff;
             margin-top: 4px;
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .format-buttons-grid {
@@ -536,7 +536,7 @@
             justify-content: center;
             gap: 12px;
             transition: all 0.3s ease;
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .format-copy-btn i {
@@ -565,7 +565,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .format-download-btn {
@@ -582,7 +582,7 @@
             justify-content: center;
             gap: 12px;
             transition: all 0.3s ease;
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .format-download-btn i {
@@ -617,7 +617,7 @@
             align-items: center;
             gap: 12px;
             animation: fadeIn 0.3s ease;
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         @keyframes fadeIn {
