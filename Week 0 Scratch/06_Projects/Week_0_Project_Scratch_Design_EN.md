@@ -17,9 +17,9 @@ In the `src0` master asset directory, David Malan supplies the step-by-step arch
 The progression of `Oscartime` is structured across 6 successive benchmark builds in `src0`, culminating in the complete `Oscartime.sb3` bundle.
 
 ### 📂 Direct Source File Links in `src0`:
-*   [Oscartime - 0 (Malan).sb3](file:///Volumes/Apple/انظمه%20تم%20تطويرها%20/نظام%20جديد%20/cs50x%202026/cs50x%202026-2027/src0/Oscartime%20-%200%20(Malan).sb3): Foundational sprite initialization and initial vertical drop vector.
-*   [Oscartime - 3 (Malan).sb3](file:///Volumes/Apple/انظمه%20تم%20تطويرها%20/نظام%20جديد%20/cs50x%202026/cs50x%202026-2027/src0/Oscartime%20-%203%20(Malan).sb3): Implementation of the bounding box collision sensor (`touching trash can?`).
-*   [Oscartime.sb3](file:///Volumes/Apple/انظمه%20تم%20تطويرها%20/نظام%20جديد%20/cs50x%202026/cs50x%202026-2027/src0/Oscartime.sb3): The final master game package incorporating dynamic scoring memory allocation (`Score Variable`).
+*   [Oscartime - 0 (Malan).sb3](./../src0/Oscartime%20-%200%20(Malan).sb3): Foundational sprite initialization and initial vertical drop vector.
+*   [Oscartime - 3 (Malan).sb3](./../src0/Oscartime%20-%203%20(Malan).sb3): Implementation of the bounding box collision sensor (`touching trash can?`).
+*   [Oscartime.sb3](./../src0/Oscartime.sb3): The final master game package incorporating dynamic scoring memory allocation (`Score Variable`).
 
 ### 🔬 Physics & Execution Deconstruction:
 *   **Gravity Simulation:**
@@ -36,9 +36,9 @@ The progression of `Oscartime` is structured across 6 successive benchmark build
 `Ivy's Hardest Game` represents the absolute peak of architectural complexity in Week 0, mastering active keyboard input polling and rebound wall physics.
 
 ### 📂 Direct Source File Links in `src0`:
-*   [Ivy's Hardest Game - Harvard 0.sb3](file:///Volumes/Apple/انظمه%20تم%20تطويرها%20/نظام%20جديد%20/cs50x%202026/cs50x%202026-2027/src0/Ivy's%20Hardest%20Game%20-%20Harvard%200.sb3): Preliminary player motion configuration via key binding blocks.
-*   [Ivy's Hardest Game - Harvard 2.sb3](file:///Volumes/Apple/انظمه%20تم%20تطويرها%20/نظام%20جديد%20/cs50x%202026/cs50x%202026-2027/src0/Ivy's%20Hardest%20Game%20-%20Harvard%202.sb3): Construction of custom procedural sub-routines (`listen for keyboard` and `feel for walls`).
-*   [Ivy's Hardest Game - Harvard.sb3](file:///Volumes/Apple/انظمه%20تم%20تطويرها%20/نظام%20جديد%20/cs50x%202026/cs50x%202026-2027/src0/Ivy's%20Hardest%20Game%20-%20Harvard.sb3): The massive master bundle featuring dynamic moving obstacles and failure triggers.
+*   [Ivy's Hardest Game - Harvard 0.sb3](./../src0/Ivy's%20Hardest%20Game%20-%20Harvard%200.sb3): Preliminary player motion configuration via key binding blocks.
+*   [Ivy's Hardest Game - Harvard 2.sb3](./../src0/Ivy's%20Hardest%20Game%20-%20Harvard%202.sb3): Construction of custom procedural sub-routines (`listen for keyboard` and `feel for walls`).
+*   [Ivy's Hardest Game - Harvard.sb3](./../src0/Ivy's%20Hardest%20Game%20-%20Harvard.sb3): The massive master bundle featuring dynamic moving obstacles and failure triggers.
 
 ### 🔬 Deconstructing Modular Sub-Routines:
 Rather than saturating the primary `forever` loop with 20 convoluted nested conditional statements, Malan introduces an exceptionally clean architectural model rooted in the **Separation of Concerns**.

@@ -15,22 +15,22 @@ When a student executes `make hello` in the terminal, it appears as though the u
             │
             ▼
   ┌────────────────────────────────────────────────────────┐
-  │ 1. PREPROCESSING (المعالجة المسبقة)                    │ ──> Expands #include & macros
+  │ 1. PREPROCESSING                    │ ──> Expands #include & macros
   └────────────────────────────────────────────────────────┘
             │  (Produces hello.i - Expanded Source)
             ▼
   ┌────────────────────────────────────────────────────────┐
-  │ 2. COMPILING (الترجمة إلى لغة التجميع)                  │ ──> Generates Assembly
+  │ 2. COMPILING                  │ ──> Generates Assembly
   └────────────────────────────────────────────────────────┘
             │  (Produces hello.s - Assembly Code)
             ▼
   ┌────────────────────────────────────────────────────────┐
-  │ 3. ASSEMBLING (التجميع إلى كود ثنائي)                   │ ──> Generates Object Code (0s & 1s)
+  │ 3. ASSEMBLING                   │ ──> Generates Object Code (0s & 1s)
   └────────────────────────────────────────────────────────┘
             │  (Produces hello.o - Raw Object File)
             ▼
   ┌────────────────────────────────────────────────────────┐
-  │ 4. LINKING (الربط مع المكتبات القياسية)                │ ──> Merges stdio.o & cs50.o
+  │ 4. LINKING                │ ──> Merges stdio.o & cs50.o
   └────────────────────────────────────────────────────────┘
             │
             ▼
