@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,50 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">ملاحظات علوم الحاسب: البنية الشجرية، وحلقة الأحداث (Event Loop)</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sitemap"></i> نموذج شجرة الوثيقة (DOM Tree & Node Graph)</h2>
-                <p class="doc-text">
-                    المتصفح يقرأ وسوم الـ HTML ويبني شجرة هرمية من الـ Nodes. الكائن الجذري هو document، ومنه تتفرع html ثم head و body. كل عقدة (Node) في هذه الشجرة هي عبارة عن كائن ديناميكي يحتوي على خصائص (Properties) ودوال (Methods) قابلة للتعديل والوصول المباشر في الذاكرة.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   DOCUMENT OBJECT MODEL (DOM) TREE HIERARCHY
-===================================================================================
-
-                        [ document ]
-                             │
-                         [ html ]
-                        /        \
-                    [ head ]    [ body ]
-                                 /    \
-                           [ div ]    [ section ]
-                            /   \          │
-                       [ h1 ]  [ p ]    [ button ]
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sync-alt"></i> حلقة الأحداث غير المتزامنة (The JavaScript Event Loop)</h2>
-                <p class="doc-text">
-                    لغة JavaScript تعمل تقليدياً كخيط واحد (Single-Threaded)، ولكنها تتعامل مع العمليات الثقيلة وغير المتزامنة من خلال بنية متكاملة:
-                </p>
-                <ul>
-                    <li><strong>مكدس الاستدعاء (Call Stack)</strong>: مكان تنفيذ الشفرات والدوال الحالية أولاً بأول (LIFO).</li>
-                    <li><strong>واجهات الويب (Web APIs)</strong>: تُدار من المتصفح لمعالجة الـ setTimeout، وطلبات الـ fetch، وأحداث النقر EventListeners.</li>
-                    <li><strong>طابور المهام (Task Queue)</strong>: عندما تنتهي العملية من واجهات الويب، تدخل طابور المهام (FIFO).</li>
-                    <li><strong>حلقة الأحداث (Event Loop)</strong>: المراقب الدائم الذي ينقل الدالة من طابور المهام إلى مكدس الاستدعاء متى أصبح فارغاً.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Computer Science Notes: Tree Graphs & The Asynchronous Event Loop</h1>
             
             <div class="doc-section">

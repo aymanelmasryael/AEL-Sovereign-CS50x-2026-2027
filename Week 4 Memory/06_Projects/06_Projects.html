@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,45 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مشاريع الذاكرة الحصرية: ترسانة برمجية أصلية 100%</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-shield-halved"></i> الحارس الذكي لمنافذ الذاكرة (ael_buffer_guardian.c)</h2>
-                <p class="doc-text">
-                    غلاف مؤسسي آمن يحيط بدوال malloc و free لمراقبة حجز الذاكرة التشغيلية، واكتشاف أي محاولة لتسريب الذاكرة (Memory Leaks) أو فك مرجعية المؤشرات الفارغة.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             AEL BUFFER GUARDIAN RUNTIME SURVEILLANCE MATRIX
-===================================================================================
-
-  [ Malloc Request ] ──> Intercepted by Guardian ──> Logs Hex Address (0x7FFF...)
-  [ Memory Usage   ] ──> Validates Active Pointers ──> Shields against SIGSEGV
-  [ Free Execution ] ──> Audits Deallocation     ──> Prevents Use-After-Free
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microscope"></i> مفكك تشفير ترويسات الصور (ael_bmp_forensics.c)</h2>
-                <p class="doc-text">
-                    محرك استقصائي هندسي يقرأ الهيكل الداخلي لملفات BITMAP غير المضغوطة، ويعرض معلومات العرض والارتفاع وعمق الألوان، مع القدرة على عكس ألوان المصفوفة.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-headphones"></i> حفار الملفات الصوتية الخام (ael_audio_recover.c)</h2>
-                <p class="doc-text">
-                    محاكي متميز لأنظمة استعادة الملفات الجنائية (File Carving Engine). يفحص تدفقات البايتات العشوائية بحثاً عن تواقيع لملفات WAV/RIFF ونسخ المقاطع إلى ملفات صوتية صالحة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Sovereign Memory Projects: 100% Original Codebases</h1>
             
             <div class="doc-section">

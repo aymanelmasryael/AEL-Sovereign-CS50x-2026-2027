@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,52 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">علوم الحاسب النظرية: بروتوكول HTTP عديم الحالة وإدارة الجلسات</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-server"></i> لماذا يُعد بروتوكول HTTP عديم الحالة (Stateless Protocol)؟</h2>
-                <p class="doc-text">
-                    بروتوكول HTTP مُصمم معمارياً ليقوم بطلب واحد (Request) وتلقي استجابة واحدة (Response)، ثم يُغلق الاتصال فوراً دون أن يحتفظ بأي سجل في الذاكرة عن العميل الذي اتصل به للتو.
-                </p>
-                
-                <h3 style="color: var(--primary-accent); margin-top: 30px;">المميزات والتحديات المعمارية</h3>
-                <ul>
-                    <li><strong>ميزة انعدام الحالة</strong>: خفة الوزن الفائقة وقدرة الخادم على خدمة ملايين الطلبات المستقلة دون استنزاف الذاكرة العشوائية (RAM).</li>
-                    <li><strong>المعضلة التطبيقية</strong>: كيف يمكن لموقع مثل متجر إلكتروني أو بوابة أمنية أن يتعرف على المستخدم في الصفحة التالية دون إجباره على إدخال كلمة المرور مع كل نقرة؟</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   STATELESS HTTP VS STATEFUL SESSIONS
-===================================================================================
-
- [CLIENT BROWSER]                                             [FLASK SERVER]
-        │                                                           │
-        ├──────────── 1. HTTP POST /login (Credentials) ───────────►│ (Verify SQL)
-        │                                                           │ (Generate Token)
-        │◄─────────── 2. HTTP 200 OK + Set-Cookie: session=0xAEL ───┤
-        │                                                           │
-   (State Cached)                                              (Stateless Done)
-        │                                                           │
-        ├──────────── 3. HTTP GET /dashboard (Cookie: session=0xAEL)►│ (Decode Session)
-        │◄─────────── 4. HTTP 200 OK (User Specific Content) ───────┤
-        │                                                           │
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-key"></i> ميكانيكية عمل الجلسات وملفات تعريف الارتباط</h2>
-                <p class="doc-text">
-                    تُحل هذه المعضلة عبر ترويسات HTTP خاصة، حيث يرسل خادم Flask ترويسة Set-Cookie تطلب من المتصفح تخزين رمز تشفير مميز. يُدار التخزين على الخادم أو يتم تشفير البيانات داخل الـ Cookie نفسها باستخدام مفتاح سري قوي (app.secret_key) لمنع التلاعب والتزوير.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Theoretical Computer Science: The Stateless HTTP Protocol & Session Mechanics</h1>
             
             <div class="doc-section">

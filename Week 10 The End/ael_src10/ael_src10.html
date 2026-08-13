@@ -190,9 +190,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> التوثيق السيادي (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Vault Doc (English)
         </button>
@@ -205,44 +202,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">المعمارية الأمنية العليا: نواة الثقة الصفرية وحماية الأطراف</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-shield-halved"></i> لمحة عامة عن خزانة الأكواد (ael_src10)</h2>
-                <p class="doc-text">
-                    تعد خزانة <code>ael_src10</code> البيئة البرمجية الأكثر صرامة في المنهج الأكاديمي، حيث تجسد معايير حماية الأنظمة المتقدمة (System Hardening). تعتمد الخزنة على إلغاء الثقة الافتراضية في أي كيان داخلي أو خارجي، وتطبيق مبدأ التحقق التشفيري الإلزامي لجميع المعاملات.
-                </p>
-
-                <h2 class="sec-title"><i class="fas fa-server"></i> المحركات البرمجية للخزنة (Vault Execution Core)</h2>
-                <ul>
-                    <li><strong>نواة الثقة الصفرية (zero_trust_kernel.py)</strong>: نظام فحص معزول يتحقق من الهويات التشفيرية، صلاحيات التحكم (RBAC)، وسلامة الشهادات قبل السماح بتنفيذ أي روتين برمجي.</li>
-                    <li><strong>محرك التغليف التشفيري (hmac_key_wrapper.py)</strong>: وحدة توليد وتدقيق التوقيعات الرقمية بصيغة <code>HMAC SHA-256</code> لضمان استحالة حقن الأوامر أو تزوير حزم البيانات.</li>
-                    <li><strong>مراقب منافذ الاتصال (port_scanner_guard.py)</strong>: نظام جدار استباقي يقوم بمسح منافذ الشبكة المحلية ورصد أي بوابات خلفية مفتوحة أو اتصالات غير مصرح بها.</li>
-                </ul>
-
-                <div class="portal-diagram">
-<pre>+-------------------------------------------------------------------+
-|               AEL_SRC10 APEX VAULT ARCHITECTURE                   |
-+-------------------------------------------------------------------+
-|                                                                   |
-|   +-----------------------------------------------------------+   |
-|   |         ZERO_TRUST_KERNEL.PY (Master Authenticator)       |   |
-|   +-----------------------------------------------------------+   |
-|                 |                               |                 |
-|                 v                               v                 |
-|   +---------------------------+   +---------------------------+   |
-|   |    HMAC_KEY_WRAPPER.PY    |   |    PORT_SCANNER_GUARD.PY  |   |
-|   |   (Integrity Encapsulator)|   |  (Proactive Edge Defense) |   |
-|   +---------------------------+   +---------------------------+   |
-|                                                                   |
-+-------------------------------------------------------------------+</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Apex Security Architecture: Zero-Trust Vault & Edge Defenses</h1>
             
             <div class="doc-section">

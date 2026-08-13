@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,37 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">دليل تشغيل الشفرات السيادية للذكاء الاصطناعي (ael_src_ai)</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microchip"></i> ترسانة برمجية حصرية خالية من الشفرات القديمة</h2>
-                <p class="doc-text">
-                    تم بناء ترسانة برمجية كاملة وحصرية 100% داخل ael_src_ai، خالية تماماً من أي شفرات قديمة أو منقولة، لتغطي النماذج اللغوية الكبيرة (LLMs)، التحليل الدلالي، ومحركات أشجار القرار.
-                </p>
-                
-                <h3 style="color: var(--primary-accent); margin-top: 30px;">1. موصل النماذج اللغوية السيادي (ael_llm_connector.py)</h3>
-                <div class="portal-diagram">
-<pre>python3 ael_llm_connector.py</pre>
-                </div>
-                <p class="doc-text">محاكاة اتصال مشفر مع واجهات النماذج اللغوية الكبيرة (LLMs - GPT-5/GPT-6)، وتطبيق طبقة صارمة من تعليمات النظام (System Prompt) لمنع هجمات حقن التلقين (Prompt Injection).</p>
-
-                <h3 style="color: var(--primary-accent); margin-top: 40px;">2. محرك فحص الكلمات والتنبؤ الدلالي (ael_ai_speller_matrix.py)</h3>
-                <div class="portal-diagram">
-<pre>python3 ael_ai_speller_matrix.py</pre>
-                </div>
-                <p class="doc-text">دمج مفاهيم القاموس التقليدي (Hash Tables / Tries) مع خوارزميات التصحيح الذكية القائمة على مسافة ليفنشتاين (Levenshtein Distance) والتنبؤ الاحتمالي بالأخطاء.</p>
-
-                <h3 style="color: var(--primary-accent); margin-top: 40px;">3. محرك أشجار القرار والتقليم الألفا-بيتا (ael_decision_tree_engine.py)</h3>
-                <div class="portal-diagram">
-<pre>python3 ael_decision_tree_engine.py</pre>
-                </div>
-                <p class="doc-text">محاكاة شجرة قرارات ذكية باستخدام خوارزمية Minimax وتقنية التقليم Alpha-Beta Pruning لحساب المسار التكتيكي الأفضل استهلاكاً للموارد.</p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Execution Guide: Sovereign AI Subsystem Codebase (ael_src_ai)</h1>
             
             <div class="doc-section">

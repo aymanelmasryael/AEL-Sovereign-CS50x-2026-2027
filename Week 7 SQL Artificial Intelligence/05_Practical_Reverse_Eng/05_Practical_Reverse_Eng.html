@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,40 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">الهندسة العكسية التطبيقية: تفكيك خطط التنفيذ (EXPLAIN QUERY PLAN)</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-unlock-alt"></i> تشريح أمر EXPLAIN QUERY PLAN</h2>
-                <p class="doc-text">
-                    في الهندسة العكسية لقواعد البيانات، لا نكتفي بمعرفة أن الاستعلام يعمل، بل نسعى لمعرفة كيف ينفذ محرك قاعدة البيانات الاستعلام خلف الكواليس، وأي الطرق يسلكها في فحص الجداول.
-                </p>
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   EXPLAIN QUERY PLAN REVERSE ENGINE TOPOLOGY
-===================================================================================
-
-  [ EXPLAIN QUERY PLAN SELECT * FROM movies WHERE title = 'Inception'; ]
-  
-  ├── Case A (Unindexed) : SCAN TABLE movies (Worst Case O(N))
-  └── Case B (Indexed)   : SEARCH TABLE movies USING COVERING INDEX (Optimal O(log N))
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-search-plus"></i> الفروق الجوهرية في استراتيجيات الفحص</h2>
-                <ul>
-                    <li><strong>المسح الشامل للجدول (SCAN TABLE / Seq Scan)</strong>: يعني أن محرك قاعدة البيانات سيفتح ملف قاعدة البيانات ويقرأ كل صفحة من البداية إلى النهاية. إذا كان الجدول يضم 10 ملايين سجل، سيتم إجراء 10 ملايين فحص.</li>
-                    <li><strong>فحص الفهرس (SEARCH TABLE USING INDEX / Index Scan)</strong>: يشير إلى أن المحرك سيتخطى الجدول الفعلي ويتجه مباشرة إلى شجرة B-Tree الخاصة بالفهرس، ويقفز للورقة المطابقة في بضع حركات فقط.</li>
-                    <li><strong>الفهرس المغطي (COVERING INDEX)</strong>: الحالة الأكثر كفاءة على الإطلاق. تحدث عندما يحتوي الفهرس نفسه على كل الأعمدة المطلوبة في جملة SELECT، مما يلغي الحاجة للرجوع إلى الجدول الأصلي تماماً.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Practical Reverse Engineering: Deconstructing Query Plans (EXPLAIN QUERY PLAN)</h1>
             
             <div class="doc-section">

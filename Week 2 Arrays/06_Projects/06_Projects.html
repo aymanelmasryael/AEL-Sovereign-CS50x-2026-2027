@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,57 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مواصفات مشاريع الأسبوع الثاني: سكرابل وقراءة النصوص</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-boxes-packing"></i> المحور الأول: مواصفات وتحديات مشروع سكرابل (Scrabble Specification)</h2>
-                <p class="doc-text">
-                    مطلوب بناء برنامج تفاعلي بالطرفية يحسب مجموع النقاط لكلمتين يدخلهما مستخدمان منفصلان، ويعلن فوز أحدهما أو التعادل.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             SCRABBLE EXECUTION FLOWCHART
-===================================================================================
-
-  [ Input P1 ] ──> compute_score() ──┐
-                                     ├──> Comparison ──> [ Print: Player X wins! / Tie! ]
-  [ Input P2 ] ──> compute_score() ──┘
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>معمارية الدالة compute_score:</strong> يجب أن تتلقى الدالة السلسلة النصية كمعامل <code>string word</code> وترجع قيمة صحيحة <code>int</code> تمثل مجموع النقاط، مع الالتزام التام بتجاهل أي رموز أو أرقام لا تنتمي للأحرف الأبجدية.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-square-root-variable"></i> المحور الثاني: مواصفات وتحديات مشروع قراءة النصوص (Readability)</h2>
-                <p class="doc-text">
-                    البرنامج يأخذ نصاً كاملاً من المستخدم ويطبق خوارزمية Coleman-Liau الصارمة لتحديد الصف الدراسي المناسب.
-                </p>
-                <ul>
-                    <li><strong>التقريب الرياضي:</strong> استخدام دالة <code>round()</code> من مكتبة <code>&lt;math.h&gt;</code> للحصول على عدد صحيح.</li>
-                    <li><strong>إدارة قسمة الأعداد الصحيحة (Integer Division Hazard):</strong> عند حساب المتوسطات، يجب تحويل المتغيرات صراحةً إلى float لتجنب فقدان الكسور العشرية.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-shield-halved"></i> المحور الثالث: مواصفات مشاريع التشفير (Caesar & Substitution)</h2>
-                <p class="doc-text">
-                    شروط مسار التنفيذ لمشروعي قيصر والاستبدال تتضمن تأمين المدخلات والتعامل الجنائي مع مفاتيح التشفير.
-                </p>
-                <ul>
-                    <li><strong>شروط مشروع قيصر:</strong> التأكد من توفر معامل واحد فقط <code>argc == 2</code>، وأن يكون مفتاحاً رقمياً صالحاً. وفي حال إدخال معامل غير صالح، يطبع البرنامج <code>Usage: ./caesar key</code> ويرجع القيمة 1.</li>
-                    <li><strong>شروط مشروع الاستبدال:</strong> التأكد من أن المفتاح مكون من 26 حرفاً أبجدياً فريداً، مع الحفاظ الكامل على حالة الحروف ومسافات النص الأصلي.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 2 Projects Specifications: Scrabble & Ciphers</h1>
             
             <div class="doc-section">

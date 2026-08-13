@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,41 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مذكرات الهندسة البرمجية: إعادة الهيكلة وقابلية التوسع</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cogs"></i> إعادة هيكلة الشيفرة البرمجية (Refactoring C to Python)</h2>
-                <p class="doc-text">
-                    في بيئات العمل المؤسسية (Enterprise Environments)، يعتبر الانتقال من <code>C</code> إلى <code>Python</code> بمثابة ترقية استراتيجية لقابلية الصيانة (Maintainability) وسرعة الوصول إلى السوق.
-                </p>
-                <ul>
-                    <li><strong>اختزال أسطر الشفرة (Code Boilerplate Reduction)</strong>: العديد من العمليات المعقدة في <code>C</code> (مثل التعامل مع السلاسل النصية عبر <code>strcat/strcpy</code> والتحقق من نهايتها بـ <code>\0</code>) تتحول في <code>Python</code> إلى عمليات بسيطة للغاية ومدمجة في المعامل <code>+</code> أو التنسيق <code>f-strings</code>.</li>
-                    <li><strong>استيراد المكتبات الجاهزة (Batteries Included)</strong>: توفر <code>Python</code> منظومة غنية من الحزم القياسية (Standard Library) مثل <code>csv</code> و <code>sys</code> و <code>re</code>، مما يقلل بشكل حاد من الحاجة لإعادة اختراع العجلة.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-shield-alt"></i> إدارة الاستثناءات الهندسية (Exception Handling Architecture)</h2>
-                <ul>
-                    <li><strong>كتل المحاولة والخطأ (try/except Blocks)</strong>: بدلاً من فحص أكواد العودة (Return Codes) يدوياً في كل خطوة كما في <code>C</code> (<code>if (ptr == NULL)</code>), تعتمد <code>Python</code> على معمارية معالجة الاستثناءات النظيفة، مما يفصل مسار العمل الطبيعي عن مسار معالجة الأخطاء.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   ERROR HANDLING ARCHITECTURE
-===================================================================================
-
-  [ C Idiom ]         ──> manual NULL checks, integer return values
-  [ Python Idiom ]    ──> try / except / finally execution stack
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Engineering Notes: Refactoring & System Maintainability</h1>
             
             <div class="doc-section">

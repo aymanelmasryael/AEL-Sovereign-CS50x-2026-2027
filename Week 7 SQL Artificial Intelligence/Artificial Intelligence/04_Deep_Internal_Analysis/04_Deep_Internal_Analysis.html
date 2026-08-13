@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,45 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل الداخلي العميق: أشجار اتخاذ القرار (Decision Trees & Minimax)</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microchip"></i> خوارزمية Minimax (تعظيم المكسب وتقليل الخسارة)</h2>
-                <p class="doc-text">
-                    عندما يتعامل الذكاء الاصطناعي مع الألعاب الاستراتيجية (مثل الشطرنج أو Tic-Tac-Toe) أو مسارات الملاحة، فإنه يتحول من التوليد اللغوي إلى تقييم فضاء الحالة (State Space Search).
-                </p>
-                <ul>
-                    <li><strong>لاعب التعظيم (Maximizer)</strong>: يسعى للوصول إلى أعلى درجة تقييم ممكنة (+1 أو أعلى قيمة رياضية).</li>
-                    <li><strong>لاعب التقليل (Minimizer)</strong>: يسعى لتقليل درجة التقييم إلى أدنى حد ممكن (-1 أو أقل قيمة رياضية).</li>
-                    <li><strong>الحالات النهائية (Terminal States)</strong>: النقطة التي تنتهي عندها اللعبة، حيث تعيد دالة المنفعة القيمة الفعلية للمسار.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   MINIMAX TREE SEARCH MATRIX
-===================================================================================
-
-                    [ Root Node: Max Turn ] (Value: +1)
-                           /             \
-       [ Min Turn ] (Value: -1)        [ Min Turn ] (Value: +1)
-         /          \                    /          \
-    [ Loss: -1 ]  [ Draw: 0 ]       [ Win: +1 ]   [ Loss: -1 ]
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-filter"></i> التقليم الألفا-بيتا (Alpha-Beta Pruning)</h2>
-                <p class="doc-text">
-                    في فضاءات الألعاب الشاسعة، يصبح البحث الشامل (Exhaustive DFS) مستحيلاً حسابياً. إذا وجد الخوارزم أن مساراً معيناً أسوأ بكثير من مسار تم استكشافه مسبقاً، يتم قطع الفرع بأكمله دون التحقق من عقده، مما يوفر حتى 50% من الذاكرة ووقت المعالجة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Deep Internal Analysis: Decision Trees & Minimax Algorithms</h1>
             
             <div class="doc-section">

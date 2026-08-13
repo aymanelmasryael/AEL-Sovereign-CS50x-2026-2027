@@ -185,9 +185,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -197,54 +194,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">استعراض المشاريع السيادية: خزنة ael_src9 وتطبيق AEL Flask MVC Core</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-rocket"></i> تطبيق AEL Flask MVC Core</h2>
-                <p class="doc-text">
-                    تطبيقاً لمبدأ السيادة البرمجية الكاملة وتجنب النسخ الحرفي لمشاريع CS50 التقليدية، تم بناء منظومة ويب متكاملة (Full-Stack Web Suite) مبنية على إطار Flask مع تطبيق هيكلي صارم لنمط التصميم MVC داخل خزانة ael_src9.
-                </p>
-                
-                <h3 style="color: var(--primary-accent); margin-top: 30px;">الوحدات المعمارية المطبقة</h3>
-                <ul>
-                    <li><strong>محرك بكرة التوجيه (Master Controller Engine)</strong>: نصوص Python منظمة تدير استعلامات GET / POST مع طبقات فحص أمني وتطهير للبيانات.</li>
-                    <li><strong>حقن قوالب الجيل الثالث (Jinja2 Glassmorphism Core)</strong>: قوالب HTML معززة بشروط وحلقات Jinja، مُصممة وفق أرقى المعايير الجمالية للوضع الداكن الزجاجي.</li>
-                    <li><strong>نظام التتبع الجلسي (Cryptographic Session Inspector)</strong>: دوال لمراقبة توليد الرموز المشفرة وتفكيك الجلسات عند تسجيل الخروج.</li>
-                    <li><strong>محاكي طبقة قاعدة البيانات (SQLite Abstracted Transactions)</strong>: عمليات دمج تحاكي إنشاء وقراءة وتحديث السجلات بصورة مستمرة.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   AEL FLASK MVC CORE SUITE ARCHITECTURE
-===================================================================================
-
-     ┌───────────────────────────────────────────────────────────────────────┐
-     │  [FLASK APP CONTROLLER] ael_mvc_core.py            [ROUTING ENGINE]   │
-     ├───────────────────────────────────┬───────────────────────────────────┤
-     │  JINJA2 TEMPLATE GENERATOR        │  SQLITE TRANSACTION WRAPPER       │
-     │  [Render ael_dashboard.html]      │  [Read / Write Active Matrix DB]  │
-     ├───────────────────────────────────┴───────────────────────────────────┤
-     │  ACTIVE TELEMETRY: Live Request Context & Cryptographic Cookie Store  │
-     └───────────────────────────────────────────────────────────────────────┘
-
-===================================================================================</pre>
-                </div>
-
-                <div class="launch-action-card">
-                    <div>
-                        <h3>⚡ الدخول إلى غرفة التحكم المركزية ael_src9</h3>
-                        <p>تصفح توثيق الخزنة وافحص تطبيق Flask MVC المعماري</p>
-                    </div>
-                    <a href="../ael_src9/ael_src9.html" class="launch-btn">
-                        <i class="fas fa-play"></i> استكشاف ael_src9
-                    </a>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Sovereign Projects Review: ael_src9 Vault & AEL Flask MVC Core</h1>
             
             <div class="doc-section">

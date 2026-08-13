@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,44 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">توثيق المشاريع: محرك المدقق الإملائي (Speller Engine)</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-book-open-reader"></i> نظرة عامة على المشروع (Project Mission)</h2>
-                <p class="doc-text">
-                    يُعد مشروع Speller التحدي البرمجي الأبرز في لغة C، حيث يُطلب من مهندس النظام تصميم محرك فائق السرعة لتدقيق النصوص إملائياً بالاستناد إلى قاموس قواميس يحتوي على أكثر من 140,000 كلمة. التحدي الرئيسي هو تقليل زمن التشغيل الكلي (Runtime Execution Latency) واستهلاك الذاكرة.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-gears"></i> تشريح دوال النظام الأربع (Kernel Interfaces)</h2>
-                <p class="doc-text">
-                    يرتكز النظام على 4 دوال أساسية تم تصميمها وتنفيذها بشكل نقي ومستقل 100% داخل مجلد ael_src5:
-                </p>
-                <ul>
-                    <li><strong>دالة load:</strong> تقوم بفتح ملف القاموس، وقراءة الكلمات سطرًا بسطر، وحساب التجزئة لكل كلمة، ثم إدراج العقدة في جدول التجزئة بأسلوب Chaining.</li>
-                    <li><strong>دالة hash:</strong> خوارزمية صلبة ومستقرة (مثل DJB2) لتحويل السلسلة النصية إلى رقم فتحة (Bucket Index) يتراوح من 0 إلى N-1.</li>
-                    <li><strong>دالة check:</strong> تستقبل كلمة من النص، وتقوم بتحويل حروفها إلى أحرف صغيرة (Case-Insensitive)، وتستعلم عنها في القائمة المرتبطة الخاصة بفتحتها في زمن O(1).</li>
-                    <li><strong>دالة unload:</strong> مسؤولة عن التحرير النظيف والكامل لجميع العقد المرتبطة في جدول التجزئة، فتحة بفتحة وعقدة بعقدة، لضمان تقرير خالٍ من التسريبات في Valgrind.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-folder-tree"></i> شفرات المصدر المؤسسية ael_src5</h2>
-                <p class="doc-text">
-                    وفقاً للتعليمات السيادية العليا: <em>"كافة شفرات المصدر أصلية 100% ومملوكة حصرياً، وليست نسخاً كربونية من الملفات القديمة"</em>. تم بناء وترميز الملفات التالية داخل المجلد ael_src5:
-                </p>
-                <ul>
-                    <li><a href="../ael_src5/ael_dictionary_chaining.c" style="color: #64ffda; text-decoration: none;">ael_dictionary_chaining.c</a> &middot; محاكاة متكاملة لقاموس Speller باستخدام جدول تجزئة بسعة 65,536 فتحة.</li>
-                    <li><a href="../ael_src5/ael_trie_autocompleter.c" style="color: #64ffda; text-decoration: none;">ael_trie_autocompleter.c</a> &middot; محرك بحث نصي يعتمد على شجرة التريس بسرعة O(1) الفورية.</li>
-                    <li><a href="../ael_src5/ael_binary_search_tree.c" style="color: #64ffda; text-decoration: none;">ael_binary_search_tree.c</a> &middot; شجرة بحث ثنائية متزنة O(log n) تدعم استعراض العقد بالطرق الثلاث.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Project Architecture: Enterprise Speller Engine</h1>
             
             <div class="doc-section">

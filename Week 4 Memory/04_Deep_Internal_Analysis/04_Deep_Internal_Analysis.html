@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,47 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل الباطني العميق: تشريح المكدس والكومة في طبقات النواة</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-network-wired"></i> تشريح نداءات النظام (brk, sbrk, mmap)</h2>
-                <p class="doc-text">
-                    الدالة malloc() ليست سحراً؛ إنها مجرد غلاف قياسي. عندما تطلب مساحة ذاكرة، تقوم malloc بإصدار نداءات نظام فعلية للنواة مثل sys_brk لتحريك حد الكومة، أو sys_mmap لتخصيص صفحات حرة للطلبات الضخمة.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             MALLOC() KERNEL SYSCALL DELEGATION MATRIX
-===================================================================================
-
-  [ USER LAYER ]        :   malloc( 512 );            malloc( 1024 * 1024 );
-                                 │                              │
-  [ GLIBC WRAPPER ]     :   ( Small Chunk < 128KB )    ( Large Chunk > 128KB )
-                                 │                              │
-  [ KERNEL SYSCALL ]    :   sys_brk() / sbrk()         sys_mmap() (Anonymous Page)
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-memory"></i> جداول صفحات الذاكرة الافتراضية (MMU & Page Tables)</h2>
-                <p class="doc-text">
-                    العناوين الست عشرية التي تراها ليست العناوين المادية في رقاقة الـ RAM. إنها عناوين افتراضية تقوم شريحة MMU بتحويلها لحظياً إلى عناوين فعلية في السيليكون باستخدام جداول الصفحات.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-triangle-exclamation"></i> تشريح خطأ الإشارة الصامتة (SIGSEGV)</h2>
-                <p class="doc-text">
-                    يحدث خطأ Segmentation Fault (الإشارة SIGSEGV) عندما يكتشف المعالج محاولة فك مرجعية مؤشر يشير إلى صفحة ذاكرة لا يمتلك العملية أذونات قراءتها أو كتابتها.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Deep Internal Analysis: Kernel Memory Layouts</h1>
             
             <div class="doc-section">

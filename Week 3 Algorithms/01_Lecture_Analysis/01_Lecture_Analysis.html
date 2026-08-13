@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,74 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل محاضرة الأسبوع الثالث: البحث والترتيب والتعقيد الحسابي</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-search"></i> المحور الأول: فلسفة البحث والتعقيد الحسابي</h2>
-                <p class="doc-text">
-                    يفتتح ديفيد مالان محاضرة الأسبوع الثالث بالعودة إلى المشهد التأسيسي؛ تمزيق دليل الهاتف. ولكن هذه المرة، نتحول من التفكير المفاهيمي إلى التدوين الرياضي الصارم للبحث الخطي (Linear Search) والبحث الثنائي (Binary Search).
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             SEARCH ALGORITHMS COMPARATIVE EXECUTION MATRIX
-===================================================================================
-
-  [ Linear Search (Unsorted/Sorted) ]
-  [ 1 ] ──> [ 2 ] ──> [ 3 ] ──> ... ──> [ N ]  ──>  Time Complexity: O(N)
-
-  [ Binary Search (Requires Sorted Array) ]
-  [ 1 ... N/2 ... N ] ──> Cut in half ──> [ 1 ... N/4 ] ──> Time Complexity: O(log N)
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>البحث الخطي:</strong> البحث صفحة بصفحة. الخوارزمية الأكثر بساطة ولكنها الأسوأ في كفاءة الأداء O(N).</li>
-                    <li><strong>البحث الثنائي:</strong> فتح الدليل من المنتصف، تحديد النصف الصالح للبحث وتجاهل النصف الآخر بالكامل O(log N).</li>
-                    <li><strong>التدوينات الرياضية:</strong> Big O تمثل الحد العلوي للتشغيل، Big Omega تمثل الحد السفلي، و Big Theta تمثل التوافق التام.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sort-amount-down"></i> المحور الثاني: خوارزميات الترتيب وهندسة المقارنات</h2>
-                <p class="doc-text">
-                    يعرض مالان متطوعين على المسرح لمحاكاة ترتيب الأرقام عبر الترتيب الفقاعي (Bubble Sort) وترتيب التحديد (Selection Sort).
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             BUBBLE SORT STEP-BY-STEP SWAP LOGIC
-===================================================================================
-
-  Pass 1: [ 5, 2, 8, 1, 9 ] ──> (5 > 2) Swap ──> [ 2, 5, 8, 1, 9 ]
-          [ 2, 5, 8, 1, 9 ] ──> (8 > 1) Swap ──> [ 2, 5, 1, 8, 9 ]
-          [ 2, 5, 1, 8, 9 ] ──> (8 &lt; 9) OK   ──> [ 2, 5, 1, 8, 9 ] (9 Locked)
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>الترتيب الفقاعي (Bubble Sort):</strong> مقارنة الأزواج المتجاورة وتبديلها لتطفو الأرقام الكبرى كفقاعات O(n^2).</li>
-                    <li><strong>ترتيب التحديد (Selection Sort):</strong> البحث عن أصغر عنصر في المصفوفة بأكملها وتبديله مع العنصر الأولي Theta(n^2).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-code-merge"></i> المحور الثالث: الرشاقة الرياضية والتكرار الذاتي (Recursion & Merge Sort)</h2>
-                <p class="doc-text">
-                    الاستدعاء الذاتي هو قدرة الدالة البرمجية على استدعاء نفسها لحل مسألة فرعية أصغر، مما يقودنا لقمة الخوارزميات: الترتيب بالدمج (Merge Sort).
-                </p>
-                <ul>
-                    <li><strong>أركان التكرار الذاتي:</strong> الشرط الأساسي (Base Case) لمنع التكرار اللانهائي، والخطوة التكرارية (Recursive Step).</li>
-                    <li><strong>الترتيب بالدمج (Merge Sort):</strong> مبدأ فرق تسد (Divide and Conquer)، يقفز بالأداء إلى O(n log n).</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 3 Lecture Analysis: Search, Sorting & Complexity</h1>
             
             <div class="doc-section">

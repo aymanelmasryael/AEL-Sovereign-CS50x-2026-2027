@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -372,163 +367,13 @@
             <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>06_Projects (Week 1 C)</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_1_Projects_Design_AR.md</code></span>
-            <a href="Week_1_Projects_Design_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🏛️ تشريح المشاريع التطبيقية (Classic CS50 Problem Sets)</h2>
-        <p>تمثل مشاريع الأسبوع الأول في لغة <code>C</code> أول احتكاك حقيقي للطالب بهندسة البرمجيات القائمة على حل المشكلات (<code>Problem-Solving Architecture</code>). في هذا المجلد، نقوم بتشريح الأساليب الخوارزمية والتصميمية لثلاثة مشاريع كلاسيكية في مسار <code>CS50x</code>:</p>
-
-<pre>
-===================================================================================
-                       WEEK 1 C - PROJECTS ARCHITECTURE
-===================================================================================
-
-  ┌────────────────────────────────────────────────────────┐
-  │ 1. MARIO (Less &amp; More Comfortable)                     │ ──> Nested Loops &amp; Alignment
-  ├────────────────────────────────────────────────────────┤
-  │ 2. CASH (Less Comfortable)                             │ ──> The Greedy Algorithm
-  ├────────────────────────────────────────────────────────┤
-  │ 3. CREDIT (More Comfortable)                           │ ──> Luhn's Algorithm &amp; Modulo Math
-  └────────────────────────────────────────────────────────┘
-
-===================================================================================
-</pre>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>🧱 1. مشروع هرم ماريو (Mario - Less &amp; More Comfortable)</h2>
-        <p>يستلهم هذا المشروع من لعبة <code>Super Mario Bros</code> لبناء أهرامات متدرجة من كتل الطوب <code>#</code> في نافذة سطر الأوامر. الهدف الهندسي هو إتقان الحلقات التكرارية المتداخلة (<code>Nested Loops</code>) وإجبار المستخدم على إدخال قيم صحيحة (<code>Input Validation</code>).</p>
-
-        <h3>هرم Mario - Less Comfortable (الهرم الأيمن)</h3>
-        <p>بناء هرم واحد يرتفع لليمين، بارتفاع يتراوح بين 1 و 8. لأي سطر <code>i</code> (من <code>0</code> إلى <code>height - 1</code>)، عدد المسافات <code>spaces = height - i - 1</code> وعدد الطوب <code>hashes = i + 1</code>.</p>
-<pre>
-   #  (3 spaces, 1 hash)
-  ##  (2 spaces, 2 hashes)
- ###  (1 space,  3 hashes)
-####  (0 spaces, 4 hashes)
-</pre>
-
-        <h3>هرم Mario - More Comfortable (الهرم المزدوج)</h3>
-        <p>بناء هرمين متقابلين تفصل بينهما مسافتان ثابتتان <code>  </code>.</p>
-<pre>
-#include &lt;cs50.h&gt;
-#include &lt;stdio.h&gt;
-
-int main(void)
-{
-    int height;
-    // 1. Input Validation (1 to 8)
-    do
-    {
-        height = get_int("Height: ");
-    }
-    while (height &lt; 1 || height &gt; 8);
-
-    // 2. Master Loop for Rows
-    for (int i = 0; i &lt; height; i++)
-    {
-        // Print leading spaces
-        for (int spaces = 0; spaces &lt; height - i - 1; spaces++)
-        {
-            printf(" ");
-        }
-
-        // Print left pyramid hashes
-        for (int hashes = 0; hashes &lt;= i; hashes++)
-        {
-            printf("#");
-        }
-
-        // Print middle static gap
-        printf("  ");
-
-        // Print right pyramid hashes
-        for (int hashes = 0; hashes &lt;= i; hashes++)
-        {
-            printf("#");
-        }
-
-        // Move to next row
-        printf("\n");
-    }
-}
-</pre>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>🪙 2. مشروع آلة الصرافة وخوارزمية النهم (Cash - The Greedy Algorithm)</h2>
-        <p>في مشروع <code>Cash</code>، يطلب من المبرمج تصميم نظام يحسب أقل عدد ممكن من العملات المعدنية اللازمة لإعطاء الباقي للعميل.</p>
-
-<pre>
-===================================================================================
-                       THE GREEDY ALGORITHM PIPELINE
-===================================================================================
-
-  [ Cents Input: e.g., 68¢ ]
-            │
-            ├─► Quarters (25¢) ──> 68 / 25 = 2 (Remainder: 18¢)
-            ├─► Dimes (10¢)    ──> 18 / 10 = 1 (Remainder: 8¢)
-            ├─► Nickels (5¢)   ──> 8 / 5   = 1 (Remainder: 3¢)
-            └─► Pennies (1¢)   ──> 3 / 1   = 3 (Remainder: 0¢)
-            
-  [ Total Minimum Coins = 2 + 1 + 1 + 3 = 7 Coins ]
-
-===================================================================================
-</pre>
-
-        <div class="alert-box">
-            <h4>💡 تشريح خوارزمية النهم (Greedy Algorithm)</h4>
-            <p>تقوم الخوارزمية الجشعة أو النهمة باختيار "أفضل وأكبر خيار متاح حالياً" في كل مرحلة دون النظر إلى المستقبل. في حالة العملات القياسية الأمريكية (25, 10, 5, 1)، ثبت رياضياً أن هذه الخوارزمية تنتج دائماً الحل الأمثل.</p>
-        </div>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>💳 3. مشروع التحقق من بطاقات الائتمان (Credit - Luhn's Algorithm)</h2>
-        <p>مشروع <code>Credit</code> هو تحدي معماري متقدم يتطلب التحقق من صحة أرقام بطاقات الائتمان (<code>Visa, MasterCard, American Express</code>) باستخدام <strong>خوارزمية لونه (Luhn's Algorithm)</strong>.</p>
-
-<pre>
-===================================================================================
-                       LUHN'S CARD VERIFICATION ALGORITHM
-===================================================================================
-
-  [ Card Number: e.g., 4 0 1 2 8 8 8 8 8 8 8 8 8 8 8 3 ] (Length 16, Starts 4 -> Visa)
-            │
-            ├─► 1. Multiply every second digit from right by 2 (Add product digits)
-            ├─► 2. Add sum of digits that weren't multiplied
-            └─► 3. If total modulo 10 == 0, Card is VALID.
-
-===================================================================================
-</pre>
-
-        <h3>1. تصنيف البطاقات حسب المعايير الدولية</h3>
-        <ul>
-            <li><strong>American Express (AMEX):</strong> الطول <code>15</code> رقماً، وتبدأ بالرقمين <code>34</code> أو <code>37</code>.</li>
-            <li><strong>MasterCard:</strong> الطول <code>16</code> رقماً، وتبدأ بالأرقام من <code>51</code> إلى <code>55</code>.</li>
-            <li><strong>Visa:</strong> الطول <code>13</code> أو <code>16</code> رقماً، وتبدأ بالرقم <code>4</code>.</li>
-        </ul>
-
-        <h3>2. تشريح خوارزمية لونه (Luhn's Algorithm)</h3>
-        <ol style="margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8;">
-            <li><strong>الخطوة الأولى:</strong> البدء من الرقم الأخير، وتجاوز الرقم الأول نحو اليسار، وضرب كل رقم ثاني في <code>2</code>. (إذا ناتج الضرب تشكل من رقمين مثل <code>6 * 2 = 12</code>، لا نجمع <code>12</code>، بل نجمع أرقام الناتج <code>1 + 2 = 3</code>).</li>
-            <li><strong>الخطوة الثانية:</strong> جمع كافة الأرقام الأخرى التي لم يتم ضربها.</li>
-            <li><strong>الخطوة الثالثة:</strong> جمع الناتجين. إذا كان المجموع الكلي ينتهي بصفر (أي <code>total_sum % 10 == 0</code>)، فإن بطاقة الائتمان سليمة.</li>
-        </ol>
-
-        <h3>3. تقنيات المعالجة الرياضية (Modulo &amp; Division Math)</h3>
-        <p>في لغة C، نظراً لعدم إمكانية تحويل الرقم إلى سلسلة نصية بسهولة في البداية، يتم انتزاع الأرقام واحداً تلو الآخر باستخدام باقي القسمة <code>card % 10</code>، ثم إزالتها كلياً بالقسمة <code>card /= 10</code>. ونظراً لطول رقم البطاقة (حتى 16 رقماً)، يتم استخدام نوع البيانات <code>long</code> لتجنب الطفح (<code>Overflow</code>).</p>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_1_Projects_Design_EN.md</code></span>
             <a href="Week_1_Projects_Design_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -685,18 +530,11 @@ int main(void)
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

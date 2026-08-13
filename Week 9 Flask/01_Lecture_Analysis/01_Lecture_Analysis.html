@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,53 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل المحاضرة: معمارية MVC وتطبيقات الويب المتكاملة</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> الاندماج العظيم بين الواجهات وقواعد البيانات</h2>
-                <p class="doc-text">
-                    تُشكل المحاضرة التاسعة نقطة الاندماج العظمى في رحلة الموسوعة، حيث تلتتقي أطياف الواجهات الأمامية (HTML / CSS / JS) مع طبقات المنطق الخلفي وقواعد البيانات (Python / SQL) تحت مظلة إطار عمل قوي ومرن هو Flask.
-                </p>
-                
-                <h3 style="color: var(--primary-accent); margin-top: 30px;">نمط التصميم المعماري MVC (Model-View-Controller)</h3>
-                <ul>
-                    <li><strong>النموذج (Model)</strong>: الطبقة المسؤولة عن التواصل مع قاعدة البيانات (SQLite) وإدارة هياكل البيانات وصلاحيات الوصول.</li>
-                    <li><strong>العرض (View)</strong>: القوالب الديناميكية (Jinja2 Templates) التي تتولى تصيير وتجميل مخرجات الـ HTML وعرضها بنمط Glassmorphism المميز لمنظومتنا.</li>
-                    <li><strong>المتحكم (Controller)</strong>: المسارات التوجيهية (Routes) في Python التي تستقبل طلبات الـ HTTP GET / POST، وتستدعي النماذج، ثم تحقن البيانات في القوالب.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   THE MVC ARCHITECTURAL PARADIGM
-===================================================================================
-
-                    ┌─────────────[ HTTP REQUEST ]─────────────┐
-                    ▼                                          │
-       ┌─────────────────────────┐                             │
-       │  CONTROLLER (Flask App) │                             │
-       └────┬───────────────▲────┘                             │
-            │               │                                  │
-       (1. Query)      (2. Data)                         (3. Render)
-            ▼               │                                  │
-       ┌─────────────────────────┐     ┌───────────────────────▼─┐
-       │     MODEL (SQLite)      │     │    VIEW (Jinja2 / UI)   │
-       └─────────────────────────┘     └─────────────────────────┘
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-file-code"></i> قوة القوالب الديناميكية</h2>
-                <p class="doc-text">
-                    تركز المحاضرة على تجاوز صفحات الـ HTML الصامتة والثابتة عبر الاستفادة من محرك القوالب Jinja، مما يتيح استخدام التكرارات (Loops)، الشروط (Conditions)، والوراثة القالبية (Template Inheritance).
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Lecture Analysis: MVC Architecture & Full-Stack Web Synthesis</h1>
             
             <div class="doc-section">

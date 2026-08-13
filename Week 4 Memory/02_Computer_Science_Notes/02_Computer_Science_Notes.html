@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,47 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">ملاحظات علوم الحاسب: جبر المؤشرات ومحاذاة الذاكرة</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-square-root-variable"></i> جبر المؤشرات (Pointer Arithmetic)</h2>
-                <p class="doc-text">
-                    عندما نجمع رقماً مع مؤشر، فإن المعالج لا يجمع بايتات فردية، بل يضرب الرقم في حجم نوع البيانات (sizeof). هذا يضمن القفز المباشر بين عناصر المصفوفة.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             POINTER ARITHMETIC MULTIPLICATION MATRIX
-===================================================================================
-
-  [ Base Address: 0x1000 ] (int *p)
-   │
-   ├─► p + 1 ──> 0x1000 + (1 * 4 bytes) ──> 0x1004
-   ├─► p + 2 ──> 0x1000 + (2 * 4 bytes) ──> 0x1008
-   └─► p + 3 ──> 0x1000 + (3 * 4 bytes) ──> 0x100C
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-table-columns"></i> محاذاة الذاكرة التلقائية (Memory Alignment)</h2>
-                <p class="doc-text">
-                    تقرأ المعالجات الحديثة الذاكرة في كتل بحجم 8 بايت. يقوم المترجم بحقن بايتات فارغة (Padding Bytes) داخل الهياكل (structs) لضمان المحاذاة التلقائية وتسريع دورة الجلب.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-circle-exclamation"></i> التصادم الحتمي: طفح المكدس مقابل طفح البافر</h2>
-                <p class="doc-text">
-                    يحدث طفح المكدس (Stack Overflow) بسبب الاستدعاءات الذاتية اللانهائية، بينما يحدث طفح البافر (Buffer Overflow) عند كتابة بيانات تتجاوز مساحة المصفوفة المخصصة، مما يفتح ثغرات أمنية خطيرة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Computer Science Notes: Pointer Algebra & Alignment</h1>
             
             <div class="doc-section">

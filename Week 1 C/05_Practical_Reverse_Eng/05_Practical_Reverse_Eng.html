@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -372,123 +367,13 @@
             <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>05_Practical_Reverse_Eng (Week 1 C)</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_1_Binary_Forensics_AR.md</code></span>
-            <a href="Week_1_Binary_Forensics_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🏛️ التشريح الجنائي للملفات التنفيذية (Binary Forensics)</h2>
-        <p>في هذا القسم من الهندسة العكسية التطبيقية، لن نكتفي بكتابة الكود المصدري <code>hello.c</code> وتشغيله، بل سنقوم بدور <strong>المحقق الجنائي الرقمي (Binary Forensic Investigator)</strong> لنفكك الملفات الثنائية الناتجة (<code>hello.o</code> و <code>hello</code>) ونفهم كيف يراها المعالج ونظام التشغيل.</p>
-
-<pre>
-===================================================================================
-                       THE REVERSE ENGINEERING TOOLBOX
-===================================================================================
-
-  [ Executable Binary: ./hello ]
-            │
-            ├─► $ strings hello    ──> Extracts ASCII Literals ("hello, world")
-            ├─► $ nm hello         ──> Inspects Symbol Table (_main, _printf)
-            ├─► $ objdump -d hello ──> Disassembles Machine Code to Assembly
-            └─► $ strace / dtruss  ──> Traces Kernel System Calls (write)
-
-===================================================================================
-</pre>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>🔬 أدوات التفكيك الاستقصائية (The Disassembly Suite)</h2>
-
-        <h3>1. استخراج النصوص المضمنة (The strings Command)</h3>
-        <p>عندما يتم تجميع البرنامج، أين تذهب الجملة النصية <code>"hello, world\n"</code>؟ يتم تخزين السلاسل النصية الثابتة (<code>String Literals</code>) في قسم مخصص داخل الملف التنفيذي يسمى <strong>قسم البيانات القراءة فقط (.rodata - Read-Only Data)</strong>. باستخدام أداة <code>strings</code>، يمكننا فحص الملف الثنائي واستخراج كافة النصوص القابلة للقراءة البشرية دون تشغيل البرنامج:</p>
-<pre>
-$ strings hello
-...
-hello, world
-What's your name? 
-hello, %s
-...
-</pre>
-
-        <h3>2. فحص جدول الرموز والعناوين (The nm Command)</h3>
-        <p>يحتوي الملف التنفيذي على جدول رموز (<code>Symbol Table</code>) يربط أسماء الدوال بعناوينها في الذاكرة. أداة <code>nm</code> تكشف لنا الدوال التي تم تعريفها داخلياً (مثل <code>main</code>) والدوال التي تم جلبها من مكتبات خارجية (مثل <code>printf</code> و <code>get_string</code>):</p>
-<pre>
-$ nm hello
-0000000100003f50 T _main
-                 U _printf
-                 U _get_string
-</pre>
-        <ul>
-            <li><strong>حرف T:</strong> يعني أن الدالة <code>_main</code> موجودة ومعرفة في قسم النصوص (<code>Text Section</code>) الخاص بملفنا.</li>
-            <li><strong>حرف U:</strong> يعني أن الدالة <code>_printf</code> و <code>_get_string</code> غير معرفة داخلياً (<code>Undefined / External</code>) وتم ربطها ديناميكياً بمكتبة <code>C</code> القياسية (<code>libc</code>) ومكتبة <code>cs50</code>.</li>
-        </ul>
-
-        <h3>3. التفكيك العكسي إلى لغة التجميع (The objdump Command)</h3>
-        <p>تحويل الأكواد الثنائية الصفرية (<code>0s &amp; 1s</code>) في الملف التنفيذي رجوعاً إلى تعليمات لغة التجميع (<code>Assembly</code>):</p>
-<pre>
-$ objdump -d hello
-hello:  file format Mach-O 64-bit x86-64
-
-Disassembly of section __TEXT,__text:
-_main:
-100003f50: 55                    pushq %rbp
-100003f51: 48 89 e5              movq  %rsp, %rbp
-100003f54: 48 8d 3d 55 00 00 00  leaq  85(%rip), %rdi  # loading "hello, world" string
-100003f5b: e8 12 00 00 00        callq _printf
-100003f60: 31 c0                 xorl  %eax, %eax
-100003f62: 5d                    popq  %rbp
-100003f63: c3                    retq
-</pre>
-        <ul>
-            <li><code>pushq %rbp</code> و <code>movq</code>: إعداد إطار التكدس (<code>Stack Frame</code>) لدالة <code>main</code>.</li>
-            <li><code>leaq</code>: تحميل عنوان السلسلة النصية <code>"hello, world\n"</code> إلى مسجل المعالج <code>%rdi</code> (وهو المسجل المسؤول عن تمرير المعامل الأول للدوال في أنظمة x86_64).</li>
-            <li><code>callq _printf</code>: استدعاء دالة الطباعة الصريحة.</li>
-            <li><code>xorl %eax, %eax</code>: تصفير المسجل <code>%eax</code> (وهو ما يعادل العبارة الضمنية <code>return 0;</code> في نجاح البرنامج).</li>
-        </ul>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>⚙️ تتبع نداءات النظام ونواة التشغيل (Tracing Kernel Syscalls)</h2>
-        <p>تعتبر دالة <code>printf</code> في لغة C مجرد واجهة تجريدية عالية المستوى. المعالج نفسه لا يعرف كيف يطبع نصاً على شاشة الطرفية. هنا يأتي دور <strong>نداءات النظام (System Calls)</strong>.</p>
-
-<pre>
-===================================================================================
-                       KERNEL SYSTEM CALL PATHWAY
-===================================================================================
-
-  [ Application: printf("hello, world\n") ]
-            │
-            ▼
-  [ C Standard Library: libc (Buffers output) ]
-            │
-            ▼  (User Mode -> Kernel Mode Switch)
-  ┌────────────────────────────────────────────────────────┐
-  │ [ OS Kernel Call: write(1, "hello, world\n", 13) ]     │ ──> Writes to File Descriptor 1 (stdout)
-  └────────────────────────────────────────────────────────┘
-            │
-            ▼
-  [ Hardware Device / Terminal Display ]
-
-===================================================================================
-</pre>
-
-        <div class="alert-box">
-            <h4>💡 تشريح مسار الطباعة في النواة</h4>
-            <p>عند استدعاء <code>printf("hello, world\n")</code>، تقوم مكتبة C القياسية بطلب مساعدة نواة نظام التشغيل (<code>OS Kernel</code>) عبر نداء نظام قياسي يسمى <code>write</code>.</p>
-            <p><strong>على أنظمة لينكس (strace):</strong> أداة <code>strace ./hello</code> تعترض هذا النداء وتظهره حرفياً: <code>write(1, "hello, world\n", 13) = 13</code>.</p>
-            <p><strong>على أنظمة ماك (dtruss):</strong> باستخدام <code>sudo dtruss ./hello</code>، نرى أن البرنامج يخاطب النواة طالباً كتابة <code>13</code> بايت (طول الجملة بالإضافة لرمز <code>\n</code>) إلى واصف الملف رقم <code>1</code> (<code>File Descriptor 1</code>) وهو ما يمثل شاشة المخرجات القياسية <code>stdout</code>.</p>
-        </div>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_1_Binary_Forensics_EN.md</code></span>
             <a href="Week_1_Binary_Forensics_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -605,18 +490,11 @@ _main:
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

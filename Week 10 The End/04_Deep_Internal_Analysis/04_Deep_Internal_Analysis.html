@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,53 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل البنيوي العميق: نمذجة التهديدات وتحصين نواة الثقة الصفرية</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-spider"></i> تشريح مصفوفة التهديدات السيبرانية (Cyber Threat Matrix Topology)</h2>
-                <p class="doc-text">
-                    التحليل البنيوي العميق للأنظمة الآمنة يتطلب تصنيف ناقلات الهجوم (Attack Vectors) وفق نموذج منهجي دقيق مثل <code>STRIDE</code> (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege).
-                </p>
-                <ul>
-                    <li><strong>انتحال الهوية (Spoofing)</strong>: التصدي له معمارياً بفرض تبادل شهادات مصادقة <code>mTLS</code> ثنائية الاتجاه.</li>
-                    <li><strong>تجاوز الصلاحيات (Elevation of Privilege)</strong>: إحباطه عبر التحقق الإلزامي من رموز الوصول (Token Inspection) عند كل حاجز دالي.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>+-------------------------------------------------------------------+
-|               APEX THREAT MITIGATION ENGINE (STRIDE)              |
-+-------------------------------------------------------------------+
-|                                                                   |
-|   INCOMING PAYLOAD                               INSPECTION RING  |
-|   ----------------                               ---------------  |
-|          |                                              |         |
-|          +--- [ SPOOFING CHECK ] ---> Valid mTLS? ---> [PASS]     |
-|          +--- [ TAMPERING CHECK] ---> HMAC SHA-256? -> [PASS]     |
-|          +--- [ ELEVATION CHECK] ---> Role == Sovereign? [PASS]   |
-|                                                                   |
-|          +==========> SECURE PAYLOAD DISPATCH ==================+ |
-|                                                                   |
-+-------------------------------------------------------------------+</pre>
-                </div>
-
-                <h2 class="sec-title"><i class="fas fa-memory"></i> معمارية التحصين الكهرومغناطيسي للبرمجيات (Hardware-Level Sandboxing)</h2>
-                <p class="doc-text">
-                    لا يتوقف تأمين الذاكرة عند الحدود المنطقية للمترجمات؛ بل يمتد إلى منع ثغرات تنفيذ التوقعات الفوضوية (Speculative Execution / Side-Channel Attacks).
-                </p>
-                <ul>
-                    <li><strong>عزل مساحات العناوين (ASLR)</strong>: جعل تخطيط الذاكرة عشوائياً تماماً لمنع هجمات قفزات المكدس (Buffer Overflow / ROP).</li>
-                </ul>
-
-                <h2 class="sec-title"><i class="fas fa-qrcode"></i> المصادقة التشفيرية للحزم البرمجية (Cryptographic Payload Verification)</h2>
-                <p class="doc-text">
-                    كل رسالة داخل المنظومة السيادية تمر بعملية تغليف تشفيري مزدوج عبر مفاتيح <code>HMAC SHA-256</code> لضمان استحالة العبث بالحزم أو حقن كائنات ضارة في الطبقة الوسيطة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Deep Internal Analysis: Threat Matrix Modeling</h1>
             
             <div class="doc-section">

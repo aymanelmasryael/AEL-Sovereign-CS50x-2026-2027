@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,55 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل الداخلي العميق: دورة حياة كائن الطلب في Flask وحقن السياق</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-spider"></i> معمارية المتغيرات السياقية (Context Globals & Local Proxies)</h2>
-                <p class="doc-text">
-                    يغوص هذا التحليل في الذاكرة الحية لإطار Flask لكشف كيفية إدارته لطلبات متعددة ومتزامنة من مستخدمين مختلفين دون حدوث تضارب في المتغيرات أو تسريب للبيانات.
-                </p>
-                
-                <h3 style="color: var(--primary-accent); margin-top: 30px;">عزل خيوط المعالجة (Thread Isolation)</h3>
-                <ul>
-                    <li><strong>الوكلاء المحليون للذاكرة</strong>: عندما يصل طلب HTTP من العميل (أ) وطلب آخر في نفس اللحظة من العميل (ب)، يقوم محرك Werkzeug بإنشاء سياق منفصل لكل طلب (Request Context).</li>
-                    <li><strong>آلية العمل في الذاكرة</strong>: عند استدعاء request.form.get("data")، يحدد الوكيل السياقي خيط المعالجة الحالي ويستجلب البيانات المخصصة لذلك العميل فقط.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   WERKZEUG THREAD-LOCAL PROXY MATRIX
-===================================================================================
-
- [CLIENT A: POST /submit] ───► [ WERKZEUG SERVER ] ◄─── [CLIENT B: GET /dashboard]
-                                       │
-                ┌──────────────────────┴──────────────────────┐
-                ▼                                             ▼
-     ┌─────────────────────┐                       ┌─────────────────────┐
-     │ Request Context A   │                       │ Request Context B   │
-     │ (Thread ID: 0x101)  │                       │ (Thread ID: 0x202)  │
-     ├─────────────────────┤                       ├─────────────────────┤
-     │ request.form['AEL'] │                       │ request.args['id']  │
-     │ session['user']="A" │                       │ session['user']="B" │
-     └─────────────────────┘                       └─────────────────────┘
-                ▲                                             ▲
-                └─────────── request / session Proxy ─────────┘
-                              (Global Python Import)
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-wave-square"></i> دورة حياة الطلب خطوة بخطوة</h2>
-                <p class="doc-text">
-                    تتوزع المراحل بين الوصول (Arrival)، دفع السياق (Push Context)، معالجة ما قبل الطلب (Before Request)، التوزيع على دوال العرض (Dispatch)، ثم فك السياق (Pop Context) لتحرير الذاكرة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Deep Internal Analysis: Flask Request Lifecycle & Context Globals</h1>
             
             <div class="doc-section">

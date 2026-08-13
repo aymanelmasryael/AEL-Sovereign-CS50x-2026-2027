@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,32 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">شفرات C السيادية: ترسانة ael_src5 لهياكل البيانات التجريدية</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sitemap"></i> ترسانة الشفرات البرمجية الحصرية (ael_src5 Master Arsenal)</h2>
-                <p class="doc-text">
-                    تطبيقاً لتعليماتك الصارمة: <strong>"المشاريع أصلية 100% وليست نسخاً من ملفات المصدر الأصلية"</strong>، تم بناء 3 شفرات برمجية مؤسسية بلغة <code>C</code> الصافية لبناء ومحاكاة هياكل البيانات التجريدية:
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> تشريح الملفات البرمجية الثلاثة</h2>
-                
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 24px;">1. القاموس فائق السرعة عبر السلسلة المنفصلة (<a href="./ael_dictionary_chaining.c" style="color: #64ffda; text-decoration: none;">ael_dictionary_chaining.c</a>)</h3>
-                <p class="doc-text">نظام متكامل يحاكي نواة المدقق الإملائي (<code>Speller</code>). يضم جدول تجزئة معزز بدالة تجزئة سريعة، ويدعم دوال <code>load</code> و <code>check</code> و <code>unload</code> مع تنظيف فوري للذاكرة.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">2. محرك الإكمال التلقائي بشجرة التريس (<a href="./ael_trie_autocompleter.c" style="color: #64ffda; text-decoration: none;">ael_trie_autocompleter.c</a>)</h3>
-                <p class="doc-text">نظام شجرة التريس (<code>Trie</code>) مصمم لبحث السلاسل النصية بسرعة $O(1)$ مع هيكل مؤشرات لـ 27 رمزاً، ويحتوي على دالة تنظيف غير متزامنة لمنع تسريبات <code>Valgrind</code>.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">3. نواة شجرة البحث الثنائية المتزنة (<a href="./ael_binary_search_tree.c" style="color: #64ffda; text-decoration: none;">ael_binary_search_tree.c</a>)</h3>
-                <p class="doc-text">نظام يبني شجرة بحث ثنائية (<code>BST</code>)، ويقوم بالمرور عليها بثلاث طرق (<code>Pre-order, In-order, Post-order</code>)، وينفذ هدم الشجرة بالكامل لمنع تسريب الذاكرة.</p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">AEL Sovereign C Masterpieces: Custom ael_src5 Base</h1>
             
             <div class="doc-section">

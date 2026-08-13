@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -372,60 +367,13 @@
             <a href="../../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>03_Engineering_Notes</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_0_Real_World_Engines_AR.md</code></span>
-            <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/03_Engineering_Notes/Week_0_Real_World_Engines_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>📐 الوحدة 1: تحليل التعقيد الزمني (Time Complexity & Big O Curves)</h2>
-        <p>استعرض ديفيد مالان في الشرائح (94 إلى 99) من عرض <code>lecture0.pdf</code> الرسوم البيانية التي تمثل جوهر المقارنة الهندسية بين الخوارزميات. في هندسة النظم الحقيقية، نطلق على هذا التحليل <strong>Asymptotic Computational Complexity</strong>.</p>
-
-<pre>
-Time to Solve
-  ^
-  |   / n (Linear - 1 by 1)
-  |  /  n/2 (Linear - 2 by 2)
-  | /
-  |/_______________________ log2(n) (Logarithmic Search)
-  +---------------------------------------------> Size of Problem (n)
-</pre>
-
-        <h3>🔬 التفكيك المعماري للمنحنيات الثلاثة</h3>
-        <ul>
-            <li><strong>منحنى O(n) - البحث الخطي خطوة بخطوة (Linear Search):</strong> تقليب صفحات دليل الهاتف صفحة تلو الأخرى من البداية إلى النهاية. علاقة خطية 1:1 تفتقر للكفاءة في قواعد البيانات العملاقة.</li>
-            <li><strong>منحنى O(n/2) - القفز صفحتين بصفحتين:</strong> يظهر المنحنى أكثر انحداراً قليلاً حيث يحل المشكلة في نصف الخطوات، ولكنه يظل ذو نمو خطي O(n) مع مخاطرة تجاوز الهدف (Overshooting).</li>
-            <li><strong>منحنى O(log2 n) - البحث الثنائي (Binary Search):</strong> "الكأس المقدسة" في علوم الحاسب. مهما تضخم حجم البيانات n إلى مليارات السجلات، يظل منحنى الوقت شبه أفقي. لو لدينا 4 مليار صفحة، سيصل المعالج إلى الهدف في 32 خطوة فقط!</li>
-        </ul>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>🏛️ الوحدة 2: حجر رشيد البرمجي (The C vs Scratch Rosetta Stone)</h2>
-        <p>في الشريحة 110 والشريحة 111، يضعنا ديفيد مالان أمام مقارنة تاريخية تمثل "حجر رشيد" البرمجي، حيث نترجم الكتل البصرية في <code>Scratch</code> إلى لغة <code>C</code> الصريحة ذات المستوى المنخفض.</p>
-
-<pre>
-#include &lt;stdio.h&gt;
-
-int main(void)
-{
-    printf("hello, world\n");
-}
-</pre>
-
-        <div class="alert-box">
-            <h4>🔬 التحليل الهندسي المقارن (Under-the-Hood)</h4>
-            <p>تهيئة النظام في C تتطلب <code>int main(void)</code> لتعريف نقطة دخول المعالج الصريحة، بينما يدير <code>Scratch</code> ذلك عبر مستشعر حدثي <code>when green flag clicked</code>. كما أن مخرجات C تذهب كتيار بايتات إلى <code>stdout</code>، بينما يقوم <code>Scratch</code> بتحديث مصفوفة الـ <code>VRAM</code> لرسم فقاعة نصية.</p>
-        </div>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_0_Real_World_Engines_EN.md</code></span>
             <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/03_Engineering_Notes/Week_0_Real_World_Engines_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -479,18 +427,11 @@ int main(void)
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,47 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل الداخلي العميق: محاذاة الهياكل وبنية التريس</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-database"></i> محاذاة الذاكرة وحشوة البايتات (Struct Alignment & Byte Padding)</h2>
-                <p class="doc-text">
-                    في معماريات 64-bit، تتطلب المؤشرات (Pointers) محاذاة صارمة على حدود 8 بايت. إذا قمت بتصميم هيكل يحتوي على متغير int (4 بايت) يتبعه مؤشر (8 بايت)، فإن المترجم يقوم بإدراج 4 بايتات صامتة (Padding) لضمان سرعة وصول المعالج للبيانات.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             STRUCT MEMORY ALIGNMENT MATRIX (64-BIT CPU)
-===================================================================================
-
-  struct node {
-      int val;           // 4 bytes
-      // [4 BYTES SILENT PADDING INJECTED BY COMPILER]
-      struct node *next; // 8 bytes
-  };                     // Total size: 16 bytes (NOT 12!)
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sitemap"></i> تشريح شجرة التريس (Trie Tree Memory Explosion)</h2>
-                <p class="doc-text">
-                    أشجار التريس هي المعجزة الكبرى للبحث عن النصوص بسرعة O(1) ثابتة. كل عقدة تمثل حرفاً وتحتوي على مصفوفة من 27 مؤشراً (26 حرفاً + الفاصلة العليا). حجم العقدة الواحدة يبلغ 216 بايت (27 × 8 بايت) بالإضافة إلى متغير منطقي (bool) ليصبح المجموع 224 بايت بعد المحاذاة.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-code-compare"></i> المقارنة المعمارية: جداول التجزئة مقابل التريس</h2>
-                <p class="doc-text">
-                    تتميز جداول التجزئة باستهلاك معتدل للذاكرة ولكنها عرضة للتصادمات التي تُطيل سلاسل القوائم المرتبطة. في المقابل، تضمن أشجار التريس انعدام التصادمات التام وبحثاً مستقراً O(1) ولكنها تستهلك كميات هائلة من الذاكرة الحرة (Memory Explosion).
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Deep Internal Analysis: Struct Alignment & Trie Mechanics</h1>
             
             <div class="doc-section">

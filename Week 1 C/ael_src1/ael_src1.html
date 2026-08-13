@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,92 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">شفرات C السيادية: ترسانة ael_src1 المخصصة</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-terminal"></i> فلسفة الكود المصدري المخصص (AEL Custom Codebase Philosophy)</h2>
-                <p class="doc-text">
-                    في إطار التزامنا التام ببناء <strong>"موسوعة AEL لعلوم الحاسب" (AEL CS Encyclopedia)</strong> بروح سيادية مستقلة، قررنا عدم الاكتفاء بالأكواد القياسية التي استعرضها ديفيد مالان في <code>src1</code> (مثل <code>hello.c</code> و <code>agree.c</code>).
-                </p>
-                <p class="doc-text">
-                    لقد قمنا بتصميم وتأسيس مكتبة برمجية خاصة بنا في مجلد <strong><code>ael_src1</code></strong>، تتفوق معمارياً على الأكواد القياسية وتقدم للطالب تطبيقات هندسية وعلمية متطورة مكتوبة بلغة <code>C</code> الصارمة.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                  AEL CUSTOM C CODEBASE (ael_src1)
-===================================================================================
-
-  [ Week 1 C / ael_src1 ]
-   │
-   ├─► 🔐 ael_system_auth.c         ──> Zero-Trust Authentication & CLI (argc/argv)
-   ├─► 🧮 ael_matrix_calculator.c   ──> 2D Array Stack Allocation & O(N^3) Math
-   ├─► 🌌 ael_stellar_orbit.c       ──> Orbital Physics, <math.h> & Double Precision
-   └─► 📦 ael_data_compressor.c     ──> Run-Length Encoding (RLE) Memory Compression
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microchip"></i> تشريح الملفات البرمجية الأربعة</h2>
-                
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 24px;">1. نظام المصادقة الأمنية (<a href="./ael_system_auth.c" style="color: #64ffda; text-decoration: none;">ael_system_auth.c</a>)</h3>
-                <p class="doc-text"><strong>المهمة المعمارية:</strong> يحاكي نظام تسجيل دخول طرفي متقدم للشركات.</p>
-                <ul>
-                    <li><strong>معاملات سطر الأوامر (argc / argv)</strong>: التحقق الصارم من إدخال اسم المستخدم كمعامل تشغيل إلزامي <code>argv[1]</code>.</li>
-                    <li><strong>حسابات السلاسل النصية (String Iteration)</strong>: فحص تطابق كلمة المرور رمزاً تلو الآخر باستخدام التكرار <code>for</code> ودالة <code>strlen</code>.</li>
-                    <li><strong>تشفير الإزاحة البسيط (ASCII Shifting)</strong>: توليد رمز دخول آمن عبر زيادة القيمة الحسابية لكل حرف بمقدار <code>+5</code>، مما يعزز فهم المبرمج لجدول <code>ASCII</code>.</li>
-                </ul>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">2. محرك ضرب المصفوفات (<a href="./ael_matrix_calculator.c" style="color: #64ffda; text-decoration: none;">ael_matrix_calculator.c</a>)</h3>
-                <p class="doc-text"><strong>المهمة المعمارية:</strong> يوضح كيفية التعامل مع الشبكات ثنائية الأبعاد في الذاكرة.</p>
-                <ul>
-                    <li><strong>المصفوفات ثنائية الأبعاد (2D Arrays)</strong>: تخصيص مصفوفات ثابتة في ذاكرة التكدس (Stack Memory) بحجم <code>3x3</code>.</li>
-                    <li><strong>الحلقات التكرارية المتداخلة الثلاثية (Triple Nested Loops)</strong>: تطبيق الخوارزمية الرياضية القياسية <code>O(N^3)</code> لحساب جداء مصفوفتين وتنسيق طباعتها على الشاشة.</li>
-                </ul>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">3. محاكي مدارات الكواكب (<a href="./ael_stellar_orbit.c" style="color: #64ffda; text-decoration: none;">ael_stellar_orbit.c</a>)</h3>
-                <p class="doc-text"><strong>المهمة المعمارية:</strong> تطبيق فيزيائي وعلمي فائق الدقة لحساب سرعة الإفلات الكوكبية (Escape Velocity).</p>
-                <ul>
-                    <li><strong>مكتبة الرياضيات القياسية (&lt;math.h&gt;)</strong>: استدعاء دالة الجذر التربيعي <code>sqrt</code>.</li>
-                    <li><strong>حدود البيانات الدقيقة (Double & Exponents)</strong>: استخدام صيغ الأسس العلمية <code>5.9722e24</code> والتعامل مع الأعداد الكسرية الضخمة دون تعريض النظام لطفح الذاكرة (Overflow).</li>
-                </ul>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">4. خوارزمية ضغط البيانات (<a href="./ael_data_compressor.c" style="color: #64ffda; text-decoration: none;">ael_data_compressor.c</a>)</h3>
-                <p class="doc-text"><strong>المهمة المعمارية:</strong> ضغط النصوص والخانات المتكررة لتقليل حجم الذاكرة المستهلكة.</p>
-                <ul>
-                    <li><strong>خوارزمية Run-Length Encoding (RLE)</strong>: تتبع الحروف المتتالية وعدها (مثال: تحويل <code>AAAAABBBCCDAA</code> إلى <code>A5B3C2D1A2</code>).</li>
-                    <li><strong>التحكم في مؤشرات الفحص (Buffer Peek)</strong>: قراءة العنصر التتالي <code>input[i + 1]</code> بشكل آمن مع منع تجاوز حدود المصفوفة (Buffer Overrun).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-gears"></i> تعليمات التجميع والتشغيل الجنائي</h2>
-                <p class="doc-text">لتجميع هذه الصروح البرمجية، توجه عبر سطر الأوامر إلى مجلد <code>ael_src1</code> واستخدم مترجم <code>clang</code> أو أمر <code>make</code>:</p>
-                <div class="portal-diagram">
-<pre># 1. Compile & run System Authentication
-$ make ael_system_auth
-$ ./ael_system_auth Ayman_Elmasry
-
-# 2. Compile & run Matrix Calculator
-$ make ael_matrix_calculator
-$ ./ael_matrix_calculator
-
-# 3. Compile & run Stellar Orbit (Link math library -lm if required by clang)
-$ make ael_stellar_orbit
-$ ./ael_stellar_orbit
-
-# 4. Compile & run Data Compressor
-$ make ael_data_compressor
-$ ./ael_data_compressor</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">AEL Sovereign C Masterpieces: Custom ael_src1 Base</h1>
             
             <div class="doc-section">

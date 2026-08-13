@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,70 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مذكرات علوم الحاسب للأسبوع الثالث: الهياكل والمقارنات الرياضية</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-boxes-stacked"></i> المحور الأول: تجميع البيانات المخصصة وهندسة الـ Structs</h2>
-                <p class="doc-text">
-                    عندما حاولنا تخزين أسماء وأرقام هواتف، اضطررنا لإنشاء مصفوفتين منفصلتين. لكن في الذاكرة الحية، لا يوجد رابط فيزيائي بين المصفوفتين. لذا توفر لغة C آلية قوية لتعريف أنواع بيانات جديدة تجمع عدة متغيرات في كائن واحد عبر <code>typedef struct</code>.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             CUSTOM STRUCT MEMORY ENCAPSULATION
-===================================================================================
-
-  [ person: people[0] ]
-  ├── name   ──> Pointer to "David"
-  └── number ──> Pointer to "+1-949-468-2750"
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>تعريف الهياكل المخصصة:</strong> يضمن الحفاظ على السلامة العلائقية (Relational Integrity) لبيانات دليل الهاتف عند إجراء عمليات الترتيب.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-chart-simple"></i> المحور الثاني: المقارنات الرياضية لخوارزميات الترتيب</h2>
-                <p class="doc-text">
-                    جدول التعقيد الحسابي الشامل يبرز الفروق الدقيقة في الكفاءة بين مختلف خوارزميات البحث والترتيب.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             ASYMPTOTIC BENCHMARK MATRIX
-===================================================================================
-Algorithm         Worst Case (Big O)   Best Case (Big Omega)   Paradigm
------------------------------------------------------------------------------------
-Bubble Sort       O(n^2)               Omega(n)                Pairwise Swapping
-Selection Sort    O(n^2)               Omega(n^2)              Min Insertion
-Merge Sort        O(n log n)           Omega(n log n)          Divide & Conquer
-Linear Search     O(n)                 Omega(1)                Sequential Search
-Binary Search     O(log n)             Omega(1)                Halving Partitions
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>الفهم المعماري لـ Omega(1):</strong> يمثل السيناريو الأكثر حظاً؛ وهو العثور على الهدف من أول محاولة.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-layer-group"></i> المحور الثالث: ميكانيكا الذاكرة في التكرار الذاتي</h2>
-                <p class="doc-text">
-                    عندما تستدعي الدالة نفسها، يقوم نظام التشغيل بحجز إطار جديد في مكدس الذاكرة (Stack Frame) لكل استدعاء.
-                </p>
-                <ul>
-                    <li><strong>خطورة غياب الشرط الأساسي:</strong> تراكم الاستدعاءات دون نقطة توقف يسبب الانهيار القاتل للنظام المعروف بـ Stack Overflow.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 3 Computer Science Notes: Structs & Sorting Benchmarks</h1>
             
             <div class="doc-section">

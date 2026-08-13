@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,42 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مذكرات الهندسة البرمجية: الربط مع واجهات OpenAI وتأمين التلقين</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cogs"></i> معمارية الربط مع OpenAI API (chat3.py mechanics)</h2>
-                <p class="doc-text">
-                    في بيئات الإنتاج الفعلية، يتطلب دمج محركات الذكاء الاصطناعي التوليدي (Generative AI) بنية برمجية وسيطة قادرة على تأمين الاتصال وإدارة الأخطاء الواردة عبر واجهات الـ API.
-                </p>
-                <ul>
-                    <li><strong>إنشاء عميل الاتصال (Client Instantiation)</strong>: يتم تهيئة كائن الاتصال <code>client = OpenAI()</code> الذي يقوم تلقائياً بقراءة مفاتيح التشفير والمصادقة من المتغيرات البيئية للنظام.</li>
-                    <li><strong>عزل توجيهات النظام عن المستخدم (Prompt Segregation)</strong>: الفصل التام بين instructions (التي تحوي القواعد الأمنية للشركة) و input (الذي يدخله المستخدم النهائي)، لمنع هجمات حقن التلقين (Prompt Injection).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-balance-scale"></i> الخوارزميات الحتمية مقابل الاستنتاج العصبي (Speller vs. LLM)</h2>
-                <ul>
-                    <li><strong>هندسة speller</strong>: نعتمد على بنية Trie أو Hash Table في الذاكرة الحية RAM. البحث فيها فوري وبأقل استهلاك للطاقة، لكنه غير قادر على الفهم الدلالي.</li>
-                    <li><strong>هندسة LLMs</strong>: النموذج قادر على فهم السياق وإصلاح الأخطاء الإملائية واستنتاج المقصد، لكنه يتطلب قوة حوسبة عالية (GPU Compute) وتمرير البيانات عبر الويب.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   ENGINEERING TOPOLOGY: SPELLER VS LLM
-===================================================================================
-
-  [ Classic Speller ] ──> Exact Hash Match in Local RAM (Deterministic O(1))
-  [ LLM Neural API ]  ──> Contextual Semantic Evaluation over Cloud API (Probabilistic)
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Engineering Notes: OpenAI API Interfacing & Prompt Securing</h1>
             
             <div class="doc-section">

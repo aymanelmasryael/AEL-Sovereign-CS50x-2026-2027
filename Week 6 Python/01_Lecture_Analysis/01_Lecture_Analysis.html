@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,42 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل محاضرة ديفيد مالان: النقلة النوعية إلى Python</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microchip"></i> التخلي عن المؤشرات الصريحة وإدارة الذاكرة التلقائية</h2>
-                <p class="doc-text">
-                    في هذه المحاضرة المفصلية، ينقلنا البروفيسور ديفيد مالان من العالم الصارم للغة <code>C</code> (حيث يتعامل المبرمج مع المؤشرات المباشرة وإدارة الذاكرة اليدوية عبر <code>malloc/free</code>) إلى عالم التجريد العالي والمرونة الفائقة للغة <code>Python</code>.
-                </p>
-                <ul>
-                    <li><strong>جامع القمامة (Garbage Collector)</strong>: في <code>Python</code>، لم يعد المبرمج مطالباً بتتبع الذاكرة المخصصة في الهييب (Heap). يدير المحرك الافتراضي للغة (CPython VM) دورة حياة الكائنات باستخدام نظام عداد المراجع (Reference Counting) وخوارزميات تنظيف القمامة التلقائية.</li>
-                    <li><strong>غياب المؤشرات الصريحة (Implicit References)</strong>: كل شيء في <code>Python</code> هو عبارة عن كائن (Object)، وعند تمرير المتغيرات، يتم تمرير مراجع مرنة تلقائياً دون الحاجة لاستخدام عوامل التشغيل <code>*</code> أو <code>&amp;</code>.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> الهياكل التجريدية المدمجة (Built-in High-Level Data Structures)</h2>
-                <ul>
-                    <li><strong>القوائم (Lists)</strong>: بدلاً من تخصيص مصفوفات ثابتة وبناء القوائم المرتبطة بشق الأنفس، توفر <code>Python</code> هياكل ديناميكية مدمجة تتوسع تلقائياً وتدعم الإضافة عبر <code>append</code>.</li>
-                    <li><strong>القواميس (Dictionaries)</strong>: تطبيق مباشر وفائق السرعة لجداول التجزئة (Hash Tables). يتميز بالبحث والإدراج بسرعة O(1) مع أسلوب كتابة مبسط للغاية يعتمد على أزواج المفاتيح والقيم (Key-Value Pairs).</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                  C vs PYTHON DATA STRUCTURE TOPOLOGY
-===================================================================================
-
-  [ C Struct Node + Pointers ] ──> Explicit memory management, manual NULL checks
-  [ Python Dictionary ]        ──> Fast internal Hash Table, auto-resizing VM
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">David Malan Lecture Analysis: The Paradigm Shift to Python</h1>
             
             <div class="doc-section">

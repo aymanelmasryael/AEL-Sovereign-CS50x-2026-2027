@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -298,8 +293,6 @@
             justify-content: space-between;
             text-align: left;
         }
-        .panel-ar .file-card { text-align: right; }
-
         .file-card:hover {
             border-color: var(--glass-border-hover);
             box-shadow: 0 10px 30px rgba(0, 116, 255, 0.15);
@@ -323,7 +316,6 @@
             align-self: flex-start;
             transition: all 0.2s ease;
         }
-        .panel-ar .file-btn { align-self: flex-end; }
         .file-btn:hover { background: #ffffff; color: var(--primary-accent); box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
 
         /* Footer */
@@ -423,82 +415,13 @@
             <a href="../../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>06_Projects</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_0_Project_Scratch_Design_AR.md</code></span>
-            <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/06_Projects/Week_0_Project_Scratch_Design_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🚀 مشاريع التخرج المصغرة في مجلد src0 (Cartesian Physics & System Execution)</h2>
-        <p>يستعرض ديفيد مالان في المجلد المصدر <code>src0</code> التطور المعماري الكامل لبناء لعبتين متكاملتين خطوة بخطوة. في منهجية AEL، نعتبر هذه الألعاب تطبيقاً حرفياً لمعمارية المستشعرات، ومحاكاة الفيزياء، والمستوى الديكارتي (Cartesian Coordinates Plane).</p>
-
-<pre>
-[ Canvas Plane ] ──> [ X: -240 to 240 / Y: -180 to 180 ] ──> [ Collision Engine (Sensing) ]
-</pre>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>📂 تحميل وفحص ملفات مشاريع التخرج من src0</h2>
-        
-        <div class="file-grid">
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-gamepad"></i> Oscartime - 0 (Malan).sb3</h4>
-                    <p>تهيئة الكائن وسقوطه الرأسي الأولي بمقدار ثابت.</p>
-                </div>
-                <a href="../src0/Oscartime%20-%200%20(Malan).sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-trash"></i> Oscartime - 3 (Malan).sb3</h4>
-                    <p>إضافة كاشف الاصطدام بسلة المهملات <code>touching trash can?</code>.</p>
-                </div>
-                <a href="../src0/Oscartime%20-%203%20(Malan).sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-trophy"></i> Oscartime.sb3</h4>
-                    <p>النسخة المجمعة بالكامل مع نظام احتساب النقاط (Score Variable).</p>
-                </div>
-                <a href="../src0/Oscartime.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-play-circle"></i> Ivy's Hardest Game - Harvard 0.sb3</h4>
-                    <p>تهيئة حركة اللاعب عبر كتل المفاتيح الاتجاهية.</p>
-                </div>
-                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard%200.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-cogs"></i> Ivy's Hardest Game - Harvard 2.sb3</h4>
-                    <p>بناء الكتل المخصصة <code>listen for keyboard</code> و <code>feel for walls</code>.</p>
-                </div>
-                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard%202.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-flag-checkered"></i> Ivy's Hardest Game - Harvard.sb3</h4>
-                    <p>المشروع العملاق النهائي مع العوائق المتحركة ونظام الخسارة.</p>
-                </div>
-                <a href="../src0/Ivy's%20Hardest%20Game%20-%20Harvard.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-        </div>
-
-        <div class="alert-box">
-            <h4>🔬 تشريح هندسة الوظائف المخصصة (Modular Sub-Routines)</h4>
-            <p>بدلاً من حشو حلقة الـ <code>forever</code> بـ 20 شرطاً متداخلاً، يقدم مالان تصميماً معمارياً شديد النظافة قائماً على فصل الاهتمامات (Separation of Concerns). روتين <code>listen for keyboard</code> يتولى مدخلات الأسهم، بينما روتين <code>feel for walls</code> يعكس اتجاه الكائن لحظياً عند الاصطدام لمنع اختراق الجدران!</p>
-        </div>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_0_Project_Scratch_Design_EN.md</code></span>
             <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/06_Projects/Week_0_Project_Scratch_Design_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -574,18 +497,11 @@
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

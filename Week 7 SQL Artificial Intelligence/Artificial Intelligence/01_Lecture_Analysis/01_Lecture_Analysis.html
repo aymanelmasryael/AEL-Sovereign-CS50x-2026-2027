@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,43 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل المحاضرة: النماذج اللغوية الكبيرة وهندسة التلقين</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-eye"></i> من البرمجة الكلاسيكية إلى التوليد الاحتمالي</h2>
-                <p class="doc-text">
-                    يتناول هذا النظام الفرعي للذكاء الاصطناعي (AI Subsystem) التابع للأسبوع السابع النقلة النوعية في علوم الحاسب من البرمجة الكلاسيكية الحتمية إلى الخوارزميات الاحتمالية القائمة على التعلم الآلي والنماذج اللغوية الكبيرة (LLMs).
-                </p>
-                <ul>
-                    <li><strong>الخوارزميات التقليدية (Deterministic C / Python)</strong>: في برامج مثل <code>speller</code>، نحدد بدقة متناهية كل خطوة يقوم بها المعالج عبر هياكل محددة (جداول التجزئة، أشجار Tries) للحصول على نتيجة حتمية 100%.</li>
-                    <li><strong>النماذج اللغوية الكبيرة (LLMs - GPT-5 mechanics)</strong>: تعتمد على شبكات عصبية ضخمة مدربة على كميات هائلة من البيانات، وتقوم بوظيفتها الأساسية عبر التنبؤ الرياضي الاحتمالي بالكلمة التالية (Next Token Prediction).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cogs"></i> معمارية التلقين والتوجيهات النظامية (System Instructions)</h2>
-                <ul>
-                    <li><strong>هندسة التلقين (Prompt Engineering)</strong>: تصميم صياغة المدخلات بأسلوب منظم يوجه النموذج اللغوي لتقليص نطاق الاحتمالات واستخراج المخرجات الأكثر دقة وارتباطاً.</li>
-                    <li><strong>توجيهات النظام (System Prompts / Instructions)</strong>: كما يظهر في ملف المحاضرة <code>chat3.py</code>، تقوم تعليمات النظام بفرض حدود معمارية وشخصية صارمة على النموذج، مما يعطي المطور السيطرة التامة على سلوك الذكاء الاصطناعي قبل تلقي مدخلات المستخدم النهائي.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   LLM SYSTEM PROMPT EXECUTION FLOW
-===================================================================================
-
-  [ System Instructions ] ──┐
-                            ├──> [ LLM Neural Engine (GPT-5) ] ──> [ Filtered Token Output ]
-  [ User Raw Prompt ]    ──┘
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Lecture Analysis: Large Language Models & Prompt Architecture</h1>
             
             <div class="doc-section">

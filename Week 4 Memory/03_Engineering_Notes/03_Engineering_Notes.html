@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,50 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">الملاحظات الهندسية: حماية المكدس وإدارة ملفات التدفق</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-shield-halved"></i> عقود المؤشرات الآمنة (Defensive Pointers)</h2>
-                <p class="doc-text">
-                    يجب تعيين أي مؤشر غير نشط فوراً إلى NULL (0x0). فك مرجعية مؤشر فارغ يوقف النظام بخطأ صريح Segmentation Fault بدلاً من تدمير الذاكرة بصمت.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>// =========================================================================
-//             DEFENSIVE POINTER CONTRACT PROTOCOL
-// =========================================================================
-
-int *buffer = malloc(1024 * sizeof(int));
-if (buffer == NULL)
-{
-    fprintf(stderr, "[FATAL] Memory allocation failed. Halting execution.\n");
-    return 1;
-}
-
-// Proceed safely with memory utilization...
-free(buffer);
-buffer = NULL; // Neutralize dangling pointer</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-file-export"></i> ميكانيكا ملفات التدفق (Stream I/O)</h2>
-                <p class="doc-text">
-                    التعامل مع الأقراص الصلبة يتم عبر مؤشرات التدفق FILE *. نستخدم دوال fread و fwrite لنقل البايتات الخام بين أقراص SSD والذاكرة العشوائية RAM.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-link-slash"></i> إبطال المؤشرات المعلقة (Dangling Pointers)</h2>
-                <p class="doc-text">
-                    المؤشر المعلق هو مؤشر يشير إلى ذاكرة تم تحريرها بالفعل. الحل الهندسي المعياري هو تعيين المؤشر إلى NULL فور استدعاء free() لمنع ثغرات Use-After-Free.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Engineering Notes: Defending Buffers & Stream I/O</h1>
             
             <div class="doc-section">

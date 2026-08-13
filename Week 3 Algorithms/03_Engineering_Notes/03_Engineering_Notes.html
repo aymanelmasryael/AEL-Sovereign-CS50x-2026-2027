@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,55 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">المذكرات الهندسية للأسبوع الثالث: الفخ الهندسي لمقارنة السلاسل</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-triangle-exclamation"></i> المحور الأول: الفخ الهندسي لمقارنة السلاسل النصية</h2>
-                <p class="doc-text">
-                    عندما تبحث عن رقم في مصفوفة، يمكنك كتابة <code>numbers[i] == target</code>. ولكن إذا كتبت <code>strings[i] == "David"</code> في لغة C، ستحصل على نتيجة كارثية لأن العامل يقارن عناوين الذاكرة بدلاً من الحروف.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             STRING EQUALITY MEMORY TRAP
-===================================================================================
-
-  if (s == t)  ──>  Compares Address 0x100 with Address 0x200 (Result: FALSE!)
-  
-  if (strcmp(s, t) == 0) ──> Compares character values 'D','A','V','I','D' (Result: TRUE!)
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>مكتبة string.h ودالة strcmp:</strong> لإجراء مقارنة فعلية للحروف، نستخدم دالة <code>strcmp</code> التي ترجع القيمة 0 إذا تطابقت السلسلتان تماماً.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> المحور الثاني: التطبيق العملي لـ typedef struct</h2>
-                <p class="doc-text">
-                    لضمان تعرف كافة الدوال على الهيكل المخصص، يتم تعريفه دائماً خارج دالة main في أعلى الملف، واستخدام تدوين النقطة (Dot Notation).
-                </p>
-                <ul>
-                    <li><strong>تدوين النقطة:</strong> نستخدم <code>people[i].name</code> للوصول إلى الحقول الداخلية للكائن.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-tachometer-fast"></i> المحور الثالث: هندسة تحسين الترتيب الفقاعي</h2>
-                <p class="doc-text">
-                    في النسخة التقليدية من الترتيب الفقاعي، يستمر البرنامج في فحص المصفوفة حتى لو أصبحت مرتبة. لتحسين الأداء، نضيف متغيراً منطقياً <code>bool swapped</code>.
-                </p>
-                <ul>
-                    <li><strong>توفير دورات المعالج:</strong> إذا انتهت دورة كاملة دون إجراء أي تبديل، يتوقف البرنامج فوراً، مما يوفر آلاف الدورات المعالجة.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 3 Engineering Notes: The String Comparison Trap</h1>
             
             <div class="doc-section">

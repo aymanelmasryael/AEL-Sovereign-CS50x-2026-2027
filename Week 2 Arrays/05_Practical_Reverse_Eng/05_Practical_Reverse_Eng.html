@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,78 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">الهندسة العكسية لمشاريع الأسبوع الثاني: سكرابل والتشفير</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> المحور الأول: الهندسة العكسية للعبة سكرابل (Scrabble Engine)</h2>
-                <p class="doc-text">
-                    البرنامج يطلب من لاعبين إدخال كلمتين، ثم يحسب مجموع نقاط كل كلمة استناداً إلى جدول نقاط محدد لكل حرف في الأبجدية الإنجليزية، ليعلن في النهاية عن الفائز.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             SCRABBLE REVERSE ENGINEERING PIPELINE
-===================================================================================
-
-  [ Input String (Word) ] ──> [ Loop Character by Character (strlen) ]
-                                      │
-                                      ▼
-             [ isalpha() ? Convert to Uppercase (toupper) ]
-                                      │
-                                      ▼
-             [ Index Calculation: char - 'A' (0 to 25) ]
-                                      │
-                                      ▼
-             [ Lookup in POINTS[] Matrix ] ──> [ Accumulate Total Score ]
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>مصفوفة النقاط الثابتة:</strong> يتم تخزين النقاط في مصفوفة ثابتة من 26 عنصراً <code>int POINTS[] = {1, 3, 3, 2, ...}</code>.</li>
-                    <li><strong>آلية الفهرسة الجنائية:</strong> للحصول على نقاط الحرف C، نقوم بطرح قيمة A من جدول ASCII للوصول للفهرس 2.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-chart-line"></i> المحور الثاني: الهندسة العكسية لمشروع قياس القراءة (Readability)</h2>
-                <p class="doc-text">
-                    بدلاً من إجراء 3 حلقات تكرارية منفصلة لحساب الحروف، الكلمات، والجمل، نقوم بتصميم حلقة واحدة عالية الكفاءة تفحص النص حرفاً بحرف.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             READABILITY PARSER LOGIC TREE
-===================================================================================
-
-                [ Character Scanner (s[i]) ]
-                 ├── isalpha(s[i]) ──> letters++
-                 ├── isspace(s[i]) ──> words++ (Initialize words at 1)
-                 └── s[i] == '.' || s[i] == '!' || s[i] == '?' ──> sentences++
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>تطبيق معادلة كولمان-ليو:</strong> حساب المتوسطات وتطبيق معامل التقريب <code>round</code> لتحديد الصف الدراسي <code>Grade X</code>.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-lock"></i> المحور الثالث: الهندسة العكسية لخوارزميات التشفير</h2>
-                <p class="doc-text">
-                    تشريح مشروعي قيصر والاستبدال للتحقق من سلامة معاملات سطر الأوامر وتطبيق التحويلات الأمنية الصارمة.
-                </p>
-                <ul>
-                    <li><strong>تأمين سطر الأوامر (CLI Validation):</strong> التحقق من أن <code>argc == 2</code> وأن المفتاح يلبي المتطلبات (أرقام لقيصر، و26 حرفاً غير مكرر للاستبدال).</li>
-                    <li><strong>الحفاظ على حالة الحروف:</strong> يتم الاحتفاظ بالحروف الكبيرة والصغيرة كما هي، مع تجاهل الرموز والمسافات عند الإزاحة.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 2 Practical Reverse Engineering: Scrabble & Ciphers</h1>
             
             <div class="doc-section">

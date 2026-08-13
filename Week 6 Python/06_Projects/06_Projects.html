@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,38 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">استعراض المشاريع: بناء منظومة ael_src6 الحصرية</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-gem"></i> الترسانة البرمجية المستقلة بلغة Python</h2>
-                <p class="doc-text">
-                    تنفيذاً للتوجيه الصارم: <strong>"المشاريع أصلية 100% وليست نسخاً من ملفات المصدر القديمة"</strong>، قمنا ببناء ترسانة برمجية قوية ومستقلة بلغة <code>Python</code> تحاكي وتتجاوز متطلبات الأسبوع السادس.
-                </p>
-                <ul>
-                    <li><strong>نظام التحقق المصرفي عبر مصفوفة لوهن (ael_credit_luhn.py)</strong>: تطبيق خوارزمية لوهن بطريقة فائقة التعبير باستخدام إمكانيات <code>Python</code> في تشريح السلاسل النصية والتعامل مع الأرقام الكبيرة دون قلق من فيضان الذاكرة.</li>
-                    <li><strong>محرك الصرافة المصغر (ael_cash_matrix.py)</strong>: خوارزمية جشعة (Greedy Algorithm) تحسب أقل عدد ممكن من العملات المعدنية باستخدام دقة الأرقام وحلقات المعالجة الذكية.</li>
-                    <li><strong>محلل الأحماض النووية الجنائي (ael_dna_forensics.py)</strong>: محرك استقصائي يحلل قواعد بيانات <code>CSV</code> ويطابق تسلسلات التكرار الترادفي القصير (STR) داخل ملفات <code>DNA</code> نصية طويلة باستخدام القواميس والتعبيرات النمطية.</li>
-                    <li><strong>رقيب النصوص المتقدم (ael_bleep_censor.py)</strong>: نظام تنقيح نصوص يستورد قاموساً من الكلمات المحظورة، ويفحص التراكيب عبر مجموعة <code>set</code> لضمان سرعة بحث O(1)، ثم يستبدل الكلمات برموز <code>*</code>.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   ael_src6 PROJECT ECOSYSTEM MATRIX
-===================================================================================
-
-  ├── ael_credit_luhn.py     ──> Automated String Slicing & BigInt Validation
-  ├── ael_cash_matrix.py     ──> High-precision Floating Point Greedy Engine
-  ├── ael_dna_forensics.py   ──> STR Pattern Matching via Hash Dictionaries
-  └── ael_bleep_censor.py    ──> O(1) Banned Word Sweeper via Sets
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Projects Overview: The Custom ael_src6 Arsenal</h1>
             
             <div class="doc-section">

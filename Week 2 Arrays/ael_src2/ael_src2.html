@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,35 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">شفرات C السيادية: ترسانة ael_src2 للمصفوفات والتشفير</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-lock"></i> ترسانة الشفرات البرمجية الحصرية (ael_src2 Master Arsenal)</h2>
-                <p class="doc-text">
-                    تطبيقاً لتعليماتك الصارمة: <strong>"المشاريع أصلية 100% وليست نسخاً من ملفات المصدر الأصلية"</strong>، تم بناء 4 شفرات برمجية مؤسسية بلغة <code>C</code> الصافية للتعامل مع المصفوفات والسلاسل النصية:
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> تشريح الملفات البرمجية الأربعة</h2>
-                
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 24px;">1. محرك مطابقة الكلمات (<a href="./ael_scrabble_match.c" style="color: #64ffda; text-decoration: none;">ael_scrabble_match.c</a>)</h3>
-                <p class="doc-text">نظام تفاعلي مؤسسي يحسب مجموع النقاط لكلمتين يدخلهما مستخدمان، ويعلن الفائز بناءً على جدول أوزان قياسي، مع تجاهل الرموز والأرقام.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">2. مقياس الفحص الأكاديمي للنصوص (<a href="./ael_readability_index.c" style="color: #64ffda; text-decoration: none;">ael_readability_index.c</a>)</h3>
-                <p class="doc-text">نظام يطبق خوارزمية <code>Coleman-Liau</code> لتحليل النصوص وتصنيف مستوى القراءة الأكاديمي (<code>Grade 1 to 16+</code>) مع حماية كاملة ضد أخطاء قسمة الأعداد الصحيحة.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">3. نواة تشفير قيصر (<a href="./ael_cipher_caesar.c" style="color: #64ffda; text-decoration: none;">ael_cipher_caesar.c</a>)</h3>
-                <p class="doc-text">نظام تشفير قيصر مؤسسي يتحقق من صحة مفتاح سطر الأوامر (<code>argc == 2</code>) ويقوم بتشفير النصوص مع الحفاظ على حالة الأحرف.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">4. محرك الاستبدال المتقدم (<a href="./ael_cipher_substitution.c" style="color: #64ffda; text-decoration: none;">ael_cipher_substitution.c</a>)</h3>
-                <p class="doc-text">نظام تشفير قوي يتحقق من مفتاح فريد مكون من 26 حرفاً أبجدياً غير مكرر، ويطبق استبدالاً كاملاً على النصوص.</p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">AEL Sovereign C Masterpieces: Custom ael_src2 Base</h1>
             
             <div class="doc-section">

@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,92 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل المحاضرة الثانية: المصفوفات وتشريح الذاكرة</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microchip"></i> المحور الأول: تفكيك مراحل التجميع الأربعة (The 4 Stages of Compilation)</h2>
-                <p class="doc-text">
-                    في المحاضرة الثانية، يبدأ ديفيد مالان بكشف الستار عن العملية السحرية التي تحول الأكواد المكتوبة بلغة <code>C</code> إلى رموز تشغيلية ثنائية (Binary Machine Code). لا يتوقف الأمر عند أمر <code>make</code> أو <code>clang</code> البسيط، بل يتم تشريح العملية إلى أربع مراحل جنائية متتالية:
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             CLANG COMPILATION LIFECYCLE (4-STAGE PIPELINE)
-===================================================================================
-
-  [ 1. PREPROCESSING ] ──> Expands #include &lt;stdio.h&gt; and replaces #define macros
-          │
-          ▼
-  [ 2. COMPILING ]     ──> Translates bare C syntax into Assembly instructions (.s)
-          │
-          ▼
-  [ 3. ASSEMBLING ]    ──> Converts Assembly instructions into Object Code (.o)
-          │
-          ▼
-  [ 4. LINKING ]       ──> Merges object files & external dynamic libraries (libc)
-          │
-          ▼
-  [ EXECUTABLE (a.out) ] ──> Machine-level binary matrix loaded directly into RAM
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>مرحلة المعالجة المسبقة (Preprocessing):</strong> يبحث المترجم عن أي خط يبدأ بالرمز <code>#</code> (مثل <code>#include</code>). يقوم محرك Preprocessor باستبدال هذه الأوامر بمحتويات الملفات المرجعية مباشرة في الذاكرة.</li>
-                    <li><strong>مرحلة الترجمة إلى التجميع (Compiling):</strong> تحويل شفرة <code>C</code> الصافية بعد المعالجة المسبقة إلى لغة التجميع (Assembly Language) محتوية على تعليمات المعالج الصريحة مثل <code>MOV, PUSH, CALL</code>.</li>
-                    <li><strong>مرحلة التجميع (Assembling):</strong> تحويل أكواد التجميع إلى رموز كائنية ثنائية (Object Code) تحتوي على أصفار ووحاد (0s and 1s) وتوليد ملف <code>.o</code>.</li>
-                    <li><strong>مرحلة الربط (Linking):</strong> دمج ملفات الكائنات المتعددة (مثل كودك <code>main.o</code> مع مكتبة <code>cs50.o</code> ومكتبة <code>stdio.o</code> في نظام التشغيل) لإنتاج ملف تنفيذي واحد <code>a.out</code>.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-braille"></i> المحور الثاني: تشريح الذاكرة الفيزيائية والمصفوفات</h2>
-                <p class="doc-text">
-                    يوضح مالان أن ذاكرة الوصول العشوائي (RAM) هي في جوهرها شبكة ضخمة من الخلايا، حيث تمثل كل خلية بايت واحد (1 Byte = 8 bits).
-                </p>
-                <ul>
-                    <li><strong>تخزين المتغيرات:</strong> عندما نعلن عن متغير <code>char</code>، فإنه يحجز بايت واحد. أما المتغير <code>int</code>، فإنه يحجز 4 بايت متتالية.</li>
-                    <li><strong>ولادة المصفوفات:</strong> عند الحاجة لتخزين 3 درجات اختبار، بدلاً من إعلان متغيرات منفصلة، نستخدم المصفوفة <code>int scores[3];</code>.</li>
-                    <li><strong>الميزة المعمارية:</strong> المصفوفات تضمن تخزين البيانات في كتل ذاكرية متتالية (Contiguous Memory Allocation)، مما يسمح بالوصول الفوري للعناصر باستخدام الفهرسة.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-quote-left"></i> المحور الثالث: حقيقة السلاسل النصية في لغة C</h2>
-                <p class="doc-text">
-                    في لغة C، لا يوجد نوع بيانات أصيل يُسمى <code>string</code>. السلسلة النصية هي مجرد مصفوفة من الحروف <code>char</code> مخزنة بشكل متتالٍ في الذاكرة، وتنتهي إجبارياً برمز صفري يُعرف باسم <code>Null Terminator</code> وقيمته الجنائية في جدول ASCII هي 0 ويُكتب <code>\0</code>.
-                </p>
-                <div class="portal-diagram">
-<pre>===================================================================================
-             MEMORY ANATOMY OF A STRING ("HI!")
-===================================================================================
-
-  Index:       [0]      [1]      [2]      [3]
-  Character:   'H'      'I'      '!'      '\0'
-  ASCII Value:  72       73       33        0
-  Memory Addr: 0x120    0x121    0x122    0x123  (Contiguous bytes)
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-key"></i> المحور الرابع: معاملات سطر الأوامر والتشفير</h2>
-                <p class="doc-text">
-                    تعتمد البرامج الطرفية على بنية <code>main(int argc, string argv[])</code> لاستقبال الأوامر المباشرة.
-                </p>
-                <ul>
-                    <li><code>argc (Argument Count)</code>: عدد المعاملات التي تم تمريرها عبر سطر الأوامر.</li>
-                    <li><code>argv (Argument Vector)</code>: مصفوفة من السلاسل النصية تحتوي على المعاملات الفعليه.</li>
-                    <li><strong>تشفير قيصر (Caesar Cipher):</strong> إزاحة الحروف بمقدار رقمي ثابت <code>(p + k) % 26</code>.</li>
-                    <li><strong>تشفير الاستبدال (Substitution Cipher):</strong> استبدال كل حرف بمفتاح نصي معقد مكون من 26 حرفاً عشوائياً.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Lecture 2 Analysis: Arrays & Memory Anatomy</h1>
             
             <div class="doc-section">

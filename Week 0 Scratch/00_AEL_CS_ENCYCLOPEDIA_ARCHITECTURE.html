@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,12 +236,8 @@
         
         ul, ol { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         ol { list-style-type: decimal; margin-left: 2.5rem; }
-        .panel-ar ol { list-style-type: arabic-indic; margin-left: 0; margin-right: 2.5rem; }
         ol li { margin-bottom: 1rem; color: #d9ebff; font-weight: 600; }
         ol li code { font-weight: normal; }
 
@@ -268,7 +263,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
         .alert-box p { margin: 0; color: #ffffff; font-size: 1.25rem; font-weight: 600; font-style: italic; }
 
@@ -387,127 +381,13 @@
             <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>Master Architecture & Syllabus</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>00_AEL_CS_ENCYCLOPEDIA_ARCHITECTURE.md</code></span>
-            <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/00_AEL_CS_ENCYCLOPEDIA_ARCHITECTURE.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🏛️ الرؤية الهندسية والهدف المعماري (Vision & Architectural Goal)</h2>
-
-        <div class="alert-box">
-            <p>"سنعامل CS50x على أنه مشروع طويل لبناء فهم عميق لعلوم الحاسب، وليس مجرد دورة للحصول على شهادة."</p>
-        </div>
-
-        <p>في هذا الصرح الهندسي، يتم بناء <strong><code>AEL Computer Science Encyclopedia & Notes</code></strong> كمرجع دائم وشامل يربط بين المفاهيم الأكاديمية العميقة والتطبيقات الهندسية الحقيقية في كبرى الشركات العالمية (<code>Google</code>, <code>Apple</code>, <code>Linux Kernel</code>).</p>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>📐 المنهجية الهندسية الثابتة: المراحل الثمانية الصارمة (The 8-Stage Execution Paradigm)</h2>
-        <p>كل أسبوع وكل محاضرة في هذه الموسوعة يمر وجوباً عبر خط أنابيب صارم مكون من 8 مراحل لا تتغير:</p>
-
-<pre>
-[ المرحلة 1: الفهم ] ──> [ المرحلة 2: التحليل ] ──> [ المرحلة 3: التنفيذ الداخلي ] ──> [ المرحلة 4: الخوارزميات ]
-       │
-       ▼
-[ المرحلة 5: الكود ] ──> [ المرحلة 6: المشاريع ] ──> [ المرحلة 7: الربط بالأنظمة ] ──> [ المرحلة 8: ما وراء CS50 ]
-</pre>
-
-        <h3>1. المرحلة 1: الفهم (Comprehensive Understanding)</h3>
-        <ul>
-            <li>شرح كامل ومفصل للمحاضرة باللغة العربية.</li>
-            <li>الإبقاء الصارم على جميع المصطلحات التقنية باللغة الإنجليزية مع توفير ترجمتها ومقصدها الدقيق.</li>
-            <li>تحليل المبررات التاريخية: لماذا ظهر هذا المفهوم تحديداً؟ ما هي المشكلة العميقة التي جاء لحلها؟</li>
-        </ul>
-
-        <h3>2. المرحلة 2: التحليل (Architectural Analysis)</h3>
-        <ul>
-            <li>تفكيك كل جزء من المحاضرة إلى أسئلة جوهرية (مثل: لماذا استخدم ديفيد مالان هذا الكود التوضيحي بالذات؟).</li>
-            <li>مناقشة كل كود وكل كتلة ظهرت في الشرح وتحليل بنيتها المنطقية.</li>
-        </ul>
-
-        <h3>3. المرحلة 3: التنفيذ الداخلي (Under the Hood Execution)</h3>
-        <ul>
-            <li>الغوص العميق في الذاكرة الصريحة (<code>Memory Hierarchy</code>).</li>
-            <li>شرح وتتبع كيفية معالجة الحاسوب لكل تعليمة على المستوى المادي (من ذرات السيليكون والترانزستورات إلى الـ <code>Machine Code</code>).</li>
-            <li>استخدام مقارنات الـ <code>Hex Editors</code> لتحليل الهياكل والتشفير (<code>Forensics</code>).</li>
-        </ul>
-
-        <h3>4. المرحلة 4: الخوارزميات (Algorithms & Efficiency)</h3>
-        <ul>
-            <li>شرح خطوات الخوارزميات وتحليل تعقيدها الزمني والمكاني باستخدام أسلوب الـ <code>Big-O Notation</code> (O(n), O(log n), O(1)).</li>
-        </ul>
-
-        <h3>5. المرحلة 5: الكود (Code Specification)</h3>
-        <ul>
-            <li>كتابة الأكواد بأسلوب احترافي متكامل ومنظم، مع شرح وتوثيق كل سطر برمجي عبر التعليقات (<code>Clean Code</code>).</li>
-        </ul>
-
-        <h3>6. المرحلة 6: المشاريع (System Design Projects)</h3>
-        <ul>
-            <li>عدم القفز للحل المباشر؛ بل المرور بالمراحل المعمارية الصارمة لبناء البرمجيات:<br>
-            <code>[فهم المشكلة] ──> [تحليل المدخلات] ──> [تحليل المخرجات] ──> [تصميم الحل/المعمارية] ──> [الخوارزمية] ──> [التكويد] ──> [الاختبار] ──> [التحسين] ──> [مقارنة الحلول]</code></li>
-        </ul>
-
-        <h3>7. المرحلة 7: الربط بالأنظمة الحقيقية (Real World Systems Interconnect)</h3>
-        <ul>
-            <li>ربط المفاهيم الأكاديمية بالأنظمة الإنتاجية الضخمة. كيف يطبق مهندسو <code>Google</code>, <code>Apple</code>, ونواة <code>Linux</code> هذه المبادئ في محركات مثل <code>V8</code>, <code>SQLite</code>، و <code>Git</code>؟</li>
-        </ul>
-
-        <h3>8. المرحلة 8: ما وراء CS50 (Beyond CS50x)</h3>
-        <ul>
-            <li>شرح المفاهيم المتقدمة التي لم يذكرها المنهج أو تجاوزها لضيق الوقت (مثل: <code>Cache Misses</code>, <code>Branch Prediction</code>, <code>Memory Alignment</code>).</li>
-        </ul>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>📅 هيكل المنهج الشامل ومراحل الغوص (The Official 10-Week Syllabus)</h2>
-        <p>تم تصميم الهيكل التنظيمي للموسوعة ليطابق مسار كورس <code>CS50x</code> الرسمي بكامل محتوياته من البداية وحتى النهاية:</p>
-
-<pre>
-===================================================================================
-                                 THE KNOWLEDGE SECTORS
-===================================================================================
-
-  [ Week 0: Scratch ] ─────────> AI Copilots, ASCII, Unicode, RGB & Block Logic
-  [ Week 1: C ] ───────────────> Compilers, Syntax, Data Types & Hardware Access
-  [ Week 2: Arrays ] ──────────> Memory Blocks, Cryptography & CLI Arguments
-  [ Week 3: Algorithms ] ──────> Search, Sorting (Merge/Select) & Big-O Efficiency
-  [ Week 4: Memory ] ──────────> Pointers, Stack vs Heap, Valgrind & File Forensics
-  [ Week 5: Data Structures ] ─> Singly/Doubly Linked Lists, Trees, Tries & Hash Tables
-  [ Week 6: Python ] ──────────> Higher-Level Abstraction, CPython Internals & OOP
-  [ Week 7: SQL ] ─────────────> Relational DBs, SQLite B-Trees, Indexes & Race Conditions
-  [ AI Intermezzo ] ───────────> Generative AI, Prompt Engineering & LLM Integration
-  [ Week 8: HTML, CSS, JS ] ───> DOM Trees, Asynchronous Fetch & Frontend Engineering
-  [ Week 9: Flask ] ───────────> MVC Architecture, Session State & Backend APIs
-  [ Week 10: The End ] ────────> System Hand-off, Production Deployment & Master Epilogue
-
-===================================================================================
-</pre>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>📂 المعمارية المجلدية الثابتة لكل أسبوع (Weekly Directory Structure)</h2>
-        <p>كل أسبوع من الأسابيع العشرة يحتوي داخلياً على المجلدات الستة التالية لضمان التنظيم المعماري الصارم:</p>
-        
-        <ol>
-            <li><code>01_Lecture_Analysis/</code>: لتحليل افتتاحية المحاضرة وفلسفة ديفيد مالان.</li>
-            <li><code>02_Computer_Science_Notes/</code>: الملاحظات الهندسية الدائمة لعلوم الحاسب.</li>
-            <li><code>03_Engineering_Notes/</code>: جداول المقارنة وحجر رشيد البرمجي.</li>
-            <li><code>04_Deep_Internal_Analysis/</code>: التحليل التحت-سيليكوني وحركة الذاكرة.</li>
-            <li><code>05_Practical_Reverse_Eng/</code>: الهندسة العكسية وتحليل الهياكل الثنائية.</li>
-            <li><code>06_Projects/</code>: قوالب هندسة وتصميم المشاريع ومقارنة المعايير.</li>
-        </ol>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>00_AEL_CS_ENCYCLOPEDIA_ARCHITECTURE.md</code></span>
             <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/00_AEL_CS_ENCYCLOPEDIA_ARCHITECTURE.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -628,18 +508,11 @@
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

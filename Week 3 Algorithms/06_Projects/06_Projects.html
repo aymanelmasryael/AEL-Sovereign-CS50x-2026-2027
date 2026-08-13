@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,58 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">نظرة عامة على مشاريع الأسبوع الثالث: التحليل الجنائي وتحدي كوندورسيه</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microscope"></i> المشروع الأول: مسألة الترتيب (Sort)</h2>
-                <p class="doc-text">
-                    المسألة مصممة لتدريب المهندس على التحقيق الجنائي البرمجي. يُمنح الطالب ثلاثة برامج مجمعة مسبقاً، والمطلوب استنتاج نوع الخوارزمية من خلال مراقبة أداء الوقت.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             SORT PROBLEM ASYMPTOTIC FORENSICS LOGIC
-===================================================================================
-
-  [ Run Time Experiment ] ──> Observe best/worst case speed ──> Categorize Algorithm
-  (Random / Reversed / Sorted buffers)
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-vote-yea"></i> المشروع الثاني: الأغلبية البسيطة وجولات الإعادة (Plurality & Runoff)</h2>
-                <p class="doc-text">
-                    نظام Plurality يعتمد على البحث الخطي وإيجاد الحد الأقصى للأصوات. بينما نظام Runoff يخزن التفضيلات في مصفوفة ثنائية الأبعاد ويقوم بإقصاء المرشح صاحب أقل أصوات وتمرير أصواته للمرشح التالي.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-project-diagram"></i> المشروع الثالث: التحدي المطلق – كوندورسيه (Tideman)</h2>
-                <p class="doc-text">
-                    يهدف المشروع إلى التغلب على ثغرات أنظمة التصويت التقليدية عبر إيجاد "فائز كوندورسيه"؛ وهو المرشح الذي سيفوز في مواجهة مباشرة ضد أي مرشح آخر.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             TIDEMAN GRAPH LOCKING PIPELINE (ACYCLIC DIRECTED GRAPH)
-===================================================================================
-
-  [ Pair Tabulation ] ──> [ Sort by Victory Margin ] ──> [ Lock Pairs (No Cycles!) ]
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>التحدي الخوارزمي الأكبر (lock_pairs):</strong> لمنع حدوث دورة مغلقة (Cycle)، يجب استخدام خوارزمية البحث في العمق (DFS) للتحقق من عدم وجود مسار يربط الخاسر بالفائز قبل قفل العلاقة في مصفوفة locked.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 3 Projects Overview: Sorting Forensics & Tideman Graphs</h1>
             
             <div class="doc-section">

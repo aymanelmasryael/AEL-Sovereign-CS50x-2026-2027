@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,42 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مذكرات علوم الحاسب: البنية التجريدية والمقارنة مع C</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-brain"></i> تصنيف اللغات: المجمعة مقابل المفسرة (Compiled vs. Interpreted)</h2>
-                <p class="doc-text">
-                    تمثل لغة <code>Python</code> تحولاً فيกระบวนทัศน์ البرمجة (Programming Paradigm). بدلاً من التركيز على تفاصيل العتاد الصلب (Hardware Specifics)، تركز <code>Python</code> على سرعة التطوير ونظافة الشفرة البرمجية.
-                </p>
-                <ul>
-                    <li><strong>اللغات المجمعة (C)</strong>: يتم تحويل الشفرة المصدرية بالكامل عبر المترجم (Compiler) إلى لغة الآلة (Machine Code) المخصصة للمعالج ونظام التشغيل قبل التشغيل.</li>
-                    <li><strong>اللغات المفسرة (Python)</strong>: يقوم المحرك الافتراضي <code>CPython</code> بتحويل الشفرة المصدرية إلى رمز وسيط (Bytecode)، ثم يقوم بتنفيذه سطراً بسطر في وقت التشغيل (Runtime). هذا يوفر قابلية تشغيل فائقة عبر المنصات المختلفة.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-exchange-alt"></i> الكتابة الديناميكية مقابل الثابتة (Dynamic vs. Static Typing)</h2>
-                <ul>
-                    <li><strong>الكتابة الثابتة (Static Typing)</strong>: في <code>C</code>، يجب تعريف نوع المتغير صراحةً (<code>int, char, float</code>) ولا يمكن تغييره لاحقاً.</li>
-                    <li><strong>الكتابة الديناميكية (Dynamic Typing)</strong>: في <code>Python</code>، ترتبط الأنواع بالقيمة المخزنة وليس باسم المتغير نفسه، مما يتيح تغيير نوع البيانات المخزنة بمرونة أثناء تنفيذ البرنامج.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   TYPING PARADIGM COMPARISON
-===================================================================================
-
-  [ C: int x = 10; ]     ──> Fixed 4 bytes on stack, strict type validation
-  [ Python: x = 10 ]     ──> Dynamic Object Reference, mutable at runtime
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Computer Science Notes: Abstract Paradigms & C Comparison</h1>
             
             <div class="doc-section">

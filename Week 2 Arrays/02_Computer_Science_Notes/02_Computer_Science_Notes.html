@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,77 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مذكرات علوم الحاسب للأسبوع الثاني: المصفوفات والتنقيح الجنائي</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-bug"></i> المحور الأول: أصل كلمة "Bug" والتشخيص الجنائي للأكواد</h2>
-                <p class="doc-text">
-                    تعود تسمية الأخطاء البرمجية باسم <code>Bug</code> إلى الأدميرال في البحرية الأمريكية الدكتورة جريس هوبر (Grace Hopper) وفريقها العامل على جهاز الحاسب العملاق <code>Harvard Mark II</code>. في أحد الأيام، تعطل الحاسب عن العمل، وعند البحث الجنائي داخل الدوائر الكهربائية، عثر الفريق على حشرة عثة حقيقية (Moth) محشورة بين المرحلات الكهربائية. تم تسجيل الملاحظة التاريخية في سجل النظام: <em>"أول حالة فعلية للعثور على حشرة"</em>.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             HISTORICAL ARCHITECTURE: THE FIRST BUG (HARVARD MARK II)
-===================================================================================
-
-  [ Relay Circuitry ] ──> [ Physical Moth Intercepted ] ──> [ System Short Circuit ]
-                                      │
-                                      ▼
-                      [ Recorded in Logbook: "First actual bug" ]
-                                      │
-                                      ▼
-                      [ Birth of Modern Debugging Paradigm ]
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>أخطاء الصياغة (Syntax Errors):</strong> أخطاء قاتلة توقف عمل المترجم فوراً (مثل نسيان الفاصلة المنقوطة <code>;</code> أو عدم إدراج مكتبة <code>&lt;stdio.h&gt;</code>). المترجم لا يمتلك أي ذكاء لفهم نيتك المنطقية.</li>
-                    <li><strong>الأخطاء المنطقية (Logical Errors):</strong> ينجح البرنامج في التجميع، لكنه ينتج سلوكاً غير مرغوب (مثل طباعة 4 قوالب طوب بدلاً من 3 في حلقة تكرارية).</li>
-                    <li><strong>تقنية الطباعة الجنائية (Debugging via printf):</strong> أداة التصحيح الأولى للمبرمج المحترف عندما يغيب الذكاء الاصطناعي هي استدعاء دالة <code>printf</code> داخل الحلقات التكرارية لفحص مؤشرات الذاكرة الحية وقيم المتغيرات.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-file-code"></i> المحور الثاني: النماذج المبدئية للدوال وعجلات التدريب</h2>
-                <p class="doc-text">
-                    المترجم يقرأ شفرة C سطراً بسطر من الأعلى إلى الأسفل. إذا حاولت الدالة <code>main</code> استدعاء دالة مساعدة مثل <code>print_column</code> قبل الإعلان عنها، سيقوم المترجم بإيقاف التجميع وإصدار خطأ <code>implicit declaration</code>.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             FUNCTION PROTOTYPE PIPELINE
-===================================================================================
-
-  [ Line 1: void print_column(int height); ] ──> Prototype informs compiler
-  [ Line 3: int main(void) { print_column(3); } ] ──> Safe execution in main
-  [ Line 10: void print_column(int height) { ... } ] ──> Actual dynamic implementation
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>الحل المعماري (Function Prototype):</strong> نسخ السطر الأول للدالة وإلصاقه فوق <code>main</code> مع إضافة فاصلة منقوطة <code>;</code>.</li>
-                    <li><strong>حقيقة مكتبة CS50 ("عجلات التدريب"):</strong> في لغة C الصارمة، لا يوجد نوع بيانات يسمى <code>string</code>. مكتبة <code>CS50.h</code> هي بمثابة عجلات تدريب الدراجة (Training Wheels)، صُممت لإخفاء تعقيدات الذاكرة والمؤشرات (Pointers) في الأسابيع الأولى، تمهيداً لإزالتها كلياً وكشف حقيقة المؤشر النصي <code>char *</code>.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-shield-halved"></i> المحور الثالث: خوارزميات التشفير وتحليل النصوص</h2>
-                <p class="doc-text">
-                    يستعرض مالان تجربة قراءة نصوص مختلفة التدرج (من مقتطفات رياض الأطفال <code>One Fish, Two Fish</code> إلى نصوص معقدة من رواية <code>1984</code> لجورج أورويل). البرمجة تتيح لنا بناء معادلة رياضية تفكك السلسلة النصية في الذاكرة لفحص طول الجمل، الكلمات، والأحرف لتحديد الصف الدراسي المؤهل لقراءتها.
-                </p>
-                <ul>
-                    <li><strong>التشفير (Encryption):</strong> عملية تحويل نص عادي (Plaintext) إلى نص مبهم (Ciphertext) عبر دالة تشفير تعتمد على مفتاح سري (Key).</li>
-                    <li><strong>فك التشفير (Decryption):</strong> عكس العملية الحسابية للوصول إلى النص الأصلي.</li>
-                    <li><strong>الهدف الجنائي:</strong> ضمان سرية المراسلات الطرفية حتى لو اعترض المهاجم قنوات الاتصال الفيزيائية.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 2 Computer Science Notes: Arrays & Forensic Debugging</h1>
             
             <div class="doc-section">

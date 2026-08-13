@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,43 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل محاضرة ديفيد مالان: هياكل البيانات العميقة</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> معضلة الذاكرة الثابتة مقابل المرونة الديناميكية</h2>
-                <p class="doc-text">
-                    تبدأ المحاضرة بتسليط الضوء على القيود الصارمة للمصفوفات (Arrays). على الرغم من أن المصفوفات توفر وصولاً عشوائياً فورياً O(1) بفضل تجاور الذاكرة (Memory Contiguity)، إلا أنها تعاني من تكلفة باهظة عند محاولة توسيعها أو تقليصها. يستدعي تغيير حجم المصفوفة استخدام realloc، وهو ما قد يتطلب نسخ الذاكرة بالكامل إلى موقع جديد بتكلفة O(n).
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-link"></i> ظهور القوائم المرتبطة (Linked Lists) كبديل معماري</h2>
-                <p class="doc-text">
-                    لحل أزمة إعادة التخصيص، يقدم البروفيسور ديفيد مالان مفهوم القوائم المرتبطة. هنا، يتم استبدال التجاور المكاني بمفهوم المؤشرات (Pointers). كل عنصر يصبح "عقدة" (Node) تحتفظ بالقيمة الفعلية ومؤشر إلى العقدة التالية في الذاكرة.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             SINGLY LINKED LIST MEMORY TOPOLOGY
-===================================================================================
-
-  [ Head ] ──> [ Data | Next ] ──> [ Data | Next ] ──> [ Data | NULL ]
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sitemap"></i> الهياكل الهجينة وجداول التجزئة (Hash Tables & Tries)</h2>
-                <p class="doc-text">
-                    بينما تقدم القوائم المرتبطة مرونة فائقة في الإدراج O(1) عند الرأس، إلا أنها تخسر ميزة البحث الثنائي (Binary Search)، ليصبح البحث خطياً O(n). من هنا تظهر الحاجة إلى جداول التجزئة (Hash Tables)، وهي بنية هجينة تجمع بين مصفوفة من المؤشرات وقوائم مرتبطة للتعامل مع التصادمات (Chaining). كما تُطرح أشجار التريس (Tries) كحل ثوري للبحث عن السلاسل النصية بسرعة O(1) ثابتة تعتمد حصراً على طول الكلمة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">David Malan Lecture Analysis: Deep Data Structures</h1>
             
             <div class="doc-section">

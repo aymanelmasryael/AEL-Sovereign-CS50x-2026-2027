@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,73 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">المذكرات الهندسية للأسبوع الثاني: هندسة إصلاح الأخطاء الصارمة</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-wrench"></i> المحور الأول: هندسة إصلاح الأخطاء الصارمة (Rigorous Bug Fixing Mechanics)</h2>
-                <p class="doc-text">
-                    خلال تجربة بناء ملف <code>buggy.c</code>، يقدم ديفيد مالان دليلاً هندسياً شاملاً للتعامل مع المترجم (Compiler). لا يجب أن يرتعب مهندس البرمجيات من السطور الحمراء؛ بل يتعين عليه تشريحها استناداً إلى أرقام السطور والرموز التشغيلية.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             CLANG ERROR FORENSICS & RESOLUTION MATRIX
-===================================================================================
-
-  [ Error: "Call to undeclared function printf" ] ──> Solution: #include &lt;stdio.h&gt;
-  [ Error: "Expected semicolon after expression" ] ──> Solution: Append ';' to line
-  [ Error: "Use of undeclared identifier name" ]   ──> Solution: Declare variable type (string)
-  [ Error: "Use of undeclared identifier string" ] ──> Solution: #include &lt;cs50.h&gt;
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>الخطأ الشائع stdio.h مقابل studio.h:</strong> الكلمة الصحيحة هي اختصار لـ Standard Input Output. لا علاقة لها بالاستوديوهات الفنية؛ إنها مكتبة الإدخال والإخراج المعيارية لنظام التشغيل.</li>
-                    <li><strong>التصريح عن أنواع البيانات (Explicit Type Declaration):</strong> تتطلب لغة C الصارمة حجز المساحة الذاكرية الصريحة مسبقاً عبر تحديد نوع المتغير قبل استخدامه.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-rotate"></i> المحور الثاني: التحكم في حدود التكرار والنماذج المبدئية</h2>
-                <p class="doc-text">
-                    تشريح الخطأ المنطقي في طباعة قوالب الطوب (The 4 vs 3 Bricks Bug) يوضح أهمية فحص معاملات الشرط في الحلقات التكرارية.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             LOOP BOUNDARY MEMORY COMPARISON
-===================================================================================
-
-  i &lt;= 3 (Incorrect Logic):
-  [ i=0 (Brick 1) ] ──> [ i=1 (Brick 2) ] ──> [ i=2 (Brick 3) ] ──> [ i=3 (Brick 4!) ]
-
-  i &lt; 3 (Correct Canonical Logic):
-  [ i=0 (Brick 1) ] ──> [ i=1 (Brick 2) ] ──> [ i=2 (Brick 3) ] ──> [ Exit Loop ]
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>القاعدة الهندسية الذهبية:</strong> عند البدء بالفهرس 0، نستخدم دائماً العامل <code>&lt;</code> وليس <code>&lt;=</code>.</li>
-                    <li><strong>النماذج المبدئية المعمارية (Function Prototypes):</strong> لضمان عدم اعتراض المترجم على الدوال المساعدة التي تأتي لاحقاً، نضع نموذج الدالة في السطر الأول قبل الدالة <code>main</code>.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-vial-circle-check"></i> المحور الثالث: اختبارات التحقق المؤتمتة (Automated Unit Verification)</h2>
-                <p class="doc-text">
-                    يوضح مالان أن المترجم يتأكد فقط من سلامة قواعد اللغة الصارمة (Syntax)، لكنه أعمى تماماً عن صحة حلك المنطقي.
-                </p>
-                <ul>
-                    <li><strong>منصة check50:</strong> برنامج <code>check50</code> هو محرك اختبارات مؤتمت (Automated Unit Tester) يقوم بمحاكاة مدخلات المستخدم والتحقق من صحة المخرجات الناتجة بدقة متناهية تشمل حتى المسافات والسطور الجديدة.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 2 Engineering Notes: Rigorous Bug Fixing Mechanics</h1>
             
             <div class="doc-section">

@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,77 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل الداخلي العميق للأسبوع الثاني: فيزياء الذاكرة وشبكة العناوين</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microchip"></i> المحور الأول: فيزياء الذاكرة وشبكة العناوين السداسية عشرية</h2>
-                <p class="doc-text">
-                    عند الغوص تحت غطاء محرك نظام التشغيل (Under the Hood)، نكتشف أن الذاكرة الحية (RAM) ليست سوى مصفوفة عملاقة من خلايا البايتات. كل خلية مجهزة بترانزستورات ومكثفات تحتفظ بشحنات كهربائية تترجم إلى أصفار ووحاد. لتمييز هذه الخلايا، يخصص المعالج لكل بايت عنواناً فريداً يُكتب بالنظام السداسي عشري (Hexadecimal Notation)، مثل <code>0x120, 0x121, 0x122</code>.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             DEEP HARDWARE MEMORY MAP (HEXADECIMAL ALLOCATION)
-===================================================================================
-
-  [ Address: 0x100 ] ──> int (Byte 1)  ┐
-  [ Address: 0x101 ] ──> int (Byte 2)  ├─ 4 Contiguous Bytes (e.g., scores[0])
-  [ Address: 0x102 ] ──> int (Byte 3)  │
-  [ Address: 0x103 ] ──> int (Byte 4)  ┘
-  [ Address: 0x104 ] ──> char (Byte 1) ──> 1 Byte (e.g., 'H')
-  [ Address: 0x105 ] ──> char (Byte 2) ──> 1 Byte (e.g., 'I')
-  [ Address: 0x106 ] ──> char (Byte 3) ──> 1 Byte (e.g., '\0' Null Terminator)
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>التخصيص المتتالي للمصفوفات:</strong> المصفوفة في لغة C ليست كائناً برمجياً معقداً، بل هي مجرد مؤشر مباشر (Pointer) لعنوان أول عنصر فيها.</li>
-                    <li><strong>حساب الإزاحة الذاكرية:</strong> عندما تطلب العنصر <code>scores[2]</code>، يقوم المعالج تلقائياً بحساب العنوان بضرب الفهرس في حجم نوع البيانات وإضافته للعنوان الأساسي.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-map-location-dot"></i> المحور الثاني: تشريح السلاسل النصية ومؤشراتها</h2>
-                <p class="doc-text">
-                    في لغة C الصارمة، السلسلة النصية هي في الواقع <code>char *</code> (مؤشر يحمل عنوان أول حرف char في الذاكرة).
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             DEEP STRING POINTER EXECUTION MATRIX
-===================================================================================
-
-  string s = "HI!"; (CS50 wrapper)  ──>  char *s = "HI!"; (Bare metal C)
-  
-  [ Pointer s ] ──> Holds address 0x104
-                       │
-                       ▼
-       [ 0x104: 'H' ] ──> [ 0x105: 'I' ] ──> [ 0x106: '!' ] ──> [ 0x107: '\0' ]
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>وظيفة الرمز القاتل \0:</strong> نظراً لأن المترجم لا يحتفظ بطول السلسلة النصية، فإن الرمز <code>\0</code> هو الحاجز الفيزيائي الوحيد الذي يمنع المعالج من قراءة بيانات عشوائية أخرى في الذاكرة (Buffer Over-read).</li>
-                    <li><strong>كيف تعمل دالة strlen فعلياً؟</strong> تنفذ حلقة while تفحص العناوين المتعاقبة في الذاكرة حتى تعثر على القيمة 0. هذا يعني أن التعقيد الزمني لقياس طول السلسلة هو O(n) وليس O(1).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-calculator"></i> المحور الثالث: التحليل الرياضي لفهرس القراءة والتشفير</h2>
-                <p class="doc-text">
-                    يُستخدم الفهرس لتحديد مستوى قراءة النصوص عبر المعادلة الرياضية الصارمة (Coleman-Liau Index) والتي تحلل متوسط الحروف والجمل لكل 100 كلمة.
-                </p>
-                <ul>
-                    <li><strong>الميكانيكا العميقة لتشفير قيصر:</strong> تعتمد عملية التشفير على صيغة رياضية في الحساب المعياري <code>c = (p + k) % 26</code>.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 2 Deep Internal Analysis: Memory Physics & Hex Grids</h1>
             
             <div class="doc-section">

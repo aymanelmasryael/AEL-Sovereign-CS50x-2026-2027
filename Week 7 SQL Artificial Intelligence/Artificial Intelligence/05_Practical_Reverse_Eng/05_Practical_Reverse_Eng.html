@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,58 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">الهندسة العكسية التطبيقية: تفكيك حزم البيانات الخاصة بـ OpenAI SDK</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-unlock-alt"></i> تفكيك كائن الطلب (Deconstructing client.responses.create)</h2>
-                <p class="doc-text">
-                    عند استدعاء مكتبة OpenAI في لغة Python، يحدث خلف الكواليس تحويل برمجي يحاكي طلبات الـ HTTP RESTful API. في هذا القسم، نقوم بتفكيك هذه الطبقة لمعرفة كيف تتم معالجة التلقين وإرساله عبر الشبكة.
-                </p>
-                <div class="portal-diagram">
-<pre>response = client.responses.create(
-    input=user_prompt,
-    instructions=system_prompt,
-    model="gpt-5"
-)</pre>
-                </div>
-                <p class="doc-text">
-                    عند فحص الطبقة السفلية (Network Socket Layer)، نجد أن هذا الاستدعاء يُترجم فعلياً إلى حزمة JSON REST Payload تُرسل عبر بروتوكول HTTPS POST المشفر.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-code"></i> الحزمة الفعلية المرسلة (The Raw Wire JSON Payload)</h2>
-                <div class="portal-diagram">
-<pre>{
-  "model": "gpt-5",
-  "messages": [
-    {
-      "role": "system",
-      "content": "Limit your answer to one sentence. Pretend you're a cat."
-    },
-    {
-      "role": "user",
-      "content": "What is the capital of France?"
-    }
-  ],
-  "temperature": 0.7,
-  "max_tokens": 256
-}</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sitemap"></i> تحليل معمارية الأدوار (Role Demarcation)</h2>
-                <ul>
-                    <li><strong>دور النظام ("role": "system")</strong>: يحظى بصلاحية سيادية وأولوية تنشيط قصوى في طبقات الانتباه التابعة للنموذج (Attention Layers).</li>
-                    <li><strong>دور المستخدم ("role": "user")</strong>: يتم تقييمه داخل الصندوق الرملي (Sandbox) الذي أنشأته تعليمات النظام، مما يمنع تجاوز أو اختراق السلوكيات المحددة مسبقاً.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Practical Reverse Engineering: Deconstructing OpenAI SDK JSON Payloads</h1>
             
             <div class="doc-section">

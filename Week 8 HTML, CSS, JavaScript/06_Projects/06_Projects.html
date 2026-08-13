@@ -185,9 +185,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -197,54 +194,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">استعراض المشاريع السيادية: خزنة ael_src8 والتطبيق التفاعلي (AEL DOM Matrix)</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-rocket"></i> تطبيق AEL DOM Matrix & Glassmorphism Web Suite</h2>
-                <p class="doc-text">
-                    استمراراً لمبدأ الاستقلالية المطلقة وتجنب النسخ التقليدية لملفات CS50، تم بناء نظام حصري متكامل داخل مجلد ael_src8 يجمع بين الهيكل المتقدم، والتصميم العصري، والديناميكية الفائقة.
-                </p>
-                
-                <h3 style="color: var(--primary-accent); margin-top: 30px;">المميزات التقنية المطبقة</h3>
-                <ul>
-                    <li><strong>محاكي حلقات الأحداث (Event Loop Simulator)</strong>: يوضح كيف تعمل المهام غير المتزامنة (Async Tasks) في الخلفية مع عدادات حية.</li>
-                    <li><strong>بناء العقد ديناميكياً (Dynamic Card Instantiation)</strong>: أزرار تفاعلية لإنشاء بطاقات زجاجية جديدة داخل شجرة الـ DOM في الوقت الفعلي مع القدرة على حذفها.</li>
-                    <li><strong>محاكاة جلب البيانات (Mock Virtual Fetch API)</strong>: نظام جلب وهمي يحاكي استجابة الخادم لطلبات حزم الـ JSON ويعرض النتيجة فوراً داخل لوحة التفتيش.</li>
-                    <li><strong>التصميم المذهل (State-of-the-Art Aesthetics)</strong>: تأثير الـ Glassmorphism الزجاجي مع تفاعلات حية وتأثيرات صوتية وحركية ناعمة.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   AEL DOM MATRIX WEB SUITE ARCHITECTURE
-===================================================================================
-
-     ┌───────────────────────────────────────────────────────────────────────┐
-     │  [MASTER HEADER]  AEL Sovereign DOM Matrix v3.0            [STATUS: OK]│
-     ├───────────────────────────────────┬───────────────────────────────────┤
-     │  DYNAMIC NODE MANAGER             │  VIRTUAL FETCH API (AJAX)         │
-     │  [+ Spawn New Glass Card]         │  [Request Internal JSON Payload]  │
-     ├───────────────────────────────────┴───────────────────────────────────┤
-     │  REAL-TIME EVENT LOOP INSPECTOR (Call Stack vs Task Queue simulation) │
-     └───────────────────────────────────────────────────────────────────────┘
-
-===================================================================================</pre>
-                </div>
-
-                <div class="launch-action-card">
-                    <div>
-                        <h3>⚡ الدخول إلى غرفة التحكم المركزية ael_src8</h3>
-                        <p>تصفح التطبيق التفاعلي المباشر واختبر أداء DOM Matrix على متصفحك</p>
-                    </div>
-                    <a href="../ael_src8/ael_src8.html" class="launch-btn">
-                        <i class="fas fa-play"></i> تشغيل ael_src8
-                    </a>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Sovereign Projects Review: ael_src8 Vault & AEL DOM Matrix Suite</h1>
             
             <div class="doc-section">

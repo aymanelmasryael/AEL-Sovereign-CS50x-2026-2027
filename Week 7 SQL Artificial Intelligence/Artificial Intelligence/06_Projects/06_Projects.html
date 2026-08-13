@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,37 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">استعراض المشاريع: ترسانة الذكاء الاصطناعي الحصرية (ael_src_ai)</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-box-open"></i> استبدال الشفرات القديمة بمنظومات سيادية حصرية</h2>
-                <p class="doc-text">
-                    التزاماً بالقرار السيادي الصارم بألا تحتوي الموسوعة على أي نسخ كربونية أو شفرات منقولة من ملفات CS50x القديمة (chat3.py أو speller)، تم بناء 3 منظومات حصرية بالكامل داخل مجلد ael_src_ai.
-                </p>
-                <ul>
-                    <li><strong>موصل النماذج اللغوية السيادي (ael_llm_connector.py)</strong>: محاكاة اتصال حي وتطبيق قواعد الأمان الصارمة (System Prompts) لمنع حقن التلقين، وإدارة الحوار التفاعلي بأسلوب متقدم.</li>
-                    <li><strong>محرك فحص الكلمات وعزل الأخطاء الإملائية (ael_ai_speller_matrix.py)</strong>: دمج مفاهيم فحص الكلمات التقليدي (Speller) عبر جداول التجزئة العميقة مع خوارزميات التصحيح الذكية المستندة إلى مسافة ليفنشتاين (Levenshtein Distance) والتنبؤ الدلالي.</li>
-                    <li><strong>محرك أشجار القرار والتقليم الألفا-بيتا (ael_decision_tree_engine.py)</strong>: محاكاة شجرة قرارات استراتيجية كاملة باستخدام خوارزمية Minimax والتقليم Alpha-Beta Pruning لتحديد المسار ذو القيمة الرياضية الأفضل للذكاء الاصطناعي.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   AEL SOVEREIGN AI PROJECTS DIRECTORY ARCHITECTURE
-===================================================================================
-
-  [ ael_src_ai ]
-    ├── ael_llm_connector.py         <── Enterprise Secure LLM Interfacing
-    ├── ael_ai_speller_matrix.py     <── Hybrid Deterministic & Fuzzy Speller
-    └── ael_decision_tree_engine.py  <── Autonomous Minimax Path Finding
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Projects Overview: Sovereign AI Subsystem Vault (ael_src_ai)</h1>
             
             <div class="doc-section">

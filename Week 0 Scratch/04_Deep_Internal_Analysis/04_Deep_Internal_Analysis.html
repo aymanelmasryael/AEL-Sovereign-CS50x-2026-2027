@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -372,59 +367,13 @@
             <a href="../../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>04_Deep_Internal_Analysis</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_0_Silicon_to_Software_AR.md</code></span>
-            <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/04_Deep_Internal_Analysis/Week_0_Silicon_to_Software_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🔬 فيزياء السيليكون وحركة الذاكرة (Silicon to Software)</h2>
-        <p>في عرض <code>lecture0.pdf</code> (الشرائح 55 إلى 88)، اصطحبنا ديفيد مالان في رحلة فك تشفير البيانات، من نبضات الفولتية في الترانزستورات إلى الرموز والصور التفاعلية. في منهجية AEL، نطلق على هذه الرحلة <strong>Sub-Silicon Bare-Metal Memory Mechanics</strong>.</p>
-
-<pre>
-[ Voltage / Transistor ] ──> [ Bit / Byte ] ──> [ ASCII / Unicode ] ──> [ RGB Display / Audio PCM ]
-</pre>
-
-        <h3>1. تمثيل النصوص المتقدم (ASCII Encoding)</h3>
-        <p>في الشريحة 58 والشريحة 59، تم تشريح السلسلة النصية <code>HI!</code> لمعرفة كيف تُحفظ فعلياً داخل شريحة الذاكرة RAM.</p>
-<pre>
-Human String:      H          I          !
-ASCII Decimal:    72         73         33
-Binary Bits:   01001000   01001001   00100001
-</pre>
-
-        <h3>2. تمثيل الألوان عبر قنوات العرض (RGB Physics)</h3>
-        <p>ماذا لو أخذنا نفس الأرقام الثلاثة (<code>72 73 33</code>) وأرسلناها إلى بطاقة الرسوميات (GPU Pixel Shader) كقيم لونية (RGB)؟ ستخرج شاشة العرض لونا أصفراً زيتونياً. المعمارية هي التي تحدد المعنى النهائي للبيانات!</p>
-<pre>
-Red Channel (R):    72 / 255
-Green Channel (G):  73 / 255
-Blue Channel (B):   33 / 255
-</pre>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>3. تمثيل الرموز التعبيرية والصور (Unicode & Emojis)</h2>
-        <p>في الشرائح 70 إلى 76، تخطى المنهج حدود الـ <code>ASCII</code> للوصول إلى <code>Unicode</code>.</p>
-<pre>
-32-Bit Raw Binary:  11110000 10011111 10011000 10000010
-Unicode Code Point: U+1F602
-Visual Glyph:       😂 (Face with Tears of Joy)
-</pre>
-
-        <div class="alert-box">
-            <h4>⚙️ تشريح الـ Bitmap Graphics والفيديو والصوت</h4>
-            <p>الصور يتم فك تشفيرها كمصفوفة من البيكسلات. والفيديو (شريحة 87) مجرد خداع بصري قائم على عرض صور متتالية بسرعة فائقة (Flipbook). والصوت (شريحة 88) يُخزّن كحزمة متتالية من أرقام الـ PCM لتمثيل التردد وارتفاع الجهد الكهربائي.</p>
-        </div>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_0_Silicon_to_Software_EN.md</code></span>
             <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/04_Deep_Internal_Analysis/Week_0_Silicon_to_Software_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -477,18 +426,11 @@ Visual Glyph:       😂 (Face with Tears of Joy)
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

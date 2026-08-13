@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -372,131 +367,13 @@
             <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>02_Computer_Science_Notes (Week 1 C)</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_1_C_Notes_AR.md</code></span>
-            <a href="Week_1_C_Notes_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🏛️ تشريح بنية لغة C والملفات المصدرية (Anatomy of C & src1)</h2>
-        <p>لغة <code>C</code> هي لغة إجرائية قياسية توفر تحكماً مباشراً في الذاكرة والعتاد. في هذا المجلد، نغوص في الأسس الأكاديمية لعلوم الحاسب بالاستناد المباشر إلى مستودع الثروة البرمجية <code>src1</code> وملف المحاضرة <code>lecture1.pdf</code>.</p>
-
-<pre>
-===================================================================================
-                       THE ANATOMY OF A C PROGRAM (hello2.c)
-===================================================================================
-
-  #include &lt;cs50.h&gt;    ──> Preprocessor Directive (CS50 Library)
-  #include &lt;stdio.h&gt;   ──> Preprocessor Directive (Standard Input/Output)
-
-  int main(void)       ──> Main Entry Point (Returns int 0 on success, takes void)
-  {
-      string answer = get_string("What's your name? "); ──> Variable Instantiation
-      printf("hello, %s\n", answer);                    ──> Formatted Output (%s)
-  }
-
-===================================================================================
-</pre>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>📦 أنواع البيانات ومحددات التنسيق (Data Types & Format Specifiers)</h2>
-        <p>في لغة C، يجب التصريح الصريح عن نوع كل متغير (<code>Statically Typed</code>). يحدد النوع حجم الذاكرة المخصصة وكيفية تفسير الأصفار والآحاد.</p>
-
-        <h3>1. أنواع البيانات الأساسية (Primitive Types)</h3>
-        <ul>
-            <li><code>int</code>: الأعداد الصحيحة (<code>Integers</code>). تستخدم عادةً 4 بايت (<code>32 bits</code>) وتخزن قيماً تتراوح بين <code>-2,147,483,648</code> و <code>2,147,483,647</code>. (مستلهم من <code>calculator0.c</code>).</li>
-            <li><code>char</code>: رمز واحد (<code>Character</code>). يستخدم 1 بايت (<code>8 bits</code>) ويتم تخزينه كأرقام وفق جدول <code>ASCII</code>. (مستلهم من <code>agree0.c</code>).</li>
-            <li><code>float</code>: الأعداد العشرية ذات الدقة الفردية (<code>Floating-point</code>). تستخدم 4 بايت. تعاني من القصور الكسري (<code>Floating-Point Imprecision</code>). (مستلهم من <code>calculator2.c</code>).</li>
-            <li><code>double</code>: الأعداد العشرية ذات الدقة المضاعفة (<code>Double precision</code>). تستخدم 8 بايت (<code>64 bits</code>) لتوفير دقة أكبر في العمليات الحسابية المعقدة.</li>
-            <li><code>bool</code>: القيم المنطقية (<code>Boolean</code> - <code>true / false</code>). يتطلب استدعاء مكتبة <code>&lt;cs50.h&gt;</code> أو <code>&lt;stdbool.h&gt;</code>.</li>
-            <li><code>string</code>: السلاسل النصية. في الواقع هي صفيف من الرموز (<code>Array of chars</code>) تنتهي برمز نال (<code>\0</code>).</li>
-        </ul>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>🔀 هياكل تدفق التحكم والمنطق (Control Flow & Logic)</h2>
-        <p>يتيح التحكم في تدفق البرنامج اتخاذ القرارات بناءً على الظروف الديناميكية. نستعرض هنا التطبيقات المستلهمة من ملفات <code>compare</code> و <code>agree</code>.</p>
-
-        <h3>1. الشروط المنطقية (Conditionals - compare0.c)</h3>
-<pre>
-if (x &lt; y)
-{
-    printf("x is less than y\n");
-}
-else if (x &gt; y)
-{
-    printf("x is greater than y\n");
-}
-else
-{
-    printf("x is equal to y\n");
-}
-</pre>
-
-        <h3>2. المعاملات المنطقية (Logical Operators - agree2.c)</h3>
-        <ul>
-            <li><code>&amp;&amp;</code> (AND): يتطلب صحة كلا الشرطين.</li>
-            <li><code>||</code> (OR): يكتفي بصحة شرط واحد على الأقل.</li>
-            <li><code>!</code> (NOT): يعكس الحالة المنطقية.</li>
-        </ul>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>🔄 البنى التكرارية والتصميم النمطي (Loops & Modular Design)</h2>
-        <p>التكرار هو أساس الكفاءة الحسابية. بدلاً من تكرار الأكواد، نستخدم الحلقات والدوال المستلهمة من ملفات <code>cat</code> و <code>mario</code>.</p>
-
-        <h3>1. حلقات التكرار (Iteration Paradigms - cat15.c & mario5.c)</h3>
-        <ul>
-            <li><code>while</code>: التكرار القائم على شرط مستمر. مثالي عندما لا نكون متأكدين من عدد التكرارات مسبقاً.</li>
-            <li><code>for</code>: التكرار المحكوم بعدداد صريح (<code>Initialization; Condition; Update</code>).</li>
-            <li><code>do-while</code>: الحلقة الحتمية. تنفذ الكود مرة واحدة على الأقل قبل التحقق من الشرط. <strong>تعتبر المعيار الهندسي الذهبي للتحقق من صحة مدخلات المستخدم (Input Validation)</strong>.</li>
-        </ul>
-
-<pre>
-// Input Validation using do-while (mario5.c)
-int n;
-do
-{
-    n = get_int("Size: ");
-}
-while (n &lt; 1);
-</pre>
-
-        <div class="alert-box">
-            <h4>💡 التصميم النمطي ونماذج الدوال (Function Prototypes)</h4>
-            <p>في <code>cat15.c</code>، يشرح مالان قاعدة معمارية كبرى في لغة C: المترجم يقرأ الملف من أعلى إلى أسفل. إذا استدعيت دالة مثل <code>meow(3)</code> قبل تعريفها، سيفشل المترجم.</p>
-            <p><strong>الحل الهندسي:</strong> التصريح عن رأس الدالة أعلى الملف <code>void meow(int n);</code>، بينما يتم كتابة تفاصيل تنفيذها أسفل الدالة الرئيسية <code>main</code>.</p>
-        </div>
-
-<pre>
-#include &lt;stdio.h&gt;
-
-void meow(int n); // Prototype Declaration
-
-int main(void)
-{
-    meow(3);
-}
-
-void meow(int n) // Internal Implementation
-{
-    for (int i = 0; i &lt; n; i++)
-    {
-        printf("meow\n");
-    }
-}
-</pre>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_1_C_Notes_EN.md</code></span>
             <a href="Week_1_C_Notes_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -621,18 +498,11 @@ void meow(int n) // Internal Implementation
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

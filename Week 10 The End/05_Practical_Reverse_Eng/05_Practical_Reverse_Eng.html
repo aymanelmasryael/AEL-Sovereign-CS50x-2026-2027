@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,50 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">الهندسة العكسية التطبيقية: تفكيك الشفرات الثنائية والتحليل الجنائي</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-unlock-alt"></i> الهندسة العكسية للملفات الثنائية (Decompilation & Disassembly)</h2>
-                <p class="doc-text">
-                    في هذا القسم المتقدم، نتعمق في آليات تفكيك الملفات الثنائية (Binary Files) لفهم المنطق البرمجي لكائن مجهول أو يشتبه في كونه برمجية خبيثة (Malware).
-                </p>
-                <ul>
-                    <li><strong>التفكيك (Disassembly)</strong>: تحويل لغة الآلة الخام (Machine Code) إلى تعليمات تجميعية (Assembly).</li>
-                    <li><strong>التحليل السلوكي (Behavioral Analysis)</strong>: مراقبة تفاعلات الملف الثنائي مع مساحة الذاكرة، وطلبات واجهة النظام (System Calls).</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>+-------------------------------------------------------------------+
-|               BINARY FORENSICS DECOMPILATION PIPELINE             |
-+-------------------------------------------------------------------+
-|                                                                   |
-|   RAW BINARY FILE                                REVERSE ENGINE   |
-|   ---------------                                --------------   |
-|          |                                              |         |
-|          +--- [ STRINGS EXTRACTION ] --> Hardcoded API Keys?      |
-|          +--- [ SYSCALL MONITORING ] --> Filesystem Touch?        |
-|          +--- [ CONTROL FLOW GRAPH ] --> Logical Jump Matrix      |
-|                                                                   |
-|          +==========> DECOMPILED LOGIC BLUEPRINT ===============+ |
-|                                                                   |
-+-------------------------------------------------------------------+</pre>
-                </div>
-
-                <h2 class="sec-title"><i class="fas fa-search-code"></i> استخراج السلاسل المضمنة ومفاتيح واجهات برمجة التطبيقات (Static Analysis)</h2>
-                <p class="doc-text">
-                    أولى خطوات التحليل الجنائي لأي تطبيق تتمثل في تشغيل أدوات الفحص الثابت (مثل أمر <code>strings</code> في نظام Linux/Unix). يتيح ذلك استخراج الكلمات النصية المضمنة داخل الكود الثنائي، والتي غالباً ما تكشف عن أخطاء تطويرية فادحة مثل ترك مفاتيح التشفير أو كلمات المرور مكشوفة.
-                </p>
-
-                <h2 class="sec-title"><i class="fas fa-project-diagram"></i> تحليل الرسوم البيانية لتدفق التحكم (Control Flow Graphs - CFG)</h2>
-                <p class="doc-text">
-                    من خلال تمثيل قفزات الشرط البرمجية في شكل رسوم بيانية، يستطيع مهندس الأمان رصد بوابات العبور الخلفية (Backdoors) وتحديد الشروط المنطقية المسؤولة عن تجاوز متطلبات المصادقة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Practical Reverse Engineering: Binary Forensics</h1>
             
             <div class="doc-section">

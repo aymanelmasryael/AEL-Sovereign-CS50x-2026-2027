@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,47 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">المذكرات الهندسية: تحصين الأنظمة واستراتيجيات الدفاع العميق</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-layer-group"></i> استراتيجية الدفاع متعدد الطبقات (Defense-in-Depth)</h2>
-                <p class="doc-text">
-                    في الهندسة الأمنية المتقدمة، لا يُعْتَمَد أبداً على حاجز أمني واحد. تصميم <code>Defense-in-Depth</code> يعني بناء طبقات حماية متتالية (جدران حماية، مصادقة متعددة العوامل MFA، تشفير البيانات أثناء النقل وأثناء الراحة، وتحديد الصلاحيات الدنيا).
-                </p>
-                
-                <div class="portal-diagram">
-<pre>+-------------------------------------------------------------------+
-|               DEFENSE-IN-DEPTH MULTI-LAYER TOPOLOGY               |
-+-------------------------------------------------------------------+
-|                                                                   |
-|  [ LAYER 1: EDGE WAF ]      --> Filtering Malicious HTTP Payloads |
-|  [ LAYER 2: ZERO-TRUST ]    --> Mandatory Mutual TLS (mTLS)       |
-|  [ LAYER 3: LEAST PRIVILEGE]--> RBAC & Minimal Execution Scopes   |
-|  [ LAYER 4: DATABASE VAULT] --> AES-256 Encrypted At Rest         |
-|                                                                   |
-+-------------------------------------------------------------------+</pre>
-                </div>
-
-                <h2 class="sec-title"><i class="fas fa-user-shield"></i> مبدأ الصلاحيات الدنيا (Principle of Least Privilege - PoLP)</h2>
-                <p class="doc-text">
-                    تنص القاعدة الذهبية في تحصين الأنظمة على منح المستخدمين والعمليات البرمجية الحد الأدنى المطلق من الصلاحيات اللازمة لأداء وظائفهم فقط.
-                </p>
-                <ul>
-                    <li><strong>عزل العمليات (Process Sandboxing)</strong>: تقييد الوصول المباشر إلى مساحة الذاكرة أو واجهات الشبكة.</li>
-                    <li><strong>إدارة الحسابات السيادية (RBAC)</strong>: الفصل التام بين مساحات وصول المديرين والمستخدمين.</li>
-                </ul>
-
-                <h2 class="sec-title"><i class="fas fa-network-wired"></i> تأمين منافذ الاتصال والموجهات (Port Filtering & Gateways)</h2>
-                <ul>
-                    <li><strong>غلق المنافذ غير النشطة (Port Hardening)</strong>: استخدام أنظمة مراقبة لعزل وحجب أي منفذ لا يُستخدم بصورة نشطة.</li>
-                    <li><strong>الوكلاء العكسيون (Reverse Proxies)</strong>: تلقي الطلبات الخارجية وفلترتها قبل توجيهها للخوادم الداخلية، مما يخفي البنية التحتية الحقيقية للنظام.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Engineering Notes: System Hardening & Defense-in-Depth</h1>
             
             <div class="doc-section">

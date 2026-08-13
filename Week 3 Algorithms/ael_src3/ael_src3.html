@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,35 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">شفرات C السيادية: ترسانة ael_src3 للخوارزميات وهياكل التصويت</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-chart-line"></i> ترسانة الشفرات البرمجية الحصرية (ael_src3 Master Arsenal)</h2>
-                <p class="doc-text">
-                    تطبيقاً لتعليماتك الصارمة: <strong>"المشاريع أصلية 100% وليست نسخاً من ملفات المصدر الأصلية"</strong>، تم بناء 4 شفرات برمجية مؤسسية بلغة <code>C</code> الصافية لمحاكاة الخوارزميات وهياكل التصويت:
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> تشريح الملفات البرمجية الأربعة</h2>
-                
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 24px;">1. محرك التحقيق الخوارزمي (<a href="./ael_sort_forensics.c" style="color: #64ffda; text-decoration: none;">ael_sort_forensics.c</a>)</h3>
-                <p class="doc-text">نظام تشخيصي مؤسسي يحاكي أداء خوارزميات الترتيب (فقاعي، اختيار، دمج) ويقيس الأداء الزمني <code>O(n^2)</code> مقابل <code>O(n log n)</code> على بيانات عشوائية ومرتبة ومعكوسة.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">2. نظام الأغلبية البسيطة (<a href="./ael_plurality_system.c" style="color: #64ffda; text-decoration: none;">ael_plurality_system.c</a>)</h3>
-                <p class="doc-text">نظام تصويت مؤسسي يبحث خطياً عن المرشحين، ويحسب الأصوات، ويعلن الفائز أو الفائزين بالتعادل.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">3. محرك جولات الإعادة الفورية (<a href="./ael_runoff_engine.c" style="color: #64ffda; text-decoration: none;">ael_runoff_engine.c</a>)</h3>
-                <p class="doc-text">نظام تصويت تفضيلي ثنائي الأبعاد، يستبعد المرشحين الحاصلين على أقل أصوات (<code>Eliminate</code>) وينقل أصوات ناخبيهم للمفضل التالي حتى تحقيق الأغلبية المطلقة.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">4. نواة الرسوم البيانية لكوندورسيه (<a href="./ael_tideman_condorcet.c" style="color: #64ffda; text-decoration: none;">ael_tideman_condorcet.c</a>)</h3>
-                <p class="doc-text">أقوى نظام تصويت يعتمد على الرسوم البيانية الموجهة غير الدورية (<code>DAG</code>)، مع خوارزمية البحث في العمق (<code>DFS - Depth First Search</code>) لمنع تشكل الحلقات المغلقة (<code>Cycle Prevention</code>).</p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">AEL Sovereign C Masterpieces: Custom ael_src3 Base</h1>
             
             <div class="doc-section">

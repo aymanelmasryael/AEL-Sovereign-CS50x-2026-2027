@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,45 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل الداخلي العميق: معمارية CPython و PyObject</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-search-plus"></i> تشريح الكائن الأولي (PyObject Memory Structure)</h2>
-                <p class="doc-text">
-                    في محرك <code>CPython</code>، كل متغير هو في الواقع مؤشر إلى هيكل <code>C</code> يُدعى <code>PyObject</code>.
-                </p>
-                <ul>
-                    <li><strong>عداد المراجع (ob_refcnt)</strong>: يتتبع عدد المتغيرات التي تشير إلى هذا الكائن. عندما يصل العداد إلى الصفر، يتم استدعاء <code>free</code> فوراً لتنظيف الذاكرة.</li>
-                    <li><strong>نوع الكائن (ob_type)</strong>: مؤشر إلى نوع الكائن (Type Object)، والذي يحدد دوال التشغيل المتاحة له.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-microchip"></i> معمارية التقييم الافتراضية (CEval Loop)</h2>
-                <ul>
-                    <li><strong>حلقة التقييم (The Evaluation Loop)</strong>: يقوم المترجم الداخلي بتحويل ملف <code>.py</code> إلى تعليمات برمجية وسيطة (Bytecode)، والتي يتم تمريرها إلى الدالة المركزية <code>_PyEval_EvalFrameDefault</code>.</li>
-                    <li><strong>ديناميكية التنفيذ (Dynamic Dispatch)</strong>: في كل خطوة، يتم قراءة تعليمة الـ Bytecode وتنفيذ أمر <code>C</code> المقابل لها عبر جدول القفز (Jump Table)، مما يفسر سبب بطء تنفيذ <code>Python</code> مقارنة بـ <code>C</code> الصافية.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   PyObject C-STRUCT TOPOLOGY
-===================================================================================
-
-  typedef struct _object {
-      _PyObject_HEAD_EXTRA
-      Py_ssize_t ob_refcnt;   ──> Garbage collection active monitor
-      struct _typeobject *ob_type; ──> Type definitions & method table
-  } PyObject;
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Deep Internal Analysis: CPython Architecture & PyObject Mechanics</h1>
             
             <div class="doc-section">

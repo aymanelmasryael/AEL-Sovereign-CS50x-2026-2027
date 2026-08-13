@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,48 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل محاضرة ديفيد مالان: تحصين الأنظمة والأمن السيبراني</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-shield-halved"></i> الاستهلال المعماري ومفهوم الثقة الصفرية (Zero-Trust Architecture)</h2>
-                <p class="doc-text">
-                    يختتم البروفيسور ديفيد مالان المنهج الأكاديمي CS50x بمفهوم حاسم يُعد حجر الزاوية في بناء المنظومات البرمجية الحديثة: <strong>الأمن السيبراني والثقة الصفرية (Zero-Trust)</strong>. لم يعد الأمان مجرد طبقة خارجية تُضاف بعد انتهاء التطوير، بل هو نسق هندسي متغلغل في كافة طبقات الاتصال والذاكرة.
-                </p>
-
-                <h2 class="sec-title"><i class="fas fa-key"></i> آليات التشفير والمصادقة (Encryption Mechanics & Handshakes)</h2>
-                <p class="doc-text">
-                    تتناول المحاضرة بعمق تشريح بروتوكولات الاتصال الآمنة، بدءاً من تبادل المفاتيح عبر خوارزميات غير متماثلة (Asymmetric Cryptography) مثل RSA و Diffie-Hellman، وصولاً إلى إنشاء جلسات مشفرة متماثلة (Symmetric Cryptography) فائقة السرعة باستخدام خوارزميات AES.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>+-------------------------------------------------------------------+
-|               SECURE ASYMMETRIC HANDSHAKE TELEMETRY               |
-+-------------------------------------------------------------------+
-|                                                                   |
-|   CLIENT (Browser)                               SERVER (Apex)    |
-|   -------                                        -------------    |
-|      |                                                 |          |
-|      | --- 1. ClientHello (Cipher Suites, Random) ---> |          |
-|      | <-- 2. ServerHello, Certificate, Key Exchange - |          |
-|      | --- 3. ClientKeyExchange, ChangeCipherSpec ---> |          |
-|      | <-- 4. ChangeCipherSpec, Finished ------------- |          |
-|      |                                                 |          |
-|      +========== ENCRYPTED AES-256 TUNNEL ESTABLISHED =+          |
-|                                                                   |
-+-------------------------------------------------------------------+</pre>
-                </div>
-
-                <h2 class="sec-title"><i class="fas fa-skull-crossbones"></i> تحليل التهديدات وهجمات حجب الخدمة (Threat Landscape & DDoS)</h2>
-                <ul>
-                    <li><strong>حقن الأكواد وثغرات التجاوز (Injection & Traversal)</strong>: تفكيك كيفية استغلال الثغرات البرمجية للوصول غير المصرح به إلى شجرة الملفات أو تنفيذ استعلامات ضارة.</li>
-                    <li><strong>إغراق الدوائر وهجمات DDoS</strong>: كيفية استنزاف موارد الخوادم عبر إرسال ملايين الطلبات المتزامنة، وطرق التعامل معها معمارياً باستخدام موجهات المرور وأنظمة تقييد المعدل (Rate Limiting).</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Deep Lecture Analysis: System Hardening & Cybersecurity</h1>
             
             <div class="doc-section">

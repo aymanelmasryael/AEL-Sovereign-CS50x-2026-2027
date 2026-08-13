@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,46 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">الهندسة العكسية التطبيقية: فك شفرة ترويسات الملفات والأرقام السحرية</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-file-signature"></i> تشريح الأرقام السحرية لملفات JPEG</h2>
-                <p class="doc-text">
-                    أي ملف JPEG حقيقي يجب أن تبدأ البايتات الأربعة الأولى منه بالترتيب الست عشري الصارم التالي: 0xFF, 0xD8, 0xFF. لا يمكن الوثوق بامتداد الملف الخارجي أبداً.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             JPEG MAGIC NUMBER FORENSIC SIGNATURE MATRIX
-===================================================================================
-
-  [ BYTE 0 ]   :   0xFF  (1111 1111)
-  [ BYTE 1 ]   :   0xD8  (1101 1000)
-  [ BYTE 2 ]   :   0xFF  (1111 1111)
-  [ BYTE 3 ]   :   0xE0 .. 0xEF  (Matches bitwise: (buffer[3] & 0xF0) == 0xE0)
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-image"></i> تشريح ترويسة ملفات الصور (BMP Headers)</h2>
-                <p class="doc-text">
-                    تتكون ترويسة ملفات BMP من كتلتين رئيسيتين: BITMAPFILEHEADER (14 بايت) و BITMAPINFOHEADER (40 بايت). تُخزن بكسلات الـ BMP بنظام BGR وليس RGB.
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-hammer"></i> تقنيات استعادة البيانات المفقودة (File Carving)</h2>
-                <p class="doc-text">
-                    عند حذف ملف، يحذف النظام الفهرس فقط ويترك البايتات الفعلية. يقوم برنامج الاستعادة بالبحث عن الأرقام السحرية في الذاكرة الخام ونسخ البايتات لاستعادة الملفات.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Practical Reverse Engineering: Bare-Metal Headers</h1>
             
             <div class="doc-section">

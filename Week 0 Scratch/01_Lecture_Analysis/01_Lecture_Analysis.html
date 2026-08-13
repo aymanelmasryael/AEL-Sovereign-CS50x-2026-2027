@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -372,74 +367,13 @@
             <a href="../../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>01_Lecture_Analysis</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_0_Scratch_Analysis_AR.md</code></span>
-            <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/01_Lecture_Analysis/Week_0_Scratch_Analysis_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🔬 تحليل افتتاحية المحاضرة: الفيل في الغرفة (AI & The Bottleneck)</h2>
-
-        <h3>1. لماذا بدأ ديفيد مالان بالحديث عن الذكاء الاصطناعي (AI) في محاضرة برمجية تأسيسية؟</h3>
-        <p>بدأ ديفيد مالان محاضرته الأولى بالتطرق مباشرة إلى "الفيل في الغرفة" (The Elephant in the Room)، وهو الذكاء الاصطناعي (AI). لم يكن هذا عبثاً، بل كان قراراً معمارياً وهندسياً مقصوداً لمعالجة القلق السائد بين الطلاب المبتدئين: <em>"هل هناك جدوى من تعلم البرمجة من الصفر في ظل وجود أدوات تقوم بكتابة الكود فوراً؟"</em></p>
-
-        <div class="alert-box">
-            <h4>💡 الرسالة الجوهرية (The Core Thesis)</h4>
-            <p>الذكاء الاصطناعي لا يلغي الحاجة لتعلم الأساسيات، بل على العكس؛ إنه يجعل إتقان الأساسيات أكثر أهمية من أي وقت مضى. الذكاء الاصطناعي يعمل كـ <strong>"مزيل لاختناقات العمل البشرية" (Human Bottleneck Eliminator)</strong>.</p>
-        </div>
-
-        <h3>2. مفهوم "اختناق العمل البشري" (The Human Bottleneck)</h3>
-        <p>في هندسة النظم التقليدية، يعتبر العنصر البشري هو نقطة الاختناق الكبرى في خطوط التطوير (Pipelines). كتابة الأكواد المكررة (Boilerplate Code)، واكتشاف الأخطاء المطبعية البسيطة (Syntax Errors)، والبحث في المستندات البرمجية، كلها عمليات تستنزف ساعات طويلة من وقت المهندس.</p>
-
-<pre>
-[ Traditional Pipeline ]
-(Idea) ──> [ Manual Boilerplate / Syntax Debugging (Human Bottleneck) ] ──> (Deployment) [SLOW]
-
-[ AI-Native Pipeline ]
-(Idea) ──> [ AI Copilot / Quick Syntactic Generation ] ──> [ Human Architect / System Validation ] ──> (Deployment) [FAST]
-</pre>
-
-        <h4>🚀 التحول من "عامل برمجة" إلى "قائد طائرة" (Driver & Pilot)</h4>
-        <p>عندما تمتلك فهماً عميقاً لعلوم الحاسب، لا تصبح مجرد أداة لكتابة الجمل البرمجية، بل تتحول إلى <strong>مهندس معماري وقائد طائرة (Driver & Pilot)</strong>. الذكاء الاصطناعي يتولى المهام التكرارية البطيئة، بينما تتولى أنت توجيه النظام، تقييم المعمارية، وضمان خلو الحلول من الثغرات المنطقية (Logical Bugs).</p>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>⚙️ بيئة التطوير ومحاكاة chat.py</h2>
-        <p>استعرض ديفيد بيئة <code>VS Code</code> ليوضح كيف يمكن في 10 أسطر برمجية بلغة <code>Python</code> استدعاء مكتبة <code>OpenAI</code> وبناء روبوت دردشة يتفاعل مع نموذج <code>GPT</code>.</p>
-
-<pre>
-from openai import OpenAI
-
-client = OpenAI()
-
-user_prompt = input("Prompt: ")
-system_prompt = "Limit your answer to one sentence. Pretend you're a cat."
-
-response = client.responses.create(
-    input=user_prompt,
-    instructions=system_prompt,
-    model="gpt-5"
-)
-
-print(response.output_text)
-</pre>
-
-        <h3>🔬 التفكيك المعماري للكود التوضيحي</h3>
-        <ul>
-            <li><strong>استيراد المكتبات (Importing Libraries):</strong> استخدام التجريد للوقوف على أكتاف العباقرة الذين بنوا بروتوكولات الاتصال المعقدة.</li>
-            <li><strong>توجيه النظام (system_prompt):</strong> التحكم التام في معمارية المخرجات، حيث يوجه المستخدم الآلة لتقمص شخصية محددة أو فرض قيود صارمة على الإجابة.</li>
-            <li><strong>سياسة الأمانة الأكاديمية (Academic Honesty):</strong> تخصيص أداة <code>CS50 Duck</code> كمساعد ذكي مصمم خصيصاً للتوجيه وطرح الأسئلة السقراطية دون إعطاء الحلول الجاهزة، لضمان بناء العقلية الهندسية للطالب.</li>
-        </ul>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_0_Scratch_Analysis_EN.md</code></span>
             <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/01_Lecture_Analysis/Week_0_Scratch_Analysis_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -507,18 +441,11 @@ print(response.output_text)
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

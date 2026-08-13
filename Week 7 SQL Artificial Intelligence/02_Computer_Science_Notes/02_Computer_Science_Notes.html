@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,43 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مذكرات علوم الحاسب: الفهرسة الشجرية والتطبيع الرياضي</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-tree"></i> معمارية الفهرسة عبر أشجار B-Tree</h2>
-                <p class="doc-text">
-                    عندما ننفذ أمر <code>CREATE INDEX</code> في <code>SQL</code>، لا يقوم محرك قاعدة البيانات بمجرد ترتيب البيانات عشوائياً، بل يشيّد بنية شجرية متوازنة ذاتياً تُعرف بـ <code>B-Tree</code>.
-                </p>
-                <ul>
-                    <li><strong>البحث اللوغاريتمي الفائق</strong>: تضمن شجرة B-Tree أن يتساوى عمق كافة الأوراق (Leaf Nodes)، مما يجعل عمليات البحث والإدراج والحذف تتم في تعقيد زمني حتمي قدره O(log N).</li>
-                    <li><strong>تقليل الإدخال والإخراج (Disk I/O Minimization)</strong>: تم تصميم عُقد الـ B-Tree لتتطابق مع حجم صفحات الذاكرة التخزينية في أنظمة التشغيل (غالباً 4KB)، مما يقلل بشكل حاد من عدد مرات القراءة من القرص الصلب.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sitemap"></i> الجبر العلائقي وتطبيع الجداول (Database Normalization)</h2>
-                <ul>
-                    <li><strong>الصيغة الطبيعية الأولى (1NF)</strong>: ضمان أن تكون كل الحقول ذرية (Atomic Values) ولا تحتوي على مصفوفات أو جداول متداخلة.</li>
-                    <li><strong>الصيغة الطبيعية الثانية (2NF)</strong>: إزالة الاعتماديات الجزئية (Partial Dependencies)، بحيث يعتمد كل حقل على المفتاح الأساسي بالكامل.</li>
-                    <li><strong>الصيغة الطبيعية الثالثة (3NF)</strong>: إزالة الاعتماديات المتعدية (Transitive Dependencies)، بحيث لا يعتمد حقل غير أساسي على حقل غير أساسي آخر.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   RELATIONAL ALGEBRA / B-TREE COMPLEXITY
-===================================================================================
-
-  [ Flat CSV Search ]        ──> O(N) Worst-case linear disk scans
-  [ B-Tree SQL Index ]       ──> O(log N) Self-balancing tree node lookups
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Computer Science Notes: B-Tree Indexing & Mathematical Normalization</h1>
             
             <div class="doc-section">

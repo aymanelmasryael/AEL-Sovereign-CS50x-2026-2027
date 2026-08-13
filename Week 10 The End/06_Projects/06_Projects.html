@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,53 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التطبيقات والمشاريع العملية: تطوير منظومة الدفاع النشط والتحصين الشامل</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-user-secret"></i> لمحة عامة عن منظومة الدفاع السيادية (ael_src10)</h2>
-                <p class="doc-text">
-                    تُعد خزنة <code>ael_src10</code> التطبيق العملي الأرقى لمعايير الأمن السيبراني في المنهج الأكاديمي. تم تصميم هذه المنظومة لتعمل كنواة فحص أمني مستقلة (Standalone Zero-Trust Kernel) قادرة على تأمين البيانات والاتصالات ومراقبة منافذ الشبكة.
-                </p>
-
-                <h2 class="sec-title"><i class="fas fa-network-wired"></i> الكيانات البرمجية للمشروع (Architectural Modules)</h2>
-                <p class="doc-text">
-                    يتكون المشروع من ثلاثة محركات رئيسية مكتوبة بلغة Python الصارمة:
-                </p>
-                <ul>
-                    <li><strong>نواة الثقة الصفرية (zero_trust_kernel.py)</strong>: المحرك المعماري الأساسي الذي يدير صلاحيات الوصول ويتحقق من الشهادات الرقمية.</li>
-                    <li><strong>وحدة التغليف التشفيري (hmac_key_wrapper.py)</strong>: مسؤولة عن توليد وتدقيق أختام <code>HMAC SHA-256</code> لضمان مصداقية وعدم تغيير أي حزمة بيانات.</li>
-                    <li><strong>مراقب منافذ الاتصال (port_scanner_guard.py)</strong>: جدار مراقبة نشط يقوم بعمليات مسح استباقي للمنافذ (Port Scanning) واكتشاف أي محاولة للاتصال غير المصرح به.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>+-------------------------------------------------------------------+
-|               AEL_SRC10 APEX VAULT ARCHITECTURE                   |
-+-------------------------------------------------------------------+
-|                                                                   |
-|   +-----------------------------------------------------------+   |
-|   |         ZERO_TRUST_KERNEL.PY (Master Authenticator)       |   |
-|   +-----------------------------------------------------------+   |
-|                 |                               |                 |
-|                 v                               v                 |
-|   +---------------------------+   +---------------------------+   |
-|   |    HMAC_KEY_WRAPPER.PY    |   |    PORT_SCANNER_GUARD.PY  |   |
-|   |   (Integrity Encapsulator)|   |  (Proactive Edge Defense) |   |
-|   +---------------------------+   +---------------------------+   |
-|                                                                   |
-+-------------------------------------------------------------------+</pre>
-                </div>
-
-                <h2 class="sec-title"><i class="fas fa-check-circle"></i> معايير التنفيذ والتشغيل</h2>
-                <ul>
-                    <li><strong>استقلالية البيئة</strong>: تعمل الوحدات بشكل قياسي ومكتفٍ ذاتياً (Zero External Dependency) لضمان أمان التشغيل في أي بيئة خوادم معزولة.</li>
-                    <li><strong>تأمين التوثيق</strong>: تم تزويد الواجهة الأمامية <code>ael_src10.html</code> بلوحة تحكم تفاعلية متقدمة تتيح للمستخدم استعراض الأكواد واختبار خوارزميات التشفير محاكياً.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Practical Projects: Active Defense Subsystems</h1>
             
             <div class="doc-section">

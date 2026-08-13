@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,50 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">القواعد الهندسية: التوجيه الديناميكي، حقن القوالب، ودمج قواعد البيانات</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-sitemap"></i> القواعد التنظيمية لمجلدات تطبيق Flask</h2>
-                <p class="doc-text">
-                    تتطلب هندسة تطبيقات الويب المتقدمة باستخدام Flask بناء هيكل تنظيمي صارم يربط بين نصوص البايثون التشغيلية ومصادر القوالب وملفات قاعدة البيانات.
-                </p>
-                
-                <h3 style="color: var(--primary-accent); margin-top: 30px;">شجرة الملفات القياسية للمنظومة</h3>
-                <ul>
-                    <li><strong>ael_mvc_core.py</strong>: ملف المحرك الرئيسي الذي يحمل تعريف التطبيق ومساراته التشغيلية.</li>
-                    <li><strong>templates/</strong>: المجلد الإلزامي لاحتواء قوالب Jinja2.</li>
-                    <li><strong>static/</strong>: المجلد الإلزامي لاحتواء الملفات الساكنة مثل مكتبات JavaScript وأوراق الأنماط CSS.</li>
-                    <li><strong>ael_matrix.db</strong>: ملف قاعدة بيانات SQLite لضمان التخزين المستمر للجداول.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   FLASK ENTERPRISE DIRECTORY TREE
-===================================================================================
-
- /ael_src9/
- ├── ael_mvc_core.py         [Master Controller & SQLite Connectors]
- ├── ael_matrix.db           [Persistent SQLite Storage Vault]
- ├── templates/
- │   └── ael_dashboard.html  [Jinja2 Glassmorphism Dashboard Template]
- └── static/
-     └── ael_style.css       [Active CSS Glass Tokens & Animations]
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-code-branch"></i> هندسة المسارات وحقن كائنات القوالب</h2>
-                <p class="doc-text">
-                    يُبنى كل مسار في Flask باستخدام الزخرفة البرمجية (Decorators) لتحديد العنوان ونوع الطلب، ثم تُحقن البيانات المستخرجة من قاعدة البيانات مباشرة في قوالب Jinja2 لتصييرها فوراً.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Engineering Principles: Dynamic Routing, Template Injection & SQLite Hooks</h1>
             
             <div class="doc-section">

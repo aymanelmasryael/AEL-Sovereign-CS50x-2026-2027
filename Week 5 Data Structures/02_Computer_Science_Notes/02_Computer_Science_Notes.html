@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,48 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">علوم الحاسب: الهياكل التجريدية والتحليل التقاربي</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-layer-group"></i> مفهوم التجريد في بنية البيانات (ADTs)</h2>
-                <p class="doc-text">
-                    تمثل الهياكل التجريدية (ADTs) مثل الطوابير (Queues) والمكدسات (Stacks) واجهات قياسية للتعامل مع البيانات دون التقيد بتفاصيل تطبيقها في الذاكرة. يمكن تطبيق المكدس (قاعدة LIFO: Last In, First Out) أو الطابور (قاعدة FIFO: First In, First Out) إما عبر مصفوفة ثابتة أو قائمة مرتبطة ديناميكية.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             STACK (LIFO) VS QUEUE (FIFO) EXECUTION
-===================================================================================
-
-  STACK (LIFO)                            QUEUE (FIFO)
-  ┌──────────┐                            ┌─────┬─────┬─────┬─────┐
-  │  Top     │ ◄── Push / Pop             │  1  │  2  │  3  │  4  │ ──► Dequeue
-  ├──────────┤                            └─────┴─────┴─────┴─────┘
-  │  Bottom  │                               ▲
-  └──────────┘                               └─ Enqueue
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-chart-line"></i> التعقيد الخوارزمي والمقارنة المعيارية (Asymptotic Topology)</h2>
-                <p class="doc-text">
-                    توضح المقارنة المعيارية الفوارق الجوهرية في الأداء: المصفوفات الثابتة تمنح وصولاً عشوائياً O(1) ولكن إدراجها وحذفها يكلف O(n) بسبب الإزاحة. القوائم المرتبطة تجعل الإدراج عند الرأس O(1) ولكن البحث فيها خطي O(n). جداول التجزئة تقدم أداءً شبه فوري O(1) في المتوسط، بينما تضمن الأشجار الثنائية المتزنة أداءً لوغاريتمياً مستقراً O(log n).
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-wave-square"></i> دوال التجزئة ومعالجة التصادم (Hash Collisions)</h2>
-                <p class="doc-text">
-                    وفقاً لمبدأ برج الحمام (Pigeonhole Principle)، إذا كان عدد المفاتيح المحتملة أكبر من حجم جدول التجزئة N، فإن حدوث التصادم حتمي رياضياً. يتم حل التصادم إما عبر العنونة المفتوحة (Open Addressing) التي تعاني من التكتل، أو عبر السلسلة المنفصلة (Chaining) التي تحول كل فتحة إلى رأس قائمة مرتبطة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">CS Notes: Abstract Data Types & Asymptotic Trade-offs</h1>
             
             <div class="doc-section">

@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,74 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل الداخلي العميق للأسبوع الثالث: الإثبات الرياضي وحشو الهياكل</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-calculator"></i> المحور الأول: الإثبات الرياضي لخوارزمية الترتيب بالدمج (Merge Sort)</h2>
-                <p class="doc-text">
-                    لفهم كيف تقفز خوارزمية Merge Sort بالكفاءة إلى O(n log n)، نقوم بتفكيك معادلة التكرار الرياضية عبر شجرة التكرار الذاتي (Recursion Tree Method).
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             MERGE SORT RECURSION TREE DECONSTRUCTION
-===================================================================================
-
-  Level 0:                     [ n ]                     ──> Work: O(n)
-                             /       \
-  Level 1:             [ n/2 ]       [ n/2 ]             ──> Work: 2 * (n/2) = O(n)
-                      /      \       /      \
-  Level 2:        [ n/4 ] [ n/4 ] [ n/4 ] [ n/4 ]        ──> Work: 4 * (n/4) = O(n)
-  
-  Total Depth = log_2(n)  ──> Total Execution Cost: O(n * log n)
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>التشريح الرياضي:</strong> تقسيم المصفوفة إلى نصفين يستغرق وقتاً ثابتاً O(1). استدعاء الدالة لكل نصف ينتج 2T(n/2). ودمج النصفين يتطلب فحص كل عنصر، مما يستهلك O(n).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-memory"></i> المحور الثاني: محاذاة الذاكرة وحشو الهياكل (Struct Padding)</h2>
-                <p class="doc-text">
-                    يفضل المعالج قراءة البيانات في كتل من 4 أو 8 بايت. إذا كان الهيكل يحتوي على char متبوعاً بـ int، يقوم المترجم بإقحام بايتات فارغة (Padding Bytes) لضمان محاذاة المتغير التالي.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             PHYSICAL STRUCT MEMORY PADDING (64-BIT ARCH)
-===================================================================================
-
-  struct { char c; int i; };
-  
-  [ 0x100: char c (1B) ] [ 0x101-0x103: PADDING (3B) ] [ 0x104-0x107: int i (4B) ]
-  
-  Total Size in RAM = 8 Bytes (not 5 Bytes!)
-
-===================================================================================</pre>
-                </div>
-
-                <ul>
-                    <li><strong>ظاهرة الحشو (Padding):</strong> زيادة الحجم الفعلي للهيكل لضمان التوافق مع سرعة قراءة نواقل المعالج.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-layer-group"></i> المحور الثالث: تشريح المكدس أثناء التكرار العميق</h2>
-                <p class="doc-text">
-                    كلما استدعيت دالة תكرارية، يحجز المترجم إطاراً يحتوي على عنوان العودة، المعاملات، والمتغيرات المحلية.
-                </p>
-                <ul>
-                    <li><strong>حماية الذاكرة MMU:</strong> إذا تجاوز عمق الاستدعاءات التكرارية سعة الـ Stack، يرسل معالج حماية الذاكرة إشارة القتل SIGSEGV ليحبط البرنامج فوراً.</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Week 3 Deep Internal Analysis: Recurrences & Struct Padding</h1>
             
             <div class="doc-section">

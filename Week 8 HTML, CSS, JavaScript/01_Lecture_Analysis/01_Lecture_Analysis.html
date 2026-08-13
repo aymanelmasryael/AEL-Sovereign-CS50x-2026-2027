@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,45 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل المحاضرة: معمارية الواجهات التفاعلية ونموذج DOM</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-globe"></i> القفزة نحو الواجهات التفاعلية</h2>
-                <p class="doc-text">
-                    تُشكل المحاضرة الثامنة قفزة نوعية في رحلة المنظومة، حيث ننتقل من طبقات الواجهات الخلفية وقواعد البيانات (C / Python / SQL) إلى الطبقة التفاعلية الأمامية التي تعمل مباشرة داخل بيئة متصفح المستخدم (Client-Side Environment).
-                </p>
-                
-                <h3 style="color: var(--primary-accent); margin-top: 30px;">الثلاثية المعمارية للويب (The Web Triad Architecture)</h3>
-                <ul>
-                    <li><strong>الهيكل (HTML)</strong>: يُشكل العظام والبنية الشجرية الأساسية (Tree Structure) للصفحة عبر عناصر دلالية واضحة.</li>
-                    <li><strong>المظهر (CSS)</strong>: يُشكل طبقة الإكساء الجمالية، حيث يتم التركيز في منظومتنا على معايير التصميم الحديثة مثل الـ Glassmorphism والألوان الحيوية.</li>
-                    <li><strong>التفاعل (JavaScript)</strong>: يُشكل الجهاز العصبي للصفحة، مما يتيح التفاعل الديناميكي المباشر مع شجرة عناصر وثيقة الويب (DOM).</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   THE CLIENT-SIDE TRIAD ARCHITECTURE
-===================================================================================
-
-       [ HTML5 ] ──( Structural Nodes )──> [ DOM TREE ]
-       [ CSS3  ] ──( Visual Glassmorphism )──> [ RENDER TREE ]
-       [ JS    ] ──( Event Listeners )──> [ INTERACTION MATRIX ]
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-bolt"></i> تجاوز البساطة التقليدية</h2>
-                <p class="doc-text">
-                    تركز المحاضرة على الانتقال من الصفحات الثابتة (Static Webpages) إلى التطبيقات الغنية (Rich Web Apps)، مؤكدة على أهمية الاستجابة الفورية والأداء السلس دون الحاجة لإعادة تحميل الصفحة بالكامل.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Lecture Analysis: Client-Side Interactive Architecture & DOM Models</h1>
             
             <div class="doc-section">

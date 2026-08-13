@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -372,91 +367,13 @@
             <a href="../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>05_Practical_Reverse_Eng (Week 3 Algorithms)</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_3_Practical_Reverse_Eng_AR.md</code></span>
-            <a href="Week_3_Practical_Reverse_Eng_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🏛️ التشريح الجنائي لخوارزميات البحث والفرز (Algorithms Forensics)</h2>
-        <p>في هذا القسم من الهندسة العكسية التطبيقية، لن نكتفي بمجرد فهم منطق الخوارزميات نظرياً، بل سنغوص في أعماق <strong>التعقيد الزمني والمكاني (Big O Notation)</strong> عبر فحص الكود المجمع (Assembly) ومراقبة سلوك الذاكرة وتكدس الاستدعاءات (Call Stack) أثناء تنفيذ خوارزميات البحث والفرز.</p>
-
-<pre>
-===================================================================================
-                       THE ALGORITHMS INSPECTION ENGINE
-===================================================================================
-
-  [ Unsorted / Unindexed Memory Structures ]
-             │
-             ├─► Linear Search  ──> O(n)     ──> Sequential Memory Traversal
-             ├─► Binary Search  ──> O(log n) ──> Divide & Conquer Pointer Arithmetic
-             ├─► Selection Sort ──> O(n²)    ──> Quadratic Register Swaps
-             └─► Merge Sort     ──> O(n log n) ──> Recursive Stack Allocation
-
-===================================================================================
-</pre>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>🔬 أدوات التفكيك الاستقصائية للخوارزميات</h2>
-
-        <h3>1. تحليل البحث الخطي مقابل الثنائي (Linear vs Binary Search)</h3>
-        <p>عند فحص أكواد لغة التجميع (Assembly) الناتجة عن تجميع خوارزميتي البحث الخطي والثنائي، نلاحظ فارقاً جوهرياً في استخدام مسجلات المعالج وقفزات التعليمات (Branching):</p>
-<pre>
-# Linear Search (Loop Traversal)
-.L2:
-    cmpl  %esi, (%rdi,%rax,4)  # Compare current element with target
-    je    .L5                  # Jump if equal (found)
-    incq  %rax                 # Increment index
-    cmpq  %rdx, %rax           # Check loop bound
-    jne   .L2                  # Repeat loop
-
-# Binary Search (Pointer Halving)
-.L10:
-    leaq  (%rsi,%rdx), %rax    # (low + high)
-    shrq  $1, %rax             # Divide by 2 (Bitwise Shift Right)
-    cmpl  %ecx, (%rdi,%rax,4)  # Compare middle element
-    ...
-</pre>
-
-        <h3>2. فحص إطارات التكدس والعودية (Call Stack &amp; Recursion)</h3>
-        <p>تتميز خوارزمية فرز الدمج (Merge Sort) باعتمادها على العودية (Recursion). أداة <code>objdump</code> توضح لنا كيف ينمو تكدس النظام (Stack) ديناميكياً مع كل استدعاء ذاتي للدالة، مما يفسر التعقيد المكاني <code>O(n)</code> المطلوب لحفظ إطارات التكدس المؤقتة:</p>
-<pre>
-$ objdump -d mergesort
-...
-100004a10: 55                    pushq %rbp
-100004a11: 48 89 e5              movq  %rsp, %rbp
-100004a14: 48 83 ec 30           subq  $48, %rsp      # Allocating stack space for sub-arrays
-...
-100004a3b: e8 d0 ff ff ff        callq _mergesort     # Recursive call (left half)
-100004a48: e8 c3 ff ff ff        callq _mergesort     # Recursive call (right half)
-100004a55: e8 80 01 00 00        callq _merge         # Merge subroutine
-...
-</pre>
-        <ul>
-            <li><strong>subq $48, %rsp:</strong> تخصيص مساحة في التكدس المحلي لحفظ المؤشرات المؤقتة للمصانع الفرعية.</li>
-            <li><strong>callq _mergesort:</strong> الاستدعاء العودي المتكرر الذي ينشئ إطارات متراكمة حتى الوصول إلى الحالة الأساسية (Base Case).</li>
-        </ul>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>⚙️ الأداء الفعلي وكفاءة الكاش (Cache Efficiency &amp; Memory Hierarchy)</h2>
-        <p>من الناحية الهندسية الصارمة، لا يعتمد أداء الخوارزميات فقط على عدد العمليات الحسابية، بل يتأثر بشدة بطريقة جلب البيانات من الذاكرة الرئيسية (RAM) إلى ذاكرة التخزين المؤقت للمعالج (CPU L1/L2 Cache).</p>
-
-        <div class="alert-box">
-            <h4>💡 تشريح نقل البيانات في المعالج</h4>
-            <p><strong>عقدة القفزات العشوائية (Cache Misses):</strong> في الخوارزميات التي تقفز عبر الذاكرة عشوائياً، يضطر المعالج لتفريغ الكاش وإعادة جلب خطوط جديدة من الذاكرة البطيئة (Cache Miss). بينما في المصفوفات الخطية المتجاورة، يقوم المعالج بالجلب المسبق (Prefetching) مما يرفع كفاءة التنفيذ بشكل هائل.</p>
-        </div>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_3_Practical_Reverse_Eng_EN.md</code></span>
             <a href="Week_3_Practical_Reverse_Eng_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -541,18 +458,11 @@ $ objdump -d mergesort
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

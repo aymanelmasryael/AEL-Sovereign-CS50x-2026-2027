@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,129 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مخطط مشروع سكراتش السيادي: حارس الفضاء السيبراني</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-shield-halved"></i> فلسفة التأسيس السيادي (The AEL Sovereign Philosophy)</h2>
-                <p class="doc-text">
-                    في الدورة القياسية، يقدم ديفيد مالان مشاريع لطيفة مثل القط <code>Scratch Cat</code> ومطاردة الماوس في <code>src0</code>. ولكن بما أننا نبني <strong>"موسوعة AEL لعلوم الحاسب" (AEL CS Encyclopedia)</strong>، فيجب أن تكون مشاريعنا مخصصة، متقدمة، وذات طابع سيادي فاخر يعكس هويتنا الهندسية.
-                </p>
-                <p class="doc-text">
-                    لذلك، أسسنا هذا الصرح التابع لمجلد <code>ael_src0</code> ليكون المخطط الهندسي الدقيق لمشروع سكراتش الخاص بنا: <strong>"حارس الفضاء السيبراني: نظام إدارة الموارد الذكي" (AEL Cyber Sentinel: AI System Shield)</strong>.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                  AEL CYBER SENTINEL - ARCHITECTURAL BLUEPRINT
-===================================================================================
-
-  [ Master Sprite 1: AI Core Node ]
-   ├─► Broadcast Events: [INIT_SYSTEM], [SCAN_THREATS], [SHUTDOWN]
-   ├─► Variables: (system_integrity = 100%), (threat_level = 0), (loop_count)
-   └─► Custom Blocks: define [Perform Deep Silicon Scan]
-   
-  [ Sprite 2: Threat Matrix Hologram ]
-   ├─► Listeners: When I receive [SCAN_THREATS]
-   └─► Cloning Mechanics: Create clone of [myself] (Random vector trajectories)
-
-  [ Sprite 3: User Authentication Keypad ]
-   ├─► Ask: [Enter AEL Sovereign Access Passcode] and wait
-   └─► Conditionals: If answer == "AEL2026", Switch Backdrop to [Vault Safe]
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> الهيكل البرمجي المعماري (اللبنات والمنطق الصريح)</h2>
-                
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 24px;">1. الكائن الرئيسي (Sprite: AI Core Node)</h3>
-                <p class="doc-text">يمثل النواة الذكية للنظام التشغيلي. يدير المتغيرات الحيوية ويبث الإشعارات اللاسلكية (Broadcasts) لباقي أجزاء المشروع.</p>
-                
-                <div class="portal-diagram">
-<pre>[When GREEN FLAG clicked]
- ├─ set [system_integrity v] to (100)
- ├─ set [threat_level v] to (0)
- ├─ set [access_granted v] to (false)
- ├─ switch backdrop to [Cyber Core Ambient v]
- ├─ say [⚡ Welcome to AEL Sovereign Terminal. Initializing Protocol...] for (3) seconds
- └─ broadcast [INIT_SYSTEM v] and wait</pre>
-                </div>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 24px;">2. التجريد وبناء اللبنات المخصصة (Custom Block Definition)</h3>
-                <p class="doc-text">بدلاً من تكرار كود الفحص، نستخدم ميزة التجريد عبر بناء لبنة مخصصة <code>Perform Deep Silicon Scan</code> تعمل بوضعية فائقة السرعة (Run without screen refresh).</p>
-
-                <div class="portal-diagram">
-<pre>[define Perform Deep Silicon Scan (intensity)]
- ├─ repeat (intensity)
- │   ├─ change [loop_count v] by (1)
- │   ├─ if < pick random (1) to (10) > (8) > then
- │   │   ├─ change [threat_level v] by (1)
- │   │   └─ broadcast [THREAT_DETECTED v]
- │   └─ wait (0.05) seconds
- └─ if < (threat_level) > (5) > then
-     ├─ set [system_integrity v] to ( (system_integrity) - (threat_level * 2) )
-     └─ start sound [Siren Alert v]</pre>
-                </div>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 24px;">3. المصادقة التفاعلية الصارمة (User Access Keypad)</h3>
-                <p class="doc-text">تجسيد صريح لآلية التعامل مع المدخلات (Input Validation) والشروط المنطقية المترابطة.</p>
-
-                <div class="portal-diagram">
-<pre>[When I receive INIT_SYSTEM v]
- ├─ ask [🔐 Enterprise Locked: State your Sovereign Passcode:] and wait
- ├─ if < (answer) = [AEL-2026-MASTER] > then
- │   ├─ set [access_granted v] to (true)
- │   ├─ broadcast [ACCESS_UNLOCKED v]
- │   ├─ say [Access Granted. Sub-Silicon Matrix Active.] for (2) seconds
- │   └─ switch backdrop to [Silicon Mainframe Gold v]
- └─ else
-     ├─ broadcast [SECURITY_LOCKDOWN v]
-     ├─ repeat (3)
-     │   ├─ change graphic effect [color v] by (25)
-     │   └─ play sound [Buzz Warning v] until done
-     └─ say [Access Denied! Terminating Session.] for (3) seconds</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-balance-scale"></i> تكافؤ المفاهيم الهندسية مع أهداف هارفارد</h2>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: right;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid var(--glass-border); color: #ffffff;">
-                            <th style="padding: 12px;">المفهوم القياسي (Malan's Concept)</th>
-                            <th style="padding: 12px;">تطبيقنا السيادي الفاخر (AEL Custom Execution)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <td style="padding: 12px; color: #64ffda;">الحلقات (Loops)</td>
-                            <td style="padding: 12px;">حلقات التكرار المحكومة بالظروف الأمنية <code>repeat until &lt; system_integrity &lt; 20 &gt;</code>.</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <td style="padding: 12px; color: #64ffda;">الشروط (Conditionals)</td>
-                            <td style="padding: 12px;">فحص مدخلات المصادقة المعقدة ومستوى المخاطر <code>if-else</code>.</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <td style="padding: 12px; color: #64ffda;">المتغيرات (Variables)</td>
-                            <td style="padding: 12px;">عدادات النزاهة التشغيلية <code>system_integrity</code> ومستويات التهديد.</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <td style="padding: 12px; color: #64ffda;">الأحداث (Events & Broadcasts)</td>
-                            <td style="padding: 12px;">رسائل بروتوكولات النظام <code>INIT_SYSTEM</code> و <code>SECURITY_LOCKDOWN</code>.</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <td style="padding: 12px; color: #64ffda;">التجريد (Custom Blocks)</td>
-                            <td style="padding: 12px;">لبنة <code>Perform Deep Silicon Scan</code> لمنع تكرار التعليمات المعقدة.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">AEL Cyber Sentinel™: The Custom Scratch Masterpiece Blueprint</h1>
             
             <div class="doc-section">

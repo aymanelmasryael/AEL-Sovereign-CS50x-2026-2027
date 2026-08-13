@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,45 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">التحليل الداخلي العميق: دورة حياة الحدث وأشجار تصيير المتصفح</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-crosshairs"></i> دورة حياة التقاط الأحداث وتصعيدها (Event Capturing & Bubbling)</h2>
-                <p class="doc-text">
-                    عندما ينقر المستخدم على زر داخل صفحة الويب، لا يتم إشعار الزر بشكل منعزل، بل يمر الحدث بسلسلة هرمية من مرحلتين:
-                </p>
-                <ul>
-                    <li><strong>مرحلة الالتقاط (Event Capturing)</strong>: ينحدر الحدث من أعلى قمة شجرة الـ DOM (window ثم document ثم body) وصولاً إلى العنصر المستهدف.</li>
-                    <li><strong>مرحلة التصعيد (Event Bubbling)</strong>: بمجرد تفعيل الدالة المرتبطة بالعنصر المستهدف (Target Element)، يتصاعد الحدث فقاعياً عائداً إلى الأصول العليا، مما يسمح بتطبيق مبدأ تفويض الأحداث (Event Delegation).</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   EVENT CAPTURING & BUBBLING MATRIX
-===================================================================================
-
-        [ window / document ]   ──( 1. Capturing Down )──>   │
-                 │                                           │
-             [ body / div ]                                  │  ( 2. Bubbling Up )
-                 │                                           │         ▲
-           [ button #ael-btn ]  <──( Target Activation )─────┘         │
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-stream"></i> شجرة التصيير وإعادة التدفق (Render Tree & Reflow Calculation)</h2>
-                <ul>
-                    <li><strong>دمج الهياكل (The Combine Matrix)</strong>: يقوم محرك المتصفح بدمج شجرة الـ DOM (المنبثقة من HTML) مع شجرة الـ CSSOM (المنبثقة من CSS) لإنتاج شجرة التصيير النهائية (Render Tree).</li>
-                    <li><strong>إعادة الحساب (Reflow / Repaint)</strong>: تعديل خصائص التخطيط (Width / Height / Margin) عبر الـ JavaScript يجبر المتصفح على إعادة حساب أبعاد كافة العناصر الهرمية (Reflow)، وهي عملية مكلفة حسابياً. لذا، تركز موسوعتنا على التلاعب بخصائص الـ Transform و Opacity المدعومة مباشرة عبر مسرعات الرسوميات (GPU Acceleration).</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Deep Internal Analysis: Event Lifecycle & Browser Render Tree Computation</h1>
             
             <div class="doc-section">

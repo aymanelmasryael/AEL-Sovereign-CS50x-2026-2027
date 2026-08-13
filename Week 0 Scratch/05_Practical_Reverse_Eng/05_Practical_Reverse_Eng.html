@@ -227,7 +227,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-ar { direction: rtl; font-family: 'Cairo', sans-serif; text-align: right; }
         .panel-en { direction: ltr; font-family: 'Inter', sans-serif; text-align: left; }
 
         h2 { font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; display: inline-block; }
@@ -237,10 +236,7 @@
         
         ul { margin: 1rem 2rem; font-size: 1.15rem; line-height: 1.8; list-style-type: none; }
         ul li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
-        .panel-ar ul li { padding-left: 0; padding-right: 1.5rem; }
         ul li::before { content: "▪"; color: var(--primary-accent); position: absolute; left: 0; top: 0; font-size: 1.2rem; }
-        .panel-ar ul li::before { left: auto; right: 0; }
-
         .content-panel pre {
             background: #020b18;
             border: 1px solid var(--glass-border);
@@ -263,7 +259,6 @@
             margin: 2rem 0;
             border: 1px solid var(--glass-border);
         }
-        .panel-ar .alert-box { border-left: none; border-right: 4px solid var(--primary-accent); border-radius: 12px 0 0 12px; }
         .alert-box h4 { margin-top: 0; color: var(--primary-accent); }
 
         .file-link-bar {
@@ -298,8 +293,6 @@
             justify-content: space-between;
             text-align: left;
         }
-        .panel-ar .file-card { text-align: right; }
-
         .file-card:hover {
             border-color: var(--glass-border-hover);
             box-shadow: 0 10px 30px rgba(0, 116, 255, 0.15);
@@ -323,7 +316,6 @@
             align-self: flex-start;
             transition: all 0.2s ease;
         }
-        .panel-ar .file-btn { align-self: flex-end; }
         .file-btn:hover { background: #ffffff; color: var(--primary-accent); box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
 
         /* Footer */
@@ -420,71 +412,13 @@
             <a href="../../docs.html"><i class="fas fa-home"></i> Master Dashboard</a> &raquo; <span>05_Practical_Reverse_Eng</span>
         </div>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ar')"><i class="fas fa-globe"></i> قراءة بالعربية (AR)</button>
             <button class="tab-btn" onclick="switchTab('en')"><i class="fas fa-globe-americas"></i> Read in English (EN)</button>
         </div>
     </div>
 
     <!-- ARABIC PANEL -->
-    <div id="panel-ar" class="content-panel panel-ar active">
-        <div class="file-link-bar">
-            <span>الملف المصدري المباشر: <code>Week_0_Data_Structures_Forensics_AR.md</code></span>
-            <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/05_Practical_Reverse_Eng/Week_0_Data_Structures_Forensics_AR.md" target="_blank"><i class="fas fa-file-markdown"></i> فتح ملف Markdown الخام</a>
-        </div>
-        
-        <h2>🔬 الهندسة العكسية لملفات src0/*.sb3 (Bare-Metal AST Forensics)</h2>
-        <p>في هندسة النظم العميقة، لا ننظر إلى ملفات <code>Scratch (.sb3)</code> الموجودة في مجلد <code>src0</code> كأيقونات بصرية مغلقة، بل كحاويات برمجية قياسية (Containerized Archives).</p>
-
-<pre>
-[ Sample.sb3 ] ──(Unzip Archive)──> [ project.json (Abstract Syntax Tree) ] + [ Vector Assets.svg ] + [ PCM Audio.wav ]
-</pre>
-
-        <h3>💡 حقيقة ملف الـ .sb3</h3>
-        <p>ملف <code>sb3</code> هو في الواقع ملف مضغوط بصيغة <code>ZIP Archive</code>. إذا قمت بتغيير امتداد أي ملف إلى <code>.zip</code> وفك ضغطه، ستجد بداخله ملفاً جوهرياً يسمى <code>project.json</code>. هذا الملف يحتوي على شجرة البنية المجرّدة (AST) التي تُعرّف كل كتلة كائن كعقدة برمجة صريحة يقرأها محرك الجافاسكريبت.</p>
-
-        <hr style="border-color: var(--glass-border); margin: 3rem 0;">
-
-        <h2>📂 استعراض وتحليل ملفات مجلد src0 المباشرة</h2>
-        
-        <div class="file-grid">
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-box-open"></i> hello0.sb3</h4>
-                    <p>الكتلة الأساسية الثابتة لعرض الجملة الافتتاحية (hello, world).</p>
-                </div>
-                <a href="../src0/hello0.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-lock-open"></i> hello2.sb3</h4>
-                    <p>دمج المتغيرات عبر عقدة <code>operator_join</code> في شجرة AST.</p>
-                </div>
-                <a href="../src0/hello2.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-network-wired"></i> meow4.sb3</h4>
-                    <p>الذروة الهندسية لسلم التجريد؛ الوظيفة المعاملية <code>define meow (n)</code>.</p>
-                </div>
-                <a href="../src0/meow4.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-            <div class="file-card">
-                <div>
-                    <h4><i class="fas fa-bolt"></i> pet1.sb3</h4>
-                    <p>المقاطعة العتادية الذكية لحساس الكاميرا <code>when video motion > 10</code>.</p>
-                </div>
-                <a href="../src0/pet1.sb3" class="file-btn"><i class="fas fa-download"></i> تحميل / فحص الملف</a>
-            </div>
-        </div>
-
-        <div class="alert-box">
-            <h4>🔬 التقييم المعماري في الـ AST</h4>
-            <p>في <code>pet0.sb3</code>، كائن الـ <code>control_forever</code> يُلزم المعالج بدفع دورات تنفيذ متتالية (CPU Polling Loop). بينما في <code>pet1.sb3</code>، يختفي الـ <code>control_forever</code> تماماً وتظهر عقدة رئيسية تعمل كمستمع أحداث مستقل يتفاعل فقط عند ورود تنبيه عتادي من الكاميرا.</p>
-        </div>
-    </div>
-
     <!-- ENGLISH PANEL -->
-    <div id="panel-en" class="content-panel panel-en">
+    <div id="panel-en" class="content-panel panel-en active">
         <div class="file-link-bar">
             <span>Source Markdown File: <code>Week_0_Data_Structures_Forensics_EN.md</code></span>
             <a href="https://github.com/aymanelmasryael/AEL-Sovereign-CS50x-2026-2027/blob/main/Week%200%20Scratch/05_Practical_Reverse_Eng/Week_0_Data_Structures_Forensics_EN.md" target="_blank"><i class="fas fa-file-markdown"></i> Open Raw Markdown</a>
@@ -549,18 +483,11 @@
 </div>
 
 <script>
-    function switchTab(lang) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(lang) {
         document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
-        
-        if (lang === 'ar') {
-            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('panel-ar').classList.add('active');
-        } else {
-            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('panel-en').classList.add('active');
-        }
+        document.getElementById('panel-en').classList.add('active');
     }
+
 </script>
 
 </body>

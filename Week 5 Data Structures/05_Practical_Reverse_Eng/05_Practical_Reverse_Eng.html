@@ -441,9 +441,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -453,41 +450,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">الهندسة العكسية التطبيقية: التحقيق الجنائي في الذاكرة</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-user-secret"></i> التحقيق الجنائي للذاكرة باستخدام Valgrind</h2>
-                <p class="doc-text">
-                    عند العمل مع القوائم المرتبطة وأشجار التريس، يتحول فحص الذاكرة إلى مسألة أمنية حيوية. تقوم أداة Valgrind بتشغيل الكود داخل معالج افتراضي لمراقبة كل عملية تخصيص malloc وكل تحرير free، لكشف الأخطاء الحرجة مثل الوصول إلى كتل محررة (Use-After-Free) أو تسريبات الذاكرة الصامتة.
-                </p>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-             VALGRIND ENTERPRISE MEMORY AUDIT OUTPUT
-===================================================================================
-
-  ==49204== HEAP SUMMARY:
-  ==49204==     in use at exit: 0 bytes in 0 blocks
-  ==49204==   total heap usage: 142,850 allocs, 142,850 frees, 11,428,000 bytes
-  ==49204== 
-  ==49204== All heap blocks were freed -- no leaks are possible
-  ==49204== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-
-===================================================================================</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-rotate"></i> خوارزمية فلويد لاكتشاف الحلقات (Floyd's Tortoise & Hare)</h2>
-                <p class="doc-text">
-                    في القوائم المرتبطة، قد تتسبب الأخطاء المنطقية في قيام عقدة متأخرة بالربط بعقدة سابقة، مما يخلق حلقة لا نهائية (Infinite Loop). لحل هذه المشكلة دون استهلاك ذاكرة إضافية O(1)، نستخدم خوارزمية السلحفاة والأرنب: نطلق مؤشرين، الأول يتنقل خطوة واحدة (slow) والثاني خطوتين (fast). إذا التقى المؤشران، فهذا تأكيد قاطع على وجود حلقة تائهة.
-                </p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Practical Reverse Engineering: Valgrind Forensics & Floyd's Cycle Detection</h1>
             
             <div class="doc-section">

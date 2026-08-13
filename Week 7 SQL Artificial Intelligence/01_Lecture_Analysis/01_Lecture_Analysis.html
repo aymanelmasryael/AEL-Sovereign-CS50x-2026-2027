@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,44 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">تحليل المحاضرة: قواعد البيانات العلائقية ومحركات الذكاء الاصطناعي</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-database"></i> قصور التخزين التقليدي عبر الملفات المسطحة</h2>
-                <p class="doc-text">
-                    تستعرض محاضرة الأسبوع السابع النقلة النوعية من تخزين البيانات المؤقت في الذاكرة التخزينية إلى التخزين الدائم والمنظم عبر قواعد البيانات العلائقية (Relational Databases) باستخدام لغة <code>SQL</code>، مع التطرق لمبادئ الذكاء الاصطناعي (AI).
-                </p>
-                <ul>
-                    <li><strong>عقبة التكرار وتضخم البيانات (Data Redundancy)</strong>: تخزين السجلات في جداول مسطحة (CSV) يؤدي إلى تكرار البيانات الحساسة، مما يرفع من تكلفة التخزين ويزيد احتمالية تضارب السجلات عند التحديث.</li>
-                    <li><strong>انعدام الفهرسة الذكية (Lack of B-Tree Indexing)</strong>: البحث داخل ملف نصي يتطلب في أسوأ الحالات تعقيداً زمنياً خطياً O(N)، بينما تستخدم قواعد البيانات العلائقية أشجار B-Trees لتحقيق بحث سريع بتعقيد لوغاريتمي O(log N).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-project-diagram"></i> منظومة العلاقات والجداول (Relational Paradigm & CRUD)</h2>
-                <ul>
-                    <li><strong>المفاتيح الأساسية والأجنبية (Primary & Foreign Keys)</strong>: تمثل الأساس المعماري لضمان سلامة العلاقات (Referential Integrity) وربط الجداول دون تكرار.</li>
-                    <li><strong>عمليات البيانات الأربع (CRUD Operations)</strong>: الإنشاء (CREATE / INSERT)، القراءة (READ / SELECT)، التحديث (UPDATE)، والحذف (DELETE).</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>===================================================================================
-                   SQL RELATIONAL SCHEMA TOPOLOGY
-===================================================================================
-
-       [ TABLE: authors ]                 [ TABLE: books ]
-       ├── id (PRIMARY KEY)  <─────┐      ├── id (PRIMARY KEY)
-       └── name (TEXT)             └──────┼── author_id (FOREIGN KEY)
-                                          └── title (TEXT)
-
-===================================================================================</pre>
-                </div>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Lecture Analysis: Relational Database Engines & AI Integration</h1>
             
             <div class="doc-section">

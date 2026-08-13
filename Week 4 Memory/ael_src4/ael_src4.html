@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,32 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">شفرات C السيادية: ترسانة ael_src4 لإدارة الذاكرة الخام</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-memory"></i> ترسانة الشفرات البرمجية الحصرية (ael_src4 Master Arsenal)</h2>
-                <p class="doc-text">
-                    تطبيقاً لتعليماتك الصارمة: <strong>"المشاريع أصلية 100% وليست نسخاً من ملفات المصدر الأصلية"</strong>، تم بناء 3 شفرات برمجية بلغة <code>C</code> الصافية للتعامل مع الذاكرة الخام وتتبع المؤشرات:
-                </p>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-cubes"></i> تشريح الملفات البرمجية الثلاثة</h2>
-                
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 24px;">1. الحارس الذكي لمنافذ الذاكرة (<a href="./ael_buffer_guardian.c" style="color: #64ffda; text-decoration: none;">ael_buffer_guardian.c</a>)</h3>
-                <p class="doc-text">نظام محاكاة متقدم يحيط بدوال <code>malloc</code> و <code>free</code> لتسجيل عمليات التخصيص، والتحقق من المؤشرات الحية، واكتشاف محاولات تسريب الذاكرة (<code>Memory Leaks</code>).</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">2. مفكك تشفير ترويسات الصور (<a href="./ael_bmp_forensics.c" style="color: #64ffda; text-decoration: none;">ael_bmp_forensics.c</a>)</h3>
-                <p class="doc-text">محرك استقصائي يحلل ترويسات ملفات <code>BMP</code> (مثل <code>BITMAPINFOHEADER</code>)، ويعرض الأبعاد وعمق الألوان، ويقوم بعكس مصفوفة ألوان البكسل (<code>Image Inversion</code>) مع الحفاظ على محاذاة الحشو.</p>
-
-                <h3 style="color: #ffffff; font-size: 20px; margin-top: 28px;">3. حفار الملفات الصوتية الخام (<a href="./ael_audio_recover.c" style="color: #64ffda; text-decoration: none;">ael_audio_recover.c</a>)</h3>
-                <p class="doc-text">محرك استخراج بيانات مفقودة (<code>File Carving</code>) يفحص الذاكرة العشوائية الخام بحثاً عن البصمة الست عشرية لملفات <code>WAV/RIFF</code>، وينسخ المقاطع الحية إلى ملفات صوتية تعمل.</p>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">AEL Sovereign C Masterpieces: Custom ael_src4 Base</h1>
             
             <div class="doc-section">

@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,39 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">مذكرات علوم الحاسب: التشفير الرياضي والتحصين البنيوي</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-lock"></i> خوارزميات التشفير غير المتماثل (Asymmetric Encryption & RSA)</h2>
-                <p class="doc-text">
-                    تعتمد الخوارزميات غير المتماثلة على بنية رياضية ثنائية المفتاح (Public/Private Keypair). ترتكز خوارزمية RSA على الصعوبة الحسابية لتحليل الأعداد الأولية الضخمة (Prime Factorization).
-                </p>
-                <ul>
-                    <li><strong>المفتاح العام (Public Key)</strong>: يُستخدم لتشفير البيانات، ويُتاح علناً للجميع.</li>
-                    <li><strong>المفتاح الخاص (Private Key)</strong>: يُحتفظ به سرياً داخل الخزنة الآمنة لفك التشفير.</li>
-                </ul>
-                
-                <div class="portal-diagram">
-<pre>       [ ENCRYPTION ]                          [ DECRYPTION ]
-PlainText ---> (Public Key) ---> CipherText ---> (Private Key) ---> PlainText</pre>
-                </div>
-
-                <h2 class="sec-title"><i class="fas fa-bolt"></i> التشفير المتماثل فائق السرعة (Symmetric Cryptography & AES)</h2>
-                <p class="doc-text">
-                    بينما يُعد التشفير غير المتماثل مثالياً لتبادل المفاتيح الأولية، فإنه مكلف حسابياً. بمجرد إتمام التبادل الأولي، تنتقل المنظومة إلى التشفير المتماثل (مثل AES-256) حيث يُستخدم مفتاح واحد مشترك لتشفير وفك تشفير حزم البيانات بسرعة هائلة.
-                </p>
-
-                <h2 class="sec-title"><i class="fas fa-fingerprint"></i> دوال التجزئة الكريبتوغرافية (Cryptographic Hash Functions)</h2>
-                <ul>
-                    <li><strong>الخواص الحتمية (Deterministic Properties)</strong>: تحويل أي نص، مهما بلغ حجمه، إلى سلسلة ثابتة الطول (مثل SHA-256).</li>
-                    <li><strong>تأثير الانهيار الجليدي (Avalanche Effect)</strong>: تغيير بت واحد في المدخلات يؤدي إلى تغيير جذري وشامل في قيمة التجزئة الناتجة، مما يضمن اكتشاف أي تلاعب أو عبث بالبيانات (Tamper Detection).</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Computer Science Notes: Mathematical Cryptography</h1>
             
             <div class="doc-section">

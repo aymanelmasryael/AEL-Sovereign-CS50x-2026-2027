@@ -179,9 +179,6 @@
 
     <!-- UI Document Switcher -->
     <div class="switcher-container">
-        <button class="switch-btn active" onclick="switchDoc('ar')">
-            <i class="fas fa-book-quran" style="margin-right: 8px;"></i> المرآة المعمارية (العربية)
-        </button>
         <button class="switch-btn" onclick="switchDoc('en')">
             <i class="fas fa-globe" style="margin-right: 8px;"></i> Sovereign Mirror (English)
         </button>
@@ -191,57 +188,8 @@
     <main class="content-portal">
         
         <!-- ARABIC VIEW -->
-        <section id="portal-ar" class="doc-view active" dir="rtl">
-            <h1 class="doc-title">الملاحظات الهندسية: التلاعب المتقدم بنموذج DOM وجلب البيانات غير المتزامن</h1>
-            
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-code"></i> الهندسة الديناميكية لشجرة DOM (Dynamic DOM Node Generation)</h2>
-                <p class="doc-text">
-                    في التطبيقات المتقدمة، لا نعتمد على كتابة كود HTML ثابت، بل نقوم بتشييد العناصر ديناميكياً في وقت التشغيل (Runtime) عبر الـ JavaScript:
-                </p>
-                <div class="portal-diagram">
-<pre>// إنشاء عنصر بطاقة جديدة في الذاكرة
-const newCard = document.createElement('div');
-newCard.className = 'ael-glass-card';
-newCard.innerHTML = `&lt;h3&gt;Sovereign Node&lt;/h3&gt;&lt;p&gt;Real-time dynamic instantiation.&lt;/p&gt;`;
-
-// ربط العنصر بشجرة الوثيقة الفعالة
-document.getElementById('master-grid').appendChild(newCard);</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-network-wired"></i> الاتصال غير المتزامن بالخوادم (Asynchronous Fetch Architecture)</h2>
-                <p class="doc-text">
-                    تطبيقات الويب الحديثة تتواصل مع الخوادم لتبادل حزم الـ JSON عبر تقنية AJAX / Fetch API دون تجميد واجهة المستخدم:
-                </p>
-                <div class="portal-diagram">
-<pre>async function fetchSovereignData(url) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP Status: ${response.status}`);
-        const data = await response.json();
-        console.log("[DATA SECURED]:", data);
-        return data;
-    } catch (error) {
-        console.error("[NETWORK ANOMALY]:", error.message);
-    }
-}</pre>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h2 class="sec-title"><i class="fas fa-palette"></i> معمارية التصميم الزجاجي (Glassmorphism Engineering Rules)</h2>
-                <ul>
-                    <li><strong>خلفية شفافة (Semi-Transparent Fill)</strong>: background: rgba(255, 255, 255, 0.03);</li>
-                    <li><strong>عزل ضبابي للخلفية (Background Blur)</strong>: backdrop-filter: blur(20px);</li>
-                    <li><strong>إطار زجاجي مشع (Subtle Border)</strong>: border: 1px solid rgba(0, 116, 255, 0.35);</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- ENGLISH VIEW -->
-        <section id="portal-en" class="doc-view" dir="ltr">
+        <section id="portal-en" class="doc-view active" dir="ltr">
             <h1 class="doc-title">Engineering Notes: Advanced DOM Manipulation & Asynchronous Fetch Matrix</h1>
             
             <div class="doc-section">
