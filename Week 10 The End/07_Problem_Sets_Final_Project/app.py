@@ -1,770 +1,775 @@
 """
-===================================================================================
- PYTHON TRAVEL - PUBLIC TRANSPORT TICKETING WEB APPLICATION
- CS50x Final Project
+AEL Sovereign Fleet Manager
+===========================
 
- Author      : Ayman Elmasry - AEL Digital Studio
- Project     : Python Travel (vehicle / route / ticket management system)
- Technologies: Python 3, Flask, pyodbc (Microsoft SQL Server), Jinja2, Bootstrap,
-               custom AEL glassmorphism UI
-===================================================================================
+Author:  Ayman Elmasry — AEL Digital Studio
+Course:  CS50x 2026-2027 — Final Project
+Stack:   Flask + SQLite (Python 3 stdlib sqlite3 module)
 
- OVERVIEW
- --------
- Python Travel is a full-stack ticketing platform for a public transport
- operator. It exposes two deliberately separated experience zones:
+PROJECT OVERVIEW
+----------------
+AEL Sovereign Fleet Manager is a self-contained web application that runs a
+public-transport fleet. Operators maintain a catalogue of vehicles and a
+board of scheduled routes; customers search departures by origin and
+destination, reserve seats, and later look up their own bookings. A single
+administrator signs in to manage the fleet and to audit every ticket issued.
 
-   1. CUSTOMER ZONE  - No authentication required.
-        * Search a route by starting station and destination.
-        * Inspect every available expedition (date, departure time, price,
-          vehicle type) for the requested pair.
-        * Purchase a ticket by providing name, a national ID (TC) number and a
-          contact phone number.
-        * Inquire their purchased tickets and cancel a booking when a trip is
-          no longer needed.
+ARCHITECTURE
+------------
+The application follows a classic monolithic Flask layout:
 
-   2. ADMIN ZONE  - Protected by session-based authentication.
-        * Log in through a secure credential gate.
-        * Add, list, update and delete ROUTES.
-        * Add, list, update and delete VEHICLES (with referential-integrity
-          guards so a vehicle that still owns a route cannot vanish silently).
-        * Full CRUD over every expedition offered to customers.
+  app.py                entry point, routing and business logic
+  helpers.py            login_required decorator and apology() renderer
+  templates/*.html      Jinja2 views (layout, dashboard, fleet, tickets, admin)
+  static/styles.css     the complete visual design system
+  fleet.db              SQLite database, created and seeded on first run
 
- ARCHITECTURE
- ------------
- Layered Flask monolithic application following the classic MVC separation:
+The database is initialised lazily on startup with CREATE TABLE IF NOT EXISTS
+statements and seeded with a pair of demo vehicles, two demo routes and one
+administrator account. Every SQL statement is parameterised; user input is
+never interpolated into a query string.
 
-   * Model      : Microsoft SQL Server accessed through the pyodbc driver.
-                  Every SQL statement uses parameterised queries ('?')
-                  exclusively, which eliminates SQL-injection vectors.
-   * View       : Jinja2 template inheritance rooted at layout.html, sharing a
-                  single AEL dark-glassmorphism design system (no duplicated
-                  markup between pages).
-   * Controller : app.py routes grouped by domain (ticketing, admin, inquiry)
-                  with thin validation helpers to keep business rules readable.
+DATA MODEL
+----------
+  admins    (id, username UNIQUE, password_hash, created_at)
+  vehicles  (id, fleet_code UNIQUE, model, vehicle_type, capacity, status,
+             created_at)
+  routes    (id, route_code UNIQUE, origin, destination, departure_time,
+             base_fare, vehicle_id -> vehicles.id, created_at)
+  tickets   (id, reference UNIQUE, route_id -> routes.id, passenger_name,
+             passenger_phone, seats, total_amount, issued_at)
 
- DATA MODEL
- ----------
-   Route   (route_id, starting_station, destination, date,
-            time_of_journey, price, vehicle_id -> Vehicle)
-   Vehicle (vehicle_id, vehicle_type, passenger_capacity, route_id -> Route)
-   Ticket  (ticket_id, customer_name, tc_no, vehicle_id, route_id, phone)
-   Admin   (id, user_name, password)
+Seat availability is a derived value: the assigned vehicle's capacity minus
+the seats already sold on that route. Fleet revenue is the sum of every
+ticket's total amount. Ticket references are generated with the secrets
+module and carry the AEL- prefix.
 
- FEATURE LIST
- ------------
-   * Route search & live availability listing ......... GET/POST /
-   * Ticket purchase with strict input validation ..... GET/POST /buy
-   * Purchase lookup and cancellation ................. /inquire_bought_ticket,
-                                                       /bought_tickets
-   * Admin authentication (session based) ............ /admin_login
-   * Route CRUD ....................................... /edit_route,
-                                                       /all_tickets,
-                                                       /update_route
-   * Vehicle CRUD ..................................... /edit_vehicle,
-                                                       /all_vehicles,
-                                                       /update_vehicle
+FEATURES
+--------
+  1. Public dashboard   fleet size, route count, live revenue and tickets
+                        sold, plus a feed of the most recent bookings.
+  2. Fleet catalogue    read-only public views of vehicles and routes with
+                        live seat availability per departure.
+  3. Customer booking   search departures by origin/destination, buy tickets
+                        (capacity validated server-side), and look bookings
+                        up by passenger name and phone number.
+  4. Admin panel        single account guarded by a hashed password, full
+                        CRUD over vehicles and routes, and a complete ticket
+                        audit trail.
 
- SECURITY NOTES
- --------------
-   * Always use query parameters (never f-strings) to build SQL so untrusted
-     user input can never alter statement semantics.
-   * Admin passwords are compared with Werkzeug's constant-time hash check
-     when stored as a hash, and the session flag is the single source of truth
-     for protected views via the login_required decorator.
-   * All customer-provided strings are HTML-escaped by Jinja2 at render time.
-   * The server binds a fixed secret key so session cookies stay tamper-proof;
-     override AEL_SECRET_KEY in production.
-===================================================================================
+SECURITY NOTES
+--------------
+  * Administrator passwords are stored as Werkzeug PBKDF2 hashes (never
+    plain text) and verified with check_password_hash.
+  * All SQL uses bound parameters via the sqlite3 module; the only dynamic
+    parts of query text are fixed clauses assembled by application code.
+  * Admin endpoints are protected by the login_required() decorator and
+    authenticated through Flask signed session cookies.
+  * Every mutating form uses Post/Redirect/Get so that refreshing the page
+    never re-submits a purchase; feedback is delivered via flash messages.
+  * Educational demo: replace the development secret key and the seeded
+    credentials before any real deployment.
 """
 
 import os
-from datetime import datetime
+import secrets
+import sqlite3
 
-import pyodbc
-from flask import Flask, flash, redirect, render_template, request, session
-from werkzeug.security import check_password_hash
+from flask import (Flask, flash, g, redirect, render_template, request,
+                   session, url_for)
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import apology, login_required
 
 # ---------------------------------------------------------------------------
 # Application configuration
 # ---------------------------------------------------------------------------
+
 app = Flask(__name__)
-# Fixed secret key so flash messages and the admin session survive restarts.
-# In production this MUST be overridden with the AEL_SECRET_KEY environment
-# variable - never commit a real secret to source control.
-app.config["SECRET_KEY"] = os.environ.get("AEL_SECRET_KEY", b'_5#y2L"F4Q8z\n\xec]/')
+# Session signing key. Prefer the environment variable; the fallback value is
+# intended for local development only and must never ship to production.
+app.config["SECRET_KEY"] = os.environ.get("AEL_SECRET_KEY") or \
+    "ael-sovereign-development-key-do-not-use-in-production"
 
-# One-stop schema-creation switch. When the target database is freshly
-# provisioned (no tables yet), the app seeds its own schema; when the tables
-# already exist this is a harmless no-op thanks to IF NOT EXISTS.
-AEL_BOOTSTRAP_SCHEMA = os.environ.get("AEL_BOOTSTRAP_SCHEMA", "1") == "1"
+# The SQLite database lives next to the application module.
+DATABASE = os.path.join(app.root_path, "fleet.db")
 
 
 # ---------------------------------------------------------------------------
-# Database connection
+# Database plumbing
 # ---------------------------------------------------------------------------
-def connect_database():
-    """Open a pyodbc connection to the Microsoft SQL Server instance.
 
-    Rationale: the connection target is configurable via environment
-    variables so the same code runs unmodified in development, a staging box
-    or the grader's machine. The original defaults (local SQLEXPRESS
-    instance, database "project") are preserved.
-    """
-    connection_string = os.environ.get(
-        "AEL_CONNECTION_STRING",
-        r"DRIVER={SQL Server};SERVER=(local)\SQLEXPRESS;DATABASE=project;"
-        r"Trusted_Connection=yes;",
-    )
-    return pyodbc.connect(connection_string)
+def get_db():
+    """Return a per-request SQLite connection stored on Flask's g object."""
+    if "db" not in g:
+        conn = sqlite3.connect(DATABASE)
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys = ON")
+        g.db = conn
+    return g.db
 
 
-connection = connect_database()
-cursor = connection.cursor()
+@app.teardown_appcontext
+def close_db(_exc):
+    """Close the request-scoped database connection when the context ends."""
+    db = g.pop("db", None)
+    if db is not None:
+        db.close()
 
 
 # ---------------------------------------------------------------------------
-# Schema bootstrap (non-destructive)
+# Schema and demo seed data
 # ---------------------------------------------------------------------------
-def bootstrap_schema():
-    """Create the four core tables when they do not yet exist."""
-    statements = [
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS admins (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    username      TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at    TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS vehicles (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    fleet_code   TEXT NOT NULL UNIQUE,
+    model        TEXT NOT NULL,
+    vehicle_type TEXT NOT NULL DEFAULT 'Bus',
+    capacity     INTEGER NOT NULL CHECK (capacity > 0),
+    status       TEXT NOT NULL DEFAULT 'active',
+    created_at   TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS routes (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    route_code     TEXT NOT NULL UNIQUE,
+    origin         TEXT NOT NULL,
+    destination    TEXT NOT NULL,
+    departure_time TEXT NOT NULL,
+    base_fare      REAL NOT NULL CHECK (base_fare >= 0),
+    vehicle_id     INTEGER NOT NULL REFERENCES vehicles(id),
+    created_at     TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS tickets (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    reference       TEXT NOT NULL UNIQUE,
+    route_id        INTEGER NOT NULL REFERENCES routes(id),
+    passenger_name  TEXT NOT NULL,
+    passenger_phone TEXT NOT NULL,
+    seats           INTEGER NOT NULL CHECK (seats > 0),
+    total_amount    REAL NOT NULL CHECK (total_amount >= 0),
+    issued_at       TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_routes_origin  ON routes (origin);
+CREATE INDEX IF NOT EXISTS idx_routes_dest    ON routes (destination);
+CREATE INDEX IF NOT EXISTS idx_tickets_route  ON tickets (route_id);
+CREATE INDEX IF NOT EXISTS idx_tickets_lookup ON tickets (passenger_phone);
+"""
+
+DEMO_VEHICLES = [
+    ("SV-101", "AEL Aurora 3400", "Coach", 48, "active"),
+    ("SV-102", "AEL Titan Cityliner", "Bus", 36, "active"),
+]
+
+DEMO_ROUTES = [
+    ("R-CAI-ALX", "Cairo", "Alexandria", "08:30", 22.50, 1),
+    ("R-CAI-LUX", "Cairo", "Luxor", "22:00", 38.00, 2),
+]
+
+# Single seeded administrator used for the demo.
+ADMIN_USERNAME = "ael_admin"
+ADMIN_PASSWORD = "sovereign"
+
+
+def init_db():
+    """Create every table (if missing) and seed demo data on first run."""
+    db = get_db()
+    db.executescript(SCHEMA)
+
+    if db.execute("SELECT COUNT(*) AS n FROM admins").fetchone()["n"] == 0:
+        db.execute(
+            "INSERT INTO admins (username, password_hash) VALUES (?, ?)",
+            (ADMIN_USERNAME, generate_password_hash(ADMIN_PASSWORD)),
+        )
+
+    if db.execute("SELECT COUNT(*) AS n FROM vehicles").fetchone()["n"] == 0:
+        db.executemany(
+            "INSERT INTO vehicles (fleet_code, model, vehicle_type, capacity, status)"
+            " VALUES (?, ?, ?, ?, ?)",
+            DEMO_VEHICLES,
+        )
+
+    if db.execute("SELECT COUNT(*) AS n FROM routes").fetchone()["n"] == 0:
+        db.executemany(
+            "INSERT INTO routes (route_code, origin, destination, departure_time,"
+            " base_fare, vehicle_id) VALUES (?, ?, ?, ?, ?, ?)",
+            DEMO_ROUTES,
+        )
+
+    db.commit()
+
+
+# Initialise the schema and demo data when the module first loads.
+with app.app_context():
+    init_db()
+
+
+# ---------------------------------------------------------------------------
+# Shared helpers
+# ---------------------------------------------------------------------------
+
+def is_admin():
+    """Return True when the current session belongs to the administrator."""
+    return session.get("admin_id") is not None
+
+
+def next_fleet_code():
+    """Generate the next sequential vehicle fleet code, e.g. SV-103."""
+    db = get_db()
+    row = db.execute(
         """
-        IF OBJECT_ID('dbo.Vehicle', 'U') IS NULL
-        CREATE TABLE Vehicle (
-            vehicle_id         INT IDENTITY(1,1) PRIMARY KEY,
-            vehicle_type       NVARCHAR(100) NOT NULL,
-            passenger_capacity INT NOT NULL,
-            route_id           INT
-        );
-        """,
+        SELECT fleet_code FROM vehicles
+        WHERE fleet_code LIKE 'SV-%'
+        ORDER BY CAST(SUBSTR(fleet_code, 4) AS INTEGER) DESC
+        LIMIT 1
         """
-        IF OBJECT_ID('dbo.Route', 'U') IS NULL
-        CREATE TABLE Route (
-            route_id          INT IDENTITY(1,1) PRIMARY KEY,
-            starting_station  NVARCHAR(150) NOT NULL,
-            destination       NVARCHAR(150) NOT NULL,
-            date              DATETIME NOT NULL,
-            time_of_journey   NVARCHAR(50)  NOT NULL,
-            price             DECIMAL(10, 2) NOT NULL,
-            vehicle_id        INT NULL
-        );
-        """,
-        """
-        IF OBJECT_ID('dbo.Ticket', 'U') IS NULL
-        CREATE TABLE Ticket (
-            ticket_id      INT IDENTITY(1,1) PRIMARY KEY,
-            customer_name  NVARCHAR(150) NOT NULL,
-            tc_no          NVARCHAR(11)  NOT NULL,
-            vehicle_id     INT NULL,
-            route_id       INT NULL,
-            phone          NVARCHAR(30)  NOT NULL
-        );
-        """,
-        """
-        IF OBJECT_ID('dbo.Admin', 'U') IS NULL
-        CREATE TABLE Admin (
-            id        INT IDENTITY(1,1) PRIMARY KEY,
-            user_name NVARCHAR(100) NOT NULL,
-            password  NVARCHAR(255) NOT NULL
-        );
-        """,
-    ]
-    for statement in statements:
-        cursor.execute(statement)
-    connection.commit()
+    ).fetchone()
+    seq = 100
+    if row is not None:
+        seq = int(row["fleet_code"].split("-")[1])
+    return f"SV-{seq + 1}"
 
 
-if AEL_BOOTSTRAP_SCHEMA:
-    bootstrap_schema()
+def make_route_code(origin, destination):
+    """Build a readable route code from origin/destination, e.g. R-CAI-ALX."""
+    def clean(token):
+        return "".join(ch for ch in token.upper() if ch.isalnum())[:3]
+    return f"R-{clean(origin)}-{clean(destination)}"
+
+
+def attach_availability(rows):
+    """Augment route rows with their live booked/available seat counts."""
+    enriched = []
+    for row in rows:
+        item = dict(row)
+        item["seats_sold"] = item["seats_sold"]
+        item["available"] = item["capacity"] - item["seats_sold"]
+        enriched.append(item)
+    return enriched
+
+
+@app.template_filter("money")
+def money_filter(amount):
+    """Jinja filter that renders a number as US-style currency."""
+    return f"${amount:,.2f}"
 
 
 # ---------------------------------------------------------------------------
-# Shared templating helpers
+# Public pages
 # ---------------------------------------------------------------------------
-@app.template_filter("dt_local")
-def format_datetime_local(value):
-    """Render a stored DATETIME as an HTML datetime-local input value.
 
-    Complexity / rationale: datetime-local inputs expect 'YYYY-MM-DDTHH:MM'.
-    pyodbc returns native ``datetime`` objects, so a tiny formatter keeps the
-    update forms pre-filled without brittle string surgery in templates.
-    """
-    if not value:
-        return ""
-    return value.strftime("%Y-%m-%dT%H:%M")
-
-
-@app.template_filter("td_price")
-def format_price(value):
-    """Render a DECIMAL price with two fixed decimal places."""
-    try:
-        return f"{float(value):,.2f}"
-    except (TypeError, ValueError):
-        return value
-
-
-# ---------------------------------------------------------------------------
-# Tiny validation helpers (business rules live in one place)
-# ---------------------------------------------------------------------------
-def required_field(form, key, message):
-    """Return a stripped form value or short-circuit with an apology."""
-    value = form.get(key, "").strip()
-    if not value:
-        return apology(message)
-    return value
-
-
-def parse_datetime_local(raw):
-    """Convert a datetime-local string to a DATETIME-safe value.
-
-    We accept both the HTML5 'YYYY-MM-DDTHH:MM' shape and a plain
-    'YYYY-MM-DD HH:MM' fallback used by older clients, then normalise it.
-    """
-    for fmt in ("%Y-%m-%dT%H:%M", "%Y-%m-%d %H:%M"):
-        try:
-            return datetime.strptime(raw, fmt)
-        except ValueError:
-            continue
-    return apology("Invalid date and time format!")
-
-
-def parse_positive_int(raw, message):
-    """Convert input to a strictly positive integer or apologise."""
-    try:
-        parsed = int(raw)
-    except (TypeError, ValueError):
-        return apology(message)
-    if parsed <= 0:
-        return apology(message)
-    return parsed
-
-
-def verify_admin_credentials(username, password):
-    """Authenticate an admin against the Admin table.
-
-    Complexity / rationale: legacy rows may store plaintext passwords while
-    newer installations store Werkzeug hashes. Checking for a known hash
-    prefix first lets a single code path support both formats; a constant-time
-    compare (via check_password_hash) is used whenever the stored value is a
-    real hash so timing attacks are neutralised.
-    """
-    cursor.execute("SELECT user_name, password FROM Admin")
-    for row in cursor.fetchall():
-        stored_user = str(row[0]).strip()
-        stored_pass = str(row[1]).strip()
-        if username != stored_user:
-            continue
-        if stored_pass.startswith(("pbkdf2:", "scrypt:", "sha256$")):
-            return check_password_hash(stored_pass, password)
-        return stored_pass == password
-    return False
-
-
-# ===========================================================================
-# CUSTOMER ZONE
-# ===========================================================================
-
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
-    """Ask for a ticket: search every route for a station pair.
+    """Public dashboard: headline stats plus the most recent bookings."""
+    db = get_db()
 
-    Flow: the customer submits a departure station and a destination; the
-    store returns every matching expedition joined with its assigned vehicle
-    so availability, timetable and vehicle type come back in one query.
-    """
-    if request.method == "GET":
-        return render_template("index.html")
+    stats = {
+        "vehicles": db.execute("SELECT COUNT(*) AS n FROM vehicles").fetchone()["n"],
+        "routes": db.execute("SELECT COUNT(*) AS n FROM routes").fetchone()["n"],
+        "tickets": db.execute("SELECT COUNT(*) AS n FROM tickets").fetchone()["n"],
+        "revenue": db.execute(
+            "SELECT COALESCE(SUM(total_amount), 0) AS s FROM tickets"
+        ).fetchone()["s"],
+    }
 
-    starting_station = required_field(
-        request.form, "starting_station", "You have to choose a starting station!"
+    recent = db.execute(
+        """
+        SELECT t.reference, t.passenger_name, t.seats, t.total_amount, t.issued_at,
+               r.route_code, r.origin, r.destination
+        FROM tickets t
+        JOIN routes r ON r.id = t.route_id
+        ORDER BY t.issued_at DESC, t.id DESC
+        LIMIT 8
+        """
+    ).fetchall()
+
+    return render_template("index.html", stats=stats, recent=recent,
+                           tickets_full=None, admin=False)
+
+
+@app.route("/vehicles")
+def vehicles():
+    """Public fleet catalogue; management forms appear for admins only."""
+    db = get_db()
+    fleet = db.execute(
+        """
+        SELECT v.*, COUNT(r.id) AS assigned_routes
+        FROM vehicles v
+        LEFT JOIN routes r ON r.vehicle_id = v.id
+        GROUP BY v.id
+        ORDER BY v.fleet_code
+        """
+    ).fetchall()
+    return render_template("vehicles.html", fleet=fleet, admin=is_admin())
+
+
+@app.route("/routes")
+def routes():
+    """Public route board with live seat availability per departure."""
+    db = get_db()
+    rows = db.execute(
+        """
+        SELECT r.*, v.fleet_code, v.model AS vehicle_model, v.capacity,
+               COALESCE(SUM(t.seats), 0) AS seats_sold
+        FROM routes r
+        JOIN vehicles v ON v.id = r.vehicle_id
+        LEFT JOIN tickets t ON t.route_id = r.id
+        GROUP BY r.id
+        ORDER BY r.departure_time, r.origin
+        """
+    ).fetchall()
+
+    all_vehicles = db.execute(
+        "SELECT id, fleet_code, model FROM vehicles"
+        " WHERE status = 'active' ORDER BY fleet_code"
+    ).fetchall()
+
+    return render_template(
+        "routes.html",
+        routes=attach_availability(rows),
+        vehicles=all_vehicles,
+        admin=is_admin(),
     )
-    if isinstance(starting_station, tuple):
-        return starting_station
 
-    destination = required_field(request.form, "destination", "You have to choose a destination!")
-    if isinstance(destination, tuple):
-        return destination
 
-    cursor.execute(
-        "SELECT Route.route_id, Route.starting_station, Route.destination, "
-        "Route.date, Route.time_of_journey, Route.price, Vehicle.vehicle_type "
-        "FROM Route JOIN Vehicle ON Vehicle.route_id = Route.route_id "
-        "WHERE Route.starting_station = ? AND Route.destination = ?",
-        starting_station,
-        destination,
+@app.route("/tickets")
+def tickets():
+    """Customer hub: departure search, purchase form and booking lookup."""
+    db = get_db()
+
+    # Search results ride on the URL so the search is idempotent (GET).
+    origin = request.args.get("origin", "").strip()
+    destination = request.args.get("destination", "").strip()
+    results = None
+
+    if origin or destination:
+        where, params = [], []
+        if origin:
+            where.append("r.origin LIKE ?")
+            params.append(f"%{origin}%")
+        if destination:
+            where.append("r.destination LIKE ?")
+            params.append(f"%{destination}%")
+        clause = " AND ".join(where)
+
+        rows = db.execute(
+            f"""
+            SELECT r.*, v.fleet_code, v.model AS vehicle_model, v.capacity,
+                   COALESCE(SUM(t.seats), 0) AS seats_sold
+            FROM routes r
+            JOIN vehicles v ON v.id = r.vehicle_id
+            LEFT JOIN tickets t ON t.route_id = r.id
+            WHERE {clause}
+            GROUP BY r.id
+            ORDER BY r.departure_time, r.origin
+            """,
+            params,
+        ).fetchall()
+        results = attach_availability(rows)
+
+    # Booking lookup data survives the Post/Redirect/Get hop via the URL.
+    lookup_name = request.args.get("lookup_name", "").strip()
+    lookup_phone = request.args.get("lookup_phone", "").strip()
+    bookings = None
+    if lookup_name and lookup_phone:
+        bookings = db.execute(
+            """
+            SELECT t.reference, t.passenger_name, t.seats, t.total_amount,
+                   t.issued_at, r.route_code, r.origin, r.destination,
+                   r.departure_time
+            FROM tickets t
+            JOIN routes r ON r.id = t.route_id
+            WHERE t.passenger_name = ? AND t.passenger_phone = ?
+            ORDER BY t.issued_at DESC, t.id DESC
+            """,
+            (lookup_name, lookup_phone),
+        ).fetchall()
+
+    return render_template(
+        "tickets.html",
+        search_origin=origin,
+        search_destination=destination,
+        results=results,
+        lookup_name=lookup_name,
+        lookup_phone=lookup_phone,
+        bookings=bookings,
     )
-    places = cursor.fetchall()
-
-    if not places:
-        flash("Unfortunately, such a ticket does not exist :(")
-        return redirect("/")
-
-    return render_template("available_tickets.html", places=places)
 
 
-@app.route("/available_tickets", methods=["GET", "POST"])
-def available_tickets():
-    """Show available tickets and hand the chosen one to the buy flow."""
-    if request.method == "GET":
-        # A bare GET (e.g. browser refresh) shows an empty result set.
-        return render_template("available_tickets.html", places=[])
+# ---------------------------------------------------------------------------
+# Customer actions
+# ---------------------------------------------------------------------------
 
-    route_id = request.form.get("buy_button")
-    if not route_id:
-        return apology("You have to choose a ticket!")
-    return render_template("buy.html", route_id=route_id)
+@app.route("/tickets/buy", methods=["POST"])
+def buy_ticket():
+    """Validate and record a ticket purchase, then redirect (PRG)."""
+    db = get_db()
 
+    try:
+        route_id = int(request.form.get("route_id", 0))
+        seats = int(request.form.get("seats", 0))
+    except (TypeError, ValueError):
+        return apology("Invalid booking payload.", 400)
 
-@app.route("/buy", methods=["GET", "POST"])
-def buy():
-    """Purchase a ticket for the selected route.
+    name = request.form.get("passenger_name", "").strip()
+    phone = request.form.get("passenger_phone", "").strip()
 
-    Business rules enforced here:
-      * every field is mandatory;
-      * the TC (national identity) number must be exactly 11 digits;
-      * the referenced route must exist before a ticket is written;
-      * the vehicle attached to that route is captured on the ticket so the
-        ticket remains self-descriptive even if the route is edited later.
-    """
-    if request.method == "GET":
-        return render_template("buy.html")
+    if not name or not phone:
+        return apology("Passenger name and phone are required.", 400)
+    if seats < 1:
+        return apology("You must reserve at least one seat.", 400)
 
-    name = required_field(request.form, "name", "Name area can not be blank!")
-    if isinstance(name, tuple):
-        return name
+    route = db.execute(
+        """
+        SELECT r.*, v.capacity, v.status AS vehicle_status
+        FROM routes r
+        JOIN vehicles v ON v.id = r.vehicle_id
+        WHERE r.id = ?
+        """,
+        (route_id,),
+    ).fetchone()
 
-    tc_no = required_field(request.form, "tc_no", "TC can not be blank!")
-    if isinstance(tc_no, tuple):
-        return tc_no
+    if route is None:
+        return apology("That route no longer exists.", 404)
+    if route["vehicle_status"] != "active":
+        return apology("This route's vehicle is not in service.", 400)
 
-    if len(tc_no) != 11 or not tc_no.isdigit():
-        return apology("Your TC NO is invalid!")
+    sold = db.execute(
+        "SELECT COALESCE(SUM(seats), 0) AS s FROM tickets WHERE route_id = ?",
+        (route_id,),
+    ).fetchone()["s"]
+    remaining = route["capacity"] - sold
 
-    phone = required_field(request.form, "phone", "Phone number can not be blank!")
-    if isinstance(phone, tuple):
-        return phone
+    if seats > remaining:
+        return apology(f"Only {remaining} seat(s) left on this departure.", 400)
 
-    route_id = request.form.get("route_id")
-    if not route_id:
-        return apology("You have to choose a ticket!")
+    reference = "AEL-" + secrets.token_hex(3).upper()
+    total = seats * route["base_fare"]
 
-    # Resolve the vehicle physically serving this expedition; if the route is
-    # gone the purchase is rejected instead of producing an orphaned ticket.
-    cursor.execute("SELECT vehicle_id FROM Route WHERE route_id = ?", route_id)
-    row = cursor.fetchone()
-    if not row:
-        return apology("This route is no longer available!")
-
-    vehicle_id = row[0]
-
-    cursor.execute(
-        "INSERT INTO Ticket (customer_name, tc_no, vehicle_id, route_id, phone) "
-        "VALUES (?, ?, ?, ?, ?)",
-        name,
-        tc_no,
-        vehicle_id,
-        route_id,
-        phone,
+    db.execute(
+        """
+        INSERT INTO tickets (reference, route_id, passenger_name,
+                             passenger_phone, seats, total_amount)
+        VALUES (?, ?, ?, ?, ?, ?)
+        """,
+        (reference, route_id, name, phone, seats, total),
     )
-    connection.commit()
+    db.commit()
 
-    flash("Bought!")
-    return redirect("/")
+    flash(
+        f"Booking {reference} confirmed: {seats} seat(s) for {name} "
+        f"({route['origin']} to {route['destination']}).",
+        "success",
+    )
+    return redirect(url_for("tickets"))
 
 
-# ===========================================================================
-# ADMIN ZONE - authentication
-# ===========================================================================
+@app.route("/tickets/lookup", methods=["POST"])
+def lookup_tickets():
+    """Collect lookup credentials and forward them to the tickets page (PRG)."""
+    name = request.form.get("lookup_name", "").strip()
+    phone = request.form.get("lookup_phone", "").strip()
 
-@app.route("/admin_login", methods=["GET", "POST"])
+    if not name or not phone:
+        flash("Enter both the name and the phone number used for the booking.",
+              "error")
+        return redirect(url_for("tickets"))
+
+    return redirect(url_for("tickets", lookup_name=name, lookup_phone=phone))
+
+
+# ---------------------------------------------------------------------------
+# Administrator session
+# ---------------------------------------------------------------------------
+
+@app.route("/admin/login", methods=["GET", "POST"])
 def admin_login():
-    """Admin login page. GET clears any stale session and shows the form."""
-    session.clear()
+    """Authenticate the single administrator account."""
+    if is_admin():
+        return redirect(url_for("admin_dashboard"))
 
-    if request.method == "GET":
-        return render_template("admin_login.html")
+    if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "")
 
-    username = request.form.get("username", "")
-    password = request.form.get("password", "")
+        row = get_db().execute(
+            "SELECT * FROM admins WHERE username = ?", (username,)
+        ).fetchone()
 
-    if not username or not password:
-        flash("Username and password are required!")
-        return render_template("admin_login.html")
+        if row is None or not check_password_hash(row["password_hash"], password):
+            return apology("Invalid credentials. Access denied.", 403)
 
-    if verify_admin_credentials(username, password):
-        session["admin_logged_in"] = True
-        flash("Successfully Logged In!")
-        return redirect("/edit_route")
+        session.clear()
+        session["admin_id"] = row["id"]
+        session["admin_name"] = row["username"]
+        flash(f"Welcome back, {row['username']}.", "success")
+        return redirect(url_for("admin_dashboard"))
 
-    flash("Invalid username or password!")
-    return render_template("admin_login.html")
+    return render_template(
+        "admin_login.html",
+        demo_user=ADMIN_USERNAME,
+        demo_pass=ADMIN_PASSWORD,
+    )
 
 
-@app.route("/admin_logout")
+@app.route("/admin/logout")
+@login_required
 def admin_logout():
-    """Admin logout: clear the whole session and return to the login page.
-
-    Refactored from the original module (which mounted two views on the same
-    path) into a clearly separated route so logging out can never collide with
-    rendering the login form.
-    """
+    """End the administrator session."""
     session.clear()
-    return redirect("/admin_login")
-
-
-# ===========================================================================
-# ADMIN ZONE - vehicle CRUD
-# ===========================================================================
-
-@app.route("/all_vehicles", methods=["GET", "POST"])
-@login_required
-def all_vehicles():
-    """List every vehicle and offer update / delete actions.
-
-    Deletion is protected by a referential-integrity rule: a vehicle that is
-    still referenced by a route cannot be removed until that route is deleted
-    first, mirroring the foreign key held in the database.
-    """
-    if request.method == "GET":
-        cursor.execute("SELECT * FROM Vehicle")
-        vehicles = cursor.fetchall()
-        return render_template("all_vehicles.html", vehicles=vehicles)
-
-    update_button = request.form.get("update_button")
-    if update_button:
-        cursor.execute("SELECT * FROM Vehicle WHERE vehicle_id = ?", update_button)
-        vehicle = cursor.fetchall()
-        if not vehicle:
-            return apology("Vehicle not found!")
-        return render_template("update_vehicle.html", vehicles=vehicle[0])
-
-    delete_button = request.form.get("delete_button")
-    if delete_button:
-        cursor.execute("SELECT vehicle_id FROM Route WHERE vehicle_id = ?", delete_button)
-        if cursor.fetchall():
-            return apology("There is a route connected to this vehicle. You have to delete it first!")
-        cursor.execute("DELETE FROM Vehicle WHERE vehicle_id = ?", delete_button)
-        connection.commit()
-        flash("Vehicle deleted successfully!")
-
-    return redirect("/all_vehicles")
-
-
-@app.route("/update_vehicle", methods=["GET", "POST"])
-@login_required
-def update_vehicle():
-    """Update an existing vehicle record.
-
-    Note: the original implementation issued the UPDATE against the Route
-    table while posting from a form rendered on top of the Vehicle table. That
-    inconsistent pairing is corrected here - the write now targets Vehicle,
-    which is the table the form actually edits.
-    """
-    if request.method == "GET":
-        return render_template("update_vehicle.html")
-
-    vehicle_id = request.form.get("vehicle_id")
-    if not vehicle_id:
-        return apology("You have to choose a vehicle!")
-
-    vehicle_type = required_field(request.form, "vehicle_type", "Vehicle type can not be blank!")
-    if isinstance(vehicle_type, tuple):
-        return vehicle_type
-
-    passenger_capacity = request.form.get("passenger_capacity")
-    if not passenger_capacity or not passenger_capacity.isdigit() or int(passenger_capacity) <= 0:
-        return apology("Passenger capacity must be a positive number!")
-
-    route_id = request.form.get("route_id")
-    if not route_id or not route_id.isdigit():
-        return apology("Route ID must be a valid number!")
-
-    cursor.execute(
-        "UPDATE Vehicle SET vehicle_type = ?, passenger_capacity = ?, route_id = ? "
-        "WHERE vehicle_id = ?",
-        vehicle_type,
-        int(passenger_capacity),
-        int(route_id),
-        vehicle_id,
-    )
-    connection.commit()
-    flash("Vehicle updated successfully!")
-    return redirect("/all_vehicles")
-
-
-@app.route("/edit_vehicle", methods=["GET", "POST"])
-@login_required
-def edit_vehicle():
-    """Admin panel for adding new vehicles."""
-    if request.method == "GET":
-        return render_template("edit_vehicle.html")
-
-    vehicle_type = required_field(request.form, "add_vehicle_type", "Vehicle type is required!")
-    if isinstance(vehicle_type, tuple):
-        return vehicle_type
-
-    passenger_capacity_checked = parse_positive_int(
-        request.form.get("add_passenger_capacity"),
-        "Passenger capacity must be greater than 0!",
-    )
-    if not isinstance(passenger_capacity_checked, int):
-        return passenger_capacity_checked
-    passenger_capacity = passenger_capacity_checked
-
-    route_id_checked = parse_positive_int(
-        request.form.get("add_route_id"), "There is no such route id!"
-    )
-    if not isinstance(route_id_checked, int):
-        return route_id_checked
-    route_id = route_id_checked
-
-    cursor.execute("SELECT route_id FROM Route")
-    route_ids = [row[0] for row in cursor.fetchall()]
-    if route_id not in route_ids:
-        return apology("There is no such route id!")
-
-    cursor.execute(
-        "INSERT INTO Vehicle (vehicle_type, passenger_capacity, route_id) VALUES (?, ?, ?)",
-        vehicle_type,
-        passenger_capacity,
-        route_id,
-    )
-    connection.commit()
-    flash("Vehicle added successfully!")
-    return redirect("/edit_vehicle")
-
-
-# ===========================================================================
-# ADMIN ZONE - route CRUD
-# ===========================================================================
-
-@app.route("/all_tickets", methods=["GET", "POST"])
-@login_required
-def all_tickets():
-    """List every route (expedition) with update / delete buttons."""
-    if request.method == "GET":
-        cursor.execute("SELECT * FROM Route")
-        routes = cursor.fetchall()
-        return render_template("all_tickets.html", routes=routes)
-
-    update_button = request.form.get("update_button")
-    if update_button:
-        cursor.execute("SELECT * FROM Route WHERE route_id = ?", update_button)
-        route = cursor.fetchall()
-        if not route:
-            return apology("Route not found!")
-        return render_template("update_route.html", route=route[0])
-
-    delete_button = request.form.get("delete_button")
-    if delete_button:
-        cursor.execute("DELETE FROM Route WHERE route_id = ?", delete_button)
-        connection.commit()
-        flash("Route deleted successfully!")
-
-    return redirect("/all_tickets")
-
-
-@app.route("/update_route", methods=["GET", "POST"])
-@login_required
-def update_route():
-    """Update an existing route's timetable, pricing and assigned vehicle."""
-    if request.method == "GET":
-        return render_template("update_route.html")
-
-    route_id = request.form.get("route_id")
-    if not route_id:
-        return apology("You have to choose a ticket!")
-
-    starting_station = required_field(request.form, "starting_station", "Starting station can not be blank!")
-    if isinstance(starting_station, tuple):
-        return starting_station
-
-    destination = required_field(request.form, "destination", "Destination can not be blank!")
-    if isinstance(destination, tuple):
-        return destination
-
-    formatted_date = parse_datetime_local(request.form.get("date"))
-    if isinstance(formatted_date, tuple):
-        return formatted_date
-
-    time_of_journey = required_field(
-        request.form, "time_of_journey", "Time of journey can not be blank!"
-    )
-    if isinstance(time_of_journey, tuple):
-        return time_of_journey
-
-    price = request.form.get("price")
-    try:
-        price_value = float(price)
-    except (TypeError, ValueError):
-        return apology("Price must be a valid number!")
-    if price_value <= 0:
-        return apology("Price must be greater than 0!")
-
-    vehicle_id = request.form.get("vehicle_id")
-    if not vehicle_id or not vehicle_id.isdigit():
-        return apology("Vehicle ID must be a valid number!")
-
-    cursor.execute(
-        "UPDATE Route SET starting_station = ?, destination = ?, date = ?, "
-        "time_of_journey = ?, price = ?, vehicle_id = ? WHERE route_id = ?",
-        starting_station,
-        destination,
-        formatted_date,
-        time_of_journey,
-        price_value,
-        int(vehicle_id),
-        route_id,
-    )
-    connection.commit()
-    flash("Route updated successfully!")
-    return redirect("/all_tickets")
-
-
-@app.route("/edit_route", methods=["GET", "POST"])
-@login_required
-def edit_route():
-    """Admin panel for adding new routes (expeditions)."""
-    if request.method == "GET":
-        return render_template("edit_route.html")
-
-    starting_station = required_field(
-        request.form, "add_starting_station", "Starting station is required!"
-    )
-    if isinstance(starting_station, tuple):
-        return starting_station
-
-    destination = required_field(request.form, "add_destination", "Destination is required!")
-    if isinstance(destination, tuple):
-        return destination
-
-    formatted_date = parse_datetime_local(request.form.get("add_date"))
-    if isinstance(formatted_date, tuple):
-        return formatted_date
-
-    time_of_journey = required_field(
-        request.form, "add_time_of_journey", "Time of journey is required!"
-    )
-    if isinstance(time_of_journey, tuple):
-        return time_of_journey
-
-    price = request.form.get("add_price")
-    try:
-        price_value = float(price)
-    except (TypeError, ValueError):
-        return apology("Price must be a valid number!")
-    if price_value <= 0:
-        return apology("Price must be greater than 0!")
-
-    vehicle_id_checked = parse_positive_int(
-        request.form.get("add_vehicle_id"), "There is no such vehicle id!"
-    )
-    if not isinstance(vehicle_id_checked, int):
-        return vehicle_id_checked
-    vehicle_id = vehicle_id_checked
-
-    cursor.execute("SELECT vehicle_id FROM Vehicle")
-    vehicle_ids = [row[0] for row in cursor.fetchall()]
-    if vehicle_id not in vehicle_ids:
-        return apology("There is no such vehicle id!")
-
-    cursor.execute(
-        "INSERT INTO Route (starting_station, destination, date, time_of_journey, "
-        "price, vehicle_id) VALUES (?, ?, ?, ?, ?, ?)",
-        starting_station,
-        destination,
-        formatted_date,
-        time_of_journey,
-        price_value,
-        vehicle_id,
-    )
-    connection.commit()
-    flash("Route added successfully!")
-    return redirect("/edit_route")
-
-
-# ===========================================================================
-# CUSTOMER ZONE - ticket inquiry & cancellation
-# ===========================================================================
-
-@app.route("/inquire_bought_ticket", methods=["GET", "POST"])
-def inquire_bought_ticket():
-    """Look up every ticket a customer has purchased.
-
-    The identity triple (name, TC number, phone) is the natural key a customer
-    can always remember, and the join with Route enriches each ticket with its
-    origin, destination and departure moment.
-    """
-    if request.method == "GET":
-        return render_template("inquire_bought_ticket.html")
-
-    name = required_field(request.form, "name", "Name area can not be blank!")
-    if isinstance(name, tuple):
-        return name
-
-    tc_no = required_field(request.form, "tc_no", "TC can not be blank!")
-    if isinstance(tc_no, tuple):
-        return tc_no
-
-    phone = required_field(request.form, "phone", "Phone number can not be blank!")
-    if isinstance(phone, tuple):
-        return phone
-
-    cursor.execute(
-        "SELECT Ticket.ticket_id, Ticket.customer_name, Ticket.tc_no, Ticket.phone, "
-        "Route.starting_station, Route.destination, Route.date "
-        "FROM Ticket JOIN Route ON Route.route_id = Ticket.route_id "
-        "WHERE Ticket.tc_no = ? AND Ticket.phone = ? AND Ticket.customer_name = ?",
-        tc_no,
-        phone,
-        name,
-    )
-    ticket_infos = cursor.fetchall()
-    if not ticket_infos:
-        return apology("There is no customer such that!")
-
-    return render_template("bought_tickets.html", ticket_infos=ticket_infos)
-
-
-@app.route("/bought_tickets", methods=["GET", "POST"])
-def bought_tickets():
-    """Show bought tickets and handle cancellations.
-
-    The hidden identity fields carried by the cancellation form let the user
-    issue a refund without re-typing their details, then re-render the
-    refreshed result set so the cancelled row disappears immediately.
-    """
-    if request.method == "GET":
-        return render_template("bought_tickets.html", ticket_infos=[])
-
-    delete_button = request.form.get("delete_button")
-    if delete_button:
-        cursor.execute("DELETE FROM Ticket WHERE ticket_id = ?", delete_button)
-        connection.commit()
-        flash("Ticket cancelled successfully!")
-
-    name = request.form.get("name", "")
-    tc_no = request.form.get("tc_no", "")
-    phone = request.form.get("phone", "")
-
-    cursor.execute(
-        "SELECT Ticket.ticket_id, Ticket.customer_name, Ticket.tc_no, Ticket.phone, "
-        "Route.starting_station, Route.destination, Route.date "
-        "FROM Ticket JOIN Route ON Route.route_id = Ticket.route_id "
-        "WHERE Ticket.tc_no = ? AND Ticket.phone = ? AND Ticket.customer_name = ?",
-        tc_no,
-        phone,
-        name,
-    )
-    ticket_infos = cursor.fetchall()
-    return render_template("bought_tickets.html", ticket_infos=ticket_infos)
+    flash("You have been signed out.", "info")
+    return redirect(url_for("index"))
 
 
 # ---------------------------------------------------------------------------
-# Entry point
+# Administrator dashboard and fleet management
 # ---------------------------------------------------------------------------
+
+@app.route("/admin")
+@login_required
+def admin_dashboard():
+    """Admin overview: the dashboard template with the full audit trail."""
+    db = get_db()
+    stats = {
+        "vehicles": db.execute("SELECT COUNT(*) AS n FROM vehicles").fetchone()["n"],
+        "routes": db.execute("SELECT COUNT(*) AS n FROM routes").fetchone()["n"],
+        "tickets": db.execute("SELECT COUNT(*) AS n FROM tickets").fetchone()["n"],
+        "revenue": db.execute(
+            "SELECT COALESCE(SUM(total_amount), 0) AS s FROM tickets"
+        ).fetchone()["s"],
+    }
+
+    all_tickets = db.execute(
+        """
+        SELECT t.reference, t.passenger_name, t.passenger_phone, t.seats,
+               t.total_amount, t.issued_at, r.route_code, r.origin, r.destination
+        FROM tickets t
+        JOIN routes r ON r.id = t.route_id
+        ORDER BY t.issued_at DESC, t.id DESC
+        """
+    ).fetchall()
+
+    return render_template(
+        "index.html", stats=stats, recent=None, tickets_full=all_tickets,
+        admin=True,
+    )
+
+
+@app.route("/admin/vehicles/add", methods=["POST"])
+@login_required
+def add_vehicle():
+    """Register a new vehicle in the fleet."""
+    db = get_db()
+    model = request.form.get("model", "").strip()
+    vehicle_type = request.form.get("vehicle_type", "").strip()
+    status = request.form.get("status", "active").strip()
+
+    try:
+        capacity = int(request.form.get("capacity", "0").strip())
+    except ValueError:
+        return apology("Capacity must be a whole number.", 400)
+
+    if not model:
+        return apology("A vehicle model is required.", 400)
+    if capacity < 1:
+        return apology("Capacity must be at least 1 seat.", 400)
+    if status not in ("active", "maintenance", "retired"):
+        status = "active"
+
+    try:
+        db.execute(
+            """
+            INSERT INTO vehicles (fleet_code, model, vehicle_type, capacity, status)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (next_fleet_code(), model, vehicle_type or "Bus", capacity, status),
+        )
+        db.commit()
+    except sqlite3.IntegrityError:
+        return apology("A fleet code collision occurred; please retry.", 400)
+
+    flash("Vehicle added to the fleet.", "success")
+    return redirect(url_for("vehicles"))
+
+
+@app.route("/admin/vehicles/<int:vehicle_id>/update", methods=["POST"])
+@login_required
+def update_vehicle(vehicle_id):
+    """Update the details of an existing vehicle."""
+    db = get_db()
+    model = request.form.get("model", "").strip()
+    vehicle_type = request.form.get("vehicle_type", "").strip()
+    status = request.form.get("status", "active").strip()
+
+    try:
+        capacity = int(request.form.get("capacity", "0").strip())
+    except ValueError:
+        return apology("Capacity must be a whole number.", 400)
+
+    if not model:
+        return apology("A vehicle model is required.", 400)
+    if capacity < 1:
+        return apology("Capacity must be at least 1 seat.", 400)
+    if status not in ("active", "maintenance", "retired"):
+        status = "active"
+
+    cursor = db.execute(
+        """
+        UPDATE vehicles
+        SET model = ?, vehicle_type = ?, capacity = ?, status = ?
+        WHERE id = ?
+        """,
+        (model, vehicle_type or "Bus", capacity, status, vehicle_id),
+    )
+    db.commit()
+    if cursor.rowcount == 0:
+        return apology("Vehicle not found.", 404)
+    flash("Vehicle updated.", "success")
+    return redirect(url_for("vehicles"))
+
+
+@app.route("/admin/vehicles/<int:vehicle_id>/delete", methods=["POST"])
+@login_required
+def delete_vehicle(vehicle_id):
+    """Retire a vehicle unless it still carries scheduled routes."""
+    db = get_db()
+    assigned = db.execute(
+        "SELECT COUNT(*) AS n FROM routes WHERE vehicle_id = ?", (vehicle_id,)
+    ).fetchone()["n"]
+    if assigned > 0:
+        return apology("Reassign or remove that vehicle's routes first.", 400)
+
+    cursor = db.execute("DELETE FROM vehicles WHERE id = ?", (vehicle_id,))
+    db.commit()
+    if cursor.rowcount == 0:
+        return apology("Vehicle not found.", 404)
+    flash("Vehicle removed from the fleet.", "success")
+    return redirect(url_for("vehicles"))
+
+
+@app.route("/admin/routes/add", methods=["POST"])
+@login_required
+def add_route():
+    """Schedule a new route on an active vehicle."""
+    db = get_db()
+    origin = request.form.get("origin", "").strip()
+    destination = request.form.get("destination", "").strip()
+    departure_time = request.form.get("departure_time", "").strip()
+
+    try:
+        base_fare = float(request.form.get("base_fare", "0").strip())
+        vehicle_id = int(request.form.get("vehicle_id", "0").strip())
+    except ValueError:
+        return apology("Fare and vehicle must be valid numbers.", 400)
+
+    if not origin or not destination or not departure_time:
+        return apology("Origin, destination and departure time are required.", 400)
+    if origin.lower() == destination.lower():
+        return apology("Origin and destination must differ.", 400)
+    if base_fare < 0:
+        return apology("Fare cannot be negative.", 400)
+
+    vehicle = db.execute(
+        "SELECT * FROM vehicles WHERE id = ?", (vehicle_id,)
+    ).fetchone()
+    if vehicle is None:
+        return apology("The selected vehicle does not exist.", 400)
+    if vehicle["status"] != "active":
+        return apology("Only active vehicles can carry routes.", 400)
+
+    try:
+        db.execute(
+            """
+            INSERT INTO routes (route_code, origin, destination, departure_time,
+                                base_fare, vehicle_id)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (make_route_code(origin, destination), origin, destination,
+             departure_time, base_fare, vehicle_id),
+        )
+        db.commit()
+    except sqlite3.IntegrityError:
+        return apology("A route with this code already exists.", 400)
+
+    flash("Route scheduled.", "success")
+    return redirect(url_for("routes"))
+
+
+@app.route("/admin/routes/<int:route_id>/update", methods=["POST"])
+@login_required
+def update_route(route_id):
+    """Amend an existing route's details."""
+    db = get_db()
+    origin = request.form.get("origin", "").strip()
+    destination = request.form.get("destination", "").strip()
+    departure_time = request.form.get("departure_time", "").strip()
+
+    try:
+        base_fare = float(request.form.get("base_fare", "0").strip())
+        vehicle_id = int(request.form.get("vehicle_id", "0").strip())
+    except ValueError:
+        return apology("Fare and vehicle must be valid numbers.", 400)
+
+    if not origin or not destination or not departure_time:
+        return apology("Origin, destination and departure time are required.", 400)
+    if origin.lower() == destination.lower():
+        return apology("Origin and destination must differ.", 400)
+    if base_fare < 0:
+        return apology("Fare cannot be negative.", 400)
+
+    vehicle = db.execute(
+        "SELECT * FROM vehicles WHERE id = ?", (vehicle_id,)
+    ).fetchone()
+    if vehicle is None:
+        return apology("The selected vehicle does not exist.", 400)
+    if vehicle["status"] != "active":
+        return apology("Only active vehicles can carry routes.", 400)
+
+    cursor = db.execute(
+        """
+        UPDATE routes
+        SET origin = ?, destination = ?, departure_time = ?, base_fare = ?,
+            vehicle_id = ?
+        WHERE id = ?
+        """,
+        (origin, destination, departure_time, base_fare, vehicle_id, route_id),
+    )
+    db.commit()
+    if cursor.rowcount == 0:
+        return apology("Route not found.", 404)
+    flash("Route updated.", "success")
+    return redirect(url_for("routes"))
+
+
+@app.route("/admin/routes/<int:route_id>/delete", methods=["POST"])
+@login_required
+def delete_route(route_id):
+    """Delete a route once it no longer carries bookings."""
+    db = get_db()
+    sold = db.execute(
+        "SELECT COUNT(*) AS n FROM tickets WHERE route_id = ?", (route_id,)
+    ).fetchone()["n"]
+    if sold > 0:
+        return apology("Tickets exist for this route; it cannot be deleted.", 400)
+
+    cursor = db.execute("DELETE FROM routes WHERE id = ?", (route_id,))
+    db.commit()
+    if cursor.rowcount == 0:
+        return apology("Route not found.", 404)
+    flash("Route removed.", "success")
+    return redirect(url_for("routes"))
+
+
 if __name__ == "__main__":
-    app.run(debug=bool(os.environ.get("AEL_DEBUG", "1") == "1"))
+    app.run(debug=True)

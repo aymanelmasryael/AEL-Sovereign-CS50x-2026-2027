@@ -1,31 +1,21 @@
--- ==============================================================================
--- Project   : AEL Sovereign — CS50x 2026-2027
--- Module    : week7_movies_pset7
--- File      : movies/10.sql
--- Author    : Ayman Elmasry — AEL Digital Studio
--- ------------------------------------------------------------------------------
--- Description:
---   Query 10: List the distinct names of all people whose directed movies
---   earned a rating of at least 9.0.
+-- ============================================================
+-- AEL Sovereign — CS50x 2026-2027
+-- Problem Set 7: Movies — Query 10
+-- Author: Ayman Elmasry — AEL Digital Studio
+-- ============================================================
+-- Write a SQL query to list the names of all people who have directed a
+-- movie that received a rating of at least 9.0.
 --
--- SQL logic:
---   A three-table join resolving directors → movies → ratings:
---     1. `people`    JOIN `directors` ON people.id = directors.person_id
---              — pairs every person with each film they directed.
---     2. `directors` JOIN `ratings`   ON directors.movie_id = ratings.movie_id
---              — attaches the rating of each directed film. Note the join
---                goes directors.movie_id directly to ratings (movies is
---                skipped because ratings already carries movie_id).
---     3. WHERE rating >= 9.0 — keeps only highly rated directed films.
---     4. DISTINCT            — ensures a director with several high-rated
---                films is listed exactly once.
---
--- Returns:
---   Unique director names whose filmography includes a film rated >= 9.0.
--- ==============================================================================
+-- The directors table is the bridge between people and movies, and the
+-- ratings table supplies each film's score.  Joining all four tables
+-- links each director to the ratings of the films they directed; the
+-- WHERE clause keeps only films scoring 9.0 or higher.  DISTINCT drops
+-- duplicates so each qualifying director is listed exactly once.
+-- ============================================================
 
-SELECT DISTINCT name
+SELECT DISTINCT people.name
 FROM people
-JOIN directors ON people.id = directors.person_id
-JOIN ratings ON directors.movie_id = ratings.movie_id
-WHERE rating >= 9.0;
+JOIN directors ON directors.person_id = people.id
+JOIN movies ON movies.id = directors.movie_id
+JOIN ratings ON ratings.movie_id = movies.id
+WHERE ratings.rating >= 9.0;

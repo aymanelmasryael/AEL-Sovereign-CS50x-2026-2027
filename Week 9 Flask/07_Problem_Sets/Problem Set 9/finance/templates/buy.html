@@ -1,25 +1,31 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Buy
-{% endblock %}
+{% block title %}Buy{% endblock %}
 
 {% block main %}
-    <h1 class="page-title">Buy <span class="accent">Shares</span></h1>
-    <p class="page-subtitle">acquire a position in your terminal</p>
+  <section class="glass-card narrow">
+    <h1 class="page-title">Buy</h1>
 
-    <div class="glass-card">
-        <form action="/buy" method="post" class="text-center">
-            <div class="mb-3">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-100"
-                       name="symbol" placeholder="Symbol" type="text">
-            </div>
-            <div class="mb-4">
-                <input autocomplete="off" class="form-control mx-auto w-100"
-                       name="shares" placeholder="Shares" min="1" step="1"
-                       type="number">
-            </div>
-            <button class="btn btn-teal" type="submit">Buy</button>
-        </form>
-    </div>
+    <form action="/buy" method="post">
+      <input
+        class="form-control"
+        autocomplete="off"
+        autofocus
+        name="symbol"
+        placeholder="Symbol (e.g. AAPL)"
+        type="text">
+
+      <input
+        class="form-control"
+        name="shares"
+        placeholder="Number of shares"
+        type="number"
+        min="1"
+        step="1">
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Buy</button>
+      </div>
+    </form>
+  </section>
 {% endblock %}

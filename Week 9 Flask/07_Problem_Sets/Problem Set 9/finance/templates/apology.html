@@ -1,12 +1,10 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Sorry
-{% endblock %}
+{% block title %}Apology{% endblock %}
 
 {% block main %}
-    <div class="quote-panel apology">
-        <div class="apology-code">{{ top }}</div>
-        <div class="apology-message">{{ bottom }}</div>
-    </div>
+  <section class="glass-card apology-card">
+    <div class="apology-code">{{ top }}</div>
+    <div class="apology-message">{{ bottom }}</div>
+  </section>
 {% endblock %}

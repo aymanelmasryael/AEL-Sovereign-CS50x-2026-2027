@@ -1,21 +1,14 @@
--- ==============================================================================
--- Project   : AEL Sovereign — CS50x 2026-2027
--- Module    : week7_songs_lab7
--- File      : songs/5.sql
--- Author    : Ayman Elmasry — AEL Digital Studio
--- ------------------------------------------------------------------------------
--- Description:
---   Query 5: Compute the average energy across all songs in the database.
+-- ============================================================
+-- AEL Sovereign — CS50x 2026-2027
+-- Lab 7: Songs — Query 5
+-- Author: Ayman Elmasry — AEL Digital Studio
+-- ============================================================
+-- Write a SQL query that returns the average energy of all the songs.
 --
--- SQL logic:
---   A whole-table aggregate. With no WHERE clause, AVG(energy) is evaluated
---   over every row of `songs`. The aggregate function collapses the entire
---   energy column into one scalar mean value. AVG ignores NULL entries, so
---   only tracks with a recorded energy score influence the mean.
---
--- Returns:
---   A single number: the mean energy of all songs.
--- ==============================================================================
+-- AVG is an aggregate function that folds the energy column of every
+-- row in the songs table into a single arithmetic mean, yielding one
+-- cell as the result.
+-- ============================================================
 
 SELECT AVG(energy)
 FROM songs;

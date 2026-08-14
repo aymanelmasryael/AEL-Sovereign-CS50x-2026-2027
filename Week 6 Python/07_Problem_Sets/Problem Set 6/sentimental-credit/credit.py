@@ -1,115 +1,79 @@
-#!/usr/bin/env python3
-# ==============================================================================
-# Project   : AEL Sovereign — CS50x 2026-2027
-# Module    : week6_sentimental_credit
-# File      : credit.py
-# Author    : Ayman Elmasry — AEL Digital Studio
-# ------------------------------------------------------------------------------
-# Description:
-#   Verifies a credit card number using the Luhn checksum algorithm and then
-#   identifies the issuing network (AMEX, MASTERCARD or VISA). Non-compliant
-#   numbers are reported as INVALID. The behaviour (prompt "Number: " and the
-#   exact INVALID/VISA/MASTERCARD/AMEX verdict strings) matches the CS50
-#   check50 specification precisely.
-#
-# Luhn algorithm (Hans Peter Luhn, 1954):
-#   1. Working from the rightmost digit, double the value of every second digit
-#      (i.e. the digits at even positions when counting from the right).
-#   2. If doubling produces a two-digit value, sum its two digits (equivalent
-#      to adding 9 for the doubled digits 10..18).
-#   3. Sum every digit with the adjusted doubled values; the number is valid
-#      iff the total modulo 10 equals zero.
-#
-# Issuer rules:
-#   - AMEX      : 15 digits, first two digits 34 or 37.
-#   - MASTERCARD: 16 digits, first two digits in the range 51..55.
-#   - VISA      : 13 or 16 digits, first digit 4.
-#
-# Complexity:
-#   Time : O(d) — one digit pass for the Luhn check plus constant prefix/length
-#                 inspection, where d is the number of digits (d <= 16).
-#   Space: O(1) — only a handful of scalar accumulators are maintained.
-# ==============================================================================
+"""
+AEL Sovereign — CS50x 2026-2027
+Problem Set 6: Sentimental Credit
+Author: Ayman Elmasry — AEL Digital Studio
+
+Validates a credit card number with the Luhn algorithm and identifies the
+issuing company (American Express, MasterCard, or Visa), printing the
+result followed by a newline.
+"""
 
 
-def luhn_sum(card_number: str) -> int:
+def get_number():
     """
-    Compute the Luhn checksum for a clean digit string.
-
-    Digits are processed right-to-left. Every second digit (tracked by the
-    `parity` flag, starting at the second-to-last) is doubled; for a doubled
-    value >= 10 the two constituent digits are summed before being added. The
-    returned total is used by `verify_luhn` to test divisibility by ten.
+    Prompt for a card number and return it as an integer.  The prompt is
+    repeated until the user supplies a value that can be parsed as an int.
     """
+    while True:
+        try:
+            return int(input("Number: "))
+        except ValueError:
+            continue
+
+
+def luhn_sum(number):
+    """
+    Compute the Luhn checksum of a card number.  Starting from the second
+    digit from the right, every other digit is doubled; when doubling a
+    digit produces a two-digit value, its digits are added together.  The
+    checksum is the sum of all the doubled and untouched digits.
+    """
+    digits = str(number)
     total = 0
-    parity = False  # when True, the current right-to-left digit is "doubled"
 
-    for digit in reversed(card_number):
-        value = int(digit)
-        if parity:
-            doubled = value * 2
-            total += doubled // 10 + doubled % 10  # split two-digit products
-        else:
-            total += value
-        parity = not parity
+    # Double every other digit, beginning with the second-to-last.
+    for index in range(len(digits) - 2, -1, -2):
+        doubled = int(digits[index]) * 2
+        total += doubled // 10 + doubled % 10
+
+    # Add every remaining digit, including the final digit on the right.
+    for index in range(len(digits) - 1, -1, -2):
+        total += int(digits[index])
 
     return total
 
 
-def verify_luhn(card_number: str) -> bool:
-    """Return True iff `card_number` passes the Luhn checksum check."""
-    return luhn_sum(card_number) % 10 == 0
-
-
-def identify_issuer(card_number: str) -> str:
+def identify_issuer(number):
     """
-    Classify a card number into its issuing network.
-
-    The Luhn check is performed first; a chemical mismatch is rejected
-    immediately. Otherwise the required (length, prefix) fingerprint for each
-    network is matched in order. The first network whose constraints are
-    satisfied wins; if none matches, the number is INVALID.
+    Return the issuer of a card as "VISA", "AMEX", or "MASTERCARD", or
+    "INVALID" if the number fails the Luhn check or matches no issuer.
     """
-    if not verify_luhn(card_number):
+    digits = str(number)
+    length = len(digits)
+
+    # A valid card number must produce a Luhn checksum divisible by 10.
+    if luhn_sum(number) % 10 != 0:
         return "INVALID"
 
-    length = len(card_number)
-    first_two = card_number[:2]
-
-    # AMEX: 15 digits, prefix 34 or 37.
-    if length == 15 and first_two in ("34", "37"):
+    # American Express: 15 digits, beginning with 34 or 37.
+    if length == 15 and digits[:2] in ("34", "37"):
         return "AMEX"
 
-    # MASTERCARD: 16 digits, prefix 51..55.
-    if length == 16 and first_two in ("51", "52", "53", "54", "55"):
+    # MasterCard: 16 digits, beginning with 51 through 55.
+    if length == 16 and digits[:2] in ("51", "52", "53", "54", "55"):
         return "MASTERCARD"
 
-    # VISA: 13 or 16 digits, leading digit 4.
-    if length in (13, 16) and card_number.startswith("4"):
+    # Visa: 13 or 16 digits, beginning with 4.
+    if length in (13, 16) and digits[0] == "4":
         return "VISA"
 
     return "INVALID"
 
 
-def get_clean_number() -> str:
-    """
-    Prompt for a card number until a valid non-empty digit string is provided.
-
-    A retry loop rejects empty input and any non-digit characters (which would
-    otherwise make the Luhn arithmetic meaningless), while still allowing a
-    leading digit of zero and arbitrary numeric lengths. Leading/trailing
-    whitespace is stripped so a stray space does not corrupt validation.
-    """
-    while True:
-        raw = input("Number: ").strip()
-        if raw.isdigit():
-            return raw
-
-
-def main() -> None:
-    """Acquire a clean card number, classify it, and print the verdict."""
-    card_number = get_clean_number()
-    print(identify_issuer(card_number))
+def main():
+    """Prompt for a number and print the identified issuer."""
+    number = get_number()
+    print(identify_issuer(number))
 
 
 if __name__ == "__main__":

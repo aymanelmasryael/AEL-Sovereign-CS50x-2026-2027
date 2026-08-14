@@ -13,10 +13,15 @@
 ## 🛠 Run
 
 ```bash
-sqlite3 movies.db < 1.sql
-sqlite3 fiftyville.db < log.sql      # → the thief is revealed
+sqlite3 fiftyville.db < log.sql       # → the thief is revealed
 sqlite3 songs.db < 8.sql
 ```
+
+> **Note:** `movies.sql` queries require the official `movies.db` (≈129 MB) from the CS50 distribution, which is too large to host on GitHub. Download it from the CS50x problem set page and place it in `Problem Set 7/movies/`:
+> ```
+> cd "Problem Set 7/movies"
+> curl -LO <official-cs50-movies.db-url>   # or via your CS50 codespace
+> ```
 
 ---
 **© Ayman Elmasry — AEL Digital Studio™ · All Rights Reserved.**

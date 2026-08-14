@@ -49,9 +49,9 @@ cc -Wall -Werror -o solution solution.c -lcs50
 python3 solution.py
 
 # SQL solutions (week 7) — verified against the bundled databases
-sqlite3 movies.db < 1.sql
 sqlite3 songs.db < 8.sql
 sqlite3 fiftyville.db < log.sql
+# movies.db (≈129 MB) is downloaded from the CS50 distribution (see Week 7 README)
 
 # JavaScript (week 8) — verified: node --check script.js
 ```

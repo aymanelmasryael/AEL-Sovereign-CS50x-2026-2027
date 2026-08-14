@@ -1,23 +1,13 @@
 {% extends "layout.html" %}
-
-{% block title %}Apology{% endblock %}
+{% block title %}Error {{ top }} · AEL Sovereign Fleet{% endblock %}
 
 {% block main %}
-    <div class="glass-card">
-        <div class="empty-state" style="padding: 60px 20px;">
-            <div style="font-size: 46px; color: var(--amber); margin-bottom: 18px;">
-                <i class="fas fa-triangle-exclamation"></i>
-            </div>
-            <div style="font-size: 52px; font-weight: 800; color: var(--text-main); font-family: 'Share Tech Mono', monospace;">
-                {{ top }}
-            </div>
-            <p style="margin-top: 18px; font-size: 17px; color: var(--text-main);">
-                {{ bottom }}
-            </p>
-            <div class="actions" style="margin-top: 30px;">
-                <a class="btn btn-ghost" href="/"><i class="fas fa-house"></i>Return Home</a>
-                <a class="btn btn-success" href="javascript:history.back()"><i class="fas fa-arrow-left"></i>Go Back</a>
-            </div>
-        </div>
-    </div>
+<div class="apology-wrap">
+  <div class="card apology-card">
+    <p class="eyebrow mono">FLEET PROTOCOL // HALT</p>
+    <h1 class="apology-code">{{ top }}</h1>
+    <p class="apology-msg">{{ bottom }}</p>
+    <a class="btn btn-ghost" href="{{ url_for('index') }}">Return to Dashboard</a>
+  </div>
+</div>
 {% endblock %}

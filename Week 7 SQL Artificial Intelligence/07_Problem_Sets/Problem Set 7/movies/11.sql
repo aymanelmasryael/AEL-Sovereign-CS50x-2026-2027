@@ -1,36 +1,23 @@
--- ==============================================================================
--- Project   : AEL Sovereign — CS50x 2026-2027
--- Module    : week7_movies_pset7
--- File      : movies/11.sql
--- Author    : Ayman Elmasry — AEL Digital Studio
--- ------------------------------------------------------------------------------
--- Description:
---   Query 11: List the titles of the five highest-rated movies featuring
---   Chadwick Boseman, from best to worst.
+-- ============================================================
+-- AEL Sovereign — CS50x 2026-2027
+-- Problem Set 7: Movies — Query 11
+-- Author: Ayman Elmasry — AEL Digital Studio
+-- ============================================================
+-- Write a SQL query to list the titles of the five highest rated movies
+-- (in order) that Chadwick Boseman starred in, starting with the highest
+-- rated.
 --
--- SQL logic:
---   A four-table join (movies → stars → people → ratings) plus ranking:
---     1. `movies` JOIN `stars`  ON movies.id = stars.movie_id
---              — associates each film with its cast credits.
---     2. `stars`  JOIN `people` ON stars.person_id = people.id
---              — resolves each credit to the actor's identity.
---     3. `movies` JOIN `ratings` ON movies.id = ratings.movie_id
---              — attaches the rating score to each movie.
---     4. WHERE name = "Chadwick Boseman"
---              — narrows to films Boseman appears in.
---     5. ORDER BY rating DESC — ranks those films by score, highest first.
---     6. LIMIT 5 — returns only the top five rows (the best-rated films).
---
--- Returns:
---   A single `title` column with at most five of Boseman's films, ordered by
---   descending rating.
--- ==============================================================================
+-- The chain people -> stars -> movies -> ratings navigates from the
+-- actor to every film they appeared in and that film's IMDb score.  The
+-- WHERE clause selects only Chadwick Boseman's credits, ORDER BY rating
+-- DESC ranks them from best to worst, and LIMIT 5 keeps the top five.
+-- ============================================================
 
-SELECT title
+SELECT movies.title
 FROM movies
-JOIN stars ON movies.id = stars.movie_id
-JOIN people ON stars.person_id = people.id
-JOIN ratings ON movies.id = ratings.movie_id
-WHERE name = "Chadwick Boseman"
-ORDER BY rating DESC
+JOIN stars ON stars.movie_id = movies.id
+JOIN people ON people.id = stars.person_id
+JOIN ratings ON ratings.movie_id = movies.id
+WHERE people.name = 'Chadwick Boseman'
+ORDER BY ratings.rating DESC
 LIMIT 5;

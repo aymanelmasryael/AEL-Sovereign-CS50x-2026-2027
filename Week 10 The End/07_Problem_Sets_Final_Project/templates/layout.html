@@ -1,368 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, width=device-width">
-        <link rel="icon" href="/static/bus.jpeg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AEL Sovereign Fleet Manager — public transport fleet operations dashboard">
+  <title>{% block title %}AEL Sovereign Fleet{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
 
-        <!-- Fonts & Design System -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <header class="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="{{ url_for('index') }}">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2 L20 7 V17 L12 22 L4 17 V7 Z" />
+            <path d="M12 2 V22 M4 7 L20 17 M20 7 L4 17" />
+          </svg>
+        </span>
+        <span class="brand-name">AEL Sovereign</span>
+        <span class="brand-sub mono">Fleet Manager</span>
+      </a>
+      <nav class="nav-links">
+        <a href="{{ url_for('index') }}">Dashboard</a>
+        <a href="{{ url_for('vehicles') }}">Vehicles</a>
+        <a href="{{ url_for('routes') }}">Routes</a>
+        <a href="{{ url_for('tickets') }}">Tickets</a>
+        {% if session.get('admin_id') %}
+        <a class="nav-admin" href="{{ url_for('admin_dashboard') }}">Admin</a>
+        <a class="nav-out" href="{{ url_for('admin_logout') }}">Log Out</a>
+        {% else %}
+        <a class="nav-out" href="{{ url_for('admin_login') }}">Log In</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
 
-        <!-- AEL Sovereign Glassmorphism Design System -->
-        <style>
-            :root {
-                --bg-deep: #050507;
-                --bg-soft: #0c0c10;
-                --text-main: #ffffff;
-                --text-muted: #9ba3b5;
-                --accent: #0074FF;
-                --accent-2: #6C47FF;
-                --success: #10B981;
-                --pink: #FF4D8D;
-                --amber: #F59E0B;
-                --teal: #00D4AA;
-                --danger: #EF4444;
-                --glass-bg: rgba(17, 17, 22, 0.66);
-                --glass-border: rgba(255, 255, 255, 0.10);
-                --glass-border-strong: rgba(255, 255, 255, 0.22);
-                --radius-lg: 28px;
-                --radius-md: 18px;
-                --shadow-gloss: 0 16px 44px 0 rgba(0, 0, 0, 0.55);
-                --shadow-glow: 0 0 32px 0 rgba(0, 116, 255, 0.22);
-            }
+  <main class="container">
+    {% with flashes = get_flashed_messages(with_categories=true) %}
+      {% if flashes %}
+        {% for category, message in flashes %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
-            * { box-sizing: border-box; margin: 0; padding: 0; }
+    {% block main %}{% endblock %}
+  </main>
 
-            body {
-                background-color: var(--bg-deep);
-                color: var(--text-muted);
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-                line-height: 1.7;
-                min-height: 100vh;
-                -webkit-font-smoothing: antialiased;
-                padding: 26px;
-                background-image:
-                    radial-gradient(circle at 18% 8%, rgba(0,116,255,0.14), transparent 44%),
-                    radial-gradient(circle at 85% 12%, rgba(108,71,255,0.12), transparent 42%),
-                    radial-gradient(circle at 60% 95%, rgba(0,212,170,0.08), transparent 46%);
-                background-attachment: fixed;
-            }
-
-            .app-shell {
-                max-width: 1240px;
-                margin: 0 auto;
-                display: flex;
-                flex-direction: column;
-                min-height: calc(100vh - 52px);
-            }
-
-            /* ---------- Navbar ---------- */
-            .navbar {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                gap: 16px;
-                background: var(--glass-bg);
-                border: 1px solid var(--glass-border);
-                backdrop-filter: blur(22px);
-                -webkit-backdrop-filter: blur(22px);
-                border-radius: var(--radius-md);
-                box-shadow: var(--shadow-gloss);
-                padding: 16px 28px;
-                margin-bottom: 34px;
-                position: sticky;
-                top: 18px;
-                z-index: 100;
-            }
-
-            .brand {
-                display: flex;
-                align-items: center;
-                gap: 14px;
-                text-decoration: none;
-                color: var(--text-main);
-                font-size: 22px;
-                font-weight: 800;
-                letter-spacing: 0.3px;
-            }
-            .brand i { color: var(--accent); font-size: 26px; filter: drop-shadow(0 0 10px var(--accent)); }
-            .brand span { font-family: 'Share Tech Mono', monospace; color: var(--text-muted); font-size: 11px; letter-spacing: 2px; font-weight: 400; }
-
-            .nav-links {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                flex-wrap: wrap;
-            }
-            .nav-link {
-                color: var(--text-muted);
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                padding: 10px 18px;
-                border-radius: 12px;
-                border: 1px solid transparent;
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                transition: all 0.2s ease;
-            }
-            .nav-link:hover { color: var(--text-main); background: rgba(0,116,255,0.12); border-color: rgba(0,116,255,0.35); }
-
-            /* ---------- Flash Messages ---------- */
-            .flash-zone { margin-bottom: 26px; }
-            .flash {
-                background: rgba(16,185,129,0.10);
-                border: 1px solid rgba(16,185,129,0.4);
-                color: #a7f3d0;
-                padding: 15px 22px;
-                border-radius: 14px;
-                font-weight: 600;
-                font-size: 15px;
-                text-align: center;
-                box-shadow: 0 0 22px rgba(16,185,129,0.15);
-            }
-
-            /* ---------- Main ---------- */
-            .main {
-                flex: 1;
-                width: 100%;
-            }
-
-            .page-title {
-                text-align: center;
-                color: var(--text-main);
-                font-size: 30px;
-                font-weight: 800;
-                letter-spacing: 0.4px;
-                margin-bottom: 6px;
-            }
-            .page-sub {
-                text-align: center;
-                color: var(--text-muted);
-                font-size: 14px;
-                margin-bottom: 30px;
-                font-family: 'Share Tech Mono', monospace;
-                letter-spacing: 1px;
-            }
-
-            /* ---------- Glass Cards ---------- */
-            .glass-card {
-                background: var(--glass-bg);
-                border: 1px solid var(--glass-border);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border-radius: var(--radius-lg);
-                box-shadow: var(--shadow-gloss);
-                padding: 40px;
-                max-width: 720px;
-                margin: 0 auto;
-            }
-            .glass-card.wide { max-width: 1080px; }
-            .glass-card h2 {
-                color: var(--text-main);
-                font-size: 21px;
-                font-weight: 700;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                margin-bottom: 26px;
-                padding-bottom: 14px;
-                border-bottom: 1px dashed var(--glass-border-strong);
-            }
-            .glass-card h2 i { color: var(--accent); }
-
-            .form-stack { display: flex; flex-direction: column; gap: 18px; max-width: 440px; margin: 0 auto; }
-
-            .field {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                text-align: left;
-            }
-            .field label { font-size: 13px; font-weight: 600; color: var(--text-main); letter-spacing: 0.4px; }
-            .field input {
-                background: rgba(0,0,0,0.35);
-                border: 1px solid var(--glass-border);
-                border-radius: 12px;
-                padding: 13px 16px;
-                color: var(--text-main);
-                font-size: 15px;
-                font-family: 'Inter', sans-serif;
-                outline: none;
-                transition: border-color 0.2s ease, box-shadow 0.2s ease;
-                width: 100%;
-            }
-            .field input:focus {
-                border-color: var(--accent);
-                box-shadow: 0 0 0 3px rgba(0,116,255,0.18);
-            }
-            .field input::placeholder { color: #5b6370; }
-
-            /* ---------- Buttons ---------- */
-            .btn {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-                padding: 14px 26px;
-                border-radius: 13px;
-                font-size: 15px;
-                font-weight: 700;
-                font-family: 'Inter', sans-serif;
-                cursor: pointer;
-                border: 1px solid transparent;
-                text-decoration: none;
-                transition: all 0.2s ease;
-            }
-            .btn-primary {
-                background: var(--accent);
-                color: #fff;
-                box-shadow: 0 6px 18px rgba(0,116,255,0.35);
-            }
-            .btn-primary:hover { background: #2b8bff; transform: translateY(-2px); box-shadow: var(--shadow-glow); }
-            .btn-ghost {
-                background: rgba(0,116,255,0.12);
-                border-color: rgba(0,116,255,0.45);
-                color: var(--text-main);
-            }
-            .btn-ghost:hover { background: var(--accent); }
-            .btn-danger {
-                background: rgba(239,68,68,0.12);
-                border-color: rgba(239,68,68,0.5);
-                color: #fecaca;
-            }
-            .btn-danger:hover { background: var(--danger); color:#fff; box-shadow: 0 0 22px rgba(239,68,68,0.4); }
-            .btn-success {
-                background: rgba(16,185,129,0.14);
-                border-color: rgba(16,185,129,0.5);
-                color: #a7f3d0;
-            }
-            .btn-success:hover { background: var(--success); color: #04331f; }
-            .btn-block { width: 100%; }
-
-            .actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-
-            /* ---------- Tables ---------- */
-            .table-wrap {
-                background: var(--glass-bg);
-                border: 1px solid var(--glass-border);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border-radius: var(--radius-lg);
-                box-shadow: var(--shadow-gloss);
-                padding: 24px;
-                overflow-x: auto;
-            }
-            table.data {
-                width: 100%;
-                border-collapse: collapse;
-                font-size: 14px;
-            }
-            table.data thead th {
-                color: var(--accent);
-                font-family: 'Share Tech Mono', monospace;
-                text-transform: uppercase;
-                letter-spacing: 1.4px;
-                font-size: 12px;
-                padding: 14px 18px;
-                border-bottom: 1px solid var(--glass-border-strong);
-                text-align: left;
-                white-space: nowrap;
-            }
-            table.data tbody td {
-                color: var(--text-main);
-                padding: 15px 18px;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-                white-space: nowrap;
-            }
-            table.data tbody tr { transition: background 0.15s ease; }
-            table.data tbody tr:hover { background: rgba(0,116,255,0.06); }
-            table.data tbody tr:last-child td { border-bottom: none; }
-            .mono { font-family: 'Share Tech Mono', monospace; }
-
-            /* ---------- Hero ---------- */
-            .hero { text-align: center; margin-bottom: 40px; }
-            .hero .icon { font-size: 52px; color: var(--accent); filter: drop-shadow(0 0 18px var(--accent)); animation: float 4s ease-in-out infinite; }
-            .hero h1 { color: var(--text-main); font-size: 42px; font-weight: 800; margin: 18px 0 8px; letter-spacing: 0.5px; }
-            .hero p { color: var(--text-muted); font-size: 16px; max-width: 560px; margin: 0 auto; }
-
-            @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-
-            /* ---------- Brief blanks ---------- */
-            .empty-state {
-                text-align: center;
-                padding: 40px 20px;
-                color: var(--text-muted);
-                font-family: 'Share Tech Mono', monospace;
-            }
-
-            /* ---------- Footer ---------- */
-            .footer {
-                margin-top: 44px;
-                padding-top: 24px;
-                border-top: 1px solid var(--glass-border);
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 14px;
-                color: var(--text-muted);
-                font-size: 13px;
-            }
-            .footer .brand-tag { font-family: 'Share Tech Mono', monospace; color: var(--accent); letter-spacing: 1px; }
-
-            @media (max-width: 640px) {
-                body { padding: 16px; }
-                .glass-card { padding: 26px; }
-                .hero h1 { font-size: 30px; }
-                .navbar { top: 12px; }
-            }
-        </style>
-
-        <title>Python Travel: {% block title %}Home{% endblock %}</title>
-    </head>
-
-    <body>
-        <div class="app-shell">
-            <nav class="navbar">
-                <a class="brand" href="/">
-                    <i class="fas fa-bus"></i>
-                    <span class="brand-text">Python Travel<span class="brand-sub"><br>PUBLIC TRANSPORT NETWORK</span></span>
-                </a>
-
-                <div class="nav-links">
-                    {% if session["admin_logged_in"] %}
-                        <a class="nav-link" href="/edit_route"><i class="fas fa-route"></i>Edit Route</a>
-                        <a class="nav-link" href="/edit_vehicle"><i class="fas fa-bus-simple"></i>Edit Vehicle</a>
-                        <a class="nav-link" href="/admin_logout"><i class="fas fa-sign-out-alt"></i>Log Out</a>
-                    {% else %}
-                        <a class="nav-link" href="/inquire_bought_ticket"><i class="fas fa-user"></i>My Tickets</a>
-                        <a class="nav-link" href="/admin_login"><i class="fas fa-cog"></i>Log In as Admin</a>
-                    {% endif %}
-                </div>
-            </nav>
-
-            {% if get_flashed_messages() %}
-                <div class="flash-zone">
-                    <div class="flash" role="alert">
-                        {{ get_flashed_messages() | join(" ") }}
-                    </div>
-                </div>
-            {% endif %}
-
-            <main class="main">
-                {% block main %}{% endblock %}
-            </main>
-
-            <footer class="footer">
-                <span>© 2026 Python Travel · All systems operational</span>
-                <span class="brand-tag">AEL Digital Studio</span>
-            </footer>
-        </div>
-    </body>
+  <footer class="footer">
+    <span>&copy; AEL Digital Studio</span>
+    <span class="mono">SOVEREIGN FLEET // OS v1.0</span>
+  </footer>
+</body>
 </html>

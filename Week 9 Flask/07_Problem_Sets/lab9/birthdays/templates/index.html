@@ -1,80 +1,99 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthdays | AEL Ledger</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link href="/static/styles.css" rel="stylesheet">
-</head>
-<body>
-    <div class="terminal">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <title>Birthdays</title>
+  </head>
 
-        <header class="banner">
-            <span class="banner-mark">&#9733;</span>
-            <h1>Birthdays</h1>
-            <p class="banner-sub">AEL Sovereign Ledger &middot; record and revisit</p>
-        </header>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1 class="page-title">Birthdays</h1>
+        <p class="page-subtitle">Remember every special day.</p>
+      </header>
 
-        <div class="layout">
+      {% if error %}
+        <div class="banner banner-error">{{ error }}</div>
+      {% endif %}
 
-            <!-- ========================================================
-                 Submission form
-                 ======================================================== -->
-            <section class="card add-card">
-                <h2>Add a Birthday</h2>
-                <p class="hint">celebrate the day with the people who matter</p>
+      <div class="grid">
+        <section class="glass-card">
+          <h2 class="card-title">Add a Birthday</h2>
 
-                <form action="/" method="post" class="add-form">
-                    <div class="field">
-                        <label for="name">Name</label>
-                        <input id="name" name="name" placeholder="e.g. Ada Lovelace" type="text" autocomplete="off" required>
-                    </div>
+          <form action="/" method="post">
+            <label class="form-label" for="name">Name</label>
+            <input
+              class="form-control"
+              id="name"
+              name="name"
+              placeholder="Full name"
+              type="text"
+              value="{{ name or '' }}"
+              autocomplete="off"
+              autofocus>
 
-                    <div class="field-row">
-                        <div class="field">
-                            <label for="month">Month</label>
-                            <input id="month" name="month" placeholder="1-12" type="number" min="1" max="12" required>
-                        </div>
-                        <div class="field">
-                            <label for="day">Day</label>
-                            <input id="day" name="day" placeholder="1-31" type="number" min="1" max="31" required>
-                        </div>
-                    </div>
+            <div class="row">
+              <div>
+                <label class="form-label" for="month">Month</label>
+                <input
+                  class="form-control"
+                  id="month"
+                  name="month"
+                  placeholder="1-12"
+                  type="number"
+                  min="1"
+                  max="12"
+                  value="{{ month or '' }}">
+              </div>
 
-                    <button class="submit" type="submit">Add Birthday</button>
-                </form>
-            </section>
+              <div>
+                <label class="form-label" for="day">Day</label>
+                <input
+                  class="form-control"
+                  id="day"
+                  name="day"
+                  placeholder="1-31"
+                  type="number"
+                  min="1"
+                  max="31"
+                  value="{{ day or '' }}">
+              </div>
+            </div>
 
-            <!-- ========================================================
-                 Stored birthdays
-                 ======================================================== -->
-            <section class="card list-card">
-                <h2>All Birthdays</h2>
+            <button class="btn" type="submit">Add Birthday</button>
+          </form>
+        </section>
 
-                {% if birthdays %}
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Birthday</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for birthday in birthdays %}
-                                <tr>
-                                    <td class="mono">{{ birthday.name }}</td>
-                                    <td class="badge">{{ birthday.month }} / {{ birthday.day }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% else %}
-                    <p class="empty">No birthdays recorded yet&mdash;submit your first entry above.</p>
-                {% endif %}
-            </section>
+        <section class="glass-card">
+          <h2 class="card-title">All Birthdays</h2>
 
-        </div>
-    </div>
-</body>
+          {% if birthdays %}
+            <table class="ledger">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Month</th>
+                  <th>Day</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for birthday in birthdays %}
+                  <tr>
+                    <td>{{ birthday.name }}</td>
+                    <td>{{ birthday.month }}</td>
+                    <td>{{ birthday.day }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p class="empty-state">No birthdays yet. Add your first one!</p>
+          {% endif %}
+        </section>
+      </div>
+    </main>
+  </body>
 </html>

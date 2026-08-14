@@ -1,54 +1,44 @@
-"""Python Travel - Shared Helper Utilities
+"""
+helpers.py — AEL Sovereign Fleet Manager
+========================================
 
-Central module for reusable, cross-cutting concerns used throughout the
-application: HTTP-error rendering, authenticated-route guarding and small
-defensive string/date helpers.
+Shared utility functions for the Flask application.
 
-© Ayman Elmasry - AEL Digital Studio - All Rights Reserved.
+Author: Ayman Elmasry — AEL Digital Studio
+
+login_required
+    Decorator that blocks a view unless an administrator session exists.
+    Guests are bounced to the login page with a flash notice.
+
+apology(message, code)
+    Renders a styled error panel (templates/apology.html) carrying a status
+    code in the {{ top }} slot and a human-readable explanation in the
+    {{ bottom }} slot. Used for every validation and access failure.
 """
 
 from functools import wraps
 
-from flask import redirect, render_template, session
+from flask import flash, redirect, render_template, session, url_for
 
 
-# ---------------------------------------------------------------------------
-# Error rendering
-# ---------------------------------------------------------------------------
+def login_required(view):
+    """
+    Protect an endpoint from anonymous access.
+
+    When no administrator id is present in the session the decorated view
+    flashes a notice and redirects to the admin login page.
+    """
+
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        if session.get("admin_id") is None:
+            flash("Administrator access required. Please sign in.", "error")
+            return redirect(url_for("admin_login"))
+        return view(*args, **kwargs)
+
+    return wrapped
+
+
 def apology(message, code=400):
-    """Render a human-friendly error card to the user.
-
-    Complexity / rationale:
-    The message is URL-encoded defensively before being passed to the
-    template. This prevents any user-influenced content (e.g. a malformed
-    station name) from breaking markup or injecting surprises, and keeps the
-    UI consistent with the glassmorphism error design.
-    """
-    from urllib.parse import quote
-    return (
-        render_template("apology.html", top=code, bottom=quote(message)),
-        code,
-    )
-
-
-# ---------------------------------------------------------------------------
-# Authentication guard
-# ---------------------------------------------------------------------------
-def login_required(f):
-    """Decorate a view to require an authenticated admin session.
-
-    Complexity / rationale:
-    Wrapping with ``functools.wraps`` preserves the original function's
-    metadata (name, docstring) so Flask can still resolve its endpoint name
-    for ``url_for`` and logging. Unauthenticated users are transparently
-    redirected to the admin login rather than receiving a raw 401, which is a
-    friendlier and more predictable flow for humans.
-    """
-
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not session.get("admin_logged_in"):
-            return redirect("/admin_login")
-        return f(*args, **kwargs)
-
-    return decorated_function
+    """Render the error panel with the HTTP status and explanation text."""
+    return render_template("apology.html", top=code, bottom=message), code

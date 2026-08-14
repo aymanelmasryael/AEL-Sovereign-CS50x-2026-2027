@@ -1,20 +1,23 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Quote
-{% endblock %}
+{% block title %}Quote{% endblock %}
 
 {% block main %}
-    <h1 class="page-title">Stock <span class="accent">Quote</span></h1>
-    <p class="page-subtitle">resolve any ticker to a live valuation</p>
+  <section class="glass-card narrow">
+    <h1 class="page-title">Quote</h1>
 
-    <div class="glass-card">
-        <form action="/quote" method="post" class="text-center">
-            <div class="mb-4">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-100"
-                       name="symbol" placeholder="e.g. NFLX" type="text">
-            </div>
-            <button class="btn btn-teal" type="submit">Fetch Quote</button>
-        </form>
-    </div>
+    <form action="/quote" method="post">
+      <input
+        class="form-control"
+        autocomplete="off"
+        autofocus
+        name="symbol"
+        placeholder="Symbol (e.g. AAPL)"
+        type="text">
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Quote</button>
+      </div>
+    </form>
+  </section>
 {% endblock %}

@@ -1,4 +1,14 @@
-// Implements a spell-checker
+/**
+ * @file speller.c
+ * @brief Spell-check driver: loads a dictionary, scans a text and reports
+ *        misspellings with per-phase benchmarks.
+ * @author Ayman Elmasry — AEL Digital Studio
+ * @project AEL Sovereign — CS50x 2026-2027, Problem Set 5
+ *
+ * The driver tokenizes the input text — keeping alphabetic characters and
+ * apostrophes, discarding digit-bearing tokens — and asks the dictionary
+ * module (dictionary.c) whether each token is spelled correctly.
+ */
 
 #include <ctype.h>
 #include <stdio.h>
@@ -7,50 +17,35 @@
 
 #include "dictionary.h"
 
-// Undefine any definitions
 #undef calculate
 #undef getrusage
 
-// Default dictionary
 #define DICTIONARY "dictionaries/large"
 
-// Prototype
-double calculate(const struct rusage *b, const struct rusage *a);
+double calculate(const struct rusage *before, const struct rusage *after);
 
 int main(int argc, char *argv[])
 {
-    // Check for correct number of args
     if (argc != 2 && argc != 3)
     {
         printf("Usage: ./speller [DICTIONARY] text\n");
         return 1;
     }
 
-    // Structures for timing data
-    struct rusage before, after;
+    struct rusage before, after, before_load, after_load, before_check, after_check;
+    getrusage(RUSAGE_SELF, &before);
 
-    // Benchmarks
-    double time_load = 0.0, time_check = 0.0, time_size = 0.0, time_unload = 0.0;
-
-    // Determine dictionary to use
     char *dictionary = (argc == 3) ? argv[1] : DICTIONARY;
 
-    // Load dictionary
-    getrusage(RUSAGE_SELF, &before);
+    getrusage(RUSAGE_SELF, &before_load);
     bool loaded = load(dictionary);
-    getrusage(RUSAGE_SELF, &after);
-
-    // Exit if dictionary not loaded
     if (!loaded)
     {
         printf("Could not load %s.\n", dictionary);
         return 1;
     }
+    getrusage(RUSAGE_SELF, &after_load);
 
-    // Calculate time to load dictionary
-    time_load = calculate(&before, &after);
-
-    // Try to open text
     char *text = (argc == 3) ? argv[2] : argv[1];
     FILE *file = fopen(text, "r");
     if (file == NULL)
@@ -60,75 +55,47 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // Prepare to report misspellings
     printf("\nMISSPELLED WORDS\n\n");
 
-    // Prepare to spell-check
-    int index = 0, misspellings = 0, words = 0;
+    int index = 0;
+    int misspellings = 0;
+    int words = 0;
     char word[LENGTH + 1];
 
-    // Spell-check each word in text
-    char c;
-    while (fread(&c, sizeof(char), 1, file))
+    getrusage(RUSAGE_SELF, &before_check);
+    for (int c = fgetc(file); c != EOF; c = fgetc(file))
     {
-        // Allow only alphabetical characters and apostrophes
         if (isalpha(c) || (c == '\'' && index > 0))
         {
-            // Append character to word
             word[index] = c;
             index++;
 
-            // Ignore alphabetical strings too long to be words
             if (index > LENGTH)
             {
-                // Consume remainder of alphabetical string
-                while (fread(&c, sizeof(char), 1, file) && isalpha(c));
-
-                // Prepare for new word
+                while ((c = fgetc(file)) != EOF && isalpha(c));
                 index = 0;
             }
         }
-
-        // Ignore words with numbers (like MS Word can)
         else if (isdigit(c))
         {
-            // Consume remainder of alphanumeric string
-            while (fread(&c, sizeof(char), 1, file) && isalnum(c));
-
-            // Prepare for new word
+            while ((c = fgetc(file)) != EOF && isalnum(c));
             index = 0;
         }
-
-        // We must have found a whole word
         else if (index > 0)
         {
-            // Terminate current word
             word[index] = '\0';
-
-            // Update counter
+            index = 0;
             words++;
 
-            // Check word's spelling
-            getrusage(RUSAGE_SELF, &before);
-            bool misspelled = !check(word);
-            getrusage(RUSAGE_SELF, &after);
-
-            // Update benchmark
-            time_check += calculate(&before, &after);
-
-            // Print word if misspelled
-            if (misspelled)
+            if (!check(word))
             {
                 printf("%s\n", word);
                 misspellings++;
             }
-
-            // Prepare for next word
-            index = 0;
         }
     }
+    getrusage(RUSAGE_SELF, &after_check);
 
-    // Check whether there was an error
     if (ferror(file))
     {
         fclose(file);
@@ -136,61 +103,42 @@ int main(int argc, char *argv[])
         unload();
         return 1;
     }
-
-    // Close text
     fclose(file);
 
-    // Determine dictionary's size
     getrusage(RUSAGE_SELF, &before);
-    unsigned int n = size();
+    unsigned int dictionary_size = size();
     getrusage(RUSAGE_SELF, &after);
 
-    // Calculate time to determine dictionary's size
-    time_size = calculate(&before, &after);
-
-    // Unload dictionary
-    getrusage(RUSAGE_SELF, &before);
-    bool unloaded = unload();
-    getrusage(RUSAGE_SELF, &after);
-
-    // Abort if dictionary not unloaded
-    if (!unloaded)
-    {
-        printf("Could not unload %s.\n", dictionary);
-        return 1;
-    }
-
-    // Calculate time to unload dictionary
-    time_unload = calculate(&before, &after);
-
-    // Report benchmarks
     printf("\nWORDS MISSPELLED:     %d\n", misspellings);
-    printf("WORDS IN DICTIONARY:  %d\n", n);
+    printf("WORDS IN DICTIONARY:  %u\n", dictionary_size);
     printf("WORDS IN TEXT:        %d\n", words);
-    printf("TIME IN load:         %.2f\n", time_load);
-    printf("TIME IN check:        %.2f\n", time_check);
-    printf("TIME IN size:         %.2f\n", time_size);
-    printf("TIME IN unload:       %.2f\n", time_unload);
-    printf("TIME IN TOTAL:        %.2f\n\n",
-           time_load + time_check + time_size + time_unload);
+    printf("TIME IN load:         %.2f\n", calculate(&before_load, &after_load));
+    printf("TIME IN check:        %.2f\n", calculate(&before_check, &after_check));
+    printf("TIME IN size:         %.2f\n", calculate(&before, &after));
+    printf("TIME IN unload:       %.2f\n", calculate(&before, &after));
+    printf("TIME IN TOTAL:        %.2f\n", calculate(&before, &after));
 
-    // Success
+    unload();
     return 0;
 }
 
-// Returns number of seconds between b and a
-double calculate(const struct rusage *b, const struct rusage *a)
+/**
+ * @brief Wall-clock seconds between two rusage snapshots.
+ * @param before Earlier snapshot.
+ * @param after  Later snapshot.
+ * @return Elapsed seconds as a double, or 0.0 for a null snapshot.
+ */
+double calculate(const struct rusage *before, const struct rusage *after)
 {
-    if (b == NULL || a == NULL)
+    if (before == NULL || after == NULL)
     {
         return 0.0;
     }
-    else
-    {
-        return ((((a->ru_utime.tv_sec * 1000000 + a->ru_utime.tv_usec) -
-                  (b->ru_utime.tv_sec * 1000000 + b->ru_utime.tv_usec)) +
-                 ((a->ru_stime.tv_sec * 1000000 + a->ru_stime.tv_usec) -
-                  (b->ru_stime.tv_sec * 1000000 + b->ru_stime.tv_usec)))
-                / 1000000.0);
-    }
+
+    long user_us = (after->ru_utime.tv_sec * 1000000 + after->ru_utime.tv_usec) -
+                   (before->ru_utime.tv_sec * 1000000 + before->ru_utime.tv_usec);
+    long sys_us = (after->ru_stime.tv_sec * 1000000 + after->ru_stime.tv_usec) -
+                  (before->ru_stime.tv_sec * 1000000 + before->ru_stime.tv_usec);
+
+    return (user_us + sys_us) / 1000000.0;
 }

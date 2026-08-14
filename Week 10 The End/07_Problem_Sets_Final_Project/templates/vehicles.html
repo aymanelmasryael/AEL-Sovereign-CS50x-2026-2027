@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block title %}Vehicles · AEL Sovereign Fleet{% endblock %}
+
+{% block main %}
+<section class="hero">
+  <p class="eyebrow mono">FLEET CATALOGUE // REGISTRY</p>
+  <h1>Vehicle Registry</h1>
+  <p class="hero-sub">Every unit in the sovereign fleet, with its current duty status.</p>
+</section>
+
+<section class="grid grid-3">
+  {% for v in fleet %}
+  <div class="card vehicle-card">
+    <div class="vc-head">
+      <span class="mono vc-code">{{ v.fleet_code }}</span>
+      <span class="badge status-{{ v.status }}">{{ v.status | upper }}</span>
+    </div>
+    <h3>{{ v.model }}</h3>
+    <p class="dim">{{ v.vehicle_type }}</p>
+    <div class="vc-meta mono">
+      <span>{{ v.capacity }} seats</span>
+      <span>{{ v.assigned_routes }} route(s)</span>
+    </div>
+    {% if admin %}
+    <div class="vc-admin">
+      <details class="accordion">
+        <summary class="mono">UPDATE RECORD</summary>
+        <form action="{{ url_for('update_vehicle', vehicle_id=v.id) }}" method="post" class="stack">
+          <label>Model
+            <input name="model" value="{{ v.model }}" required>
+          </label>
+          <label>Type
+            <select name="vehicle_type">
+              {% for t in ['Bus', 'Coach', 'Minibus', 'Shuttle'] %}
+              <option value="{{ t }}" {% if v.vehicle_type == t %}selected{% endif %}>{{ t }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>Capacity
+            <input name="capacity" type="number" min="1" value="{{ v.capacity }}" required>
+          </label>
+          <label>Status
+            <select name="status">
+              {% for s in ['active', 'maintenance', 'retired'] %}
+              <option value="{{ s }}" {% if v.status == s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button class="btn btn-primary" type="submit">Save Changes</button>
+        </form>
+      </details>
+      <form action="{{ url_for('delete_vehicle', vehicle_id=v.id) }}" method="post"
+            onsubmit="return confirm('Remove {{ v.fleet_code }} from the fleet?');">
+        <button class="btn btn-danger" type="submit">Remove</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+  {% else %}
+  <div class="card panel"><p class="empty">No vehicles registered.</p></div>
+  {% endfor %}
+</section>
+
+{% if admin %}
+<section class="card panel">
+  <div class="panel-head">
+    <h2 class="mono">REGISTER NEW VEHICLE</h2>
+    <span class="badge badge-admin">ADMIN</span>
+  </div>
+  <form action="{{ url_for('add_vehicle') }}" method="post" class="form-grid">
+    <label>Model
+      <input name="model" placeholder="e.g. AEL Aurora 3400" required>
+    </label>
+    <label>Type
+      <select name="vehicle_type">
+        <option>Bus</option>
+        <option>Coach</option>
+        <option>Minibus</option>
+        <option>Shuttle</option>
+      </select>
+    </label>
+    <label>Capacity
+      <input name="capacity" type="number" min="1" placeholder="48" required>
+    </label>
+    <label>Status
+      <select name="status">
+        <option value="active">active</option>
+        <option value="maintenance">maintenance</option>
+        <option value="retired">retired</option>
+      </select>
+    </label>
+    <div class="form-submit">
+      <button class="btn btn-primary" type="submit">Register Vehicle</button>
+    </div>
+  </form>
+  <p class="hint mono">Fleet codes are assigned automatically in sequence.</p>
+</section>
+{% endif %}
+{% endblock %}

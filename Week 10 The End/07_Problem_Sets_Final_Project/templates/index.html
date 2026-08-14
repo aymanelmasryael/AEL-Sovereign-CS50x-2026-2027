@@ -1,26 +1,104 @@
 {% extends "layout.html" %}
-
-{% block title %}Inquire Ticket{% endblock %}
+{% block title %}{% if admin %}Admin — Fleet Command{% else %}Dashboard{% endif %} · AEL Sovereign Fleet{% endblock %}
 
 {% block main %}
-    <div class="hero">
-        <div class="icon"><i class="fas fa-bus"></i></div>
-        <h1>Inquire Ticket</h1>
-        <p>Select your departure and arrival stations to explore every available expedition on our network.</p>
-    </div>
+<section class="hero">
+  <p class="eyebrow mono">AEL SOVEREIGN // COMMAND DECK</p>
+  <h1>{% if admin %}Fleet Command{% else %}Public Dashboard{% endif %}</h1>
+  <p class="hero-sub">
+    {% if admin %}
+      Audit every booking across the fleet and keep the schedule healthy.
+    {% else %}
+      Live operational overview of the AEL Sovereign public-transport fleet.
+    {% endif %}
+  </p>
+</section>
 
-    <div class="glass-card">
-        <h2><i class="fas fa-magnifying-glass-location"></i>Route Search</h2>
-        <form action="/" method="post" class="form-stack">
-            <div class="field">
-                <label for="starting_station">Starting Station</label>
-                <input id="starting_station" autocomplete="off" autofocus name="starting_station" placeholder="e.g. Central Station" type="text" required>
-            </div>
-            <div class="field">
-                <label for="destination">Destination</label>
-                <input id="destination" autocomplete="off" name="destination" placeholder="e.g. Airport Terminal 2" type="text" required>
-            </div>
-            <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-search"></i>Search Routes</button>
-        </form>
-    </div>
+<section class="grid grid-4">
+  <div class="card stat-card">
+    <span class="stat-icon mono" aria-hidden="true">[V]</span>
+    <span class="stat-value">{{ stats.vehicles }}</span>
+    <span class="stat-label mono">TOTAL VEHICLES</span>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-icon mono" aria-hidden="true">[R]</span>
+    <span class="stat-value">{{ stats.routes }}</span>
+    <span class="stat-label mono">ACTIVE ROUTES</span>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-icon mono" aria-hidden="true">[T]</span>
+    <span class="stat-value">{{ stats.tickets }}</span>
+    <span class="stat-label mono">TICKETS SOLD</span>
+  </div>
+  <div class="card stat-card">
+    <span class="stat-icon mono" aria-hidden="true">[$]</span>
+    <span class="stat-value">{{ stats.revenue | money }}</span>
+    <span class="stat-label mono">FLEET REVENUE</span>
+  </div>
+</section>
+
+<section class="card panel">
+  <div class="panel-head">
+    <h2 class="mono">{% if admin %}TICKET AUDIT TRAIL{% else %}RECENT ACTIVITY{% endif %}</h2>
+    <span class="badge badge-live">LIVE</span>
+  </div>
+
+  {% if admin %}
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Passenger</th>
+        <th>Phone</th>
+        <th>Route</th>
+        <th>Seats</th>
+        <th>Amount</th>
+        <th>Issued</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in tickets_full %}
+      <tr>
+        <td class="mono">{{ t.reference }}</td>
+        <td>{{ t.passenger_name }}</td>
+        <td class="mono">{{ t.passenger_phone }}</td>
+        <td>{{ t.origin }} → {{ t.destination }} <span class="mono dim">({{ t.route_code }})</span></td>
+        <td>{{ t.seats }}</td>
+        <td class="mono">{{ t.total_amount | money }}</td>
+        <td class="mono dim">{{ t.issued_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="empty">No tickets issued yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Passenger</th>
+        <th>Route</th>
+        <th>Seats</th>
+        <th>Amount</th>
+        <th>Issued</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in recent %}
+      <tr>
+        <td class="mono">{{ t.reference }}</td>
+        <td>{{ t.passenger_name }}</td>
+        <td>{{ t.origin }} → {{ t.destination }} <span class="mono dim">({{ t.route_code }})</span></td>
+        <td>{{ t.seats }}</td>
+        <td class="mono">{{ t.total_amount | money }}</td>
+        <td class="mono dim">{{ t.issued_at }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="empty">No activity yet — be the first to book.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</section>
 {% endblock %}

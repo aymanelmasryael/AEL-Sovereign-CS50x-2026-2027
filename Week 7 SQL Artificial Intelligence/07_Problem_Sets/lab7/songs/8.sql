@@ -1,25 +1,16 @@
--- ==============================================================================
--- Project   : AEL Sovereign — CS50x 2026-2027
--- Module    : week7_songs_lab7
--- File      : songs/8.sql
--- Author    : Ayman Elmasry — AEL Digital Studio
--- ------------------------------------------------------------------------------
--- Description:
---   Query 8: List the names of all songs that feature another artist
---   (their title contains "feat.").
+-- ============================================================
+-- AEL Sovereign — CS50x 2026-2027
+-- Lab 7: Songs — Query 8
+-- Author: Ayman Elmasry — AEL Digital Studio
+-- ============================================================
+-- Write a SQL query that lists the names of the songs that feature other
+-- artists.
 --
--- SQL logic:
---   A LIKE pattern match against the title text. The `%` wildcards on BOTH
---   sides — '%feat.%' — match any title that CONTAINS the literal substring
---   "feat." anywhere (prefix, middle or suffix). In SQLite, LIKE is
---   case-insensitive for ASCII by default, so "Feat.", "FEAT." and "feat."
---   all satisfy the pattern, catching collaborator credits regardless of
---   capitalisation.
---
--- Returns:
---   One column, `name`, listing every song whose title advertises a guest
---   artist via the "feat." tag.
--- ==============================================================================
+-- Collaborations are flagged inside the track title with the text
+-- "feat.".  The LIKE pattern '%feat.%' matches any name containing that
+-- literal substring at any position, so every featured collaboration is
+-- captured in the result.
+-- ============================================================
 
 SELECT name
 FROM songs
