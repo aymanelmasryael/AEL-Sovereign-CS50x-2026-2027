@@ -1,22 +1,30 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Inquire Ticket
-{% endblock %}
+{% block title %}Inquire My Tickets{% endblock %}
 
 {% block main %}
+    <div class="hero">
+        <div class="icon"><i class="fas fa-receipt"></i></div>
+        <h1>My Tickets</h1>
+        <p>Look up the tickets you have purchased using your passenger details.</p>
+    </div>
 
-    <form action="/inquire_bought_ticket" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" placeholder="Name" type="text">
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="tc_no" placeholder="TC No" type="number">
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="phone" placeholder="Phone Number" type="number">
-        </div>
-        <button class="btn btn-primary" type="submit">My Tickets</button>
-    </form>
-
+    <div class="glass-card">
+        <h2><i class="fas fa-magnifying-glass"></i>Ticket Inquiry</h2>
+        <form action="/inquire_bought_ticket" method="post" class="form-stack">
+            <div class="field">
+                <label for="name">Full Name</label>
+                <input id="name" autocomplete="off" autofocus name="name" placeholder="Name used at purchase" type="text" required>
+            </div>
+            <div class="field">
+                <label for="tc_no">National ID (TC No)</label>
+                <input id="tc_no" autocomplete="off" name="tc_no" placeholder="11-digit number" type="text" inputmode="numeric" pattern="[0-9]{11}" maxlength="11" title="Must be exactly 11 digits" required>
+            </div>
+            <div class="field">
+                <label for="phone">Phone Number</label>
+                <input id="phone" autocomplete="off" name="phone" placeholder="Phone used at purchase" type="tel" required>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-ticket"></i>Show My Tickets</button>
+        </form>
+    </div>
 {% endblock %}

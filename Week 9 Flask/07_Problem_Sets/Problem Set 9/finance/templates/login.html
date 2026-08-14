@@ -5,13 +5,20 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/login" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Log In</button>
-    </form>
+    <h1 class="page-title">Log <span class="accent">In</span></h1>
+    <p class="page-subtitle">access your trading terminal</p>
+
+    <div class="glass-card">
+        <form action="/login" method="post" class="text-center">
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-100"
+                       id="username" name="username" placeholder="Username" type="text">
+            </div>
+            <div class="mb-4">
+                <input class="form-control mx-auto w-100" id="password"
+                       name="password" placeholder="Password" type="password">
+            </div>
+            <button class="btn btn-primary" type="submit">Log In</button>
+        </form>
+    </div>
 {% endblock %}

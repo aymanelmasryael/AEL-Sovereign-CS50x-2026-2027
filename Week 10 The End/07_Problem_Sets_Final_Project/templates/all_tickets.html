@@ -1,40 +1,47 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    All Tickets
-{% endblock %}
+{% block title %}All Routes{% endblock %}
 
 {% block main %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Route ID</th>
-                <th scope="col">Starting Station</th>
-                <th scope="col">Destination</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time Of Journey</th>
-                <th scope="col">Price</th>
-                <th scope="col">Vehicle ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for route in routes %}
+    <div class="hero">
+        <div class="icon"><i class="fas fa-route"></i></div>
+        <h1>All Routes</h1>
+        <p>Every expedition in the network. Update or delete a route below.</p>
+    </div>
+
+    <div class="table-wrap">
+        <table class="data">
+            <thead>
                 <tr>
-                    <td>{{ route[0] }}</td>
-                    <td>{{ route[1] }}</td>
-                    <td>{{ route[2] }}</td>
-                    <td>{{ route[3] }}</td>
-                    <td>{{ route[4] }}</td>
-                    <td>{{ route[5] }}</td>
-                    <td>{{ route[6] }}</td>
-                    <td>
-                        <form action="/all_tickets" method="post">
-                            <button class="btn btn-primary" type="submit" name="update_button" value="{{ route[0] }}">Update</button>
-                            <button class="btn btn-danger" type="submit" name="delete_button" value="{{ route[0] }}">Delete</button>
-                        </form>
-                    </td>
+                    <th>Route ID</th>
+                    <th>Starting Station</th>
+                    <th>Destination</th>
+                    <th>Date</th>
+                    <th>Time of Journey</th>
+                    <th>Price</th>
+                    <th>Vehicle ID</th>
+                    <th></th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for route in routes %}
+                    <tr>
+                        <td class="mono">{{ route[0] }}</td>
+                        <td>{{ route[1] }}</td>
+                        <td>{{ route[2] }}</td>
+                        <td class="mono">{{ route[3] }}</td>
+                        <td class="mono">{{ route[4] }}</td>
+                        <td class="mono">{{ route[5] | td_price }}</td>
+                        <td class="mono">{{ route[6] }}</td>
+                        <td>
+                            <form action="/all_tickets" method="post" class="actions">
+                                <button class="btn btn-ghost" type="submit" name="update_button" value="{{ route[0] }}"><i class="fas fa-pen"></i>Update</button>
+                                <button class="btn btn-danger" type="submit" name="delete_button" value="{{ route[0] }}"><i class="fas fa-trash"></i>Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

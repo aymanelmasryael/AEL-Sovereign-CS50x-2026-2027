@@ -1,48 +1,80 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-        <link href="/static/styles.css" rel="stylesheet">
-        <title>Birthdays</title>
-    </head>
-    <body>
-        <div class="header">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthdays | AEL Ledger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="/static/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="terminal">
+
+        <header class="banner">
+            <span class="banner-mark">&#9733;</span>
             <h1>Birthdays</h1>
-        </div>
-        <div class="container">
-            <div class="section">
+            <p class="banner-sub">AEL Sovereign Ledger &middot; record and revisit</p>
+        </header>
 
+        <div class="layout">
+
+            <!-- ========================================================
+                 Submission form
+                 ======================================================== -->
+            <section class="card add-card">
                 <h2>Add a Birthday</h2>
-                <!-- TODO: Create a form for users to submit a name, a month, and a day -->
-                <form action="/" method="post">
-                    <input name="name" placeholder="Name" type="text" required>
-                    <input name="month" placeholder="Month" type="number" min="1" max="12" required>
-                    <input name="day" palceholder="Day" type="number" min="1" max="31" required>
-                    <input type="submit" value="Add Birthday">
+                <p class="hint">celebrate the day with the people who matter</p>
+
+                <form action="/" method="post" class="add-form">
+                    <div class="field">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" placeholder="e.g. Ada Lovelace" type="text" autocomplete="off" required>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="month">Month</label>
+                            <input id="month" name="month" placeholder="1-12" type="number" min="1" max="12" required>
+                        </div>
+                        <div class="field">
+                            <label for="day">Day</label>
+                            <input id="day" name="day" placeholder="1-31" type="number" min="1" max="31" required>
+                        </div>
+                    </div>
+
+                    <button class="submit" type="submit">Add Birthday</button>
                 </form>
-            </div>
+            </section>
 
-            <div class="section">
-
+            <!-- ========================================================
+                 Stored birthdays
+                 ======================================================== -->
+            <section class="card list-card">
                 <h2>All Birthdays</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Birthday</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for birthday in birthdays %}
-                        <tr>
-                            <td>{{ birthday.name }}</td>
-                            <td>{{ birthday.month }}/{{ birthday.day }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+
+                {% if birthdays %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Birthday</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for birthday in birthdays %}
+                                <tr>
+                                    <td class="mono">{{ birthday.name }}</td>
+                                    <td class="badge">{{ birthday.month }} / {{ birthday.day }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="empty">No birthdays recorded yet&mdash;submit your first entry above.</p>
+                {% endif %}
+            </section>
+
         </div>
-    </body>
+    </div>
+</body>
 </html>

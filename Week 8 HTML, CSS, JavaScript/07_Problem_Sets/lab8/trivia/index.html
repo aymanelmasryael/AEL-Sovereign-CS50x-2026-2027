@@ -1,70 +1,261 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-        <link href="styles.css" rel="stylesheet">
-        <title>Trivia!</title>
-        <script>
-            // TODO: Add code to check answers to questions
-            document.addEventListener("DOMContentLoaded", function() {
-                let correct = document.querySelector(".correct");
-                correct.addEventListener("click", function() {
-                    correct.style.backgroundColor = "green";
-                    document.querySelector("#feedback1").innerHTML = "Correct!";
-                });
-                let incorrects = document.querySelectorAll(".incorrect");
-                for(let i = 0; i < incorrects.length; ++i)
-                {
-                    incorrects[i].addEventListener("click", function() {
-                        incorrects[i].style.backgroundColor = "red";
-                        document.querySelector("#feedbakc2").innerHTML = "Incorrect";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AEL Sovereign Trivia — an interactive quiz lab for Harvard CS50x week 8, featuring multiple-choice and free-response questions with instant feedback.">
+    <meta name="theme-color" content="#07090F">
+    <title>AEL Sovereign Trivia | CS50x Week 8 Lab</title>
+
+    <!-- Inline SVG favicon (no external file required) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230074FF'/%3E%3Cstop offset='1' stop-color='%236C47FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='72' font-size='58' font-family='Arial, sans-serif' font-weight='700' fill='white' text-anchor='middle'%3E%3F%3C/text%3E%3C/svg%3E">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="trivia-wrapper">
+
+        <!-- Header -->
+        <header class="hero">
+            <p class="eyebrow">AEL DIGITAL STUDIO</p>
+            <h1>Trivia</h1>
+            <p class="subtitle">Interactive quiz &middot; Harvard CS50x Week 8 Lab</p>
+
+            <!-- Live score bar -->
+            <div class="scoreboard" aria-live="polite">
+                <div class="score">
+                    <span class="score-label">Score</span>
+                    <span class="score-value" id="score-value">0</span>
+                </div>
+                <div class="score">
+                    <span class="score-label">Attempts</span>
+                    <span class="score-value" id="attempts-value">0</span>
+                </div>
+                <div class="score">
+                    <span class="score-label">Answered</span>
+                    <span class="score-value" id="answered-value">0 / 0</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+
+            <!-- PART 1 : Multiple Choice -->
+            <section class="section" id="part-multi" aria-labelledby="mc-title">
+                <h2 class="section-label">Part 1 &middot; Multiple Choice</h2>
+                <hr class="rule">
+
+                <div class="question-card">
+
+                    <h3 class="question">Which of the following is recognized as the largest living organism on Earth?</h3>
+
+                    <div class="options" role="group" aria-label="Answer options" data-correct="corrected">
+                        <button type="button" class="option" data-correct="false" data-feedback="A blue whale is the largest animal, but not the largest living organism.">
+                            A Blue Whale
+                        </button>
+                        <button type="button" class="option" data-correct="false" data-feedback="Spinosaurus was large, yet it is long extinct.">
+                            A Spinosaurus
+                        </button>
+                        <button type="button" class="option" data-correct="true" data-feedback="A single honey fungus covers thousands of acres — truly the largest organism on Earth.">
+                            A Honey Fungus (Armillaria)
+                        </button>
+                        <button type="button" class="option" data-correct="false" data-feedback="Trees can be huge, but this clonal fungus outmasses them all.">
+                            A Giant Sequoia Tree
+                        </button>
+                    </div>
+
+                    <p class="feedback" id="feedback-multi" aria-live="polite"></p>
+                </div>
+
+                <div class="question-card">
+
+                    <h3 class="question">Which programming language is the primary foundation taught first in Harvard's CS50x introduction course?</h3>
+
+                    <div class="options" role="group" aria-label="Answer options" data-correct="corrected">
+                        <button type="button" class="option" data-correct="true" data-feedback="Correct! CS50x begins deep in the C language before moving to Python and the web.">
+                            C
+                        </button>
+                        <button type="button" class="option" data-correct="false" data-feedback="Python appears later in the course, not first.">
+                            Python
+                        </button>
+                        <button type="button" class="option" data-correct="false" data-feedback="JavaScript is used in the web weeks, not the opening weeks.">
+                            JavaScript
+                        </button>
+                        <button type="button" class="option" data-correct="false" data-feedback="SQL is introduced in the databases week.">
+                            SQL
+                        </button>
+                    </div>
+
+                    <p class="feedback" id="feedback-multi-2" aria-live="polite"></p>
+                </div>
+            </section>
+
+            <!-- PART 2 : Free Response -->
+            <section class="section" id="part-free" aria-labelledby="fr-title">
+                <h2 class="section-label">Part 2 &middot; Free Response</h2>
+                <hr class="rule">
+
+                <div class="question-card">
+                    <h3 class="question">Which film holds the record as the highest-grossing movie of all time?</h3>
+
+                    <form class="free-form" id="free-form" novalidate>
+                        <label class="sr-only" for="free-answer">Your answer</label>
+                        <input class="free-input" type="text" id="free-answer" placeholder="Type your answer" autocomplete="off">
+                        <button type="submit" class="confirm-btn">Check Answer</button>
+                    </form>
+
+                    <p class="feedback" id="feedback-free" aria-live="polite"></p>
+                </div>
+            </section>
+
+            <!-- Reset -->
+            <div class="reset-wrap">
+                <button type="button" class="reset-btn" id="reset-btn">Reset Quiz</button>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p>&copy; Ayman Elmasry &middot; AEL Digital Studio &mdash; CBS50x Week 8 Trivia Lab</p>
+        </footer>
+    </div>
+
+    <script>
+        /* ==================================================================
+           AEL SOVEREIGN TRIVIA — Engine (Vanilla JS, standalone)
+           Satisfies CS50x Lab 8 requirements:
+             - Multiple-choice questions marked correct/wrong with feedback
+             - Free-response text input checked against a correct answer
+        ================================================================== */
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const scoreEl = document.getElementById("score-value");
+            const attemptsEl = document.getElementById("attempts-value");
+            const answeredEl = document.getElementById("answered-value");
+
+            const TOTAL_QUESTIONS = 3; // 2 multiple-choice + 1 free-response
+            const CORRECT_ANSWERS = ["avatar", "avataar"]; // accepted responses (trimmed, lowercased)
+
+            let score = 0;
+            let attempts = 0;
+            let answered = 0;
+
+            const updateScoreboard = () => {
+                scoreEl.textContent = score;
+                attemptsEl.textContent = attempts;
+                answeredEl.textContent = answered + " / " + TOTAL_QUESTIONS;
+            };
+
+            /* ----------------------------------------------------------
+               Multiple-Choice Behaviour
+               On click: lock the group, colour the chosen option, reveal
+               feedback. The "correct" answer is derived from data-correct.
+            ---------------------------------------------------------- */
+            const questionCards = document.querySelectorAll(".question-card");
+
+            const lockGroup = (group) => {
+                group.querySelectorAll(".option").forEach((btn) => (btn.disabled = true));
+            };
+
+            const gradeMultipleChoice = (group, card) => {
+                const chosen = group.querySelector(".option.selected");
+                const isCorrect = chosen.dataset.correct === "true";
+                const feedback = card.querySelector(".feedback");
+
+                chosen.classList.add(isCorrect ? "is-correct" : "is-incorrect");
+                card.classList.add(isCorrect ? "card-correct" : "card-incorrect");
+
+                feedback.textContent = isCorrect
+                    ? chosen.dataset.feedback
+                    : chosen.dataset.feedback;
+
+                feedback.className = "feedback " + (isCorrect ? "is-correct" : "is-incorrect");
+
+                attempts += 1;
+                answered += 1;
+                if (isCorrect) score += 1;
+                updateScoreboard();
+            };
+
+            document.querySelectorAll(".options").forEach((group) => {
+                const card = group.closest(".question-card");
+                group.querySelectorAll(".option").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        if (group.querySelector(".option.selected")) return; // already answered
+                        btn.classList.add("selected");
+                        lockGroup(group);
+                        gradeMultipleChoice(group, card);
                     });
-                }
-                document.querySelector("#confirm").addEventListener("click", function() {
-                    let input = document.querySelector("input");
-                    if (input.value == "Avatar")
-                    {
-                        input.style.backgroundColor = "green";
-                        document.querySelector("#feedback2").innerHTML = "Correct!";
-                    }
-                    else
-                    {
-                        input.style.backgroundColor = "red";
-                        document.querySelector("#feedback2").innerHTML = "Incorrect";
-                    }
                 });
             });
-        </script>
-    </head>
-    <body>
-        <div class="header">
-            <h1>Trivia!</h1>
-        </div>
 
-        <div class="container">
-            <div class="section">
-                <h2>Part 1: Multiple Choice </h2>
-                <hr>
-                <!-- TODO: Add multiple choice question here -->
-                <h3>What is the biggest creature in the world?</h3>
-                <button class="incorrect">Blue Whale</button>
-                <button class="incorrect">Spinosaurus</button>
-                <button class="correct">Kind of a Mushroom</button>
-                <button class="incorrect">A Tree</button>
+            /* ----------------------------------------------------------
+               Free-Response Behaviour
+               On submit: compare trimmed, lowercased input against the
+               set of acceptable answers.
+            ---------------------------------------------------------- */
+            const freeForm = document.getElementById("free-form");
+            const freeInput = document.getElementById("free-answer");
+            const freeFeedback = document.getElementById("feedback-free");
 
-                <p id="feedback1"></p>
-            </div>
+            freeForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                if (freeInput.disabled) return; // already answered
 
-            <div class="section">
-                <h2>Part 2: Free Response</h2>
-                <hr>
-                <!-- TODO: Add free response question here -->
-                <h3>What is the world's highest grossing movie in the world?</h3>
-                <input type="text" placeholder="Answer">
-                <button id="confirm">Confirm</button>
-                <p id="feedback1"></p>
-            </div>
-        </div>
-    </body>
+                const value = freeInput.value.trim().toLowerCase().replace(/\s+/g, " ");
+                const isCorrect = CORRECT_ANSWERS.includes(value);
+
+                freeInput.disabled = true;
+                freeInput.classList.add(isCorrect ? "is-correct" : "is-incorrect");
+                freeForm.querySelector(".confirm-btn").disabled = true;
+
+                freeFeedback.textContent = isCorrect
+                    ? 'Correct! "Avatar" (2009) holds that record.'
+                    : 'Incorrect. The answer is "Avatar" (2009).';
+
+                freeFeedback.className = "feedback " + (isCorrect ? "is-correct" : "is-incorrect");
+
+                attempts += 1;
+                answered += 1;
+                if (isCorrect) score += 1;
+                updateScoreboard();
+            });
+
+            /* ----------------------------------------------------------
+               Reset — restore every cell to its initial state.
+            ---------------------------------------------------------- */
+            const resetBtn = document.getElementById("reset-btn");
+
+            resetBtn.addEventListener("click", () => {
+                questionCards.forEach((card) => {
+                    card.classList.remove("card-correct", "card-incorrect");
+                    const fb = card.querySelector(".feedback");
+                    fb.textContent = "";
+                    fb.className = "feedback";
+                    card.querySelectorAll(".option").forEach((btn) => {
+                        btn.classList.remove("selected", "is-correct", "is-incorrect");
+                        btn.disabled = false;
+                    });
+                });
+
+                freeInput.value = "";
+                freeInput.classList.remove("is-correct", "is-incorrect");
+                freeInput.disabled = false;
+                freeForm.querySelector(".confirm-btn").disabled = false;
+                freeFeedback.textContent = "";
+                freeFeedback.className = "feedback";
+
+                score = 0;
+                attempts = 0;
+                answered = 0;
+                updateScoreboard();
+                freeInput.focus();
+            });
+
+            updateScoreboard();
+        });
+    </script>
+</body>
 </html>

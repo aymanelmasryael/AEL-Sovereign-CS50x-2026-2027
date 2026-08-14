@@ -1,27 +1,33 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Update Vehicle
-{% endblock %}
+{% block title %}Update Vehicle{% endblock %}
 
 {% block main %}
-    <h1>Update Vehicle</h1>
+    <div class="hero">
+        <div class="icon"><i class="fas fa-bus-simple"></i></div>
+        <h1>Update Vehicle</h1>
+        <p>Modify the type, capacity, or route assignment of this vehicle.</p>
+    </div>
 
-    <!-- Update Vehicle Form -->
-    <form action="/update_route" method="post">
-        <input type="hidden" name="vehicle_id" value="{{ vehicles[0] }}">
-        <div class="mb-3">
-            <label for="vehicle_type" class="form-label">Vehicle Type:</label>
-            <input class="form-control mx-auto w-auto" type="text" value="{{ vehicles[1] }}" id="vehicle_type" name="vehicle_type" required>
-        </div>
-        <div class="mb-3">
-            <label for="passenger_capacity" class="form-label">Passenger Capacity:</label>
-            <input class="form-control mx-auto w-auto" type="text" value="{{ vehicles[2] }}" id="passenger_capacity" name="passenger_capacity" required>
-        </div>
-        <div class="mb-3">
-            <label for="route_id" class="form-label">Route ID:</label>
-            <input class="form-control mx-auto w-auto" type="text" value="{{ vehicles[3] }}" id="route_id" name="route_id" required>
-        </div>
-        <button class="btn btn-primary" type="submit">Update Vehicle</button>
-    </form>
+    <div class="glass-card">
+        <h2><i class="fas fa-pen-to-square"></i>Vehicle Details</h2>
+        <form action="/update_vehicle" method="post" class="form-stack">
+            <div class="field">
+                <input type="hidden" name="vehicle_id" value="{{ vehicles[0] }}">
+            </div>
+            <div class="field">
+                <label for="vehicle_type">Vehicle Type</label>
+                <input class="form-control" type="text" value="{{ vehicles[1] }}" id="vehicle_type" name="vehicle_type" required>
+            </div>
+            <div class="field">
+                <label for="passenger_capacity">Passenger Capacity</label>
+                <input class="form-control" type="number" min="1" value="{{ vehicles[2] }}" id="passenger_capacity" name="passenger_capacity" required>
+            </div>
+            <div class="field">
+                <label for="route_id">Route ID</label>
+                <input class="form-control" type="number" min="1" value="{{ vehicles[3] }}" id="route_id" name="route_id" required>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-save"></i>Update Vehicle</button>
+        </form>
+    </div>
 {% endblock %}
