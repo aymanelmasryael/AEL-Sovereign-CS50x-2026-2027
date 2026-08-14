@@ -10,7 +10,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 10 Cybersecurity: Mathematical Cryptography & Encryption Handshakes",
-  "document_type": "02_Computer_Science_Notes (EN)",
+  "document_type": "Notes (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "system_version": "v3.0"
 }

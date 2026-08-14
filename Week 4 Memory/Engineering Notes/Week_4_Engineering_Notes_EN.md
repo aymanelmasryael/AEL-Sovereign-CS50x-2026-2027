@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 4 Memory: Systems Architecture & Toolchain Mechanics",
-  "document_type": "03_Engineering_Notes (EN)",
+  "document_type": "Engineering Notes (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

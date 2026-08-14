@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 7 (AI Subsystem): OpenAI API Interfacing & Deterministic Search vs LLMs",
-  "document_type": "03_Engineering_Notes (EN)",
+  "document_type": "Engineering Notes (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

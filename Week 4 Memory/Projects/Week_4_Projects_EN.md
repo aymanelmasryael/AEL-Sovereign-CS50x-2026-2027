@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 4 Memory: Custom Enterprise Bare-Metal Projects",
-  "document_type": "06_Projects (EN)",
+  "document_type": "Projects (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 6 Python: Lecture Architecture & High-Level VM Dynamics",
-  "document_type": "01_Lecture_Analysis (EN)",
+  "document_type": "Lecture (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }
