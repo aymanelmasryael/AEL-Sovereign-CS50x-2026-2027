@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Tickets
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Starting Station</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Time Of Journey</th>
+                <th scope="col">Date</th>
+                <th scope="col">Price</th>
+                <th scope="col">Vehicle</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in places %}
+                <tr>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[5] }}</td>
+                    <td>{{ row[6] }}</td>
+                    <td>
+                        <form action="/available_tickets" method="post">
+                            <button class="btn btn-primary" type="submit" name="buy_button" value="{{ row[0] }}">BUY</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

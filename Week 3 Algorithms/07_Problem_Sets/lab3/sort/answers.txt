@@ -1,0 +1,11 @@
+sort1 uses: Bubble sort
+
+How do you know?: Slowest one for reversed arrays and for bubble sort this is the worst case.
+
+sort2 uses: Merge sort
+
+How do you know?: this is the fastest sort algorithm for big arrays so it is merge sort.
+
+sort3 uses: Selection sort
+
+How do you know?: it is apperant sort1 is bubble sort and sort2 is merge, there is one left and it is selection sort. Also this is better than sort1 in reversed sort

@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin Panel
+{% endblock %}
+
+{% block main %}
+    <h1>Admin Panel</h1>
+    <br><br>
+
+      <!-- Add Route Form -->
+    <h2>Add Route</h2>
+    <form action="/edit_route" method="post">
+
+        <div class="mb-3">
+            <label for="add_starting_station" class="form-label">Starting Station:</label>
+            <input class="form-control mx-auto w-auto" type="text" id="add_starting_station" name="add_starting_station" required>
+        </div>
+        <div class="mb-3">
+            <label for="add_destination" class="form-label">Destination:</label>
+            <input class="form-control mx-auto w-auto" type="text" id="add_destination" name="add_destination" required>
+        </div>
+        <div class="mb-3">
+            <label for="add_date" class="form-label">Date:</label>
+            <input class="form-control mx-auto w-auto" type="datetime-local" id="add_date" name="add_date" required>
+        </div>
+        <div class="mb-3">
+            <label for="add_time_of_journey" class="form-label">Time of Journey:</label>
+            <input class="form-control mx-auto w-auto" type="text" id="add_time_of_journey" name="add_time_of_journey" required>
+        </div>
+        <div class="mb-3">
+            <label for="add_price" class="form-label">Price:</label>
+            <input class="form-control mx-auto w-auto" type="number" id="add_price" name="add_price" required>
+        </div>
+        <div class="mb-3">
+            <label for="add_vehicle_id" class="form-label">Vehicle ID:</label>
+            <input class="form-control mx-auto w-auto" type="number" id="add_vehicle_id" name="add_vehicle_id" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Add Route</button>
+    </form>
+
+    <br><br>
+
+     <!-- Update And Delete Route Form -->
+     <h2>Update And Delete Route</h2>
+     <form action="/all_tickets" method="get">
+         <button class="btn btn-primary" type="submit">Update / Delete</button>
+     </form>
+{% endblock %}

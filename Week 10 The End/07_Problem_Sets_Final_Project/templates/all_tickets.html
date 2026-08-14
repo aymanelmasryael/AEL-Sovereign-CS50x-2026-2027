@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    All Tickets
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Route ID</th>
+                <th scope="col">Starting Station</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time Of Journey</th>
+                <th scope="col">Price</th>
+                <th scope="col">Vehicle ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for route in routes %}
+                <tr>
+                    <td>{{ route[0] }}</td>
+                    <td>{{ route[1] }}</td>
+                    <td>{{ route[2] }}</td>
+                    <td>{{ route[3] }}</td>
+                    <td>{{ route[4] }}</td>
+                    <td>{{ route[5] }}</td>
+                    <td>{{ route[6] }}</td>
+                    <td>
+                        <form action="/all_tickets" method="post">
+                            <button class="btn btn-primary" type="submit" name="update_button" value="{{ route[0] }}">Update</button>
+                            <button class="btn btn-danger" type="submit" name="delete_button" value="{{ route[0] }}">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

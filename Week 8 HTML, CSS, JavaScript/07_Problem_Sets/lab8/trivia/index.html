@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            // TODO: Add code to check answers to questions
+            document.addEventListener("DOMContentLoaded", function() {
+                let correct = document.querySelector(".correct");
+                correct.addEventListener("click", function() {
+                    correct.style.backgroundColor = "green";
+                    document.querySelector("#feedback1").innerHTML = "Correct!";
+                });
+                let incorrects = document.querySelectorAll(".incorrect");
+                for(let i = 0; i < incorrects.length; ++i)
+                {
+                    incorrects[i].addEventListener("click", function() {
+                        incorrects[i].style.backgroundColor = "red";
+                        document.querySelector("#feedbakc2").innerHTML = "Incorrect";
+                    });
+                }
+                document.querySelector("#confirm").addEventListener("click", function() {
+                    let input = document.querySelector("input");
+                    if (input.value == "Avatar")
+                    {
+                        input.style.backgroundColor = "green";
+                        document.querySelector("#feedback2").innerHTML = "Correct!";
+                    }
+                    else
+                    {
+                        input.style.backgroundColor = "red";
+                        document.querySelector("#feedback2").innerHTML = "Incorrect";
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <!-- TODO: Add multiple choice question here -->
+                <h3>What is the biggest creature in the world?</h3>
+                <button class="incorrect">Blue Whale</button>
+                <button class="incorrect">Spinosaurus</button>
+                <button class="correct">Kind of a Mushroom</button>
+                <button class="incorrect">A Tree</button>
+
+                <p id="feedback1"></p>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <!-- TODO: Add free response question here -->
+                <h3>What is the world's highest grossing movie in the world?</h3>
+                <input type="text" placeholder="Answer">
+                <button id="confirm">Confirm</button>
+                <p id="feedback1"></p>
+            </div>
+        </div>
+    </body>
+</html>
