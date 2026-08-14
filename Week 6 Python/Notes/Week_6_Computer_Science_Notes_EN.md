@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 6 Python: Theoretical Concepts & Language Pragmatics",
-  "document_type": "02_Computer_Science_Notes (EN)",
+  "document_type": "Notes (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

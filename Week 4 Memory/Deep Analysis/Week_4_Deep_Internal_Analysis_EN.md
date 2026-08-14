@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 4 Memory: Kernel Level Memory Layout & Sub-Silicon Allocation",
-  "document_type": "04_Deep_Internal_Analysis (EN)",
+  "document_type": "Deep Analysis (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

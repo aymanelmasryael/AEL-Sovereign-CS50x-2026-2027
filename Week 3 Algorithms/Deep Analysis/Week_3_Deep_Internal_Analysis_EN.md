@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 3: Mathematical Recurrences & Memory Padding",
-  "document_type": "04_Deep_Internal_Analysis (EN)",
+  "document_type": "Deep Analysis (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

@@ -10,7 +10,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 10 Cybersecurity: Lecture Architecture & Threat Landscape",
-  "document_type": "01_Lecture_Analysis (EN)",
+  "document_type": "Lecture (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "system_version": "v3.0"
 }

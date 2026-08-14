@@ -19,7 +19,7 @@ A full-stack **public-transport fleet management system** built with Flask + SQL
 ## 🛠 Run
 
 ```bash
-cd "Week 10 The End/07_Problem_Sets_Final_Project"
+cd "Week 10 The End/Problem Sets"
 pip install -r requirements.txt
 python3 app.py          # → http://127.0.0.1:5000
 ```

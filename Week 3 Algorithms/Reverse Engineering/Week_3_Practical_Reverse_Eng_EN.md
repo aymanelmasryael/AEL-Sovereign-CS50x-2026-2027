@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 3: Binary Forensics & Voting Mechanics",
-  "document_type": "05_Practical_Reverse_Eng (EN)",
+  "document_type": "Reverse Engineering (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

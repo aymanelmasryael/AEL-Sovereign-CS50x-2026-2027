@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 9 (Flask): MVC Frameworks, Jinja Templating & Session Telemetry",
-  "document_type": "03_Engineering_Notes (EN)",
+  "document_type": "Engineering Notes (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

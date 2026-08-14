@@ -10,7 +10,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 10 Cybersecurity: Threat Matrix Modeling & Zero-Trust Kernel Hardening",
-  "document_type": "04_Deep_Internal_Analysis (EN)",
+  "document_type": "Deep Analysis (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "system_version": "v3.0"
 }

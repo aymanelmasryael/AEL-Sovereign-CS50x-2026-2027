@@ -14,7 +14,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 5 Data Structures: Lecture Architecture & Core Mechanics",
-  "document_type": "01_Lecture_Analysis (EN)",
+  "document_type": "Lecture (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "execution_state": "Active Master Verification"
 }

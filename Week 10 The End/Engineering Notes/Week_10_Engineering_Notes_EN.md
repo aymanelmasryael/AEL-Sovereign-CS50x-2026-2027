@@ -10,7 +10,7 @@
   ],
   "syllabus_source": "Harvard CS50x 2026-2027",
   "domain": "Week 10 Cybersecurity: System Hardening & Defense-in-Depth Architectures",
-  "document_type": "03_Engineering_Notes (EN)",
+  "document_type": "Engineering Notes (EN)",
   "methodology": "8-Stage Sub-Silicon Execution Paradigm",
   "system_version": "v3.0"
 }
