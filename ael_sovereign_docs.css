@@ -373,6 +373,43 @@
 
         .triad-link:hover i { color: #ffffff; transform: scale(1.2); }
 
+        /* Academic Media Wings (Slides / Subtitles / Transcript) */
+        .media-wings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .wing-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            color: #C7C7C7;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .wing-chip i { color: var(--primary-accent); font-size: 13px; transition: transform 0.3s ease; }
+
+        .wing-chip:hover {
+            background: var(--primary-accent);
+            color: #ffffff;
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 16px rgba(0, 116, 255, 0.2);
+        }
+
+        .wing-chip:hover i { color: #ffffff; transform: scale(1.15); }
+
         /* Custom ael_src Highlight Box */
         .ael-src-box {
             background: linear-gradient(135deg, rgba(0, 50, 120, 0.45), rgba(17, 17, 17, 0.75));
@@ -480,6 +517,7 @@
             .nav-brand { font-size: 18px; }
             .link-grid { grid-template-columns: 1fr; }
             .ael-src-box { flex-direction: column; align-items: flex-start; }
+            .media-wings { flex-direction: column; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
             .content-portal { padding: 24px 20px; }
             .switcher-container { gap: 10px; }
