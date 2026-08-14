@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Inquire Ticket
+{% endblock %}
+
+{% block main %}
+    <h1>Inquire Ticket</h1>
+    <form action="/" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="starting_station" placeholder="Starting Station" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="destination" placeholder="Destination" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+{% endblock %}

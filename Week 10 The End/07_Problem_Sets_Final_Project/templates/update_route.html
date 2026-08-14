@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Update Route
+{% endblock %}
+
+{% block main %}
+    <h1>Update Route</h1>
+
+      <!-- Update Route Form -->
+    <form action="/update_route" method="post">
+        <input type="hidden" name="route_id" value="{{ route[0] }}">
+        <div class="mb-3">
+            <label for="starting_station" class="form-label">Starting Station:</label>
+            <input class="form-control mx-auto w-auto" type="text" value="{{ route[1] }}" id="starting_station" name="starting_station" required>
+        </div>
+        <div class="mb-3">
+            <label for="destination" class="form-label">Destination:</label>
+            <input class="form-control mx-auto w-auto" type="text" value="{{ route[2] }}" id="destination" name="destination" required>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date:</label>
+            <input class="form-control mx-auto w-auto" type="datetime-local" value="{{ route[3] }}" id="date" name="date" required>
+        </div>
+        <div class="mb-3">
+            <label for="time_of_journey" class="form-label">Time of Journey:</label>
+            <input class="form-control mx-auto w-auto" type="text" value="{{ route[4] }}" id="time_of_journey" name="time_of_journey" required>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price:</label>
+            <input class="form-control mx-auto w-auto" type="number" value="{{ route[5] }}" id="price" name="price" required>
+        </div>
+        <div class="mb-3">
+            <label for="vehicle_id" class="form-label">Vehicle ID:</label>
+            <input class="form-control mx-auto w-auto" type="number" value="{{ route[6] }}" id="vehicle_id" name="vehicle_id" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Route</button>
+    </form>
+{% endblock %}

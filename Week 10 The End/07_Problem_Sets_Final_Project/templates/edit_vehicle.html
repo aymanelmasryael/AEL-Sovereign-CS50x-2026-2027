@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin Panel
+{% endblock %}
+
+{% block main %}
+    <h1>Admin Panel</h1>
+
+    <br><br>
+
+    <!-- Add Vehicle Form -->
+    <h2>Add Vehicle</h2>
+    <form action="/edit_vehicle" method="post">
+        <div class="mb-3">
+            <label for="add_vehicle_type" class="form-label">Vehicle Type:</label>
+            <input class="form-control mx-auto w-auto" type="text" id="add_vehicle_type" name="add_vehicle_type" required>
+        </div>
+        <div class="mb-3">
+            <label for="add_passenger_capacity" class="form-label">Passenger Capacity:</label>
+            <input class="form-control mx-auto w-auto" type="number" id="add_passenger_capacity" name="add_passenger_capacity" required>
+        </div>
+        <div class="mb-3">
+            <label for="add_route_id1" class="form-label">Route ID:</label>
+            <input class="form-control mx-auto w-auto" type="number" id="add_route_id1" name="add_route_id" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Add Vehicle</button>
+    </form>
+    <br><br>
+
+    <!-- Update And Delete Vehicle Form -->
+    <h2>Update And Delete Vehicle</h2>
+    <form action="/all_vehicles" method="post">
+        <button class="btn btn-primary" type="submit">Update / Delete</button>
+    </form>
+{% endblock %}

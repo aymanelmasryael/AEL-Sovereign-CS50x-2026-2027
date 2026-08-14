@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Inquire Ticket
+{% endblock %}
+
+{% block main %}
+
+    <form action="/inquire_bought_ticket" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" placeholder="Name" type="text">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="tc_no" placeholder="TC No" type="number">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="phone" placeholder="Phone Number" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">My Tickets</button>
+    </form>
+
+{% endblock %}

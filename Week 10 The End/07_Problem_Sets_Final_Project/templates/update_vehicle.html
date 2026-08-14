@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Update Vehicle
+{% endblock %}
+
+{% block main %}
+    <h1>Update Vehicle</h1>
+
+    <!-- Update Vehicle Form -->
+    <form action="/update_route" method="post">
+        <input type="hidden" name="vehicle_id" value="{{ vehicles[0] }}">
+        <div class="mb-3">
+            <label for="vehicle_type" class="form-label">Vehicle Type:</label>
+            <input class="form-control mx-auto w-auto" type="text" value="{{ vehicles[1] }}" id="vehicle_type" name="vehicle_type" required>
+        </div>
+        <div class="mb-3">
+            <label for="passenger_capacity" class="form-label">Passenger Capacity:</label>
+            <input class="form-control mx-auto w-auto" type="text" value="{{ vehicles[2] }}" id="passenger_capacity" name="passenger_capacity" required>
+        </div>
+        <div class="mb-3">
+            <label for="route_id" class="form-label">Route ID:</label>
+            <input class="form-control mx-auto w-auto" type="text" value="{{ vehicles[3] }}" id="route_id" name="route_id" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Vehicle</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,8 @@
+If songs.db contains the top 100 songs of one listener from 2018, how would you characterize their audio aura?
+Answer: There is a lot of high energy songs in this list. I think there is always energetic songs is majority lists like this.
+
+
+Hypothesize about why the way you’ve calculated this aura might not be very representative of the listener.
+What better ways of calculating this aura would you propose?
+Answer: I calculated the average energy of the songs so this might be a problem because it can be there is no song energy with equal that average energy.
+        Some songs can be much more energetic and somes are almost 0 energy. This is the side effect of calculating the average

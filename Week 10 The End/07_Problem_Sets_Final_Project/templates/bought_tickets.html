@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    My Tickets
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">NAME</th>
+                <th scope="col">TC NO</th>
+                <th scope="col">PHONE NUMBER</th>
+                <th scope="col">STARTING STATION</th>
+                <th scope="col">DESTINATION</th>
+                <th scope="col">DATE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ticket_infos %}
+                <tr>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[5] }}</td>
+                    <td>{{ row[6] }}</td>
+                    <td>
+                        <form action="/bought_tickets" method="post">
+                            <button class="btn btn-danger" type="submit" name="delete_button" value="{{ row[0] }}">Cancel Ticket</button>
+                            <input type="hidden" name="name" value="{{ row[1] }}">
+                            <input type="hidden" name="tc_no" value="{{ row[2] }}">
+                            <input type="hidden" name="phone" value="{{ row[3] }}">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

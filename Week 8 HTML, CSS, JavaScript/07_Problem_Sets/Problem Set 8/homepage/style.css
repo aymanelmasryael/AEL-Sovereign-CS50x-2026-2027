@@ -1,0 +1,40 @@
+body {
+    background-color: azure;
+    font-family: Arial;
+}
+
+.mainSection {
+    margin-left: 20%;
+    width: 60%;
+    padding: 10px;
+}
+
+.myPhoto {
+    border: 3px solid;
+    width: 25%;
+    height: 35%;
+    float: right;
+}
+
+.headerDiv {
+    background-color: lightgray;
+    width: 100%;
+    height: 30px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding-left: 20px;
+}
+
+li {
+    list-style-type: none;
+    font-size: medium;
+}
+
+.fa-angle-down{
+    margin-right: 10px;
+}
