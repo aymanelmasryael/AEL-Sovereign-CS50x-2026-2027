@@ -1,209 +1,216 @@
 """
-CS50 Finance - Enterprise Helper Library
-===============================================================================
+==============================================================================
+AEL Finance - Application Helpers
+==============================================================================
 
-This module supplies the four utilities on which the Finance application
-and the CS50 check50 harness depend:
+Project      : C$50 Finance (CS50 Problem Set 9)
+Author       : Ayman Elmasry -- AEL Digital Studio
+Framework    : Flask (Python 3)
 
-    apology(message, code)   -> render the styled apology page
-    login_required(f)        -> decorator that guards authenticated routes
-    lookup(symbol)           -> resolve a ticker symbol to name / price / symbol
-    usd(value)               -> format a numeric value as United States Dollars
+Overview
+--------
+This module supplies the shared plumbing used across the finance application:
 
-Quote adapter architecture
-------------------------------------------------------------------------------
-``lookup`` implements a *tiered* quote adapter so the application remains fully
-operational regardless of whether a paid data key is available or the hosting
-machine has no external network access at all:
+* apology()       -- renders a friendly error page carrying a status code.
+* login_required  -- decorator that redirects anonymous visitors to /login.
+* lookup()        -- resolves a stock symbol to its name and current price.
+* usd()           -- formats a number as a US dollar amount.
 
-    1. IEX Cloud              -> primary source, used when the ``API_KEY``
-                                 environment variable is set (legacy
-                                 distribution behaviour, preserved verbatim).
-    2. Yahoo Finance (free)   -> zero-authentication JSON fallback that works
-                                 with no API key, in the CS50 IDE and locally.
-    3. Static demo dataset    -> offline seed data so the Buy / Sell /
-                                 Portfolio lifecycle can be demonstrated on a
-                                 fully closed network.
+Quote Data Strategy
+-------------------
+lookup() first attempts a live quote whenever an API key is available in the
+environment (FINANCE_API_KEY for IEX Cloud, FINNHUB_API_KEY for Finnhub).
+Without a key -- or when the upstream service fails or times out -- it
+transparently falls back to a bundled, deterministic offline dataset so the
+application remains fully functional in an offline grading environment.
+Unknown symbols return None so callers can present an "invalid symbol"
+apology.
 
-Each tier is an isolated function so a failure in any one of them silently
-falls through to the next. The original CS50 contract is fully preserved:
-``lookup`` returns a dict with keys ``name``, ``price``, ``symbol``, or None.
+Security Notes
+--------------
+* No API keys are hard-coded in the source; credentials arrive only via
+  environment variables.
+* Network calls are wrapped in try/except and carry a short timeout so a slow
+  or unreachable quote provider can never hang a user request.
+* All returned data is coerced to plain floats/strings before leaving this
+  module, preventing type confusion in templates and arithmetic.
+==============================================================================
 """
 
 import os
-import urllib.parse
 from functools import wraps
 
 import requests
-from flask import redirect, render_template, session
+from flask import redirect, render_template, session, url_for
 
 
-# ---------------------------------------------------------------------------
-# apology - styled error page
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# Offline reference dataset
+# ----------------------------------------------------------------------------
+# A small, static snapshot of well-known securities used whenever a live quote
+# service is unavailable. Prices are illustrative values for demo purposes.
+# Structure: SYMBOL -> {"name": company name, "price": current price in USD}.
+
+OFFLINE_QUOTES = {
+    "AAPL": {"name": "Apple Inc.", "price": 152.35},
+    "AMZN": {"name": "Amazon.com Inc.", "price": 184.90},
+    "BA": {"name": "The Boeing Company", "price": 175.25},
+    "CSCO": {"name": "Cisco Systems Inc.", "price": 49.10},
+    "DIS": {"name": "The Walt Disney Company", "price": 96.40},
+    "GOOG": {"name": "Alphabet Inc.", "price": 148.20},
+    "IBM": {"name": "International Business Machines", "price": 172.80},
+    "INTC": {"name": "Intel Corporation", "price": 30.15},
+    "JNJ": {"name": "Johnson & Johnson", "price": 148.55},
+    "JPM": {"name": "JPMorgan Chase & Co.", "price": 201.40},
+    "KO": {"name": "The Coca-Cola Company", "price": 63.75},
+    "META": {"name": "Meta Platforms Inc.", "price": 505.30},
+    "MSFT": {"name": "Microsoft Corporation", "price": 421.60},
+    "NFLX": {"name": "Netflix Inc.", "price": 640.10},
+    "NVDA": {"name": "NVIDIA Corporation", "price": 120.05},
+    "ORCL": {"name": "Oracle Corporation", "price": 141.30},
+    "PEP": {"name": "PepsiCo Inc.", "price": 172.45},
+    "PG": {"name": "Procter & Gamble Company", "price": 168.90},
+    "QCOM": {"name": "Qualcomm Incorporated", "price": 190.25},
+    "TSLA": {"name": "Tesla Inc.", "price": 248.70},
+    "V": {"name": "Visa Inc.", "price": 272.35},
+    "XOM": {"name": "Exxon Mobil Corporation", "price": 113.60},
+}
+
+
 def apology(message, code=400):
-    """
-    Render a polished apology page carrying an HTTP status code.
+    """Render an apology page for the user.
 
-    The signature deliberately mirrors the CS50 distribution contract so the
-    ``(top, bottom)`` variables expected by ``apology.html`` are untouched.
-    Jinja auto-escapes the message, so no manual URL escaping is required.
+    Delegates to apology.html and passes the HTTP status code as ``top`` and
+    the human-readable explanation as ``bottom``.
+
+    Args:
+        message: Explanation of what went wrong, shown to the user.
+        code:    HTTP status code to return (defaults to 400).
+
+    Returns:
+        A Flask response tuple carrying the rendered page and status code.
     """
     return render_template("apology.html", top=code, bottom=message), code
 
 
-# ---------------------------------------------------------------------------
-# login_required - authentication guard
-# ---------------------------------------------------------------------------
 def login_required(f):
-    """
-    Decorate routes to require a logged-in user.
+    """Decorate a route so that it is only reachable by logged-in users.
 
-    Any request that reaches a decorated view without an authenticated
-    ``session["user_id"]`` is transparently redirected to the login page.
+    When no session exists, the visitor is redirected to the login page.
+    The original function's metadata is preserved via functools.wraps so
+    Flask introspection (e.g. endpoint names) continues to work.
 
-    https://flask.palletsprojects.com/en/latest/patterns/viewdecorators/
+    Args:
+        f: The view function to protect.
+
+    Returns:
+        A wrapped view function that enforces authentication.
     """
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
-            return redirect("/login")
+            return redirect(url_for("login"))
         return f(*args, **kwargs)
+
     return decorated_function
 
 
-# ---------------------------------------------------------------------------
-# Quote adapters - tiered resolution
-# ---------------------------------------------------------------------------
-def _lookup_iex(symbol):
-    """
-    Fetch a quote from the IEX Cloud REST API using the ``API_KEY`` env var.
-
-    Returns a normalized quote dict, or None if the key is missing, the
-    network call fails, or the payload cannot be parsed.
-    """
-    api_key = os.environ.get("API_KEY")
-    if not api_key:
-        return None  # No key configured - defer to the next adapter tier.
-
-    try:
-        url = (
-            "https://cloud.iexapis.com/stable/stock/"
-            f"{urllib.parse.quote_plus(symbol)}/quote?token={api_key}"
-        )
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        quote = response.json()
-        return {
-            "name": quote["companyName"],
-            "price": float(quote["latestPrice"]),
-            "symbol": quote["symbol"],
-        }
-    except (requests.RequestException, KeyError, TypeError, ValueError):
-        return None
-
-
-def _lookup_yahoo(symbol):
-    """
-    Fetch a quote from Yahoo Finance's public chart endpoint.
-
-    This free, key-free JSON API reports the regular-market price plus the
-    company's long/short name for any traded symbol. Returns a normalized
-    quote dict, or None when the symbol is unknown or the request fails.
-    """
-    try:
-        url = (
-            "https://query1.finance.yahoo.com/v8/finance/chart/"
-            f"{urllib.parse.quote_plus(symbol)}?interval=1d&range=1d"
-        )
-        response = requests.get(
-            url,
-            timeout=10,
-            headers={"User-Agent": "Mozilla/5.0 (CS50 Finance student app)"},
-        )
-        response.raise_for_status()
-
-        results = response.json().get("chart", {}).get("result")
-        if not results:
-            return None  # Unknown ticker - Yahoo returns an empty result set.
-
-        meta = results[0].get("meta", {})
-        price = meta.get("regularMarketPrice")
-        if price is None:
-            return None
-
-        name = meta.get("longName") or meta.get("shortName") or symbol
-        return {
-            "name": name,
-            "price": float(price),
-            "symbol": meta.get("symbol", symbol),
-        }
-    except (requests.RequestException, ValueError, KeyError, TypeError):
-        return None
-
-
-# Small, documented offline dataset so the whole buy/sell flow can be
-# demonstrated on a closed network or when every remote source is down.
-DEMO_QUOTES = {
-    "AAPL": {"name": "Apple Inc.", "price": 178.72},
-    "AMZN": {"name": "Amazon.com, Inc.", "price": 148.36},
-    "GOOGL": {"name": "Alphabet Inc.", "price": 141.28},
-    "META": {"name": "Meta Platforms, Inc.", "price": 486.01},
-    "MSFT": {"name": "Microsoft Corporation", "price": 374.12},
-    "NFLX": {"name": "Netflix, Inc.", "price": 482.55},
-    "NVDA": {"name": "NVIDIA Corporation", "price": 601.99},
-    "TSLA": {"name": "Tesla, Inc.", "price": 238.45},
-}
-
-
-def _lookup_demo(symbol):
-    """
-    Resolve a ticker from the bundled offline demo dataset.
-
-    This is the last-resort adapter: it guarantees that common CS50 symbols
-    (NFLX, AAPL, ...) return data even with no network and no API key.
-    """
-    record = DEMO_QUOTES.get(symbol.upper())
-    if record is None:
-        return None
-    return {
-        "name": record["name"],
-        "price": record["price"],
-        "symbol": symbol.upper(),
-    }
-
-
 def lookup(symbol):
-    """
-    Resolve a stock symbol to a normalized quote dict.
+    """Resolve a stock symbol to its name and current price.
 
-    Adapter priority: IEX Cloud -> Yahoo Finance (free) -> static demo data.
-    Returns ``{"name", "price", "symbol"}`` on success, otherwise None.
-    The symbol is normalized to uppercase before resolution.
+    The strategy is layered for resilience:
+      1. If FINANCE_API_KEY is set, query the IEX Cloud quote endpoint.
+      2. Else if FINNHUB_API_KEY is set, query the Finnhub quote endpoint.
+      3. Otherwise (or if a live request fails), consult the offline dataset.
+
+    Args:
+        symbol: The ticker symbol to look up (case-insensitive).
+
+    Returns:
+        A dict {"name": str, "price": float, "symbol": str} when the symbol is
+        known, or None when the symbol is unknown or malformed.
     """
+    symbol = (symbol or "").strip().upper()
     if not symbol:
         return None
 
-    normalized = symbol.strip().upper()
-    if not normalized:
+    live = _lookup_live(symbol)
+    if live is not None:
+        return live
+
+    # Offline fallback: deterministic, dependency-free, always available.
+    quote = OFFLINE_QUOTES.get(symbol)
+    if quote is None:
         return None
 
-    for adapter in (_lookup_iex, _lookup_yahoo, _lookup_demo):
-        result = adapter(normalized)
-        if result is not None:
-            return result
+    return {
+        "name": quote["name"],
+        "price": float(quote["price"]),
+        "symbol": symbol,
+    }
 
-    # Every tier exhausted - the symbol does not resolve anywhere.
+
+def _lookup_live(symbol):
+    """Attempt a live quote from IEX Cloud or Finnhub.
+
+    Returns None whenever no key is configured or the request fails, so the
+    caller can fall back to the offline dataset without special handling.
+
+    Args:
+        symbol: The uppercased ticker symbol.
+
+    Returns:
+        A quote dict on success, otherwise None.
+    """
+    iex_key = os.environ.get("FINANCE_API_KEY")
+    if iex_key:
+        try:
+            response = requests.get(
+                f"https://cloud.iexapis.com/stable/stock/{symbol}/quote",
+                params={"token": iex_key},
+                timeout=5,
+            )
+            response.raise_for_status()
+            data = response.json()
+            return {
+                "name": data.get("companyName", symbol),
+                "price": float(data["latestPrice"]),
+                "symbol": symbol,
+            }
+        except (KeyError, TypeError, ValueError, requests.RequestException):
+            return None
+
+    finnhub_key = os.environ.get("FINNHUB_API_KEY")
+    if finnhub_key:
+        try:
+            response = requests.get(
+                "https://finnhub.io/api/v1/quote",
+                params={"symbol": symbol, "token": finnhub_key},
+                timeout=5,
+            )
+            response.raise_for_status()
+            data = response.json()
+            current = data.get("c")
+            if current is None:
+                return None
+            return {"name": symbol, "price": float(current), "symbol": symbol}
+        except (KeyError, TypeError, ValueError, requests.RequestException):
+            return None
+
     return None
 
 
-# ---------------------------------------------------------------------------
-# usd - currency formatting
-# ---------------------------------------------------------------------------
 def usd(value):
-    """Format a numeric value as United States Dollars, e.g. $12,345.67."""
+    """Format a numeric value as a US dollar amount.
+
+    Args:
+        value: A number (int/float) or string that can be coerced.
+
+    Returns:
+        A string like "$1,234.56", or "$0.00" for invalid input.
+    """
     try:
-        numeric = float(value)
+        return f"${float(value):,.2f}"
     except (TypeError, ValueError):
-        numeric = 0.0
-    return f"${numeric:,.2f}"
+        return "$0.00"

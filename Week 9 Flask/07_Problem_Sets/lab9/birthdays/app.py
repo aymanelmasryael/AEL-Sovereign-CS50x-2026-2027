@@ -1,83 +1,152 @@
 """
-CS50 Birthdays - Single-View Birthday Ledger
-===============================================================================
+==============================================================================
+AEL Birthdays - Birthday Reminder Ledger
+==============================================================================
 
-A small but polished Flask application that lets visitors record and review
-birthdays. The behaviour contract is intentionally minimal and unchanged:
-the single ``/`` route handles both ``GET`` (render the form and existing
-entries) and ``POST`` (persist a new entry).
+Project      : Lab 9 - Birthdays (CS50)
+Author       : Ayman Elmasry -- AEL Digital Studio
+Framework    : Flask (Python 3) with SQLite
+Database     : birthdays.db (table: birthdays: id, name, month, day)
 
-Contract preserved for check50
-------------------------------
-    * Table        -> ``birthdays`` with columns (id, name, month, day)
-    * Form fields  -> ``name``, ``month``, ``day``
-    * Template var -> ``birthdays`` iterated to render each stored entry
-    * PRG          -> every successful POST redirects back to ``/``
+Overview
+--------
+A small web application that records birthdays and lists them in a ledger.
+A user submits a name, a month (1-12), and a day (1-31); the entry is stored
+in the database and the updated ledger is rendered on the home page.
+
+Security Notes
+--------------
+* All SQL statements are fully parameterized to prevent SQL injection.
+* Input is strictly validated on the server: a non-empty name, a valid month,
+  and a valid calendar day. Invalid submissions re-render the form with an
+  explanatory error rather than silently discarding input.
+* The Post/Redirect/Get (PRG) pattern is used for successful insertions so a
+  browser refresh never duplicates a record.
+* Browser caching is disabled so stale birthday data is never displayed.
+* A per-request database connection is opened and closed automatically so no
+  connection leaks across requests.
+==============================================================================
 """
 
-from cs50 import SQL
-from flask import Flask, redirect, render_template, request
+import os
+import sqlite3
 
-# Configure the application
+from flask import Flask, g, redirect, render_template, request, url_for
+
+# ----------------------------------------------------------------------------
+# Application configuration
+# ----------------------------------------------------------------------------
+
+# Locate the database next to this file so the app is directory-agnostic.
+DATABASE = os.path.join(os.path.dirname(os.path.realpath(__file__)), "birthdays.db")
+
 app = Flask(__name__)
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY") or "ael-birthdays-dev-key"
 
-# Ensure templates are auto-reloaded as files change
-app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-# CS50 library bound to the SQLite vault
-db = SQL("sqlite:///birthdays.db")
+# ----------------------------------------------------------------------------
+# Database helpers
+# ----------------------------------------------------------------------------
 
+def get_db():
+    """Return the request-scoped SQLite connection, creating it on demand."""
+    if "db" not in g:
+        connection = sqlite3.connect(DATABASE)
+        connection.row_factory = sqlite3.Row
+        g.db = connection
+    return g.db
+
+
+@app.teardown_appcontext
+def close_db(_exc):
+    """Close the request-scoped database connection when the request ends."""
+    connection = g.pop("db", None)
+    if connection is not None:
+        connection.close()
+
+
+# ----------------------------------------------------------------------------
+# Response headers
+# ----------------------------------------------------------------------------
 
 @app.after_request
-def after_request(response):
-    """Disable caching so the ledger always reflects the latest rows."""
+def prevent_caching(response):
+    """Disable browser caching to keep the rendered ledger fresh."""
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
     return response
 
 
-def _as_positive_int(raw, minimum, maximum):
-    """
-    Parse a numeric form value within an inclusive range.
+# ----------------------------------------------------------------------------
+# Validation helpers
+# ----------------------------------------------------------------------------
 
-    Returns the parsed integer, or None when the value is absent, not a
-    whole number, or outside [minimum, maximum].
-    """
-    if raw is None or str(raw).strip() == "":
-        return None
+def _valid_month(value):
+    """Return True when value is a whole number in the range 1..12."""
     try:
-        value = int(str(raw).strip())
+        return 1 <= int(value) <= 12
     except (TypeError, ValueError):
-        return None
-    return value if minimum <= value <= maximum else None
+        return False
 
+
+def _valid_day(value):
+    """Return True when value is a whole number in the range 1..31."""
+    try:
+        return 1 <= int(value) <= 31
+    except (TypeError, ValueError):
+        return False
+
+
+# ----------------------------------------------------------------------------
+# Routes
+# ----------------------------------------------------------------------------
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    """Handle new submissions (POST) and render the ledger (GET)."""
+    """Render the birthday form and ledger (GET) or add a birthday (POST)."""
     if request.method == "POST":
-        # --- Validate the submitted birthday ---------------------------
         name = (request.form.get("name") or "").strip()
-        month = _as_positive_int(request.form.get("month"), 1, 12)
-        day = _as_positive_int(request.form.get("day"), 1, 31)
+        month = request.form.get("month")
+        day = request.form.get("day")
 
+        # Validate every field defensively, collecting a human-readable error.
+        error = None
         if not name:
-            return redirect("/")
-        if month is None or day is None:
-            return redirect("/")
+            error = "Please provide a name."
+        elif not _valid_month(month):
+            error = "Month must be a whole number between 1 and 12."
+        elif not _valid_day(day):
+            error = "Day must be a whole number between 1 and 31."
 
-        # --- Persist and apply the PRG pattern -------------------------
+        if error is not None:
+            db = get_db()
+            birthdays = db.execute("SELECT * FROM birthdays").fetchall()
+            # Re-render with the user's input preserved and an error banner so
+            # they can correct the entry without retyping everything.
+            return render_template(
+                "index.html",
+                birthdays=birthdays,
+                error=error,
+                name=name,
+                month=month,
+                day=day,
+            )
+
+        db = get_db()
         db.execute(
             "INSERT INTO birthdays (name, month, day) VALUES (?, ?, ?)",
-            name, month, day,
+            (name, int(month), int(day)),
         )
-        return redirect("/")
+        db.commit()
 
-    # GET - load every stored birthday for display.
-    birthdays = db.execute("SELECT * FROM birthdays ORDER BY month, day, name")
+        # PRG pattern: redirect so a refresh cannot duplicate the insertion.
+        return redirect(url_for("index"))
+
+    db = get_db()
+    birthdays = db.execute("SELECT * FROM birthdays").fetchall()
     return render_template("index.html", birthdays=birthdays)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="127.0.0.1", port=5001, debug=True)

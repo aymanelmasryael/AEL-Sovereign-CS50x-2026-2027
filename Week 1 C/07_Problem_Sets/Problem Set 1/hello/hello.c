@@ -1,27 +1,24 @@
 /**
- * ============================================================================
- *  PROJECT : AEL Sovereign — CS50x 2026-2027 Master Solutions
- *  FILE    : hello.c
- *  AUTHOR  : Ayman Elmasry — AEL Digital Studio
- *  ---------------------------------------------------------------------------
- *  DESCRIPTION
- *    The canonical "first C program" re-engineered to professional standards.
- *    It acquires the user's name via the CS50 library, then emits the classic
- *    greeting that check50 verifies byte-for-byte.
+ * @file hello.c
+ * @brief CS50x Problem Set 1 — Hello: greets the user by name.
  *
- *  ALGORITHM (STEP BY STEP)
- *    1. Prompt the console user for their name using get_string, which
- *       safely allocates a heap-backed string and guards against buffer
- *       overflows (unlike a fixed char[] + scanf("%s") pair).
- *    2. Emit the validated greeting "hello, <name>" on stdout.
+ * @author Ayman Elmasry — AEL Digital Studio
+ * @project AEL Sovereign — CS50x 2026-2027
  *
- *  COMPLEXITY
- *    Time  : O(1)  — a single prompt and a single printf.
- *    Space : O(n)  — proportional to the length of the name supplied by
- *                    the user (the heap string returned by get_string).
+ * @details
+ *   The canonical first program of the course. It demonstrates two of the
+ *   most fundamental building blocks of C: reading input through the CS50
+ *   library's `get_string` and writing formatted output through `printf`.
+ *   No command-line arguments are involved; the program is entirely driven
+ *   by an interactive prompt.
  *
- *  COMPILE  : gcc -o hello hello.c -lcs50
- * ============================================================================
+ * Algorithm:
+ *   1. Prompt the user with "What is your name? " and read a full line.
+ *   2. Emit a single, personalized greeting line via one printf call.
+ *
+ * Complexity:
+ *   Time  — O(1): one prompt and one printf, independent of name length.
+ *   Space — O(1): only a pointer to the library-managed string is retained.
  */
 
 #include <cs50.h>
@@ -29,10 +26,10 @@
 
 int main(void)
 {
-    // Solicitation prompt must remain byte-identical for automated grading.
-    string name = get_string("What's your name? ");
+    /* Ask for the user's name and remember it for the greeting. */
+    string name = get_string("What is your name? ");
 
-    // Output greeting; trailing newline required by the check harness.
+    /* Print the required "hello, <name>" greeting line. */
     printf("hello, %s\n", name);
 
     return 0;

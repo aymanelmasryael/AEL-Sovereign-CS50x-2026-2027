@@ -1,131 +1,159 @@
-/* ============================================================================
-   AEL DIGITAL STUDIO — CV / PORTFOLIO — Interaction Engine v1.0
-   Author : Ayman Elmasry
-   Purpose: Vanilla-JS micro-interactions for the CS50x week 8 "homepage":
-            1. Mobile navigation toggle
-            2. Sticky navbar state on scroll
-            3. Scroll-reveal animations (IntersectionObserver)
-            4. Animated skill meters on reveal
-            5. Scroll-spy: highlight the active nav link
-            6. Auto-updating footer year
-   ========================================================================== */
+/* ============================================================
+   AEL Digital Studio — Homepage Interactions
+   Mobile nav toggle, sticky nav, scroll reveal, smooth scroll,
+   automatic footer year. All vanilla JavaScript, no dependencies.
+   ============================================================ */
 
-document.addEventListener("DOMContentLoaded", () => {
+(function () {
+    "use strict";
 
-    /* ------------------------------------------------------------------
-       1. Mobile Navigation Toggle
-    ------------------------------------------------------------------ */
+    /* --------------------------------------------------------
+       1. MOBILE NAVIGATION TOGGLE
+    -------------------------------------------------------- */
     const navToggle = document.getElementById("nav-toggle");
-    const navMenu = document.getElementById("nav-menu");
+    const navList = document.getElementById("nav-list");
 
-    if (navToggle && navMenu) {
-        navToggle.addEventListener("click", () => {
-            const expanded = navToggle.getAttribute("aria-expanded") === "true";
-            navToggle.setAttribute("aria-expanded", String(!expanded));
-            navMenu.classList.toggle("is-open");
+    if (navToggle && navList) {
+        navToggle.addEventListener("click", function () {
+            const isOpen = navList.classList.toggle("is-open");
+            navToggle.classList.toggle("is-open", isOpen);
+            navToggle.setAttribute("aria-expanded", String(isOpen));
+            navToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
         });
-    }
 
-    /* ------------------------------------------------------------------
-       2. Sticky Navbar — shadow state on scroll
-    ------------------------------------------------------------------ */
-    const navbar = document.getElementById("navbar");
-
-    const updateNavbarState = () => {
-        if (!navbar) return;
-        navbar.classList.toggle("is-scrolled", window.scrollY > 12);
-    };
-
-    updateNavbarState();
-    window.addEventListener("scroll", updateNavbarState, { passive: true });
-
-    /* ------------------------------------------------------------------
-       3 & 4. Scroll-Reveal + Animated Skill Meters
-       Uses IntersectionObserver so sections fade in the first time they
-       enter the viewport. Skill meter fill-width is driven by the inline
-       data-level attribute (a percentage 0-100).
-    ------------------------------------------------------------------ */
-    const revealables = document.querySelectorAll(".reveal, .meter-fill");
-
-    if ("IntersectionObserver" in window) {
-        const revealObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
-
-                    const el = entry.target;
-
-                    if (el.classList.contains("meter-fill")) {
-                        // Drive the progress width from the data-level attribute.
-                        const level = Math.min(100, Math.max(0, parseInt(el.dataset.level, 10) || 0));
-                        el.style.setProperty("--level", level + "%");
-                        el.classList.add("is-visible");
-                    } else {
-                        el.classList.add("is-visible");
-                    }
-
-                    // Only reveal each element once, then stop observing it.
-                    revealObserver.unobserve(el);
-                });
-            },
-            { threshold: 0.18 }
-        );
-
-        revealables.forEach((el) => revealObserver.observe(el));
-    } else {
-        // Graceful fallback: reveal everything immediately for older browsers.
-        revealables.forEach((el) => {
-            if (el.classList.contains("meter-fill")) {
-                const level = Math.min(100, Math.max(0, parseInt(el.dataset.level, 10) || 0));
-                el.style.setProperty("--level", level + "%");
-            }
-            el.classList.add("is-visible");
-        });
-    }
-
-    /* ------------------------------------------------------------------
-       5. Scroll-Spy — highlight the nav link of the visible section
-    ------------------------------------------------------------------ */
-    const navLinks = Array.from(document.querySelectorAll(".nav-link"));
-    const sections = navLinks
-        .map((link) => document.querySelector(link.getAttribute("href")))
-        .filter((section) => section !== null);
-
-    const setActiveLink = (id) => {
-        navLinks.forEach((link) => {
-            const isActive = link.getAttribute("href") === "#" + id;
-            link.classList.toggle("is-active", isActive);
-        });
-    };
-
-    const activeObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setActiveLink(entry.target.id);
-                }
-            });
-        },
-        { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
-    );
-
-    sections.forEach((section) => activeObserver.observe(section));
-
-    // Close the mobile menu after tapping any nav link (smooth-scroll target).
-    navMenu?.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-            if (navMenu.classList.contains("is-open")) {
-                navMenu.classList.remove("is-open");
+        // Close the menu automatically when a link is chosen
+        navList.addEventListener("click", function (event) {
+            if (event.target.closest("a")) {
+                navList.classList.remove("is-open");
+                navToggle.classList.remove("is-open");
                 navToggle.setAttribute("aria-expanded", "false");
             }
         });
+    }
+
+    /* --------------------------------------------------------
+       2. STICKY NAVIGATION (frosted glass on scroll)
+    -------------------------------------------------------- */
+    const header = document.getElementById("site-header");
+
+    if (header) {
+        // Immediate check so the header looks right on refresh
+        updateHeaderState();
+
+        // Debounced scroll listener to avoid excessive style recalculations
+        let scrollFrame = false;
+        window.addEventListener(
+            "scroll",
+            function () {
+                if (!scrollFrame) {
+                    window.requestAnimationFrame(updateHeaderState);
+                    scrollFrame = true;
+                }
+            },
+            { passive: true }
+        );
+
+        function updateHeaderState() {
+            header.classList.toggle("is-scrolled", window.scrollY > 12);
+            scrollFrame = false;
+        }
+    }
+
+    /* --------------------------------------------------------
+       3. ACTIVE NAV LINK (optional scroll-spy)
+    -------------------------------------------------------- */
+    const sections = document.querySelectorAll("main section[id]");
+    const navLinks = document.querySelectorAll('.nav-list a[href^="#"]');
+
+    if ("IntersectionObserver" in window && sections.length && navLinks.length) {
+        const spy = new IntersectionObserver(
+            function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(function (link) {
+                            const matches = link.getAttribute("href") === "#" + entry.target.id;
+                            link.classList.toggle("is-active", matches);
+                        });
+                    }
+                });
+            },
+            { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+        );
+
+        sections.forEach(function (section) {
+            spy.observe(section);
+        });
+    }
+
+    /* --------------------------------------------------------
+       4. SCROLL REVEAL (IntersectionObserver with fallback)
+    -------------------------------------------------------- */
+    const revealItems = document.querySelectorAll(".reveal");
+
+    function showImmediately() {
+        revealItems.forEach(function (item) {
+            item.classList.add("is-visible");
+        });
+    }
+
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(
+            function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        revealObserver.unobserve(entry.target); // animate once
+                    }
+                });
+            },
+            { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }
+        );
+
+        revealItems.forEach(function (item) {
+            revealObserver.observe(item);
+        });
+    } else {
+        // Older browsers: never hide content, just show it
+        showImmediately();
+    }
+
+    /* --------------------------------------------------------
+       5. SMOOTH SCROLLING (progressive enhancement)
+    -------------------------------------------------------- */
+    // Respect users who prefer reduced motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            const targetId = link.getAttribute("href");
+            if (targetId.length < 2) return; // bare "#"
+
+            const target = document.querySelector(targetId);
+            if (!target) return;
+
+            event.preventDefault();
+
+            // Native smooth scrolling when supported and motion is allowed
+            if ("scrollBehavior" in document.documentElement.style && !prefersReducedMotion) {
+                target.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                // Hard fallback: honor scroll-padding-top via CSS by scrolling to offset
+                const headerHeight = header ? header.offsetHeight : 0;
+                const top = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                window.scrollTo({ top: Math.max(top, 0), behavior: "auto" });
+            }
+
+            // Keep focus where the user navigated (accessibility)
+            target.setAttribute("tabindex", "-1");
+            target.focus({ preventScroll: true });
+        });
     });
 
-    /* ------------------------------------------------------------------
-       6. Auto-Updating Footer Year
-    ------------------------------------------------------------------ */
-    const yearEl = document.getElementById("year");
+    /* --------------------------------------------------------
+       6. AUTOMATIC FOOTER YEAR
+    -------------------------------------------------------- */
+    const yearEl = document.getElementById("footer-year");
     if (yearEl) {
         yearEl.textContent = String(new Date().getFullYear());
     }
-});
+})();

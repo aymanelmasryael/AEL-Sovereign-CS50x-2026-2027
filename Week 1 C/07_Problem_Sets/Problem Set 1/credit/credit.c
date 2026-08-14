@@ -1,212 +1,203 @@
 /**
- * ============================================================================
- *  PROJECT : AEL Sovereign — CS50x 2026-2027 Master Solutions
- *  FILE    : credit.c
- *  AUTHOR  : Ayman Elmasry — AEL Digital Studio
- *  ---------------------------------------------------------------------------
- *  DESCRIPTION
- *    Identifies the issuing network of a credit card number and certifies its
- *    validity using the Luhn checksum. Accepts a single 64-bit card number via
- *    stdin ("Number: ") and prints one of AMEX / MASTERCARD / VISA / INVALID —
- *    the exact contract the check50 harness expects.
+ * @file credit.c
+ * @brief CS50x Problem Set 1 — Credit: LUHN-based card issuer validator.
  *
- *  THE LUHN ALGORITHM (WITH PROOF SKETCH)
- *    Devised by Hans Peter Luhn (IBM, 1954) to catch accidental transcription
- *    errors rather than fraud. Procedure, scanning from the *rightmost* digit:
- *      1. Moving left, double every second digit.
- *      2. If a doubled digit exceeds 9, it contributes its digit-sum instead
- *         (equivalently, subtract 9 — a doubled digit is never more than 18).
- *      3. Sum every un-doubled digit together with every adjusted doubled one.
- *      4. The number is valid iff this total is congruent to 0 mod 10.
+ * @author Ayman Elmasry — AEL Digital Studio
+ * @project AEL Sovereign — CS50x 2026-2027
  *
- *    Why it works: a transposition or a single-digit mutation produces a total
- *    that is NOT a multiple of 10 in ~all* real-world cases, so mod-10 wraps
- *    expose the corruption. The check digit is itself the digit that forces
- *    the full total to a ten's multiple, which is why "ends in a zero" is the
- *    acceptance test.
+ * @details
+ *   Validates a credit-card number entered interactively. The program
+ *   applies the LUHN checksum (the industry-standard check-digit scheme
+ *   used by virtually all card networks) and then classifies the number
+ *   by its length and leading digits into AMEX, MASTERCARD, VISA, or the
+ *   INVALID bucket.
  *
- *  ISSUING-NETWORK HEURISTICS
- *    AMEX       : 15 digits, prefix 34 or 37.
- *    MASTERCARD : 16 digits, leading pair in [51, 55].
- *    VISA       : 13 or 16 digits, leading digit 4.
- *    A number is reported only after it passes the Luhn check.
+ * Algorithm:
+ *   1. Read the card number as a long (up to 16 digits).
+ *   2. LUHN checksum: walking the digits from the right, every other
+ *      digit (the second-to-last, fourth-to-last, ...) is doubled, and the
+ *      digits of each doubled value are summed; the undoubled digits are
+ *      added unchanged. The number passes iff the total is divisible by 10.
+ *   3. Issuer classification from length + prefix:
+ *        - AMEX       : 15 digits, prefix 34 or 37
+ *        - MASTERCARD : 16 digits, prefix 51..55
+ *        - VISA       : 13 or 16 digits, leading digit 4
+ *   4. Emit exactly one of: "VISA", "AMEX", "MASTERCARD", "INVALID".
  *
- *  COMPLEXITY
- *    Time  : O(d)  — single left-to-right digit stream, d <= 16 digits.
- *    Space : O(1)  — constant heap of scalars, no digit arrays required.
- *
- *  COMPILE  : gcc -o credit credit.c -lcs50
- * ============================================================================
+ * Complexity:
+ *   Time  — O(d): d is the digit count (bounded by 16); a constant number
+ *           of passes over the digits.
+ *   Space — O(1): only scalar state, no dynamic allocation.
  */
 
 #include <cs50.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 
-/* Issuing-network display tokens — the check50-verified vocabulary. */
-#define TOKEN_AMEX       "AMEX"
-#define TOKEN_MASTERCARD "MASTERCARD"
-#define TOKEN_VISA       "VISA"
-#define TOKEN_INVALID    "INVALID"
-
-/* Distinctive card-length and prefix signatures of each network. */
-#define AMEX_LEN       15
-#define AMEX_PREFIX_34 34
-#define AMEX_PREFIX_37 37
-
-#define MASTERCARD_LEN     16
-#define MASTERCARD_MIN_51  51
-#define MASTERCARD_MAX_55  55
-
-#define VISA_PREFIX 4
-#define VISA_LEN_SHORT 13
-#define VISA_LEN_LONG  16
-
-/* Forward declarations for the modular validation pipeline. */
-long get_card_number(void);
-bool is_valid_luhn(long number);
-int  count_digits(long number);
-int  leading_pair(long number);
-int  leading_digit(long number);
-const char *identify_issuer(long number);
-
-int main(void)
-{
-    long number = get_card_number();
-
-    /* Only a checksum-verified number may be branded. */
-    if (is_valid_luhn(number))
-    {
-        printf("%s\n", identify_issuer(number));
-    }
-    else
-    {
-        printf("%s\n", TOKEN_INVALID);
-    }
-
-    return 0;
-}
+/* Card-network constants used for classification. */
+#define VISA_MIN_DIGITS 13
+#define VISA_MAX_DIGITS 16
+#define AMEX_DIGITS 15
+#define MASTERCARD_DIGITS 16
+#define AMEX_PREFIX_ONE 34
+#define AMEX_PREFIX_TWO 37
+#define MASTERCARD_PREFIX_MIN 51
+#define MASTERCARD_PREFIX_MAX 55
+#define VISA_LEADING_DIGIT 4
+#define VISA_PREFIX_SIZE 1
+#define AMEX_PREFIX_SIZE 2
+#define MASTERCARD_PREFIX_SIZE 2
+#define MODULUS_TEN 10
 
 /**
- * Acquires the card number, refusing negatives (a card number is unsigned
- * by definition). Zero is technically Luhn-valid, so input of 0 reproduces
- * the reference behaviour of "INVALID" branding downstream via prefix rules.
- */
-long get_card_number(void)
-{
-    long number;
-    do
-    {
-        number = get_long("Number: ");
-    }
-    while (number < 0);
-    return number;
-}
-
-/**
- * Applies the Luhn checksum. Reads digits right-to-left by repeated
- * floor-division by 10, which peels the least-significant digit each turn.
+ * @brief Count the decimal digits in a non-negative number.
  *
- * OBSERVATION: only the position parity matters, so a running digit-index
- * (0-based, counting from the units place) selects the doubling class.
- * Height-reweighting a doubled digit: max(2*9)=18, whose digit sum is its
- * base-10 "digital root" — obtained here as (2*d) % 10 + (2*d) / 10.
+ * @param number The number to inspect.
+ * @return The number of digits, or 0 for the value zero.
  */
-bool is_valid_luhn(long number)
-{
-    int  total  = 0;
-    int  parity = 0;   /* 0 => units digit (un-doubled), 1 => doubled class. */
-
-    for (; number > 0; number /= 10, parity ^= 1)
-    {
-        int digit = number % 10;
-
-        if (parity == 0)
-        {
-            total += digit;                 /* every other digit: sum as-is. */
-        }
-        else
-        {
-            int doubled = digit * 2;
-            total += doubled % 10 + doubled / 10;  /* digit-sum fold.        */
-        }
-    }
-
-    return total % 10 == 0;
-}
-
-/**
- * Returns the number of base-10 digits in `number` by aggressive division.
- * Corollary: 0 has zero digits, which is harmless for the issuer test.
- */
-int count_digits(long number)
+static int count_digits(long number)
 {
     int digits = 0;
-    do
+
+    while (number > 0)
     {
         number /= 10;
         digits++;
     }
-    while (number > 0);
+
     return digits;
 }
 
 /**
- * Extracts the two most-significant digits of `number` by stripping its
- * less-significant digits until only two remain.
+ * @brief Compute the LUHN checksum of a card number.
+ *
+ * @param number The card number (its most significant digit first).
+ * @return The weighted sum described by the LUHN algorithm.
  */
-int leading_pair(long number)
+static int luhn_checksum(long number)
 {
-    while (number >= 100)
+    int sum = 0;
+    bool double_next = false;
+
+    /* Process digits from right to left. The rightmost (check) digit is
+       never doubled; every other digit moving leftwards is doubled and
+       its constituent digits are summed rather than the product itself. */
+    while (number > 0)
     {
+        int digit = (int) (number % 10);
+
+        if (double_next)
+        {
+            digit *= 2;
+            if (digit >= 10)
+            {
+                /* A doubled digit is at most 18, so its digit-sum is
+                   (tens digit) + (units digit). */
+                sum += (digit % 10) + (digit / 10);
+            }
+            else
+            {
+                sum += digit;
+            }
+        }
+        else
+        {
+            sum += digit;
+        }
+
+        double_next = !double_next;
         number /= 10;
     }
-    return (int) number;
+
+    return sum;
 }
 
 /**
- * Extracts the most-significant digit of `number`.
+ * @brief Isolate the leading `target` digits of a number.
+ *
+ * @param number        The number whose prefix is required.
+ * @param target        How many leading digits to keep.
+ * @return The leading `target` digits as a number.
  */
-int leading_digit(long number)
-{
-    while (number >= 10)
-    {
-        number /= 10;
-    }
-    return (int) number;
-}
-
-/**
- * Classifies a Luhn-valid number by its distinctive length-and-prefix
- * signature. Order matters for VISA: both its lengths and its lone '4'
- * prefix are tested after the two-digit networks to avoid collisions.
- */
-const char *identify_issuer(long number)
+static long leading_prefix(long number, int target)
 {
     int digits = count_digits(number);
-    int pair   = leading_pair(number);
-    int first  = leading_digit(number);
+    long divisor = 1;
 
-    /* AMEX: 15 digits, opens 34 or 37. */
-    if (digits == AMEX_LEN &&
-        (pair == AMEX_PREFIX_34 || pair == AMEX_PREFIX_37))
+    for (int i = 0; i < digits - target; i++)
     {
-        return TOKEN_AMEX;
+        divisor *= 10;
     }
 
-    /* MASTERCARD: 16 digits, leading pair in the inclusive window 51-55. */
-    if (digits == MASTERCARD_LEN &&
-        pair >= MASTERCARD_MIN_51 && pair <= MASTERCARD_MAX_55)
+    return number / divisor;
+}
+
+/**
+ * @brief Classify a number into a card issuer, or NULL if unrecognized.
+ *
+ * @param number The (checksum-passing) card number.
+ * @return "VISA", "AMEX" or "MASTERCARD", or NULL when no pattern matches.
+ */
+static const char *issuer_name(long number)
+{
+    int digits = count_digits(number);
+
+    if ((digits == VISA_MIN_DIGITS || digits == VISA_MAX_DIGITS) &&
+        leading_prefix(number, VISA_PREFIX_SIZE) == VISA_LEADING_DIGIT)
     {
-        return TOKEN_MASTERCARD;
+        return "VISA";
     }
 
-    /* VISA: 13 or 16 digits, single leading 4. */
-    if (((digits == VISA_LEN_SHORT) || (digits == VISA_LEN_LONG)) &&
-        first == VISA_PREFIX)
+    if (digits == AMEX_DIGITS)
     {
-        return TOKEN_VISA;
+        long prefix = leading_prefix(number, AMEX_PREFIX_SIZE);
+        if (prefix == AMEX_PREFIX_ONE || prefix == AMEX_PREFIX_TWO)
+        {
+            return "AMEX";
+        }
     }
 
-    return TOKEN_INVALID;
+    if (digits == MASTERCARD_DIGITS)
+    {
+        long prefix = leading_prefix(number, MASTERCARD_PREFIX_SIZE);
+        if (prefix >= MASTERCARD_PREFIX_MIN && prefix <= MASTERCARD_PREFIX_MAX)
+        {
+            return "MASTERCARD";
+        }
+    }
+
+    return NULL;
+}
+
+int main(void)
+{
+    long number = get_long("Number: ");
+
+    /* A negative number is meaningless in this context; reject it early. */
+    if (number < 0)
+    {
+        printf("INVALID\n");
+        return 0;
+    }
+
+    /* Fail fast if the number fails the LUHN checksum. */
+    if (luhn_checksum(number) % MODULUS_TEN != 0)
+    {
+        printf("INVALID\n");
+        return 0;
+    }
+
+    /* A passing checksum is only half the story: the length and prefix
+       must also match a recognized card network. */
+    const char *issuer = issuer_name(number);
+    if (issuer == NULL)
+    {
+        printf("INVALID\n");
+    }
+    else
+    {
+        printf("%s\n", issuer);
+    }
+
+    return 0;
 }

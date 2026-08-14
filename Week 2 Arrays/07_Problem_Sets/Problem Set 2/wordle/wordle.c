@@ -1,292 +1,362 @@
 /**
- * ============================================================================
- *  PROJECT : AEL Sovereign — CS50x 2026-2027 Master Solutions
- *  FILE    : wordle.c
- *  AUTHOR  : Ayman Elmasry — AEL Digital Studio
- *  ---------------------------------------------------------------------------
- *  DESCRIPTION
- *    A faithful, terminated re-implementation of WORDLE50 — the CS50 WeeK-2
- *    terminal spin on the daily word-guessing puzzle. A word of length 5..8
- *    is loaded pseudo-randomly from a bundled dictionary with 1000 entries,
- *    and the player has (length + 1) attempts to divine it, receiving
- *    coloured, position-aware feedback after every guess. This file is a
- *    production-grade rewrite that preserves the *exact* stdin/stdout
- *    protocol of the official distribution code, so check50 behaviour is
- *    bit-for-bit unchanged.
+ * @file wordle.c
+ * @brief CS50x Problem Set 2 — Wordle: terminal word-guessing game.
  *
- *  FEEDBACK MODEL
- *    Each guessed character is rated against the secret word:
- *      EXACT  (green)  — the letter sits in the same position in `choice`.
- *      CLOSE  (yellow) — the letter exists in `choice`, but elsewhere.
- *      WRONG  (red)    — the letter is entirely absent.
- *    The collective score is the arithmetic sum of these per-letter ratings;
- *    a perfect guess scores EXACT * wordsize.
+ * @author Ayman Elmasry — AEL Digital Studio
+ * @project AEL Sovereign — CS50x 2026-2027
  *
- *  PERFORMANCE & RUNTIME CONSIDERATIONS
- *    - The dictionary load is O(LISTSIZE * wordsize) — a single disk read.
- *    - Each guess is scored in O(wordsize) with one strstr() membership
- *      probe per letter; the ANSI colouring pass is a further O(wordsize).
- *    - A variable-length 2-D array `options[LISTSIZE][wordsize+1]` holds the
- *      dictionary, requiring no dynamic allocation or manual free.
+ * @details
+ *   Implements the classic Wordle game for word lengths 5 through 8.
+ *   The player has as many guesses as the word is letters long and must
+ *   guess a randomly chosen word drawn from a bundled dictionary file.
+ *   Each letter of a guess is scored against the secret word and rendered
+ *   as a colored tile: green for a correct letter in the correct position,
+ *   yellow for a letter in the word but misplaced, and red otherwise.
+ *   A per-letter "matched" bookkeeping pass guarantees each occurrence of
+ *   a duplicated letter in the secret can be consumed only once, which is
+ *   precisely how the official game avoids phantom yellow tiles.
  *
- *  COMPLEXITY
- *    Time  : O(LISTSIZE)  load  + O(guesses * wordsize) for the whole game.
- *    Space : O(LISTSIZE * wordsize)  resident dictionary.
+ * Algorithm:
+ *   1. Parse the optional word length argument (default 5, range 5..8);
+ *      reject malformed usage with the contract message and exit code 1.
+ *   2. Load the aligned dictionary and choose a uniformly random secret.
+ *   3. For each round:
+ *        a. Prompt for a guess, requiring exact length and dictionary
+ *           membership.
+ *        b. Classify each position via check_word (green/yellow/red).
+ *        c. Reveal any newly placed letters in the hidden word.
+ *        d. Print the hidden-word state, then the colored feedback row.
+ *        e. On a full match, announce victory and exit 0.
+ *   4. If turns run out, announce defeat and reveal the secret word.
  *
- *  COMPILE  : gcc -o wordle wordle.c -lcs50
- * ============================================================================
+ * Complexity:
+ *   Time  — O(w) per turn for checks (w = word length, bounded by 8),
+ *           plus O(n) for the dictionary membership scan and O(n) once
+ *           for loading, where n is the dictionary size.
+ *   Space — O(n) for the retained dictionary plus O(w) working state.
  */
 
 #include <cs50.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-/* Every bundled dictionary file holds exactly this many candidate words. */
-#define LISTSIZE 1000
-
-/* Per-letter match verdict weights (feedback taxonomy). */
-#define EXACT 2   /* right letter, right position  */
-#define CLOSE 1   /* right letter, wrong position  */
-#define WRONG 0   /* wrong letter entirely         */
-
-/* ANSI true-colour sequences for the boxed-letter board tiles. */
-#define GREEN   "\e[38;2;255;255;255;1m\e[48;2;106;170;100;1m"
-#define YELLOW  "\e[38;2;255;255;255;1m\e[48;2;201;180;88;1m"
-#define RED     "\e[38;2;255;255;255;1m\e[48;2;220;20;60;1m"
-#define RESET   "\e[0;39m"
-
-/* Allowed secret-word lengths (the flagship puzzle is 5). */
+/* ---- Game configuration constants (no magic numbers) ---- */
 #define MIN_WORDSIZE 5
 #define MAX_WORDSIZE 8
+#define DEFAULT_WORDSIZE 5
+#define MAX_WORDS 1000
 
-/* Forward declarations for the modular game pipeline. */
-string get_guess(int wordsize);
-int    check_word(string guess, int wordsize, int status[], string choice);
-void   print_word(string guess, int wordsize, int status[]);
-int    validated_wordsize(int argc, string argv[]);
-FILE * open_wordlist(int wordsize, char filename[]);
-void   load_dictionary(FILE *wordlist, int wordsize, char options[][wordsize + 1]);
-string choose_secret(int wordsize, char options[][wordsize + 1]);
-void   play_rounds(string choice, int wordsize);
+/* ---- ANSI escape sequences for terminal coloring ---- */
+#define ANSI_RESET "\x1b[0m"
+#define ANSI_DARK_GREY "\x1b[1;30m"
+#define ANSI_TITLE "\x1b[1;33m"
+#define ANSI_SUCCESS "\x1b[1;32m"
+#define ANSI_FAILURE "\x1b[1;31m"
+#define ANSI_TILE_GREEN "\x1b[38;2;255;255;255m\x1b[48;2;106;170;100m"
+#define ANSI_TILE_YELLOW "\x1b[38;2;255;255;255m\x1b[48;2;201;180;88m"
+#define ANSI_TILE_RED "\x1b[38;2;255;255;255m\x1b[48;2;220;50;47m"
 
-int main(int argc, string argv[])
+/* Outcome classes for one letter of a guess. */
+typedef enum
 {
-    int wordsize = validated_wordsize(argc, argv);
+    STATUS_ABSENT = 0,   /* Letter is not in the secret word (red tile).   */
+    STATUS_PRESENT = 1,  /* Letter is in the word but misplaced (yellow).  */
+    STATUS_EXACT = 2     /* Letter is correct at this position (green).    */
+} status_t;
 
-    char wl_filename[8];
-    FILE *wordlist = open_wordlist(wordsize, wl_filename);
+/* The dictionary for the requested length, held in a flat 2-D buffer so
+   the program needs no dynamic allocation and owns no allocated memory. */
+static char g_words[MAX_WORDS][MAX_WORDSIZE + 1];
+static int g_word_count = 0;
 
-    char options[LISTSIZE][wordsize + 1];
-    load_dictionary(wordlist, wordsize, options);
+/**
+ * @brief Locate and open the dictionary file for a given word length.
+ *
+ * The official build environment runs inside the wordle directory and
+ * expects "wordle{size}.txt". To also work when the process is launched
+ * from an enclosing directory, several candidate paths are probed.
+ *
+ * @param wordsize The requested word length (identifies the file).
+ * @return An open FILE*, or NULL if none of the candidates resolved.
+ */
+static FILE *open_word_file(int wordsize)
+{
+    static const char *templates[] =
+    {
+        "wordle%i.txt",    /* official distribution filename              */
+        "%i.txt",          /* this repository's word-list naming          */
+        "wordle/%i.txt",   /* launch from the directory above wordle/     */
+        "./%i.txt"         /* explicit current-directory form             */
+    };
 
-    /* Seed the PRNG once per process; picks vary run-to-run as designed. */
-    string choice = choose_secret(wordsize, options);
+    for (int i = 0; i < (int) (sizeof(templates) / sizeof(templates[0])); i++)
+    {
+        char path[64];
+        sprintf(path, templates[i], wordsize);
 
-    play_rounds(choice, wordsize);
+        FILE *wordlist = fopen(path, "r");
+        if (wordlist != NULL)
+        {
+            return wordlist;
+        }
+    }
 
-    return 0;
+    return NULL;
 }
 
 /**
- * Validates the command-line contract: usage "Usage: ./wordle wordsize",
- * and the size must lie in the permitted half-open-ish window [5, 8].
- * Returns the canonical word length, or exits with status 1 on any breach.
+ * @brief Populate the global dictionary from the appropriate word file.
+ *
+ * @param wordsize The requested word length.
+ * @return true if at least one word was loaded, false otherwise.
  */
-int validated_wordsize(int argc, string argv[])
+static bool load_words(int wordsize)
 {
-    if (argc != 2)
-    {
-        printf("Usage: ./wordle wordsize\n");
-        exit(1);
-    }
-
-    int wordsize = atoi(argv[1]);
-    if (wordsize < MIN_WORDSIZE || wordsize > MAX_WORDSIZE)
-    {
-        printf("Error: wordsize must be either 5, 6, 7, or 8\n");
-        exit(1);
-    }
-
-    return wordsize;
-}
-
-/**
- * Opens the on-disk dictionary "N.txt" (N = wordsize) and reports failure
- * with the exact diagnostic the harness expects. `filename` is echoed in
- * the failure message and filled with the constructed file name.
- */
-FILE * open_wordlist(int wordsize, char filename[])
-{
-    sprintf(filename, "%i.txt", wordsize);
-
-    FILE *wordlist = fopen(filename, "r");
+    FILE *wordlist = open_word_file(wordsize);
     if (wordlist == NULL)
     {
-        printf("Error opening file %s.\n", filename);
-        exit(1);
+        return false;
     }
-    return wordlist;
-}
 
-/**
- * Bulk-loads LISTSIZE whitespace-delimited words into the options grid.
- * Each row is at most `wordsize` letters plus a NUL terminator, and every
- * dictionary line is a token of exactly that length by construction.
- */
-void load_dictionary(FILE *wordlist, int wordsize,
-                     char options[][wordsize + 1])
-{
-    for (int i = 0; i < LISTSIZE; i++)
+    char buffer[MAX_WORDSIZE + 1];
+    while (fscanf(wordlist, "%s", buffer) == 1 && g_word_count < MAX_WORDS)
     {
-        fscanf(wordlist, "%s", options[i]);
+        if (strlen(buffer) == (size_t) wordsize)
+        {
+            strcpy(g_words[g_word_count], buffer);
+            g_word_count++;
+        }
     }
+
     fclose(wordlist);
+    return g_word_count > 0;
 }
 
 /**
- * Selects one secret word at uniform distribution over the loaded set.
- * srand(time(NULL)) aligns the outcome with the wall clock, exactly as the
- * reference implementation seeds its generator.
- */
-string choose_secret(int wordsize, char options[][wordsize + 1])
-{
-    srand(time(NULL));
-    return options[rand() % LISTSIZE];
-}
-
-/**
- * Orchestrates the turn loop: greeting, (wordsize + 1) guess opportunities,
- * and the terminal win/loss verdict. One extra try over the word length is
- * the canonical Wordle generosity that keeps the game winnable.
- */
-void play_rounds(string choice, int wordsize)
-{
-    int guesses = wordsize + 1;
-    bool won = false;
-
-    printf(GREEN"This is WORDLE50"RESET"\n");
-    printf("You have %i tries to guess the %i-letter word I'm thinking of\n",
-           guesses, wordsize);
-
-    for (int round = 1; round <= guesses && !won; round++)
-    {
-        string guess = get_guess(wordsize);
-
-        /* Fresh per-round verdict slate, defaulting every tile to WRONG. */
-        int status[wordsize];
-        for (int i = 0; i < wordsize; i++)
-        {
-            status[i] = WRONG;
-        }
-
-        int score = check_word(guess, wordsize, status, choice);
-
-        printf("Guess %i: ", round);
-        print_word(guess, wordsize, status);
-
-        /* A perfect score across every position terminates the game. */
-        if (score == EXACT * wordsize)
-        {
-            won = true;
-        }
-    }
-
-    if (won)
-    {
-        printf("You won!\n");
-    }
-    else
-    {
-        printf("%s\n", choice);
-    }
-}
-
-/**
- * Prompts the user for a guess of exactly `wordsize` letters, refusing
- * any malformed length until an acceptable word arrives. The prompt text
- * "Input a %d-letter word: " must match the harness byte-for-byte.
- */
-string get_guess(int wordsize)
-{
-    string guess;
-    do
-    {
-        guess = get_string("Input a %d-letter word: ", wordsize);
-    }
-    while (wordsize != (int) strlen(guess));
-    return guess;
-}
-
-/**
- * Rates `guess` letter-by-letter against `choice`, writing each per-letter
- * verdict into status[] and returning their arithmetic sum.
+ * @brief Prompt the player until a valid guess is supplied.
  *
- * MATCH-ORDER SEMANTICS — preserved from the reference distribution:
- *   a position whose letters agree yields EXACT; otherwise a `strstr` over a
- *   one-character substring reports membership anywhere in the target word as
- *   CLOSE. This "existence not availability" heuristic reproduces the exact
- *   grading behaviour the assignment was verified against, and must not be
- *   "improved" into count-aware matching or the harness indecision shifts.
+ * A guess is accepted only when its length equals wordsize and it appears
+ * verbatim inside the active dictionary.
+ *
+ * @param wordsize The required guess length.
+ * @return A pointer to the validated guess string.
  */
-int check_word(string guess, int wordsize, int status[], string choice)
+static string get_guess(int wordsize)
 {
-    int score = 0;
-    char probe[2] = "\0";   /* one-letter NUL-terminated substring. */
+    while (true)
+    {
+        string guess = get_string("Input a %i-letter word: ", wordsize);
+
+        if (strlen(guess) != (size_t) wordsize)
+        {
+            printf("Input must be %i letters\n", wordsize);
+            continue;
+        }
+
+        bool found = false;
+        for (int i = 0; i < g_word_count; i++)
+        {
+            if (strcmp(guess, g_words[i]) == 0)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+        {
+            return guess;
+        }
+
+        printf("Word must be in the file.\n");
+    }
+}
+
+/**
+ * @brief Score each letter of a guess against the secret word.
+ *
+ * @param guess    The player's word.
+ * @param wordsize The word length.
+ * @param status   Output array: one status_t per position.
+ * @param secret   The hidden word being guessed.
+ * @return true if every position matched exactly.
+ */
+static bool check_word(string guess, int wordsize, status_t status[], string secret)
+{
+    bool exact = true;
+    bool matched[MAX_WORDSIZE];
 
     for (int i = 0; i < wordsize; i++)
     {
-        if (guess[i] == choice[i])
+        matched[i] = false;
+        status[i] = STATUS_ABSENT;
+    }
+
+    /* First pass: lock in positions that match exactly. Those letters are
+       marked consumed so a later pass cannot reuse them incorrectly. */
+    for (int i = 0; i < wordsize; i++)
+    {
+        if (guess[i] == secret[i])
         {
-            status[i] = EXACT;
-            score += EXACT;
+            status[i] = STATUS_EXACT;
+            matched[i] = true;
         }
         else
         {
-            probe[0] = guess[i];
-            if (strstr(choice, probe) != NULL)
+            exact = false;
+        }
+    }
+
+    /* Second pass: every remaining guess letter searches for an unused
+       occurrence elsewhere in the secret. Because matched[] is honored,
+       duplicated secret letters can never yield redundant yellow tiles. */
+    for (int i = 0; i < wordsize; i++)
+    {
+        if (status[i] == STATUS_EXACT)
+        {
+            continue;
+        }
+
+        for (int j = 0; j < wordsize; j++)
+        {
+            if (!matched[j] && guess[i] == secret[j])
             {
-                status[i] = CLOSE;
-                score += CLOSE;
-            }
-            else
-            {
-                status[i] = WRONG;
+                status[i] = STATUS_PRESENT;
+                matched[j] = true;
+                break;
             }
         }
     }
 
-    return score;
+    return exact;
 }
 
 /**
- * Emits the guess with the tile colours prescribed by `status`, resetting
- * the terminal styling between letters and after the row. The trailing
- * newline separates board rows so a fresh attempt rewrites cleanly.
+ * @brief Render a guess with per-letter colored tiles.
+ *
+ * @param guess    The validated guess.
+ * @param status   The scoring produced by check_word.
+ * @param wordsize The word length.
  */
-void print_word(string guess, int wordsize, int status[])
+static void print_word(string guess, status_t status[], int wordsize)
 {
     for (int i = 0; i < wordsize; i++)
     {
-        int verdict = status[i];
-
-        if (verdict == EXACT)
+        switch (status[i])
         {
-            printf(GREEN);
+            case STATUS_EXACT:
+                printf(ANSI_TILE_GREEN "%c" ANSI_RESET, guess[i]);
+                break;
+            case STATUS_PRESENT:
+                printf(ANSI_TILE_YELLOW "%c" ANSI_RESET, guess[i]);
+                break;
+            default:
+                printf(ANSI_TILE_RED "%c" ANSI_RESET, guess[i]);
+                break;
         }
-        else if (verdict == CLOSE)
-        {
-            printf(YELLOW);
-        }
-        else
-        {
-            printf(RED);
-        }
-
-        printf("%c", guess[i]);
-        printf(RESET);
     }
 
     printf("\n");
+}
+
+/**
+ * @brief Print the progression of the hidden word.
+ *
+ * Positions already pinned down by the player are shown as their real
+ * letters; everything else is hidden behind a dark-grey underscore.
+ *
+ * @param secret   The hidden word.
+ * @param wordsize The word length.
+ * @param opened   Per-position flag: whether that letter is revealed.
+ */
+static void hide_word(string secret, int wordsize, bool opened[])
+{
+    for (int i = 0; i < wordsize; i++)
+    {
+        if (opened[i])
+        {
+            printf("%c", secret[i]);
+        }
+        else
+        {
+            printf(ANSI_DARK_GREY "_" ANSI_RESET);
+        }
+    }
+
+    printf("\n");
+}
+
+int main(int argc, string argv[])
+{
+    int wordsize = DEFAULT_WORDSIZE;
+
+    if (argc == 2)
+    {
+        wordsize = atoi(argv[1]);
+        if (wordsize < MIN_WORDSIZE || wordsize > MAX_WORDSIZE)
+        {
+            printf("Usage: ./wordle wordsize\n");
+            return 1;
+        }
+    }
+    else if (argc != 1)
+    {
+        printf("Usage: ./wordle wordsize\n");
+        return 1;
+    }
+
+    if (!load_words(wordsize))
+    {
+        printf("Error: could not load word list.\n");
+        return 1;
+    }
+
+    /* Seed from the current time and pick the secret uniformly at random. */
+    srand((unsigned int) time(NULL));
+    string secret = g_words[rand() % g_word_count];
+
+    /* No letters of the secret have been revealed yet. */
+    bool opened[MAX_WORDSIZE] = { false };
+
+    printf("This is WORDLE\n");
+    printf("You have %i tries to guess the %i-letter word I'm thinking of\n",
+           wordsize, wordsize);
+    printf("\n");
+
+    for (int turn = 1; turn <= wordsize; turn++)
+    {
+        printf("Round %i/%i\n", turn, wordsize);
+
+        string guess = get_guess(wordsize);
+
+        status_t status[MAX_WORDSIZE];
+        bool correct = check_word(guess, wordsize, status, secret);
+
+        /* Reveal the letters the player just pinned down. */
+        for (int i = 0; i < wordsize; i++)
+        {
+            if (status[i] == STATUS_EXACT)
+            {
+                opened[i] = true;
+            }
+        }
+
+        printf(ANSI_TITLE "Hidden word:" ANSI_RESET "\n");
+        hide_word(secret, wordsize, opened);
+        print_word(guess, status, wordsize);
+        printf("\n");
+
+        if (correct)
+        {
+            printf(ANSI_SUCCESS "You won!" ANSI_RESET "\n");
+            return 0;
+        }
+    }
+
+    printf(ANSI_FAILURE "You ran out of turns!" ANSI_RESET
+           " The word was: %s\n", secret);
+    return 0;
 }

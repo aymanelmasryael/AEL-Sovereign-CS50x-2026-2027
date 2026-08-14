@@ -1,49 +1,52 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Portfolio
-{% endblock %}
+{% block title %}Portfolio{% endblock %}
 
 {% block main %}
-    <h1 class="page-title">Sovereign <span class="accent">Portfolio</span></h1>
-    <p class="page-subtitle">live valuations &middot; per-position mark-to-market</p>
+  <section class="glass-card">
+    <h1 class="page-title">Portfolio</h1>
 
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th scope="col">Symbol</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Shares</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Holding</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in database %}
-                    <tr>
-                        <td class="row-total">{{ row["symbol"] }}</td>
-                        <td class="row-muted">{{ row["name"] }}</td>
-                        <td>{{ row["shares"] }}</td>
-                        <td>{{ row["price"] | usd }}</td>
-                        <td class="row-total">{{ row["TOTAL"] | usd }}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="5" class="empty-state">No positions&mdash;buy your first stock to populate the terminal.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th scope="row" colspan="4">Cash Balance</th>
-                    <td class="row-total">{{ cash | usd }}</td>
-                </tr>
-                <tr>
-                    <th scope="row" colspan="4">Net Worth</th>
-                    <td class="row-total">{{ total | usd }}</td>
-                </tr>
-            </tfoot>
+    {% if positions %}
+      <div class="table-wrap">
+        <table class="market-table">
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Name</th>
+              <th class="amount-cell">Shares</th>
+              <th class="amount-cell">Price</th>
+              <th class="amount-cell">TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for position in positions %}
+              <tr>
+                <td class="symbol-cell">{{ position.symbol }}</td>
+                <td>{{ position.name }}</td>
+                <td class="amount-cell">{{ position.shares }}</td>
+                <td class="amount-cell">{{ position.price | usd }}</td>
+                <td class="amount-cell">{{ position.total | usd }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
         </table>
+      </div>
+    {% else %}
+      <p class="empty-state">
+        You have no holdings yet. Head over to the
+        <a href="/buy">buy</a> page to start trading.
+      </p>
+    {% endif %}
+
+    <div class="totals">
+      <div class="total-row">
+        <span>Cash</span>
+        <span>{{ cash | usd }}</span>
+      </div>
+      <div class="total-row grand">
+        <span>Grand Total</span>
+        <span>{{ grand_total | usd }}</span>
+      </div>
     </div>
+  </section>
 {% endblock %}

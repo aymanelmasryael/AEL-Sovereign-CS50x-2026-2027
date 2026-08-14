@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+{% block title %}Routes · AEL Sovereign Fleet{% endblock %}
+
+{% block main %}
+<section class="hero">
+  <p class="eyebrow mono">SCHEDULE BOARD // DEPARTURES</p>
+  <h1>Route Schedule</h1>
+  <p class="hero-sub">Fixed departures with live seat availability.</p>
+</section>
+
+<section class="card panel">
+  <div class="panel-head">
+    <h2 class="mono">ACTIVE DEPARTURES</h2>
+    <span class="badge badge-live">LIVE</span>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Route</th>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Departs</th>
+        <th>Vehicle</th>
+        <th>Fare</th>
+        <th>Availability</th>
+        {% if admin %}<th>Manage</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in routes %}
+      <tr>
+        <td class="mono">{{ r.route_code }}</td>
+        <td>{{ r.origin }}</td>
+        <td>{{ r.destination }}</td>
+        <td class="mono">{{ r.departure_time }}</td>
+        <td><span class="mono">{{ r.fleet_code }}</span> <span class="dim">{{ r.vehicle_model }}</span></td>
+        <td class="mono">{{ r.base_fare | money }}</td>
+        <td>
+          {% if r.available > 0 %}
+          <span class="badge status-active">{{ r.available }} seat(s)</span>
+          {% else %}
+          <span class="badge status-retired">FULL</span>
+          {% endif %}
+        </td>
+        {% if admin %}
+        <td class="manage-cell">
+          <details class="accordion">
+            <summary class="mono">EDIT</summary>
+            <form action="{{ url_for('update_route', route_id=r.id) }}" method="post" class="stack">
+              <label>Origin
+                <input name="origin" value="{{ r.origin }}" required>
+              </label>
+              <label>Destination
+                <input name="destination" value="{{ r.destination }}" required>
+              </label>
+              <label>Departure time
+                <input name="departure_time" value="{{ r.departure_time }}" required>
+              </label>
+              <label>Fare (per seat)
+                <input name="base_fare" type="number" step="0.01" min="0" value="{{ r.base_fare }}" required>
+              </label>
+              <label>Vehicle
+                <select name="vehicle_id" required>
+                  {% for v in vehicles %}
+                  <option value="{{ v.id }}" {% if r.vehicle_id == v.id %}selected{% endif %}>{{ v.fleet_code }} — {{ v.model }}</option>
+                  {% endfor %}
+                </select>
+              </label>
+              <button class="btn btn-primary" type="submit">Save</button>
+            </form>
+          </details>
+          <form action="{{ url_for('delete_route', route_id=r.id) }}" method="post"
+                onsubmit="return confirm('Delete route {{ r.route_code }}?');">
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
+        </td>
+        {% endif %}
+      </tr>
+      {% else %}
+      <tr><td colspan="{% if admin %}8{% else %}7{% endif %}" class="empty">No routes scheduled.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+{% if admin %}
+<section class="card panel">
+  <div class="panel-head">
+    <h2 class="mono">SCHEDULE NEW ROUTE</h2>
+    <span class="badge badge-admin">ADMIN</span>
+  </div>
+  <form action="{{ url_for('add_route') }}" method="post" class="form-grid">
+    <label>Origin
+      <input name="origin" placeholder="Cairo" required>
+    </label>
+    <label>Destination
+      <input name="destination" placeholder="Alexandria" required>
+    </label>
+    <label>Departure time
+      <input name="departure_time" placeholder="08:30" required>
+    </label>
+    <label>Fare (per seat)
+      <input name="base_fare" type="number" step="0.01" min="0" placeholder="22.50" required>
+    </label>
+    <label>Vehicle
+      <select name="vehicle_id" required>
+        {% for v in vehicles %}
+        <option value="{{ v.id }}">{{ v.fleet_code }} — {{ v.model }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <div class="form-submit">
+      <button class="btn btn-primary" type="submit">Schedule Route</button>
+    </div>
+  </form>
+  <p class="hint mono">Route codes are generated from origin and destination.</p>
+</section>
+{% endif %}
+{% endblock %}

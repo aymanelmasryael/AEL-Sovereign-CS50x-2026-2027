@@ -1,121 +1,102 @@
 /**
- * ============================================================================
- *  PROJECT : AEL Sovereign — CS50x 2026-2027 Master Solutions
- *  FILE    : mario.c
- *  AUTHOR  : Ayman Elmasry — AEL Digital Studio
- *  ---------------------------------------------------------------------------
- *  DESCRIPTION
- *    Renders the classic Super Mario "more comfortable" twin pyramid: a
- *    left-aligned right-triangle of bricks mirrored across a two-space gutter
- *    into an identical right triangle. Satisfies the "More" problem set by
- *    producing horizontal symmetry with a gap, built row by row.
+ * @file mario.c
+ * @brief CS50x Problem Set 1 — Mario (More): twin brick pyramids.
  *
- *  ALGORITHM (STEP BY STEP)
- *    1. Prompt for a height; accept only integers in the inclusive range
- *       [1, 8], looping until a compliant value is entered.
- *    2. For each row r (1-based) from 1..height:
- *         a. Print (height - r) leading spaces, right-aligning the left block.
- *         b. Print r '#', forming the left-aligned ascending staircase.
- *         c. Print the canonical two-space gutter separating the halves.
- *         d. Print r '#' again, forming the mirrored descending staircase.
- *         e. Terminate the row with a newline.
+ * @author Ayman Elmasry — AEL Digital Studio
+ * @project AEL Sovereign — CS50x 2026-2027
  *
- *  INDUCTIVE COMPLEXITY
- *    Row r emits (height - r) + r + 2 + r = height + r + 2 characters, so the
- *    total work telescopes to Theta(height^2) — inherent to writing every
- *    character of the output, hence asymptotically optimal for this task.
+ * @details
+ *   Recreates the two "half-pyramids" from the original Super Mario Bros.
+ *   level, rendered entirely from '#'. The user is prompted for a height
+ *   restricted to the inclusive range [1, 8]; any other value is rejected
+ *   and the prompt is repeated. The left pyramid is right-aligned via
+ *   leading spaces, and the right pyramid is its horizontal mirror image,
+ *   separated by exactly two spaces of gutter.
  *
- *  COMPLEXITY
- *    Time  : O(height^2)   — the output grid itself is Theta(height^2) chars.
- *    Space : O(1)          — only scalar loop counters are retained.
+ * Algorithm:
+ *   1. Prompt (and re-prompt) until a valid height h in [1, 8] is given.
+ *   2. For each row r in 1..h:
+ *        - print (h - r) leading spaces (right-alignment),
+ *        - print r hashes for the left pyramid,
+ *        - print a fixed two-space gap,
+ *        - print r hashes for the right pyramid,
+ *        - print a newline.
  *
- *  COMPILE  : gcc -o mario mario.c -lcs50
- * ============================================================================
+ * Complexity:
+ *   Time  — O(h^2): each row emits O(h) characters, so the total output
+ *           is bounded by O(h^2).
+ *   Space — O(1): only scalar state; output is streamed, never buffered.
  */
 
 #include <cs50.h>
 #include <stdio.h>
 
-/* Problem-set-specified bounds for the pyramid height. */
+/* Contract constraints from the problem specification. */
 #define MIN_HEIGHT 1
 #define MAX_HEIGHT 8
-
-/* The fixed-width gutter separating the two mirrored half-pyramids. */
-#define GUTTER_WIDTH 2
-
-/* Forward declarations for a modular rendering pipeline. */
-int get_height(void);
-void render_pyramid(int height);
-void render_leaning_tower(const int height, int row);
-
-int main(void)
-{
-    int height = get_height();
-    render_pyramid(height);
-    return 0;
-}
+#define PYRAMID_GAP 2
 
 /**
- * Prompts the user and returns a height within the permitted range.
- * The do/while guarantees at least one prompt and re-asks until valid.
+ * @brief Prompt the user until a height within [MIN_HEIGHT, MAX_HEIGHT].
+ *
+ * @return The validated height entered by the user.
  */
-int get_height(void)
+static int prompt_height(void)
 {
     int height;
+
     do
     {
         height = get_int("Height: ");
     }
     while (height < MIN_HEIGHT || height > MAX_HEIGHT);
+
     return height;
 }
 
 /**
- * Orchestrates the full masonry. Height-informed arts: for each row we
- * delegate the construction of the ascending staircase to the left and
- * emit the gutter plus the descending staircase directly.
- */
-void render_pyramid(int height)
-{
-    for (int row = 1; row <= height; row++)
-    {
-        /* Left half: leading spaces then `row` bricks. */
-        render_leaning_tower(height, row);
-
-        /* Central gutter of two spaces. */
-        for (int g = 0; g < GUTTER_WIDTH; g++)
-        {
-            printf(" ");
-        }
-
-        /* Right half: `row` bricks with no trailing spaces. */
-        for (int b = 0; b < row; b++)
-        {
-            printf("#");
-        }
-
-        printf("\n");
-    }
-}
-
-/**
- * Emits the left-aligned ascending staircase for a given row.
+ * @brief Print one row of both pyramids for the given height.
  *
- * For row `row` the number of required prefixes is (height - row) spaces,
- * followed by exactly `row` bricks. Row height is `const` to signal that the
- * rendering decisions derive from the immutable total height only.
+ * @param row    The 1-based row number being rendered.
+ * @param height The total number of rows in the pyramids.
  */
-void render_leaning_tower(const int height, int row)
+static void print_row(int row, int height)
 {
-    /* Padding: keep the staircase visually right-justified to the gutter. */
-    for (int space = 0; space < height - row; space++)
+    /* Leading spaces push the left pyramid flush against the gutter. */
+    for (int spaces = 0; spaces < height - row; spaces++)
     {
         printf(" ");
     }
 
-    /* Bricks: the working run-length for this row. */
-    for (int brick = 0; brick < row; brick++)
+    /* Left pyramid bricks. */
+    for (int bricks = 0; bricks < row; bricks++)
     {
         printf("#");
     }
+
+    /* The fixed gutter that separates the two pyramids. */
+    for (int gap = 0; gap < PYRAMID_GAP; gap++)
+    {
+        printf(" ");
+    }
+
+    /* Right pyramid bricks; no leading spaces are required here. */
+    for (int bricks = 0; bricks < row; bricks++)
+    {
+        printf("#");
+    }
+
+    printf("\n");
+}
+
+int main(void)
+{
+    int height = prompt_height();
+
+    for (int row = 1; row <= height; row++)
+    {
+        print_row(row, height);
+    }
+
+    return 0;
 }

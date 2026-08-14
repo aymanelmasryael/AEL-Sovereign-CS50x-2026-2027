@@ -1,179 +1,199 @@
--- ==============================================================================
--- Project   : AEL Sovereign — CS50x 2026-2027
--- Module    : week7_fiftyville_pset7
--- File      : log.sql
--- Author    : Ayman Elmasry — AEL Digital Studio
--- ------------------------------------------------------------------------------
--- Description:
---   INVESTIGATION JOURNAL — The Case of the Stolen CS50 Duck (Fiftyville).
---   This file is a complete, reproducible forensic narrative. Every SQL query
---   executed during the investigation is preserved with a comment explaining
---   WHY it was run, WHAT it revealed, and HOW it narrowed the suspect pool.
---   The investigation converges on a single thief, their escape route, and
---   their accomplice.
---
--- Investigation design (deductive narrowing):
---   1. Establish the crime   — read the police report for date/place.
---   2. Collect witness leads — three interviews name the bakery, the ATM on
---      Leggett Street, and a <1-minute phone call about an early flight.
---   3. Correlate hard facts  — each lead is turned into a concrete table
---      query (bakery exits 10:15-10:25, Leggett Street withdrawals, short
---      calls, earliest morning flight).
---   4. Intersect suspects    — the thief must satisfy ALL leads at once.
---      Each clue is an independent data source; their intersection collapses
---      the suspect set to one person.
---   5. Trace the escape      — identify the destination airport and the
---      accomplice who booked the ticket.
---
--- Final conclusion (verified against the database):
---   THIEF     : Bruce
---   ESCAPED TO: New York City (flight #36, dep. 08:20 on 29 July)
---   ACCOMPLICE: Robin (purchased the ticket; took Bruce's phone call)
--- ==============================================================================
+-- ============================================================
+-- AEL Sovereign — CS50x 2026-2027
+-- Problem Set 7: Fiftyville
+-- Author: Ayman Elmasry — AEL Digital Studio
+-- ============================================================
+-- The CS50 duck has been stolen!  The only clues are the files found
+-- in the Fiftyville town hall.  This log reconstructs the investigation
+-- step by step, narrowing the suspect pool until the thief, their
+-- accomplice, and the escape city are identified.
+-- ============================================================
 
--- ------------------------------------------------------------------------------
--- STEP 1 — Read the police report.
--- We know the theft took place in Humphrey Street; we must confirm the day
--- and extract the exact description of the crime.
--- ------------------------------------------------------------------------------
+
+-- ------------------------------------------------------------
+-- STEP 1 — Read the crime scene report
+-- The report for 2021-07-28 on Humphrey Street pins down when and
+-- where the theft happened, so later searches can focus on the
+-- witnesses and the bakery parking lot.
+-- ------------------------------------------------------------
 SELECT description
 FROM crime_scene_reports
-WHERE month = 7 AND day = 28 AND street = "Humphrey Street";
+WHERE year = 2021
+  AND month = 7
+  AND day = 28
+  AND street = 'Humphrey Street';
 
--- The report states: the CS50 duck was stolen at 10:15am at the Humphrey
--- Street bakery, and that THREE witnesses gave interviews on the same day.
+-- Findings: Theft of the CS50 duck took place at 10:15am at the
+-- Humphrey Street bakery.  Three witnesses were interviewed that day,
+-- and each transcript mentions the bakery.
 
--- ------------------------------------------------------------------------------
--- STEP 2 — Interview the witnesses.
--- All three interviews were conducted on 28 July; each transcript may name a
--- distinct piece of evidence (parking-lot getaway car, ATM withdrawal, call).
--- ------------------------------------------------------------------------------
+
+-- ------------------------------------------------------------
+-- STEP 2 — Read the witness interviews
+-- The witnesses are Ruth, Eugene, and Raymond.  Their accounts list
+-- the three breadcrumbs that drive the whole investigation.
+-- ------------------------------------------------------------
 SELECT name, transcript
 FROM interviews
-WHERE month = 7 AND day = 28;
+WHERE year = 2021
+  AND month = 7
+  AND day = 28;
 
--- Witness 1 (Ruth) : saw the thief get into a car in the bakery parking lot
---                     and drive away within ten minutes of the theft.
--- Witness 2 (Eugene): recognised the thief withdrawing money from an ATM on
---                     Leggett Street earlier that morning.
--- Witness 3 (Raymond): as the thief left the bakery, they called someone for
---                     less than a minute and mentioned taking the EARLIEST
---                     flight out of Fiftyville the next day, asking the other
---                     party to purchase the ticket.
+-- Ruth:  the thief left the bakery parking lot within ten minutes.
+-- Eugene: the thief withdrew money from the ATM on Leggett Street.
+-- Raymond: the thief called someone for under a minute and asked that
+--         person to buy a ticket on the earliest flight out of
+--         Fiftyville tomorrow (2021-07-29).
 
--- ------------------------------------------------------------------------------
--- STEP 3 — Lead 1: Cars leaving the bakery parking lot (10:15 - 10:25).
--- The getaway window is the ten minutes after 10:15. Exit events in that
--- window produce candidate licence plates.
--- ------------------------------------------------------------------------------
-SELECT license_plate
+
+-- ------------------------------------------------------------
+-- STEP 3 — Cars that left the bakery parking lot
+-- Ruth said the thief drove away within ten minutes of the 10:15am
+-- theft.  The security logs for the bakery between 10:15 and 10:25
+-- expose a short list of licence plates to cross-reference.
+-- ------------------------------------------------------------
+SELECT license_plate, activity, hour, minute
 FROM bakery_security_logs
-WHERE month = 7 AND day = 28
-  AND hour = 10 AND minute BETWEEN 15 AND 25
-  AND activity = "exit";
+WHERE year = 2021
+  AND month = 7
+  AND day = 28
+  AND hour = 10
+  AND minute BETWEEN 15 AND 25
+ORDER BY minute;
 
--- 8 plates: 5P2BI95, 94KL13X, 6P58WS2, 4328GD8, G412CB7, L93JTIZ, 322W7JE, 0NTHK55
+-- Finding: eight cars exited between 10:16 and 10:23.  Match these
+-- plates against the people table to build the first suspect pool.
 
--- ------------------------------------------------------------------------------
--- STEP 4 — Lead 2: ATM withdrawals on Leggett Street.
--- Eugene saw the thief at the ATM; we pull every Leggett Street withdrawal
--- on the morning of the 28th, then resolve each account to its owner.
--- ------------------------------------------------------------------------------
-SELECT people.name, atm_transactions.account_number
+
+-- ------------------------------------------------------------
+-- STEP 4 — ATM withdrawals on Leggett Street
+-- Eugene saw the thief at the Leggett Street ATM.  Pull the account
+-- numbers that had money withdrawn there on the morning of the theft.
+-- ------------------------------------------------------------
+SELECT account_number, amount
 FROM atm_transactions
-JOIN bank_accounts ON bank_accounts.account_number = atm_transactions.account_number
-JOIN people ON people.id = bank_accounts.person_id
-WHERE month = 7 AND day = 28
-  AND atm_location = "Leggett Street"
-  AND transaction_type = "withdraw";
+WHERE year = 2021
+  AND month = 7
+  AND day = 28
+  AND atm_location = 'Leggett Street'
+  AND transaction_type = 'withdraw';
 
--- 8 names: Bruce, Diana, Brooke, Kenny, Iman, Luca, Taylor, Benista.
+-- Finding: eight withdrawals.  The bank_accounts table connects these
+-- account numbers back to the people table.
 
--- ------------------------------------------------------------------------------
--- STEP 5 — Lead 3: Short phone calls (< 1 minute) on the 28th.
--- Raymond overheard a <1-minute call as the thief left the bakery. List the
--- callers, and resolve them to names, to find the person who called someone.
--- ------------------------------------------------------------------------------
-SELECT people.name AS caller, phone_calls.receiver
+
+-- ------------------------------------------------------------
+-- STEP 5 — Phone calls under a minute
+-- Raymond heard the thief call someone and talk for less than a
+-- minute.  Every call on 2021-07-28 with a duration under 60 seconds
+-- is a candidate.
+-- ------------------------------------------------------------
+SELECT caller, receiver, duration
 FROM phone_calls
-JOIN people ON people.phone_number = phone_calls.caller
-WHERE month = 7 AND day = 28 AND duration < 60;
+WHERE year = 2021
+  AND month = 7
+  AND day = 28
+  AND duration < 60;
 
--- 9 calls. Suspect callers include Sofia, Kelsey, Bruce, Taylor, Diana, Kenny.
 
--- ------------------------------------------------------------------------------
--- STEP 6 — Lead 4: The earliest flight out of Fiftyville on 29 July.
--- Raymond heard the thief say they planned to take the EARLIEST flight the
--- next day. First confirm which airport serves Fiftyville, then list flights.
--- ------------------------------------------------------------------------------
-SELECT id, abbreviation, full_name, city
-FROM airports
-WHERE city = "Fiftyville";
-
--- Fiftyville Regional Airport has id = 8.
-
-SELECT id, destination_airport_id, hour, minute
+-- ------------------------------------------------------------
+-- STEP 6 — The earliest flight out of Fiftyville
+-- Raymond also heard the thief book a ticket on the earliest flight
+-- out of Fiftyville on the next morning, 2021-07-29.  Sort that
+-- morning's departures by time to find which one the thief boarded.
+-- ------------------------------------------------------------
+SELECT id, hour, minute, origin_airport_id, destination_airport_id
 FROM flights
-WHERE month = 7 AND day = 29 AND origin_airport_id = 8
-ORDER BY hour, minute;
+WHERE year = 2021
+  AND month = 7
+  AND day = 29
+  AND origin_airport_id = (
+      SELECT id
+      FROM airports
+      WHERE city = 'Fiftyville'
+  )
+ORDER BY hour, minute
+LIMIT 1;
 
--- The earliest flight is #36, departing 08:20, destination airport id = 4.
--- Next, resolve airport 4 to find the escape destination.
-SELECT full_name, city
+-- Finding: the 8:20am flight, id 36.  Identify its destination city.
+SELECT city
 FROM airports
-WHERE id = 4;
+WHERE id = (
+    SELECT destination_airport_id
+    FROM flights
+    WHERE id = 36
+);
 
--- Airport 4 = LaGuardia Airport in NEW YORK CITY.
+-- Finding: the escape city is New York City (LaGuardia Airport).
 
--- ------------------------------------------------------------------------------
--- STEP 7 — Intersect the leads to isolate the thief.
--- The suspect must satisfy ALL FOUR constraints simultaneously:
---   (a) parked/bakery exit within 10:15-10:25,
---   (b) Leggett Street ATM withdrawal on the 28th,
---   (c) caller of a <1-minute call on the 28th,
---   (d) passenger on the earliest 29 July flight (id 36).
--- Each table is joined on its natural foreign key (people ↔ license_plate,
--- bank_accounts ↔ account, phone_calls ↔ caller, passengers ↔ passport).
--- ------------------------------------------------------------------------------
-SELECT DISTINCT p.name, p.passport_number, p.license_plate
-FROM people AS p
-JOIN bakery_security_logs AS bsl ON bsl.license_plate = p.license_plate
-JOIN bank_accounts AS ba ON ba.person_id = p.id
-JOIN atm_transactions AS atm ON atm.account_number = ba.account_number
-JOIN phone_calls AS pc ON pc.caller = p.phone_number
-JOIN passengers AS ps ON ps.passport_number = p.passport_number
-JOIN flights AS f ON f.id = ps.flight_id
-WHERE bsl.month = 7 AND bsl.day = 28
-  AND bsl.hour = 10 AND bsl.minute BETWEEN 15 AND 25
-  AND bsl.activity = "exit"
-  AND atm.month = 7 AND atm.day = 28
-  AND atm.atm_location = "Leggett Street"
-  AND atm.transaction_type = "withdraw"
-  AND pc.month = 7 AND pc.day = 28 AND pc.duration < 60
-  AND f.id = 36;
 
--- EXACTLY ONE row survives the intersection: BRUCE
--- (passport 5773159633, licence plate 94KL13X).
--- Every alternative candidate fails at least one clue, so Bruce is the thief.
+-- ------------------------------------------------------------
+-- STEP 7 — Cross-reference every clue
+-- The thief must appear in all four candidate lists at once:
+--   1. a car that left the bakery parking lot 10:15-10:25
+--   2. a Leggett Street ATM withdrawal on 2021-07-28
+--   3. a caller on a phone call under 60 seconds on 2021-07-28
+--   4. a passenger aboard flight 36 on 2021-07-29
+-- Intersecting the sets leaves exactly one person.
+-- ------------------------------------------------------------
+SELECT people.name
+FROM people
+JOIN bank_accounts ON bank_accounts.person_id = people.id
+JOIN atm_transactions ON atm_transactions.account_number = bank_accounts.account_number
+JOIN bakery_security_logs ON bakery_security_logs.license_plate = people.license_plate
+JOIN phone_calls ON phone_calls.caller = people.phone_number
+JOIN passengers ON passengers.passport_number = people.passport_number
+WHERE atm_transactions.year = 2021
+  AND atm_transactions.month = 7
+  AND atm_transactions.day = 28
+  AND atm_transactions.atm_location = 'Leggett Street'
+  AND atm_transactions.transaction_type = 'withdraw'
+  AND bakery_security_logs.year = 2021
+  AND bakery_security_logs.month = 7
+  AND bakery_security_logs.day = 28
+  AND bakery_security_logs.hour = 10
+  AND bakery_security_logs.minute BETWEEN 15 AND 25
+  AND phone_calls.year = 2021
+  AND phone_calls.month = 7
+  AND phone_calls.day = 28
+  AND phone_calls.duration < 60
+  AND passengers.flight_id = 36;
 
--- ------------------------------------------------------------------------------
--- STEP 8 — Confirm the accomplice.
--- Raymond said the thief ASKED someone to buy the ticket and called them for
--- under a minute. Find who received Bruce's short call on the 28th; that
--- person arranged the flight and is the accomplice.
--- ------------------------------------------------------------------------------
-SELECT people.name AS accomplice
-FROM phone_calls
-JOIN people ON people.phone_number = phone_calls.receiver
-WHERE month = 7 AND day = 28 AND duration < 60
-  AND caller = (SELECT phone_number FROM people WHERE name = "Bruce");
+-- Finding: the thief is Bruce.
 
--- The receiver of Bruce's short call is ROBIN.
 
--- ------------------------------------------------------------------------------
--- FINAL VERDICT
--- ------------------------------------------------------------------------------
--- THIEF      : Bruce
--- ESCAPED TO : New York City (flight #36, 08:20, LaGuardia Airport)
--- ACCOMPLICE : Robin (booked the flight and received the short call)
--- ==============================================================================
+-- ------------------------------------------------------------
+-- STEP 8 — Identify the accomplice
+-- Raymond said the thief called someone to buy the plane ticket.  The
+-- person on the other end of Bruce's short call on 2021-07-28 is the
+-- accomplice who booked the escape flight.
+-- ------------------------------------------------------------
+SELECT people.name
+FROM people
+JOIN phone_calls ON phone_calls.receiver = people.phone_number
+WHERE phone_calls.year = 2021
+  AND phone_calls.month = 7
+  AND phone_calls.day = 28
+  AND phone_calls.duration < 60
+  AND phone_calls.caller = (
+      SELECT phone_number
+      FROM people
+      WHERE name = 'Bruce'
+  );
+
+-- Finding: the accomplice is Robin.
+
+
+-- ------------------------------------------------------------
+-- CONCLUSION
+-- The investigation is complete.
+--
+--   The THIEF is:      Bruce
+--   The city the thief ESCAPED TO:  New York City
+--   The ACCOMPLICE is: Robin
+--
+-- Bruce left the bakery parking lot at 10:18am, withdrew money from
+-- the Leggett Street ATM, made a 45-second call to Robin asking for a
+-- ticket, and boarded flight 36 from Fiftyville to New York City on
+-- the morning of 2021-07-29.
+-- ------------------------------------------------------------

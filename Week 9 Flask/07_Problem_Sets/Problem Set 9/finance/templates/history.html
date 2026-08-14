@@ -1,44 +1,38 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    History
-{% endblock %}
+{% block title %}History{% endblock %}
 
 {% block main %}
-    <h1 class="page-title">Transaction <span class="accent">Ledger</span></h1>
-    <p class="page-subtitle">chronological record of every executed trade</p>
+  <section class="glass-card">
+    <h1 class="page-title">Transaction History</h1>
 
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th scope="col">Symbol</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Shares</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in transaction %}
-                    <tr>
-                        <td class="row-total">{{ row["symbol"] }}</td>
-                        {% if row["shares"] < 0 %}
-                            <td class="row-negative">SELL</td>
-                            <td>{{ row["shares"] }}</td>
-                        {% else %}
-                            <td class="row-total">BUY</td>
-                            <td>{{ row["shares"] }}</td>
-                        {% endif %}
-                        <td>{{ row["price"] | usd }}</td>
-                        <td class="row-muted">{{ row["date"] }}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="5" class="empty-state">No transactions yet&mdash;your ledger awaits its first entry.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
+    {% if transactions %}
+      <div class="table-wrap">
+        <table class="market-table">
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th class="amount-cell">Shares</th>
+              <th class="amount-cell">Price</th>
+              <th>Transacted</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in transactions %}
+              <tr class="{{ 'buy-row' if transaction.shares > 0 else 'sell-row' }}">
+                <td class="symbol-cell">{{ transaction.symbol }}</td>
+                <td class="amount-cell">
+                  {{ '+' if transaction.shares > 0 }}{{ transaction.shares }}
+                </td>
+                <td class="amount-cell">{{ transaction.price | usd }}</td>
+                <td>{{ transaction.date }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
         </table>
-    </div>
+      </div>
+    {% else %}
+      <p class="empty-state">No transactions yet. Your ledger is waiting to grow.</p>
+    {% endif %}
+  </section>
 {% endblock %}

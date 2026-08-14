@@ -1,68 +1,44 @@
-#!/usr/bin/env python3
-# ==============================================================================
-# Project   : AEL Sovereign — CS50x 2026-2027
-# Module    : week6_sentimental_mario_more
-# File      : mario.py
-# Author    : Ayman Elmasry — AEL Digital Studio
-# ------------------------------------------------------------------------------
-# Description:
-#   Builds the classic double-sided Mario pyramid of '#' blocks (the "more
-#   comfortable" variant). The user supplies a height between 1 and 8; input is
-#   validated in a retry loop until a legal integer is provided. Each row is
-#   centred with spaces and separated by a fixed two-space gap, matching the
-#   check50 output specification byte-for-byte.
-#
-# Algorithm:
-#   For row r in [1..height]:
-#       leading_spaces = height - r
-#       left_bricks    = r
-#       gap            = "  "
-#       right_bricks   = r
-#   This produces an isosceles shape whose apex is the single-brick top row.
-#
-# Complexity:
-#   Time : O(h^2) — the pyramid emits Sum(r) = h(h+1)/2 bricks plus fillers.
-#   Space: O(1)   — output is streamed; only constant-sized row strings exist.
-# ==============================================================================
+"""
+AEL Sovereign — CS50x 2026-2027
+Problem Set 6: Sentimental Mario (More)
+Author: Ayman Elmasry — AEL Digital Studio
+
+Prompts the user for a pyramid height between 1 and 8, re-prompting until
+a valid value is entered, and prints two adjacent right-aligned pyramids
+of hashes separated by two spaces.
+"""
 
 
-def get_height() -> int:
+def get_height():
     """
-    Loop until the user supplies an integer height in the inclusive range 1..8.
-
-    Non-numeric input raises ValueError, which is swallowed so the loop simply
-    re-prompts. Out-of-range integers fall through to the next iteration, and
-    only a legal height terminates the loop. This guarantees the returned
-    value can be used to index pyramid rows without any bounds checking.
+    Repeatedly prompt for a height until an integer between 1 and 8
+    (inclusive) is provided.  Non-numeric input is ignored.
     """
     while True:
         try:
             height = int(input("Height: "))
         except ValueError:
-            continue  # ignore junk; silently re-prompt
-
+            continue
         if 1 <= height <= 8:
             return height
 
 
-def print_pyramid(height: int) -> None:
+def print_pyramids(height):
     """
-    Render a two-sided '#' pyramid of the given height.
-
-    Row indices are 1-based for readability: row 1 is the apex (a single
-    brick), row `height` is the base. The two columns are joined by the
-    fixed two-space separator required by the CS50 specification.
+    Print two mirrored half-pyramids of the requested height.  Each row
+    is right-aligned within a field as wide as the height, and the two
+    halves are separated by exactly two spaces.
     """
     for row in range(1, height + 1):
-        print(" " * (height - row), end="")  # right-justify the left column
-        print("#" * row, end="")             # left column of bricks
-        print("  ", end="")                  # mandatory two-space gap
-        print("#" * row)                     # right column of bricks
+        spaces = " " * (height - row)
+        hashes = "#" * row
+        print(f"{spaces}{hashes}  {hashes}")
 
 
-def main() -> None:
-    """Acquire a validated height and print the corresponding pyramid."""
-    print_pyramid(get_height())
+def main():
+    """Prompt for a height and render the double pyramid."""
+    height = get_height()
+    print_pyramids(height)
 
 
 if __name__ == "__main__":

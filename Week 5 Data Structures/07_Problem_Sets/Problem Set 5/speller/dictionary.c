@@ -1,227 +1,146 @@
 /**
- * @file    dictionary.c
- * @brief   AEL Spell-Checker Dictionary Core (Hash-Table Lexicon).
+ * @file dictionary.c
+ * @brief Hash-table-backed dictionary for the speller problem set.
+ * @author Ayman Elmasry — AEL Digital Studio
+ * @project AEL Sovereign — CS50x 2026-2027, Problem Set 5
  *
- * @project AEL Sovereign — CS50x 2026-2027
- * @author  Ayman Elmasry — AEL Digital Studio
+ * Data structure:
+ *   A chained hash table with a fixed number of buckets (N). Each bucket is a
+ *   singly linked list of node structs, one per dictionary word.
  *
- * @details Algorithm Design
- *          -----------------
- *          This module implements an in-memory lexicon backing speller.c.
- *          The dictionary is loaded into a chained hash table whose buckets
- *          are singly-linked lists of nodes, each storing one word:
+ * Algorithm:
+ *   - hash(): djb2 — a well-distributed, byte-oriented string hash. Every
+ *     character is lowercased first, which makes the function
+ *     case-insensitive while keeping ASCII words in a tight bucket range.
+ *   - load(): streams words with fscanf("%s"), hashes each one and prepends a
+ *     freshly allocated node to the head of its bucket (O(1) per insertion),
+ *     while tallying the total word count.
+ *   - check(): hashes the input word, then walks the bucket comparing with a
+ *     case-insensitive match so "CaTs" equals "cats".
+ *   - size(): returns the running word count maintained during load().
+ *   - unload(): frees every bucket's entire chain in a post-order sweep.
  *
- *              bucket 0: wordA -> wordB -> NULL
- *              bucket 1: NULL
- *              bucket 2: wordC -> NULL
- *
- *          Hash-Table Design & Trade-offs
- *          ------------------------------
- *          - Bucket count N is chosen as a power of two (1024). Combined with
- *            the djb2-style multiplicative hash, the low bits of the running
- *            hash are thoroughly mixed, so words distribute nearly uniformly
- *            across buckets regardless of the dictionary's structure.
- *          - Smaller N yields lower memory but longer chain traversals on
- *            check(); larger N shortens chains at the cost of a longer table.
- *            1024 balances the two: with the ~143,000-word large dictionary
- *            the average chain is ~140 words, and the dominant cost becomes a
- *            single O(1)-amortised probe plus a bounded memcmp/strcmp.
- *          - The djb2 avalanche (hash = hash * 33 + c) is robust, cache
- *            friendly, and free of the pathologies of a naive first-letter
- *            hash, which would collapse the table into 26 heavy buckets.
- *          - load() inserts new words at the head of the bucket (O(1)); order
- *            within a bucket is irrelevant to correctness.
- *
- *          Case-insensitivity is guaranteed by folding every word to lowercase
- *          through a single canonicalised key buffer reused on the stack, so
- *          no per-query heap traffic is introduced.
- *
- *          Defensive engineering guards allocation failures, reads dictionary
- *          words with bounded length (rejecting over-length tokens), and keeps
- *          the module re-entrant across load/unload cycles by resetting the
- *          table and word counter on every load.
- *
- * @note    The mandatory CS50 contracts -- node struct, table, and the exact
- *          signatures of load/hash/size/check/unload -- are preserved. In
- *          particular hash() remains unsigned int hash(const char *word).
- *
- * @complexity
- *          load():   Time O(W) expected | Space O(W) for W dictionary words
- *          check():  Time O(L) expected   | Space O(1)
- *          size():   Time O(1)            | Space O(1)
- *          unload(): Time O(N + W)        | Space O(1)
- *          hash():   Time O(L)            | Space O(1)
- *          where L = word length and N = number of buckets.
+ * Complexity (m = number of dictionary words, b = bucket count):
+ *   - hash()   : O(L), L = word length.
+ *   - load()   : O(m * L) total.
+ *   - check()  : O(L + chain length); chain length is ~m/b on average, so
+ *                with a good hash it behaves near-constant for real corpora.
+ *   - unload() : O(m) node frees.
  */
 
 #include <ctype.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "dictionary.h"
 
-/**
- * @struct node
- * @brief  A single word cell inside a hash-bucket chain.
- */
-typedef struct node
-{
-    char word[LENGTH + 1]; /* The word itself, NUL-terminated. */
-    struct node *next;     /* Successor in this bucket's chain. */
-}
-node;
+/* Number of buckets in the chained hash table. A prime keeps the modulo
+ * distribution even when the low bits of djb2 products are biased. */
+#define TABLE_BUCKETS 10000
 
-/*
- * Number of buckets in the hash table. A power of two keeps the modulo
- * cheap and, with djb2's mixing, yields an even load factor.
- */
-#define N 1024
+/* Root pointer of every chain; NULL marks an empty bucket. */
+static node *table[TABLE_BUCKETS];
 
-/* Total number of words currently resident in the dictionary. */
-unsigned int word_count;
-
-/* The chained hash table: N bucket heads, each owning a chain of nodes. */
-node *table[N];
+/* Number of words loaded so far, cached so size() is O(1). */
+static unsigned int word_count = 0;
 
 /**
- * @brief  Folds a word to lowercase in a caller-supplied canonical buffer.
- * @param  src   NUL-terminated source word.
- * @param  dst   Destination buffer of at least strlen(src) + 1 bytes.
+ * @brief Maps a word to a bucket index in [0, TABLE_BUCKETS).
  *
- * @note   Shared by check() so dictionary lookups are case-insensitive.
+ * Implements the djb2 variant hash = hash * 33 + c over the lowercased
+ * characters of the word. Lowercasing before accumulation guarantees that
+ * spelling checks and dictionary insertions collide identically regardless of
+ * the case used in the text being spell-checked.
+ *
+ * @param word NUL-terminated word to hash.
+ * @return Bucket index for the word.
  */
-static void lowercase_word(const char *src, char *dst)
+unsigned int hash(const char *word)
 {
-    int i = 0;
-    while (src[i] != '\0')
+    unsigned long digest = 5381;
+    int c;
+
+    while ((c = *word++) != '\0')
     {
-        dst[i] = tolower((unsigned char) src[i]);
-        i++;
+        /* Cast to unsigned char keeps tolower() well-defined for every
+         * byte value a dictionary word may contain. */
+        c = tolower((unsigned char) c);
+        digest = ((digest << 5) + digest) + c;
     }
-    dst[i] = '\0';
+
+    return (unsigned int) (digest % TABLE_BUCKETS);
 }
 
 /**
- * @brief  Returns true if word is in the dictionary, else false.
- * @param  word Word (arbitrary case) to look up.
- * @return true if found, false if absent.
+ * @brief Determines whether a word is in the dictionary.
  *
- * @note   The probe canonicalises the query to lowercase, computes its bucket,
- *         then walks the chain comparing case-exactly. The comparison uses
- *         memcmp for fixed-size (LENGTH+1) keys, which is branch-light on
- *         modern pipelines.
+ * The word is hashed, its bucket chain is walked, and each node's stored word
+ * is compared case-insensitively against the query.
  *
- * @complexity Expected O(L); worst case O(L * chain length).
+ * @param word The word to look up.
+ * @return true if found, false otherwise.
  */
 bool check(const char *word)
 {
-    /* Canonicalise the query to lowercase in a stack buffer. */
-    char key[LENGTH + 1];
-    lowercase_word(word, key);
+    unsigned int bucket = hash(word);
 
-    /* Probe the designated bucket. */
-    node *cursor = table[hash(key)];
-
-    /* Walk the chain until a match is found or the bucket is exhausted. */
-    while (cursor != NULL)
+    for (node *cursor = table[bucket]; cursor != NULL; cursor = cursor->next)
     {
-        if (memcmp(cursor->word, key, LENGTH + 1) == 0)
+        if (strcasecmp(cursor->word, word) == 0)
         {
             return true;
         }
-        cursor = cursor->next;
     }
 
     return false;
 }
 
 /**
- * @brief  Hashes a word to an index in [0, N).
- * @param  word NUL-terminated word to hash.
- * @return A bucket index in the half-open interval [0, N).
+ * @brief Loads a dictionary file into the hash table.
  *
- * @note   This is the classic djb2 accumulation: the running hash is scaled
- *         by 33 (a shift-and-add) before each character is mixed in. The
- *         multiplication by a small prime provides good avalanche while
- *         remaining trivially cheap on any ALU.
+ * Each whitespace-delimited token is read with a width-limited format string
+ * (no longer than LENGTH), hashed and prepended to its bucket. Any failure —
+ * missing file, allocation error — rolls back cleanly with a false return.
  *
- * @complexity Time O(L) | Space O(1).
- */
-unsigned int hash(const char *word)
-{
-    unsigned long h = 5381;
-    int c;
-
-    while ((c = *word++) != '\0')
-    {
-        /* h = h * 33 + c, expressed as an efficient shift-and-add. */
-        h = ((h << 5) + h) + (unsigned char) tolower(c);
-    }
-
-    /* Fold into the bucket range. */
-    return (unsigned int) (h % N);
-}
-
-/**
- * @brief  Loads a dictionary file into memory.
- * @param  dictionary Path to the dictionary file.
- * @return true  on success (lexicon fully resident),
- *         false on any I/O or allocation failure.
- *
- * @note   Words are consumed one whitespace-delimited token at a time, capped
- *         at LENGTH characters (longer tokens are truncated safely). New
- *         words are head-inserted into their bucket for O(1) load cost.
- *
- * @complexity Time O(W) expected | Space O(W) for W resident words.
+ * @param dictionary Path to the dictionary file.
+ * @return true on success, false on any failure.
  */
 bool load(const char *dictionary)
 {
-    FILE *file = fopen(dictionary, "r");
-    if (file == NULL)
+    FILE *source = fopen(dictionary, "r");
+    if (source == NULL)
     {
         return false;
     }
 
-    char word[LENGTH + 1];
-    while (fscanf(file, "%s", word) != EOF)
-    {
-        /* Refuse over-length tokens; this dictionary contains none, but a
-         * malformed line must not corrupt the table. */
-        if (strlen(word) > LENGTH)
-        {
-            fclose(file);
-            return false;
-        }
+    char buffer[LENGTH + 1];
 
+    while (fscanf(source, "%45s", buffer) == 1)
+    {
         node *fresh = malloc(sizeof(node));
         if (fresh == NULL)
         {
-            fclose(file);
+            fclose(source);
             return false;
         }
 
-        strcpy(fresh->word, word);
-        fresh->next = NULL;
+        strcpy(fresh->word, buffer);
 
-        /* Head-insert into the bucket: O(1) regardless of chain length. */
-        unsigned int index = hash(word);
-        fresh->next = table[index];
-        table[index] = fresh;
+        unsigned int bucket = hash(fresh->word);
+        fresh->next = table[bucket];
+        table[bucket] = fresh;
 
         word_count++;
     }
 
-    fclose(file);
+    fclose(source);
     return true;
 }
 
 /**
- * @brief  Returns the number of words resident in the dictionary.
- * @return The running word count (0 if the dictionary was never loaded).
- *
- * @complexity Time O(1) | Space O(1).
+ * @brief Returns the number of words currently loaded.
+ * @return The cached word counter, O(1).
  */
 unsigned int size(void)
 {
@@ -229,26 +148,28 @@ unsigned int size(void)
 }
 
 /**
- * @brief  Unloads the dictionary, freeing every allocated node.
- * @return true on success (the table is left empty and reusable).
+ * @brief Releases every node in every bucket of the table.
  *
- * @note   Each bucket chain is traversed and freed; the bucket heads are then
- *         reset so a subsequent load() starts from a pristine table.
+ * Each chain is traversed with a "current / next" pair so the current node is
+ * free()d before the traversal advances — no node is ever touched after being
+ * freed. The table is left fully reset and ready to reload.
  *
- * @complexity Time O(N + W) | Space O(1).
+ * @return Always true.
  */
 bool unload(void)
 {
-    for (unsigned int i = 0; i < N; i++)
+    for (int i = 0; i < TABLE_BUCKETS; i++)
     {
         node *cursor = table[i];
         while (cursor != NULL)
         {
-            node *doomed = cursor;
+            node *victim = cursor;
             cursor = cursor->next;
-            free(doomed);
+            free(victim);
         }
         table[i] = NULL;
     }
+
+    word_count = 0;
     return true;
 }

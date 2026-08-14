@@ -1,232 +1,254 @@
-/* ===========================================================================
-   CS50 Birthdays - AEL Sovereign Dark Edition
-   ---------------------------------------------------------------------------
-   Frosted-glass ledger themed to match the repository's dark design language:
-   deep black backdrop, neon accents, glassmorphism panels and monospaced data.
-   =========================================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+/* ==========================================================================
+   AEL Birthdays - Dark Glassmorphism Theme
+   ==========================================================================
+   Author : Ayman Elmasry -- AEL Digital Studio
+   Palette: near-black canvas, frosted glass panels, neon violet/cyan accents.
+   ========================================================================== */
 
 :root {
-    --bg-deep: #000000;
-    --bg-panel: rgba(17, 17, 17, 0.7);
-    --bg-input: rgba(255, 255, 255, 0.04);
-    --text-main: #ffffff;
-    --text-muted: #A3A3A3;
-    --text-dim: #6B7280;
-    --color-neon: #0074FF;
-    --color-violet: #6C47FF;
-    --color-teal: #00D4AA;
-    --color-pink: #FF4D8D;
-    --color-amber: #F59E0B;
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-border-bright: rgba(255, 255, 255, 0.24);
-    --shadow-epic: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
-    --radius-lg: 24px;
-    --radius-md: 14px;
+  --bg-void: #07060d;
+  --bg-panel: rgba(255, 255, 255, 0.045);
+  --bg-panel-strong: rgba(255, 255, 255, 0.08);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass-strong: rgba(255, 255, 255, 0.22);
+  --text-primary: #f1eeff;
+  --text-muted: #9b94bd;
+  --accent: #b388ff;
+  --accent-cyan: #7ce7ff;
+  --neon-grad: linear-gradient(120deg, #b388ff, #7ce7ff);
+  --danger: #ff6b8b;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, Menlo,
+    Consolas, monospace;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-    background-color: var(--bg-deep);
-    background-image:
-        radial-gradient(circle at 50% 0%, rgba(0, 116, 255, 0.14) 0%, transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(0, 212, 170, 0.06) 0%, transparent 45%);
-    background-attachment: fixed;
-    color: var(--text-muted);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    line-height: 1.7;
-    margin: 0;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  background: radial-gradient(
+      1100px 620px at 12% -8%,
+      rgba(179, 136, 255, 0.1),
+      transparent 60%
+    ),
+    radial-gradient(1000px 700px at 108% 8%, rgba(124, 231, 255, 0.08),
+      transparent 55%),
+    var(--bg-void);
+  background-attachment: fixed;
 }
 
-.terminal {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 44px 22px 70px 22px;
+a {
+  color: var(--accent);
+  text-decoration: none;
 }
 
-/* ---------------------------------------------------------------------------
-   Header banner
-   ------------------------------------------------------------------------- */
+.container {
+  width: min(960px, 92vw);
+  margin: 0 auto;
+  padding: 56px 0 90px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.page-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  background: var(--neon-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.page-subtitle {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Frosted glass cards
+   -------------------------------------------------------------------------- */
+
+.glass-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   Forms
+   -------------------------------------------------------------------------- */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: var(--mono);
+  color: var(--text-primary);
+  background: rgba(10, 10, 20, 0.65);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control::placeholder {
+  color: #5b546e;
+}
+
+.form-control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(179, 136, 255, 0.18);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.btn {
+  padding: 12px 22px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  color: #0b0a14;
+  background: var(--neon-grad);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(179, 136, 255, 0.28);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   Ledger table
+   -------------------------------------------------------------------------- */
+
+.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+}
+
+.ledger thead th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-glass-strong);
+}
+
+.ledger tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.ledger tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ledger tbody tr {
+  transition: background 0.15s ease;
+}
+
+.ledger tbody tr:hover {
+  background: var(--bg-panel-strong);
+}
+
+.ledger tbody td:first-child {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Error banner
+   -------------------------------------------------------------------------- */
+
 .banner {
-    text-align: center;
-    margin-bottom: 44px;
+  padding: 12px 16px;
+  margin-bottom: 22px;
+  font-size: 0.9rem;
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.banner-mark {
-    display: inline-block;
-    color: var(--color-amber);
-    font-size: 1.6rem;
-    filter: drop-shadow(0 0 14px var(--color-amber));
-    margin-bottom: 8px;
+.banner-error {
+  color: #ffe1e9;
+  background: rgba(255, 107, 139, 0.12);
+  border: 1px solid rgba(255, 107, 139, 0.4);
 }
 
-.banner h1 {
-    margin: 0;
-    color: var(--text-main);
-    font-size: 3rem;
-    font-weight: 800;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-shadow: 0 0 30px rgba(0, 116, 255, 0.45);
+.empty-state {
+  color: var(--text-muted);
+  padding: 18px 0 6px;
 }
 
-.banner-sub {
-    margin: 10px 0 0 0;
-    color: var(--text-dim);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
+/* --------------------------------------------------------------------------
+   Responsive behaviour
+   -------------------------------------------------------------------------- */
 
-/* ---------------------------------------------------------------------------
-   Layout
-   ------------------------------------------------------------------------- */
-.layout {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 28px;
-    align-items: start;
-}
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-@media (max-width: 820px) {
-    .layout { grid-template-columns: 1fr; }
-}
-
-.card {
-    background: var(--bg-panel);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    padding: 34px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: var(--shadow-epic);
-}
-
-.card h2 {
-    margin: 0 0 6px 0;
-    color: var(--text-main);
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.hint {
-    margin: 0 0 26px 0;
-    color: var(--text-dim);
-    font-size: 0.88rem;
-}
-
-/* ---------------------------------------------------------------------------
-   Form
-   ------------------------------------------------------------------------- */
-.field label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.field input {
-    width: 100%;
-    background: var(--bg-input);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    color: var(--text-main);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.95rem;
-    padding: 14px 16px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.field input:focus {
-    outline: none;
-    border-color: var(--color-neon);
-    box-shadow: 0 0 22px rgba(0, 116, 255, 0.25);
-}
-
-.field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 18px;
-}
-
-.submit {
-    width: 100%;
-    margin-top: 26px;
-    border: none;
-    border-radius: 12px;
-    padding: 14px 20px;
-    background: linear-gradient(135deg, var(--color-neon), var(--color-violet));
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-    box-shadow: 0 0 22px rgba(0, 116, 255, 0.35);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 38px rgba(0, 116, 255, 0.6);
-}
-
-/* ---------------------------------------------------------------------------
-   Table
-   ------------------------------------------------------------------------- */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 8px;
-}
-
-thead th {
-    text-align: left;
-    padding: 12px 14px;
-    color: var(--color-neon);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--glass-border-bright);
-}
-
-tbody td {
-    padding: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-tbody tr { transition: background 0.2s ease; }
-tbody tr:hover { background: rgba(0, 116, 255, 0.07); }
-
-.mono { font-family: 'JetBrains Mono', monospace; color: var(--text-main); }
-
-.badge {
-    display: inline-block;
-    background: rgba(0, 212, 170, 0.12);
-    border: 1px solid rgba(0, 212, 170, 0.3);
-    color: var(--color-teal);
-    border-radius: 999px;
-    padding: 4px 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.empty {
-    color: var(--text-dim);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.88rem;
-    text-align: center;
-    padding: 30px 0 10px 0;
+  .page-title {
+    font-size: 2rem;
+  }
 }

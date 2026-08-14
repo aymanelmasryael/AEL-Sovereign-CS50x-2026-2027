@@ -1,159 +1,116 @@
 /**
- * @file    tideman.c
- * @brief   Tideman Ranked-Pairs Condorcet Election Kernel.
+ * @file tideman.c
+ * @brief Tideman ranked-choice election: voters rank every candidate and the
+ *        winner is the source of the locked, acyclic "strongest win" graph.
+ * @author Ayman Elmasry — AEL Digital Studio
+ * @project AEL Sovereign — CS50x 2026-2027, Problem Set 3
  *
- * @project AEL Sovereign — CS50x 2026-2027
- * @author  Ayman Elmasry — AEL Digital Studio
+ * Algorithm:
+ *   1. vote() records one ballot rank at a time into the ranks[] array,
+ *      rejecting unknown names or any candidate already ranked on this ballot.
+ *   2. record_preferences() turns each completed ballot into pairwise counts.
+ *   3. add_pairs() derives one directed "preference edge" per unordered pair.
+ *   4. sort_pairs() orders those edges by margin of victory (largest first).
+ *   5. lock_pairs() locks edges in that order only when adding the edge cannot
+ *      form a cycle (checked with a depth-first path search from loser to
+ *      winner through the edges locked so far).
+ *   6. print_winner() prints the candidate who is never a loser in the graph.
  *
- * @details Algorithm Design
- *          -----------------
- *          This program implements the Tideman method, a Condorcet-consistent
- *          ranked-choice voting system. Every voter supplies a complete
- *          ordering of all candidates; from these ballots the engine derives,
- *          for each unordered candidate pair (i, j), the number of voters who
- *          prefer i over j (and vice-versa).
- *
- *          The pipeline proceeds in four precisely ordered phases:
- *            1. record_preferences() -- collapses each voter's ranked ballot
- *               into a pairwise preference matrix via a double loop over all
- *               ordered pairs.
- *            2. add_pairs()          -- isolates every decisive head-to-head
- *               contest, storing (winner, loser) pairs and discarding ties.
- *            3. sort_pairs()         -- orders pairs by descending strength of
- *               victory (selection sort), so the most decisive contests are
- *               locked first.
- *            4. lock_pairs()         -- locks edges into the winner graph only
- *               when doing so cannot close a directed cycle. Cycle induction
- *               is detected with a depth-first reachability probe; an edge is
- *               accepted only if no directed path already connects the loser
- *               back to the winner. This invariant guarantees the locked
- *               structure remains a Directed Acyclic Graph (DAG).
- *
- *          The election victor is the Condorcet winner: the unique DAG source
- *          with no incoming locked edges.
- *
- *          Defensive engineering integrates candidate-name validation at ballot
- *          entry (rejecting unknown or duplicate-rank candidates) and robust
- *          integer arithmetic for both preference tallying and margin sizing.
- *
- * @note    The mandatory CS50 contracts -- the pair struct, the global
- *          preferences/locked matrices, candidates/pairs arrays, and all six
- *          required functions -- are preserved exactly for check50 linkage.
- *
- * @complexity
- *          record_preferences(): Time O(n^2)
- *          add_pairs():          Time O(n^2)
- *          sort_pairs():         Time O(p^2)   (p = pair count <= n(n-1)/2)
- *          lock_pairs():         Time O(p * (n + e)) worst case (DFS reach)
- *          print_winner():       Time O(n^2)
- *          where n = candidate_count.
+ * Complexity:
+ *   - vote()             : O(C) name scan plus O(rank) duplicate check.
+ *   - record_preferences: O(C^2) per ballot.
+ *   - add_pairs          : O(C^2).
+ *   - sort_pairs         : O(P log P), P <= C(C-1)/2.
+ *   - lock_pairs         : O(P * C^2) in the worst case per DFS walk.
+ *   - print_winner       : O(C^2).
  */
 
 #include <cs50.h>
 #include <stdio.h>
-#include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 
-/* Maximum number of candidates permitted in a single election. */
 #define MAX 9
 
-/* preferences[i][j] is the number of voters who prefer i over j. */
-int preferences[MAX][MAX];
-
-/* locked[i][j] records that candidate i is locked in over candidate j. */
-bool locked[MAX][MAX];
-
-/**
- * @struct pair
- * @brief  An ordered head-to-head contest between two candidates.
- */
 typedef struct
 {
-    int winner;  /* Candidate preferred by the majority of voters. */
-    int loser;   /* Candidate defeated in this pair.              */
-}
-pair;
+    string name;
+    int votes;
+} candidate;
 
-/* Registry of participating candidates. */
-string candidates[MAX];
+typedef struct
+{
+    int winner;
+    int loser;
+} pair;
 
-/* Collection of all decisive (non-tied) pairs discovered from ballots. */
-pair pairs[MAX * (MAX - 1) / 2];
-
-/* Number of decisive pairs; registry size; both maintained globally. */
-int pair_count;
+candidate candidates[MAX];
 int candidate_count;
+pair pairs[MAX * (MAX - 1) / 2];
+int pair_count;
+int preferences[MAX][MAX];
+bool locked[MAX][MAX];
 
-/* Function prototypes mandated by the CS50 problem specification. */
 bool vote(int rank, string name, int ranks[]);
 void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
 void print_winner(void);
-bool has_cycle(int winner, int loser);
+int pair_margin_compare(const void *a, const void *b);
+bool edge_creates_cycle(int winner, int current);
 
-/**
- * @brief  Entry point: registers candidates, collects ranked ballots,
- *         tabulates preferences, locks the DAG, and announces the winner.
- * @return 0 on success, 1/2 for usage/overflow, 3 for an invalid ballot.
- */
 int main(int argc, string argv[])
 {
-    /* Reject an invocation that provides no candidates. */
     if (argc < 2)
     {
         printf("Usage: tideman [candidate ...]\n");
         return 1;
     }
 
-    /* Register candidates, enforcing the registry's hard capacity. */
-    candidate_count = argc - 1;
-    if (candidate_count > MAX)
+    if (argc - 1 > MAX)
     {
         printf("Maximum number of candidates is %i\n", MAX);
         return 2;
     }
-    for (int i = 0; i < candidate_count; i++)
-    {
-        candidates[i] = argv[i + 1];
-    }
 
-    /* Reset the locked graph: no edges exist before ballot processing. */
+    candidate_count = argc - 1;
     for (int i = 0; i < candidate_count; i++)
     {
-        for (int j = 0; j < candidate_count; j++)
-        {
-            locked[i][j] = false;
-        }
+        candidates[i].name = argv[i + 1];
+        candidates[i].votes = 0;
     }
 
     pair_count = 0;
-    int voter_count = get_int("Number of voters: ");
 
-    /* Collect and tabulate every voter's ranked ballot. */
+    int voter_count = get_int("Number of voters: ");
+    if (voter_count < 1)
+    {
+        printf("Invalid number of voters.\n");
+        return 3;
+    }
+
+    int ranks[MAX];
     for (int i = 0; i < voter_count; i++)
     {
-        /* ranks[i] records the candidate occupying the voter's ith position. */
-        int ranks[candidate_count];
+        for (int j = 0; j < candidate_count; j++)
+        {
+            ranks[j] = -1;
+        }
 
         for (int j = 0; j < candidate_count; j++)
         {
             string name = get_string("Rank %i: ", j + 1);
-
-            /* An unrecognised candidate invalidates the entire ballot. */
             if (!vote(j, name, ranks))
             {
                 printf("Invalid vote.\n");
-                return 3;
+                return 4;
             }
         }
 
         record_preferences(ranks);
-        printf("\n");
     }
 
-    /* Execute the ranked-pairs pipeline to completion. */
     add_pairs();
     sort_pairs();
     lock_pairs();
@@ -162,22 +119,33 @@ int main(int argc, string argv[])
 }
 
 /**
- * @brief  Maps a candidate name to its registry index at a given ballot rank.
- * @param  rank  The zero-based position this candidate occupies on the ballot.
- * @param  name  The candidate name supplied by the voter.
- * @param  ranks Shared ballot buffer; updated in place at ranks[rank].
- * @return true  if the name matches a registered candidate,
- *         false otherwise (invalid ballot entry).
+ * @brief Records a single ranked choice onto a voter's ballot.
  *
- * @note   Uses a linear, case-exact scan of the candidate registry.
+ * The candidate named at rank r is stored in ranks[r] as its roster index,
+ * provided the name is on the roster and has not already been assigned an
+ * earlier rank on this same ballot (checked by scanning ranks[0..r-1]).
+ *
+ * @param rank  The current preference position being filled (0-based).
+ * @param name  The candidate name offered by the voter.
+ * @param ranks Working array in which each filled slot holds a roster index.
+ * @return true  if the choice was accepted,
+ *         false if the name is unknown or already ranked on this ballot.
  */
 bool vote(int rank, string name, int ranks[])
 {
     for (int i = 0; i < candidate_count; i++)
     {
-        if (strcmp(name, candidates[i]) == 0)
+        if (strcmp(name, candidates[i].name) == 0)
         {
+            for (int j = 0; j < rank; j++)
+            {
+                if (ranks[j] == i)
+                {
+                    return false;
+                }
+            }
             ranks[rank] = i;
+            candidates[i].votes++;
             return true;
         }
     }
@@ -185,13 +153,12 @@ bool vote(int rank, string name, int ranks[])
 }
 
 /**
- * @brief  Updates the pairwise preference matrix from one voter's ranking.
- * @param  ranks The candidate indexes in descending order of preference.
+ * @brief Accumulates pairwise preferences implied by one complete ballot.
  *
- * @note   For every ordered pair (ranks[i], ranks[j]) with i preceding j, the
- *         voter prefers ranks[i]; hence preferences[ranks[i]][ranks[j]] is
- *         credited. The double loop visits each unordered pair exactly once
- *         in the forward direction.
+ * For every ordered pair (i before j) in ranks[], preferences[i][j] is
+ * incremented, reflecting that the voter prefers candidate i over j.
+ *
+ * @param ranks Completed ballot: ranks[i] holds the roster index at rank i.
  */
 void record_preferences(int ranks[])
 {
@@ -205,13 +172,14 @@ void record_preferences(int ranks[])
 }
 
 /**
- * @brief  Enumerates every decisive pair into the global pairs array.
+ * @brief Builds the list of "strong" directed preference edges.
  *
- * @note   Compares each unordered candidate pair (i, j); the majority
- *         preference determines the winner. A perfect tie contributes no pair.
+ * For each unordered candidate pair (a, b), the direction of the edge points
+ * at the candidate preferred by more voters; exact ties contribute no edge.
  */
 void add_pairs(void)
 {
+    pair_count = 0;
     for (int i = 0; i < candidate_count; i++)
     {
         for (int j = i + 1; j < candidate_count; j++)
@@ -219,67 +187,86 @@ void add_pairs(void)
             if (preferences[i][j] > preferences[j][i])
             {
                 pairs[pair_count].winner = i;
-                pairs[pair_count].loser  = j;
+                pairs[pair_count].loser = j;
                 pair_count++;
             }
             else if (preferences[i][j] < preferences[j][i])
             {
                 pairs[pair_count].winner = j;
-                pairs[pair_count].loser  = i;
+                pairs[pair_count].loser = i;
                 pair_count++;
             }
-            /* Equality: no preference -- the tie contributes nothing. */
         }
     }
 }
 
 /**
- * @brief  Sorts pairs in strictly decreasing order of victory strength.
+ * @brief Comparator for qsort(): orders pairs by margin of victory, descending.
  *
- * @note   Implements an in-place selection sort keyed on the margin of
- *         victory, i.e. the count of voters preferring the winner over the
- *         loser. Larger margins correspond to more decisive contests and are
- *         locked into the DAG first.
- *
- * @complexity Time O(p^2) | Space O(1) for p decisive pairs.
+ * @param a First pair to compare.
+ * @param b Second pair to compare.
+ * @return negative if a should sort after b, zero on equal margins,
+ *         positive if a should sort before b.
+ */
+int pair_margin_compare(const void *a, const void *b)
+{
+    const pair *pa = (const pair *) a;
+    const pair *pb = (const pair *) b;
+
+    int margin_a = preferences[pa->winner][pa->loser] - preferences[pa->loser][pa->winner];
+    int margin_b = preferences[pb->winner][pb->loser] - preferences[pb->loser][pb->winner];
+
+    return margin_b - margin_a;
+}
+
+/**
+ * @brief Sorts all recorded pairs by descending margin of victory.
  */
 void sort_pairs(void)
 {
-    for (int i = 0; i < pair_count - 1; i++)
-    {
-        int best = i;
-        for (int j = i + 1; j < pair_count; j++)
-        {
-            if (preferences[pairs[j].winner][pairs[j].loser] >
-                preferences[pairs[best].winner][pairs[best].loser])
-            {
-                best = j;
-            }
-        }
-        if (best != i)
-        {
-            pair pivot = pairs[i];
-            pairs[i]   = pairs[best];
-            pairs[best] = pivot;
-        }
-    }
+    qsort(pairs, pair_count, sizeof(pair), pair_margin_compare);
 }
 
 /**
- * @brief  Locks pairs into the winner graph, refusing any edge that would
- *         close a directed cycle.
+ * @brief Depth-first search: can the locked graph already route "current"
+ *        back to "winner"?
  *
- * @note   Each candidate edge is admitted only if no directed path already
- *         connects the loser back to the winner. This preserves the
- *         acyclicity invariant essential to a valid Condorcet ranking.
+ * Starting from the would-be loser, every locked outgoing edge is followed;
+ * if the walk ever reaches the would-be winner, locking winner->loser now
+ * would complete a cycle.
  *
- * @complexity Time O(p * (n + e)) worst case across all pair_count edges.
+ * @param winner Candidate index that would gain the new outgoing edge.
+ * @param current Node currently being expanded during the search.
+ * @return true  if a cycle would be created,
+ *         false otherwise.
+ */
+bool edge_creates_cycle(int winner, int current)
+{
+    if (locked[current][winner])
+    {
+        return true;
+    }
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (locked[current][i] && edge_creates_cycle(winner, i))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * @brief Locks pairs in descending margin order, skipping any that would
+ *        introduce a cycle into the graph.
  */
 void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++)
     {
-        if (!has_cycle(pairs[i].winner, pairs[i].loser))
+        if (!edge_creates_cycle(pairs[i].winner, pairs[i].loser))
         {
             locked[pairs[i].winner][pairs[i].loser] = true;
         }
@@ -287,64 +274,27 @@ void lock_pairs(void)
 }
 
 /**
- * @brief  Determines whether locking the edge (winner -> loser) would create
- *         a directed cycle in the accumulated lock graph.
- * @param  winner The potential tail of the new edge.
- * @param  loser  The potential head of the new edge.
- * @return true  if a cycle would be induced,
- *         false if the edge is safe to lock.
+ * @brief Prints the Tideman winner.
  *
- * @note   A cycle is induced iff there already exists a directed path from
- *         loser back to winner. This is resolved with depth-first reachability
- *         along already-locked edges. Passing the invariant `winner == loser`
- *         (an identity edge) trivially denotes a cycle.
- *
- * @complexity Worst-case O(n + e) per call over the candidate graph.
- */
-bool has_cycle(int winner, int loser)
-{
-    /* An identity edge is an immediate, degenerate cycle. */
-    if (winner == loser)
-    {
-        return true;
-    }
-
-    /* Recurse along every locked out-edge of `loser` to chase a return path. */
-    for (int i = 0; i < candidate_count; i++)
-    {
-        if (locked[loser][i] && has_cycle(winner, i))
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * @brief  Prints the Condorcet winner: the unique DAG source with no
- *         incoming locked edges.
- *
- * @note   A candidate is the source of the locked graph when no other
- *         candidate is locked over it; such a candidate loses to no one and is
- *         therefore undefeated in every decisive head-to-head contest.
- *
- * @complexity Time O(n^2) | Space O(1).
+ * The winner is the unique source node of the locked graph — a candidate that
+ * never appears as the loser of any locked edge.
  */
 void print_winner(void)
 {
     for (int i = 0; i < candidate_count; i++)
     {
-        bool defeated = false;
-        for (int j = 0; j < candidate_count && !defeated; j++)
+        bool ever_defeated = false;
+        for (int j = 0; j < candidate_count; j++)
         {
             if (locked[j][i])
             {
-                defeated = true;
+                ever_defeated = true;
+                break;
             }
         }
-        if (!defeated)
+        if (!ever_defeated)
         {
-            printf("%s\n", candidates[i]);
+            printf("%s\n", candidates[i].name);
             return;
         }
     }

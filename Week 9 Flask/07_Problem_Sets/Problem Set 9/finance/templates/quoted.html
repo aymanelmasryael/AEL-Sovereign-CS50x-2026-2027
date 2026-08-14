@@ -1,17 +1,20 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Quote Result
-{% endblock %}
+{% block title %}Quoted{% endblock %}
 
 {% block main %}
-    <h1 class="page-title">Market <span class="accent">Snapshot</span></h1>
-    <p class="page-subtitle">requested quote resolved successfully</p>
+  <section class="glass-card narrow">
+    <h1 class="page-title">Quote</h1>
 
-    <div class="quote-panel">
-        <div class="quote-symbol">{{ symbol }}</div>
-        <div class="quote-name">{{ name }}</div>
-        <div class="quote-price-label">Latest Price</div>
-        <div class="quote-price">{{ price | usd }}</div>
+    <div class="quote-result">
+      <div class="quote-symbol">{{ quote.symbol }}</div>
+      <div class="quote-name">{{ quote.name }}</div>
+      <div class="quote-price">{{ quote.price | usd }}</div>
+
+      <div class="form-actions">
+        <a class="btn" href="/buy">Buy {{ quote.symbol }}</a>
+        <a class="btn btn-ghost" href="/quote">New Quote</a>
+      </div>
     </div>
+  </section>
 {% endblock %}

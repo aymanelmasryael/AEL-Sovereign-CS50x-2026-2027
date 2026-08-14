@@ -1,109 +1,62 @@
-#!/usr/bin/env python3
-# ==============================================================================
-# Project   : AEL Sovereign — CS50x 2026-2027
-# Module    : week6_sentimental_readability
-# File      : readability.py
-# Author    : Ayman Elmasry — AEL Digital Studio
-# ------------------------------------------------------------------------------
-# Description:
-#   Computes the U.S. school grade level required to read a given text, using
-#   the Coleman-Liau readability index — the same formula employed by the
-#   CS50 "readability" problem. It prompts for a "Text: ", analyses its
-#   letters, words and sentences, then reports the grade (with the check50
-#   special cases "Before Grade 1" and "Grade 16+" handled explicitly).
-#
-# Algorithm (Coleman-Liau, 1975):
-#     L = (letters / words) * 100          -> avg letters per 100 words
-#     S = (sentences / words) * 100        -> avg sentences per 100 words
-#     index = 0.0588 * L - 0.296 * S - 15.8
-#   The index is rounded to the nearest integer to yield the grade.
-#
-# Counting rules:
-#   - letter  : any alphabetic character (Unicode-aware via str.isalpha()).
-#   - word    : any maximal run of non-whitespace separated by whitespace.
-#   - sentence: any terminally punctuated clause ending in '.', '!' or '?'.
-#
-# Complexity:
-#   Time : O(n) — a single linear scan of the text for each metric.
-#   Space: O(n) — the input string plus its tokenised word list.
-# ==============================================================================
+"""
+AEL Sovereign — CS50x 2026-2027
+Problem Set 6: Sentimental Readability
+Author: Ayman Elmasry — AEL Digital Studio
 
-import re
+Estimates the U.S. school grade level required to understand a passage of
+text, using the Coleman-Liau index.  The user is prompted for a sentence
+or paragraph and the computed grade level is printed.
+"""
 
 
-SENTENCE_TERMINATORS = (".", "!", "?")
+def count_letters(text):
+    """Return the number of alphabetic characters in the text."""
+    return sum(1 for character in text if character.isalpha())
 
 
-def count_words(text: str) -> int:
+def count_words(text):
+    """Return the number of words in the text, split on whitespace."""
+    return len(text.split())
+
+
+def count_sentences(text):
+    """Return the number of sentences, based on '.', '!', and '?'."""
+    return sum(1 for character in text if character in ".!?")
+
+
+def grade_level(letters, words, sentences):
     """
-    Count the number of words in `text`.
-
-    A word is defined as any contiguous run of non-whitespace characters,
-    mirroring the CS50 specification. Splitting on whitespace (rather than
-    manually tallying spaces) is more robust: it naturally ignores repeated
-    and leading/trailing whitespace, so the token count is exact either way.
+    Compute the Coleman-Liau reading grade.  L is the average number of
+    letters per 100 words and S is the average number of sentences per
+    100 words; the index is 0.0588 * L - 0.296 * S - 15.8.
     """
-    return len(re.split(r"\s+", text.strip())) if text.strip() else 0
+    per_100 = 100 / words
+    letters_per = letters * per_100
+    sentences_per = sentences * per_100
+    return 0.0588 * letters_per - 0.296 * sentences_per - 15.8
 
 
-def count_letters(text: str) -> int:
+def report(index):
     """
-    Count the number of alphabetic letters in `text`.
-
-    `str.isalpha()` is preferred over manual ASCII range checks because it is
-    Unicode-aware and therefore counts accented and non-Latin letters too.
+    Render the reading level as a string.  Indexes below 1 are reported
+    as "Before Grade 1", indexes of 16 or higher as "Grade 16+", and any
+    other value is rounded to the nearest whole grade.
     """
-    return sum(1 for char in text if char.isalpha())
-
-
-def count_sentences(text: str) -> int:
-    """
-    Count the number of sentences in `text`.
-
-    A sentence is delimited by any of '.', '!' or '?'. Each such char
-    contributes exactly one sentence boundary; the final clause need not be
-    terminated because the text itself represents one complete thought.
-    """
-    return sum(1 for char in text if char in SENTENCE_TERMINATORS)
-
-
-def coleman_liau_grade(letters: int, words: int, sentences: int) -> float:
-    """
-    Evaluate the raw Coleman-Liau index for the given counts.
-
-    The formula yields a non-negative float; the caller is responsible for
-    rounding and for applying the two grade-clamping bounds. Returning the
-    unrounded float keeps this function pure and trivially unit-testable.
-    """
-    letters_per_100 = (letters / words) * 100.0
-    sentences_per_100 = (sentences / words) * 100.0
-    return round(0.0588 * letters_per_100 - 0.296 * sentences_per_100 - 15.8)
-
-
-def main() -> None:
-    """
-    Drive the analysis: read a text, compute its grade, and print a verdict.
-
-    The verdict format exactly matches check50:
-        - "Before Grade 1" when index < 1
-        - "Grade N"        when 1 <= index <= 16
-        - "Grade 16+"      when index > 16
-    """
-    text = input("Text: ")
-    words = count_words(text)
-    if words == 0:
-        return  # guard against division-by-zero on an empty text
-
-    letters = count_letters(text)
-    sentences = count_sentences(text)
-    index = coleman_liau_grade(letters, words, sentences)
-
     if index < 1:
-        print("Before Grade 1")
-    elif index > 16:
-        print("Grade 16+")
-    else:
-        print(f"Grade {index}")
+        return "Before Grade 1"
+    if index >= 16:
+        return "Grade 16+"
+    return f"Grade {round(index)}"
+
+
+def main():
+    """Prompt for text and print the estimated reading grade level."""
+    text = input("Text: ")
+    letters = count_letters(text)
+    words = count_words(text)
+    sentences = count_sentences(text)
+    index = grade_level(letters, words, sentences)
+    print(report(index))
 
 
 if __name__ == "__main__":

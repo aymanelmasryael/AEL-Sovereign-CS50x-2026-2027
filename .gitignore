@@ -25,6 +25,9 @@ Thumbs.db
 *.db-journal
 fiftyville.db-journal
 
+# Large Distribution Databases (download from CS50 official distribution)
+movies.db
+
 # Compiled Binaries & Build Artifacts
 *.out
 *.exe

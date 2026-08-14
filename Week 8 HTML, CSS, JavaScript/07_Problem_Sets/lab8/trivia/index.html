@@ -3,259 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AEL Sovereign Trivia — an interactive quiz lab for Harvard CS50x week 8, featuring multiple-choice and free-response questions with instant feedback.">
-    <meta name="theme-color" content="#07090F">
-    <title>AEL Sovereign Trivia | CS50x Week 8 Lab</title>
+    <title>Computer Science Trivia | CS50x Lab 8</title>
+    <meta name="description"
+          content="A self-contained interactive computer science trivia quiz with multiple choice and free-response questions.">
 
-    <!-- Inline SVG favicon (no external file required) -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230074FF'/%3E%3Cstop offset='1' stop-color='%236C47FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='72' font-size='58' font-family='Arial, sans-serif' font-weight='700' fill='white' text-anchor='middle'%3E%3F%3C/text%3E%3C/svg%3E">
+    <!-- Inline SVG favicon (no external asset files) -->
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238b5cf6'/%3E%3Cstop offset='1' stop-color='%232dd4bf'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='44' font-family='Arial,Helvetica,sans-serif' font-size='32' font-weight='700' text-anchor='middle' fill='%23050709'%3E?%3C/text%3E%3C/svg%3E">
+
+    <!-- Typography: Google Fonts with graceful system fallbacks -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+          rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="glow glow--violet" aria-hidden="true"></div>
+    <div class="glow glow--teal" aria-hidden="true"></div>
 
-    <div class="trivia-wrapper">
+    <main class="quiz-shell">
+        <!-- ============================================================
+             HEADER
+        ============================================================ -->
+        <header class="quiz-header">
+            <div class="quiz-mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img">
+                    <rect x="2" y="2" width="28" height="28" rx="8" fill="none" stroke="url(#markGrad)" stroke-width="2"/>
+                    <text x="16" y="22" text-anchor="middle" font-family="Sora, sans-serif"
+                          font-size="14" font-weight="700" fill="var(--text)">?</text>
+                    <defs>
+                        <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="var(--accent-violet)"/>
+                            <stop offset="1" stop-color="var(--accent-teal)"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1 class="quiz-title">Computer Science Trivia</h1>
+            <p class="quiz-subtitle">Test your foundations of computing. Three multiple-choice questions, then one free-response challenge.</p>
 
-        <!-- Header -->
-        <header class="hero">
-            <p class="eyebrow">AEL DIGITAL STUDIO</p>
-            <h1>Trivia</h1>
-            <p class="subtitle">Interactive quiz &middot; Harvard CS50x Week 8 Lab</p>
-
-            <!-- Live score bar -->
-            <div class="scoreboard" aria-live="polite">
-                <div class="score">
-                    <span class="score-label">Score</span>
-                    <span class="score-value" id="score-value">0</span>
-                </div>
-                <div class="score">
-                    <span class="score-label">Attempts</span>
-                    <span class="score-value" id="attempts-value">0</span>
-                </div>
-                <div class="score">
-                    <span class="score-label">Answered</span>
-                    <span class="score-value" id="answered-value">0 / 0</span>
-                </div>
+            <div class="quiz-scoreboard" aria-label="Quiz progress">
+                <p class="scoreboard-item">
+                    <span class="scoreboard-label">Correct</span>
+                    <span class="scoreboard-value" id="score">0</span>
+                </p>
+                <p class="scoreboard-item">
+                    <span class="scoreboard-label">Answered</span>
+                    <span class="scoreboard-value" id="answered">0</span>
+                </p>
+                <p class="scoreboard-item">
+                    <span class="scoreboard-label">Result</span>
+                    <span class="scoreboard-value" id="result">--</span>
+                </p>
             </div>
         </header>
 
-        <main class="container">
+        <!-- ============================================================
+             QUESTION 1 : MULTIPLE CHOICE
+        ============================================================ -->
+        <section class="question" data-answered="false">
+            <p class="question-number">Question 1 of 4</p>
+            <h2 class="question-text">Which data structure operates on a First In, First Out (FIFO) principle?</h2>
 
-            <!-- PART 1 : Multiple Choice -->
-            <section class="section" id="part-multi" aria-labelledby="mc-title">
-                <h2 class="section-label">Part 1 &middot; Multiple Choice</h2>
-                <hr class="rule">
-
-                <div class="question-card">
-
-                    <h3 class="question">Which of the following is recognized as the largest living organism on Earth?</h3>
-
-                    <div class="options" role="group" aria-label="Answer options" data-correct="corrected">
-                        <button type="button" class="option" data-correct="false" data-feedback="A blue whale is the largest animal, but not the largest living organism.">
-                            A Blue Whale
-                        </button>
-                        <button type="button" class="option" data-correct="false" data-feedback="Spinosaurus was large, yet it is long extinct.">
-                            A Spinosaurus
-                        </button>
-                        <button type="button" class="option" data-correct="true" data-feedback="A single honey fungus covers thousands of acres — truly the largest organism on Earth.">
-                            A Honey Fungus (Armillaria)
-                        </button>
-                        <button type="button" class="option" data-correct="false" data-feedback="Trees can be huge, but this clonal fungus outmasses them all.">
-                            A Giant Sequoia Tree
-                        </button>
-                    </div>
-
-                    <p class="feedback" id="feedback-multi" aria-live="polite"></p>
-                </div>
-
-                <div class="question-card">
-
-                    <h3 class="question">Which programming language is the primary foundation taught first in Harvard's CS50x introduction course?</h3>
-
-                    <div class="options" role="group" aria-label="Answer options" data-correct="corrected">
-                        <button type="button" class="option" data-correct="true" data-feedback="Correct! CS50x begins deep in the C language before moving to Python and the web.">
-                            C
-                        </button>
-                        <button type="button" class="option" data-correct="false" data-feedback="Python appears later in the course, not first.">
-                            Python
-                        </button>
-                        <button type="button" class="option" data-correct="false" data-feedback="JavaScript is used in the web weeks, not the opening weeks.">
-                            JavaScript
-                        </button>
-                        <button type="button" class="option" data-correct="false" data-feedback="SQL is introduced in the databases week.">
-                            SQL
-                        </button>
-                    </div>
-
-                    <p class="feedback" id="feedback-multi-2" aria-live="polite"></p>
-                </div>
-            </section>
-
-            <!-- PART 2 : Free Response -->
-            <section class="section" id="part-free" aria-labelledby="fr-title">
-                <h2 class="section-label">Part 2 &middot; Free Response</h2>
-                <hr class="rule">
-
-                <div class="question-card">
-                    <h3 class="question">Which film holds the record as the highest-grossing movie of all time?</h3>
-
-                    <form class="free-form" id="free-form" novalidate>
-                        <label class="sr-only" for="free-answer">Your answer</label>
-                        <input class="free-input" type="text" id="free-answer" placeholder="Type your answer" autocomplete="off">
-                        <button type="submit" class="confirm-btn">Check Answer</button>
-                    </form>
-
-                    <p class="feedback" id="feedback-free" aria-live="polite"></p>
-                </div>
-            </section>
-
-            <!-- Reset -->
-            <div class="reset-wrap">
-                <button type="button" class="reset-btn" id="reset-btn">Reset Quiz</button>
+            <div class="options" role="group" aria-label="Answer choices for question 1">
+                <button type="button" class="option" data-correct="false">Stack</button>
+                <button type="button" class="option" data-correct="true">Queue</button>
+                <button type="button" class="option" data-correct="false">Tree</button>
+                <button type="button" class="option" data-correct="false">Graph</button>
             </div>
 
-        </main>
+            <p class="feedback" role="status"></p>
+        </section>
 
-        <footer class="footer">
-            <p>&copy; Ayman Elmasry &middot; AEL Digital Studio &mdash; CBS50x Week 8 Trivia Lab</p>
+        <!-- ============================================================
+             QUESTION 2 : MULTIPLE CHOICE
+        ============================================================ -->
+        <section class="question" data-answered="false">
+            <p class="question-number">Question 2 of 4</p>
+            <h2 class="question-text">In binary, what is the decimal value of <code>1101</code>?</h2>
+
+            <div class="options" role="group" aria-label="Answer choices for question 2">
+                <button type="button" class="option" data-correct="false">11</button>
+                <button type="button" class="option" data-correct="false">9</button>
+                <button type="button" class="option" data-correct="true">13</button>
+                <button type="button" class="option" data-correct="false">15</button>
+            </div>
+
+            <p class="feedback" role="status"></p>
+        </section>
+
+        <!-- ============================================================
+             QUESTION 3 : MULTIPLE CHOICE
+        ============================================================ -->
+        <section class="question" data-answered="false">
+            <p class="question-number">Question 3 of 4</p>
+            <h2 class="question-text">Which sorting algorithm repeatedly finds the smallest remaining element and swaps it into position?</h2>
+
+            <div class="options" role="group" aria-label="Answer choices for question 3">
+                <button type="button" class="option" data-correct="false">Bubble Sort</button>
+                <button type="button" class="option" data-correct="true">Selection Sort</button>
+                <button type="button" class="option" data-correct="false">Merge Sort</button>
+                <button type="button" class="option" data-correct="false">Insertion Sort</button>
+            </div>
+
+            <p class="feedback" role="status"></p>
+        </section>
+
+        <!-- ============================================================
+             QUESTION 4 : FREE RESPONSE
+        ============================================================ -->
+        <section class="question question--text" data-answered="false">
+            <p class="question-number">Question 4 of 4</p>
+            <h2 class="question-text">What does the acronym <code>HTTP</code> stand for?</h2>
+
+            <form class="free-response" id="free-response-form" autocomplete="off">
+                <label class="sr-only" for="text-answer">Your answer</label>
+                <input type="text" id="text-answer" name="answer" class="text-input"
+                       placeholder="Type your answer here" spellcheck="false">
+                <button type="submit" class="check-btn">Check Answer</button>
+            </form>
+
+            <p class="feedback" role="status"></p>
+            <p class="hint">Tip: the answer is three words. Case does not matter.</p>
+        </section>
+
+        <!-- ============================================================
+             CONTROLS
+        ============================================================ -->
+        <footer class="quiz-footer">
+            <button type="button" class="reset-btn" id="reset-btn">Reset Quiz</button>
+            <p class="footer-note">
+                A CS50x Lab 8 original build by <a href="https://github.com/aymanelmasryael" target="_blank" rel="noopener">Ayman Elmasry</a>.
+            </p>
         </footer>
-    </div>
+    </main>
 
     <script>
-        /* ==================================================================
-           AEL SOVEREIGN TRIVIA — Engine (Vanilla JS, standalone)
-           Satisfies CS50x Lab 8 requirements:
-             - Multiple-choice questions marked correct/wrong with feedback
-             - Free-response text input checked against a correct answer
-        ================================================================== */
+        /* ============================================================
+           Computer Science Trivia — Lab 8
+           Original vanilla JavaScript: grading, scoreboard, reset.
+        ============================================================ */
+        (function () {
+            "use strict";
 
-        document.addEventListener("DOMContentLoaded", () => {
+            // --- Shared state --------------------------------------
+            var score = 0;         // correct answers so far
+            var answered = 0;      // questions the user has attempted
+            var totalQuestions = 4;
 
-            const scoreEl = document.getElementById("score-value");
-            const attemptsEl = document.getElementById("attempts-value");
-            const answeredEl = document.getElementById("answered-value");
+            // --- DOM references -------------------------------------
+            var scoreEl = document.getElementById("score");
+            var answeredEl = document.getElementById("answered");
+            var resultEl = document.getElementById("result");
+            var questions = document.querySelectorAll(".question");
+            var resetBtn = document.getElementById("reset-btn");
+            var freeResponseForm = document.getElementById("free-response-form");
 
-            const TOTAL_QUESTIONS = 3; // 2 multiple-choice + 1 free-response
-            const CORRECT_ANSWERS = ["avatar", "avataar"]; // accepted responses (trimmed, lowercased)
+            /* --------------------------------------------------------
+               Multiple choice: mark an option as the user's final pick
+            -------------------------------------------------------- */
+            document.querySelectorAll(".options").forEach(function (optionsGroup) {
+                optionsGroup.addEventListener("click", function (event) {
+                    var button = event.target.closest(".option");
+                    if (!button) return; // clicked between options
 
-            let score = 0;
-            let attempts = 0;
-            let answered = 0;
+                    var question = optionsGroup.closest(".question");
+                    if (question.dataset.answered === "true") return; // already answered
 
-            const updateScoreboard = () => {
-                scoreEl.textContent = score;
-                attemptsEl.textContent = attempts;
-                answeredEl.textContent = answered + " / " + TOTAL_QUESTIONS;
-            };
+                    question.dataset.answered = "true";
+                    answered += 1;
 
-            /* ----------------------------------------------------------
-               Multiple-Choice Behaviour
-               On click: lock the group, colour the chosen option, reveal
-               feedback. The "correct" answer is derived from data-correct.
-            ---------------------------------------------------------- */
-            const questionCards = document.querySelectorAll(".question-card");
-
-            const lockGroup = (group) => {
-                group.querySelectorAll(".option").forEach((btn) => (btn.disabled = true));
-            };
-
-            const gradeMultipleChoice = (group, card) => {
-                const chosen = group.querySelector(".option.selected");
-                const isCorrect = chosen.dataset.correct === "true";
-                const feedback = card.querySelector(".feedback");
-
-                chosen.classList.add(isCorrect ? "is-correct" : "is-incorrect");
-                card.classList.add(isCorrect ? "card-correct" : "card-incorrect");
-
-                feedback.textContent = isCorrect
-                    ? chosen.dataset.feedback
-                    : chosen.dataset.feedback;
-
-                feedback.className = "feedback " + (isCorrect ? "is-correct" : "is-incorrect");
-
-                attempts += 1;
-                answered += 1;
-                if (isCorrect) score += 1;
-                updateScoreboard();
-            };
-
-            document.querySelectorAll(".options").forEach((group) => {
-                const card = group.closest(".question-card");
-                group.querySelectorAll(".option").forEach((btn) => {
-                    btn.addEventListener("click", () => {
-                        if (group.querySelector(".option.selected")) return; // already answered
-                        btn.classList.add("selected");
-                        lockGroup(group);
-                        gradeMultipleChoice(group, card);
+                    // Visually lock the whole group
+                    optionsGroup.querySelectorAll(".option").forEach(function (opt) {
+                        opt.disabled = true;
                     });
+
+                    var isCorrect = button.dataset.correct === "true";
+                    button.classList.add(isCorrect ? "option--correct" : "option--incorrect");
+
+                    // Reveal the right answer when the user got it wrong
+                    if (!isCorrect) {
+                        optionsGroup.querySelectorAll(".option").forEach(function (opt) {
+                            if (opt.dataset.correct === "true") {
+                                opt.classList.add("option--revealed");
+                            }
+                        });
+                    }
+
+                    if (isCorrect) score += 1;
+                    updateScoreboard(question);
                 });
             });
 
-            /* ----------------------------------------------------------
-               Free-Response Behaviour
-               On submit: compare trimmed, lowercased input against the
-               set of acceptable answers.
-            ---------------------------------------------------------- */
-            const freeForm = document.getElementById("free-form");
-            const freeInput = document.getElementById("free-answer");
-            const freeFeedback = document.getElementById("feedback-free");
+            /* --------------------------------------------------------
+               Free response: normalize input, then compare
+            -------------------------------------------------------- */
+            function normalizeText(value) {
+                // Lowercase, collapse whitespace, strip punctuation
+                return value
+                    .toLowerCase()
+                    .replace(/[^a-z0-9 ]/g, "")
+                    .replace(/\s+/g, " ")
+                    .trim();
+            }
 
-            freeForm.addEventListener("submit", (event) => {
+            freeResponseForm.addEventListener("submit", function (event) {
                 event.preventDefault();
-                if (freeInput.disabled) return; // already answered
 
-                const value = freeInput.value.trim().toLowerCase().replace(/\s+/g, " ");
-                const isCorrect = CORRECT_ANSWERS.includes(value);
+                var question = freeResponseForm.closest(".question");
+                if (question.dataset.answered === "true") return; // already answered
 
-                freeInput.disabled = true;
-                freeInput.classList.add(isCorrect ? "is-correct" : "is-incorrect");
-                freeForm.querySelector(".confirm-btn").disabled = true;
+                var input = document.getElementById("text-answer");
+                var feedback = question.querySelector(".feedback");
+                var cleaned = normalizeText(input.value);
+                var correctAnswer = normalizeText("HyperText Transfer Protocol");
 
-                freeFeedback.textContent = isCorrect
-                    ? 'Correct! "Avatar" (2009) holds that record.'
-                    : 'Incorrect. The answer is "Avatar" (2009).';
+                if (!cleaned) {
+                    input.classList.add("input--shake");
+                    setTimeout(function () {
+                        input.classList.remove("input--shake");
+                    }, 500);
+                    input.focus();
+                    return;
+                }
 
-                freeFeedback.className = "feedback " + (isCorrect ? "is-correct" : "is-incorrect");
-
-                attempts += 1;
+                question.dataset.answered = "true";
                 answered += 1;
-                if (isCorrect) score += 1;
-                updateScoreboard();
+                input.disabled = true;
+
+                var isCorrect = cleaned === correctAnswer;
+                if (isCorrect) {
+                    score += 1;
+                    input.classList.add("input--correct");
+                    showFeedback(feedback, "Correct! HTTP stands for HyperText Transfer Protocol.", true);
+                } else {
+                    input.classList.add("input--incorrect");
+                    showFeedback(
+                        feedback,
+                        'Not quite. HTTP stands for "HyperText Transfer Protocol" (correct answer shown).',
+                        false
+                    );
+                }
+
+                updateScoreboard(question);
             });
 
-            /* ----------------------------------------------------------
-               Reset — restore every cell to its initial state.
-            ---------------------------------------------------------- */
-            const resetBtn = document.getElementById("reset-btn");
+            /* --------------------------------------------------------
+               Shared helpers
+            -------------------------------------------------------- */
+            function showFeedback(el, message, isCorrect) {
+                el.textContent = message;
+                el.className = "feedback " + (isCorrect ? "feedback--success" : "feedback--error");
+            }
 
-            resetBtn.addEventListener("click", () => {
-                questionCards.forEach((card) => {
-                    card.classList.remove("card-correct", "card-incorrect");
-                    const fb = card.querySelector(".feedback");
-                    fb.textContent = "";
-                    fb.className = "feedback";
-                    card.querySelectorAll(".option").forEach((btn) => {
-                        btn.classList.remove("selected", "is-correct", "is-incorrect");
-                        btn.disabled = false;
+            function updateScoreboard(question) {
+                scoreEl.textContent = String(score);
+                answeredEl.textContent = String(answered);
+
+                if (answered === totalQuestions) {
+                    resultEl.textContent = score + "/" + totalQuestions + " correct";
+                } else {
+                    resultEl.textContent = "--";
+                }
+            }
+
+            /* --------------------------------------------------------
+               Reset: clear every question, scoreboard, and feedback
+            -------------------------------------------------------- */
+            resetBtn.addEventListener("click", function () {
+                score = 0;
+                answered = 0;
+
+                questions.forEach(function (question) {
+                    question.dataset.answered = "false";
+
+                    // Unlock and restyle options
+                    question.querySelectorAll(".option").forEach(function (opt) {
+                        opt.disabled = false;
+                        opt.classList.remove("option--correct", "option--incorrect", "option--revealed");
                     });
+
+                    // Clear free-response input styling
+                    var input = question.querySelector(".text-input");
+                    if (input) {
+                        input.disabled = false;
+                        input.value = "";
+                        input.classList.remove("input--correct", "input--incorrect");
+                    }
+
+                    // Clear feedback
+                    var feedback = question.querySelector(".feedback");
+                    if (feedback) {
+                        feedback.textContent = "";
+                        feedback.className = "feedback";
+                    }
                 });
 
-                freeInput.value = "";
-                freeInput.classList.remove("is-correct", "is-incorrect");
-                freeInput.disabled = false;
-                freeForm.querySelector(".confirm-btn").disabled = false;
-                freeFeedback.textContent = "";
-                freeFeedback.className = "feedback";
+                scoreEl.textContent = "0";
+                answeredEl.textContent = "0";
+                resultEl.textContent = "--";
 
-                score = 0;
-                attempts = 0;
-                answered = 0;
-                updateScoreboard();
-                freeInput.focus();
+                document.getElementById("text-answer").focus();
             });
-
-            updateScoreboard();
-        });
+        })();
     </script>
 </body>
 </html>

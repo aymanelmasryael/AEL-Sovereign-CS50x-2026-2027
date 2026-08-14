@@ -1,24 +1,29 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Log In
-{% endblock %}
+{% block title %}Log In{% endblock %}
 
 {% block main %}
-    <h1 class="page-title">Log <span class="accent">In</span></h1>
-    <p class="page-subtitle">access your trading terminal</p>
+  <section class="glass-card narrow">
+    <h1 class="page-title">Log In</h1>
 
-    <div class="glass-card">
-        <form action="/login" method="post" class="text-center">
-            <div class="mb-3">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-100"
-                       id="username" name="username" placeholder="Username" type="text">
-            </div>
-            <div class="mb-4">
-                <input class="form-control mx-auto w-100" id="password"
-                       name="password" placeholder="Password" type="password">
-            </div>
-            <button class="btn btn-primary" type="submit">Log In</button>
-        </form>
-    </div>
+    <form action="/login" method="post">
+      <input
+        class="form-control"
+        autocomplete="off"
+        autofocus
+        name="username"
+        placeholder="Username"
+        type="text">
+
+      <input
+        class="form-control"
+        name="password"
+        placeholder="Password"
+        type="password">
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Log In</button>
+      </div>
+    </form>
+  </section>
 {% endblock %}

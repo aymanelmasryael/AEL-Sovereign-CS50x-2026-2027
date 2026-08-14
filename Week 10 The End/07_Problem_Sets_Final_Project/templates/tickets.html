@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block title %}Tickets · AEL Sovereign Fleet{% endblock %}
+
+{% block main %}
+<section class="hero">
+  <p class="eyebrow mono">PASSENGER TERMINAL // BOOKING</p>
+  <h1>Find and Book a Trip</h1>
+  <p class="hero-sub">Search departures, reserve seats, and check your bookings.</p>
+</section>
+
+<section class="card panel">
+  <div class="panel-head">
+    <h2 class="mono">SEARCH DEPARTURES</h2>
+    <span class="badge badge-live">GET</span>
+  </div>
+  <form action="{{ url_for('tickets') }}" method="get" class="form-grid">
+    <label>Origin
+      <input name="origin" value="{{ search_origin }}" placeholder="Cairo" autofocus>
+    </label>
+    <label>Destination
+      <input name="destination" value="{{ search_destination }}" placeholder="Alexandria">
+    </label>
+    <div class="form-submit">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+</section>
+
+{% if results is not none %}
+<section class="card panel">
+  <div class="panel-head">
+    <h2 class="mono">MATCHING DEPARTURES</h2>
+    <span class="badge badge-live">{{ results | length }}</span>
+  </div>
+  {% if results %}
+  <div class="grid grid-3">
+    {% for r in results %}
+    <div class="card trip-card">
+      <div class="vc-head">
+        <span class="mono vc-code">{{ r.route_code }}</span>
+        <span class="mono dim">{{ r.departure_time }} departs</span>
+      </div>
+      <h3>{{ r.origin }} → {{ r.destination }}</h3>
+      <p class="dim">{{ r.vehicle_model }} · <span class="mono">{{ r.fleet_code }}</span></p>
+      <div class="vc-meta mono">
+        <span>{{ r.available }} seat(s) left</span>
+        <span>{{ r.base_fare | money }} / seat</span>
+      </div>
+      {% if r.available > 0 %}
+      <form action="{{ url_for('buy_ticket') }}" method="post" class="stack">
+        <input type="hidden" name="route_id" value="{{ r.id }}">
+        <label>Passenger name
+          <input name="passenger_name" placeholder="Your full name" required>
+        </label>
+        <label>Phone
+          <input name="passenger_phone" placeholder="05XXXXXXXX" required>
+        </label>
+        <label>Seats
+          <input name="seats" type="number" min="1" max="{{ r.available }}" value="1" required>
+        </label>
+        <button class="btn btn-primary" type="submit">Buy Now</button>
+      </form>
+      {% else %}
+      <p class="empty">This departure is fully booked.</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">No departures match your search. Try different cities.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+<section class="card panel">
+  <div class="panel-head">
+    <h2 class="mono">MY BOOKINGS</h2>
+    <span class="badge badge-live">LOOKUP</span>
+  </div>
+  <form action="{{ url_for('lookup_tickets') }}" method="post" class="form-grid">
+    <label>Name
+      <input name="lookup_name" value="{{ lookup_name }}" placeholder="Name on booking">
+    </label>
+    <label>Phone
+      <input name="lookup_phone" value="{{ lookup_phone }}" placeholder="Phone on booking">
+    </label>
+    <div class="form-submit">
+      <button class="btn btn-ghost" type="submit">Find My Tickets</button>
+    </div>
+  </form>
+
+  {% if bookings %}
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Route</th>
+        <th>Departs</th>
+        <th>Seats</th>
+        <th>Amount</th>
+        <th>Issued</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in bookings %}
+      <tr>
+        <td class="mono">{{ b.reference }}</td>
+        <td>{{ b.origin }} → {{ b.destination }} <span class="mono dim">({{ b.route_code }})</span></td>
+        <td class="mono">{{ b.departure_time }}</td>
+        <td>{{ b.seats }}</td>
+        <td class="mono">{{ b.total_amount | money }}</td>
+        <td class="mono dim">{{ b.issued_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% elif bookings is not none %}
+  <p class="empty">No bookings found for that name and phone.</p>
+  {% endif %}
+</section>
+{% endblock %}

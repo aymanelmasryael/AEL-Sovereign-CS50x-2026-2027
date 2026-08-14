@@ -1,26 +1,22 @@
 {% extends "layout.html" %}
-
-{% block title %}Admin Login{% endblock %}
+{% block title %}Admin Login · AEL Sovereign Fleet{% endblock %}
 
 {% block main %}
-    <div class="hero">
-        <div class="icon"><i class="fas fa-shield-halved"></i></div>
-        <h1>Admin Login</h1>
-        <p>Restricted area. Authorised personnel only.</p>
-    </div>
-
-    <div class="glass-card">
-        <h2><i class="fas fa-lock"></i>Authentication</h2>
-        <form action="/admin_login" method="post" class="form-stack">
-            <div class="field">
-                <label for="username">Username</label>
-                <input id="username" autocomplete="off" autofocus name="username" placeholder="Admin username" type="text" required>
-            </div>
-            <div class="field">
-                <label for="password">Password</label>
-                <input id="password" autocomplete="off" name="password" placeholder="••••••••" type="password" required>
-            </div>
-            <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-sign-in-alt"></i>Login</button>
-        </form>
-    </div>
+<div class="auth-wrap">
+  <div class="card auth-card">
+    <p class="eyebrow mono">SECURE ACCESS // ADMINISTRATOR</p>
+    <h1>Command Login</h1>
+    <p class="hero-sub">Restricted channel for fleet operators.</p>
+    <form action="{{ url_for('admin_login') }}" method="post" class="stack">
+      <label>Username
+        <input name="username" autocomplete="username" required autofocus>
+      </label>
+      <label>Password
+        <input name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <button class="btn btn-primary" type="submit">Sign In</button>
+    </form>
+    <p class="demo-hint mono">DEMO — user: {{ demo_user }} / pass: {{ demo_pass }}</p>
+  </div>
+</div>
 {% endblock %}
