@@ -40,7 +40,7 @@
 ## Features
 
 - **11 weeks of CS50x curriculum** — Week 0 Scratch through Week 10 The End — complete solutions and analysis
-- **Complete problem-set solutions** — every official Problem Set and Lab for Weeks 1–10 merged into each week's `07_Problem_Sets` wing (see [SOLUTIONS.md](SOLUTIONS.md))
+- **Complete problem-set solutions** — every official Problem Set and Lab for Weeks 1–10 merged into each week's `Problem Sets` wing (see [SOLUTIONS.md](SOLUTIONS.md))
 - **Master dashboard** (`docs.html`) — root navigational hub with SHA-256 biometric integrity checking
 - **Interactive exam simulator** — 11 simulation questions with instant JavaScript assessment and LaTeX-rendered Big-Theta analysis
 - **Live WebAssembly IDE** (`cs50x_live_ide.html`) — Pyodide-powered Python execution in the browser
@@ -99,8 +99,8 @@ AEL-Sovereign-CS50x-2026-2027/
 ├── Dockerfile                           # Production container
 ├── server_check50_execution.py          # Server-side validation
 ├── Week 0 Scratch/                      # Week 0 materials
-├── Week 1 C/                            # Week 1 materials (includes 07_Problem_Sets)
-├── ...                                  # Weeks 2–10 (each includes 07_Problem_Sets)
+├── Week 1 C/                            # Week 1 materials (includes Problem Sets)
+├── ...                                  # Weeks 2–10 (each includes Problem Sets)
 └── README.md
 ```
 
@@ -175,20 +175,20 @@ docker run -p 8080:80 ael-cs50x-citadel
 
 ## Solutions
 
-Every official CS50x Problem Set and Lab is merged into its week's `07_Problem_Sets/` wing with complete, verified source code:
+Every official CS50x Problem Set and Lab is merged into its week's `Problem Sets/` wing with complete, verified source code:
 
 | Week | Wing Folder | Highlights |
 |------|-------------|------------|
-| Week 1 — C | `Week 1 C/07_Problem_Sets` | Hello, Mario (More), Credit, Population |
-| Week 2 — Arrays | `Week 2 Arrays/07_Problem_Sets` | Readability, Wordle, Scrabble |
-| Week 3 — Algorithms | `Week 3 Algorithms/07_Problem_Sets` | Plurality, Tideman, Sort |
-| Week 4 — Memory | `Week 4 Memory/07_Problem_Sets` | Filter (More), Reverse, Smiley, Volume |
-| Week 5 — Data Structures | `Week 5 Data Structures/07_Problem_Sets` | Speller, Inheritance |
-| Week 6 — Python | `Week 6 Python/07_Problem_Sets` | DNA, Sentimental suite, World Cup |
-| Week 7 — SQL & AI | `Week 7 SQL Artificial Intelligence/07_Problem_Sets` | Movies, Fiftyville, Songs |
-| Week 8 — HTML, CSS, JS | `Week 8 HTML, CSS, JavaScript/07_Problem_Sets` | Homepage, Trivia |
-| Week 9 — Flask | `Week 9 Flask/07_Problem_Sets` | Finance, Birthdays |
-| Week 10 — Final Project | `Week 10 The End/07_Problem_Sets_Final_Project` | Python Travel (Flask) |
+| Week 1 — C | `Week 1 C/Problem Sets` | Hello, Mario (More), Credit, Population |
+| Week 2 — Arrays | `Week 2 Arrays/Problem Sets` | Readability, Wordle, Scrabble |
+| Week 3 — Algorithms | `Week 3 Algorithms/Problem Sets` | Plurality, Tideman, Sort |
+| Week 4 — Memory | `Week 4 Memory/Problem Sets` | Filter (More), Reverse, Smiley, Volume |
+| Week 5 — Data Structures | `Week 5 Data Structures/Problem Sets` | Speller, Inheritance |
+| Week 6 — Python | `Week 6 Python/Problem Sets` | DNA, Sentimental suite, World Cup |
+| Week 7 — SQL & AI | `Week 7 SQL Artificial Intelligence/Problem Sets` | Movies, Fiftyville, Songs |
+| Week 8 — HTML, CSS, JS | `Week 8 HTML, CSS, JavaScript/Problem Sets` | Homepage, Trivia |
+| Week 9 — Flask | `Week 9 Flask/Problem Sets` | Finance, Birthdays |
+| Week 10 — Final Project | `Week 10 The End/Problem Sets` | Python Travel (Flask) |
 
 Browse the full master index in **[SOLUTIONS.md](SOLUTIONS.md)**.
 
