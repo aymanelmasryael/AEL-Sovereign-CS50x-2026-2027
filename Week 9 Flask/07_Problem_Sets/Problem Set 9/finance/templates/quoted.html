@@ -1,12 +1,17 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Quoted
+    Quote Result
 {% endblock %}
 
 {% block main %}
-    <h1>Quoted</h1>
-    <h3>Name: {{ name }}</h3>
-    <h3>Price: {{ price }}</h3>
-    <h3>Symbol: {{ symbol }}</h3>
+    <h1 class="page-title">Market <span class="accent">Snapshot</span></h1>
+    <p class="page-subtitle">requested quote resolved successfully</p>
+
+    <div class="quote-panel">
+        <div class="quote-symbol">{{ symbol }}</div>
+        <div class="quote-name">{{ name }}</div>
+        <div class="quote-price-label">Latest Price</div>
+        <div class="quote-price">{{ price | usd }}</div>
+    </div>
 {% endblock %}

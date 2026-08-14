@@ -5,18 +5,26 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Sell</h1>
-    <form action="/sell" method="post">
-        <div class="mb-3">
-            <select name="symbol">
-                {% for symbol in symbols %}
-                    <option value="{{ symbol }}">{{ symbol }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares" placeholder="Shares" type="number">
-        </div>
-        <button class="btn btn-primary" type="submit">Sell</button>
-    </form>
+    <h1 class="page-title">Sell <span class="accent">Shares</span></h1>
+    <p class="page-subtitle">liquidate a position in your terminal</p>
+
+    <div class="glass-card">
+        <form action="/sell" method="post" class="text-center">
+            <div class="mb-3">
+                <select class="form-select form-select-lg mx-auto w-100" name="symbol">
+                    {% for symbol in symbols %}
+                        <option value="{{ symbol }}">{{ symbol }}</option>
+                    {% else %}
+                        <option disabled selected>No holdings to sell</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-4">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-100"
+                       name="shares" placeholder="Shares" min="1" step="1"
+                       type="number">
+            </div>
+            <button class="btn btn-primary" type="submit">Sell</button>
+        </form>
+    </div>
 {% endblock %}

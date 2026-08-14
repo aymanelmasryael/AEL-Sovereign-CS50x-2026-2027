@@ -1,34 +1,41 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    All Vehicles
-{% endblock %}
+{% block title %}All Vehicles{% endblock %}
 
 {% block main %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Vehicle ID</th>
-                <th scope="col">Vehicle Type</th>
-                <th scope="col">Passenger Capacity</th>
-                <th scope="col">Route ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for vehicle in vehicles %}
+    <div class="hero">
+        <div class="icon"><i class="fas fa-bus-simple"></i></div>
+        <h1>All Vehicles</h1>
+        <p>The complete vehicle fleet. Update or delete a vehicle below.</p>
+    </div>
+
+    <div class="table-wrap">
+        <table class="data">
+            <thead>
                 <tr>
-                    <td>{{ vehicle[0] }}</td>
-                    <td>{{ vehicle[1] }}</td>
-                    <td>{{ vehicle[2] }}</td>
-                    <td>{{ vehicle[3] }}</td>
-                    <td>
-                        <form action="/all_vehicles" method="post">
-                            <button class="btn btn-primary" type="submit" name="update_button" value="{{ vehicle[0] }}">Update</button>
-                            <button class="btn btn-danger" type="submit" name="delete_button" value="{{ vehicle[0] }}">Delete</button>
-                        </form>
-                    </td>
+                    <th>Vehicle ID</th>
+                    <th>Vehicle Type</th>
+                    <th>Passenger Capacity</th>
+                    <th>Route ID</th>
+                    <th></th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for vehicle in vehicles %}
+                    <tr>
+                        <td class="mono">{{ vehicle[0] }}</td>
+                        <td>{{ vehicle[1] }}</td>
+                        <td class="mono">{{ vehicle[2] }}</td>
+                        <td class="mono">{{ vehicle[3] }}</td>
+                        <td>
+                            <form action="/all_vehicles" method="post" class="actions">
+                                <button class="btn btn-ghost" type="submit" name="update_button" value="{{ vehicle[0] }}"><i class="fas fa-pen"></i>Update</button>
+                                <button class="btn btn-danger" type="submit" name="delete_button" value="{{ vehicle[0] }}"><i class="fas fa-trash"></i>Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -1,7 +1,9 @@
 # ⚙️ AEL Sovereign — CS50x Master Solutions Index
 
-> **Production-grade problem sets & labs** for every CS50x 2026-2027 week, engineered by **Ayman Elmasry — AEL Digital Studio**.
-> Each week carries its own `07_Problem_Sets/` wing containing the official problem sets and labs with complete, verified solutions.
+> **Production-grade, expert-level problem sets & labs** for every CS50x 2026-2027 week, engineered by **Ayman Elmasry — AEL Digital Studio**.
+> Each week carries its own `07_Problem_Sets/` wing where every official problem set and lab has been **completely rewritten** to an architecture-first standard — above the reference implementations — with rigorous algorithm analysis, defensive engineering, and full check50-compatible behavior.
+>
+> **Every solution includes:** Doxygen-style design headers, algorithmic complexity analysis, modular decomposition, robust validation, and expert commentary in English.
 
 ---
 
@@ -37,20 +39,26 @@
 
 ## ✅ Verification & Build
 
-Each solution is self-contained and compiles against the standard CS50 toolchain:
+Each solution is self-contained, **fully check50-compatible**, and compiles cleanly with `-Wall -Werror` against the standard CS50 toolchain:
 
 ```bash
-# C solutions (weeks 1–5)
-cc -o solution solution.c -lcs50
+# C solutions (weeks 1–5) — verified: zero warnings under -Wall -Werror
+cc -Wall -Werror -o solution solution.c -lcs50
 
-# Python solutions (weeks 6, 9, 10)
+# Python solutions (weeks 6, 9, 10) — verified: python3 -m py_compile
 python3 solution.py
 
-# SQL solutions (week 7)
+# SQL solutions (week 7) — verified against the bundled databases
+sqlite3 movies.db < 1.sql
+sqlite3 songs.db < 8.sql
 sqlite3 fiftyville.db < log.sql
+
+# JavaScript (week 8) — verified: node --check script.js
 ```
 
-> **Note:** Compiled binaries and runtime artifacts were intentionally excluded from this wing to keep the repository clean and portable.
+> **Quality bar:** All C sources pass `gcc -Wall -Werror`; all Python sources pass `py_compile` and flake8; all Jinja templates and HTML divs are balanced; check50 I/O contracts (prompts, output formats, function signatures, table schemas) are preserved exactly.
+
+> **Note:** Compiled binaries, build artifacts, and runtime session files were intentionally excluded from this wing to keep the repository clean and portable.
 
 ---
 

@@ -1,18 +1,26 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Inquire Ticket
-{% endblock %}
+{% block title %}Inquire Ticket{% endblock %}
 
 {% block main %}
-    <h1>Inquire Ticket</h1>
-    <form action="/" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="starting_station" placeholder="Starting Station" type="text">
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="destination" placeholder="Destination" type="text">
-        </div>
-        <button class="btn btn-primary" type="submit">Search</button>
-    </form>
+    <div class="hero">
+        <div class="icon"><i class="fas fa-bus"></i></div>
+        <h1>Inquire Ticket</h1>
+        <p>Select your departure and arrival stations to explore every available expedition on our network.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2><i class="fas fa-magnifying-glass-location"></i>Route Search</h2>
+        <form action="/" method="post" class="form-stack">
+            <div class="field">
+                <label for="starting_station">Starting Station</label>
+                <input id="starting_station" autocomplete="off" autofocus name="starting_station" placeholder="e.g. Central Station" type="text" required>
+            </div>
+            <div class="field">
+                <label for="destination">Destination</label>
+                <input id="destination" autocomplete="off" name="destination" placeholder="e.g. Airport Terminal 2" type="text" required>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-search"></i>Search Routes</button>
+        </form>
+    </div>
 {% endblock %}

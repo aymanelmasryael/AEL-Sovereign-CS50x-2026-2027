@@ -1,66 +1,273 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <title>Ayman Elmasry — CV</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width">
-        <link href="styles.css" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-        <script src="script.js"></script>
-    </head>
-    <body>
-        <div class="mainSection">
-            <h3>Ayman Elmasry</h3>
-            <p>Software Architect &amp; Full-Stack Engineer</p>
-            <p title="e-mail"><i class="fa fa-envelope"></i> info@aymanelmasry.com</p>
-            <p title="website"><i class="fa fa-globe"></i> aymanelmasry.com</p>
-            <hr>
-            <div class="headerDiv" data-bs-toggle="collapse" href="#aboutMeSection">
-                <h4 class="header" title="About Me">About Me<i class="fa fa-angle-down"></i></h4>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ayman Elmasry — CV and portfolio of the founder of AEL Digital Studio. Software Architect, Full-Stack Engineer and AI engineering advocate.">
+    <meta name="author" content="Ayman Elmasry">
+    <meta name="theme-color" content="#0B0F1A">
+    <title>Ayman Elmasry — Software Architect &amp; Full-Stack Engineer</title>
+
+    <!-- Inline SVG favicon (no external file required) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230074FF'/%3E%3Cstop offset='1' stop-color='%236C47FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-size='46' font-family='Arial, sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EAE%3C/text%3E%3C/svg%3E">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- Sticky Glass Navigation -->
+    <nav class="navbar" id="navbar" aria-label="Primary navigation">
+        <a class="nav-brand" href="#hero" aria-label="Back to top">
+            <span class="brand-mark" aria-hidden="true">AE</span>
+            <span class="brand-text">AEL Digital Studio</span>
+        </a>
+
+        <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="sr-only">Menu</span>
+        </button>
+
+        <ul class="nav-menu" id="nav-menu">
+            <li><a class="nav-link is-active" href="#hero">Home</a></li>
+            <li><a class="nav-link" href="#about">About</a></li>
+            <li><a class="nav-link" href="#skills">Skills</a></li>
+            <li><a class="nav-link" href="#experience">Experience</a></li>
+            <li><a class="nav-link nav-cta" href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main id="main">
+
+        <!-- Hero Header -->
+        <header class="hero" id="hero">
+            <div class="hero-inner">
+                <div class="hero-avatar" aria-hidden="true">
+                    <svg viewBox="0 0 120 120" role="presentation">
+                        <defs>
+                            <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" stop-color="#0074FF"/>
+                                <stop offset="1" stop-color="#00D4AA"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="60" cy="60" r="56" fill="none" stroke="url(#ring-grad)" stroke-width="3"/>
+                        <text x="60" y="76" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="800" fill="#ffffff">AE</text>
+                    </svg>
+                    <span class="hero-avatar-status" title="Available for engagements"></span>
+                </div>
+
+                <div class="hero-copy">
+                    <p class="hero-eyebrow">AEL DIGITAL STUDIO &middot; SOVEREIGN ENGINEERING</p>
+                    <h1 class="hero-name">Ayman Elmasry</h1>
+                    <p class="hero-role">Software Architect &amp; Full-Stack Engineer</p>
+                    <p class="hero-tagline">
+                        Founder of AEL Digital Studio and passionate advocate for computational problem-solving,
+                        software architecture and artificial intelligence. I design sovereign, production-grade
+                        systems and help ambitious learners master Computer Science.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#contact">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5C21 15.09 16.97 18 12 18S3 15.09 3 11.5S6.03 5 12 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 3c3 2 3 6.5 2 9M9 3c-3 2-3 6.5-2 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            Let's Connect
+                        </a>
+                        <a class="btn btn-ghost" href="#about">About Me</a>
+                    </div>
+                </div>
             </div>
-            <div class="collapse" id="aboutMeSection">
-                <ul>
-                    <li>
-                        <p>Founder of AEL Digital Studio, dedicated to advanced computational problem-solving, software architecture, and artificial intelligence — passionate about building sovereign, production-grade systems and empowering learners across Computer Science.</p>
-                        <b><u>For my projects and Activities:</u></b> <br>
-                        <ul>
-                             <li><i class="fa fa-github"></i><a href="https://github.com/aymanelmasryael">Github</a></li>
-                             <li><i class="fa fa-linkedin-square"></i><a href="https://linkedin.com/in/aymanelmasryael">LinkedIn</a></li>
-                             <li><i class='fa fa-globe'></i><a href="https://aymanelmasry.com">Website</a></li>
-                        </ul>
-                    </li>
-                </ul>
+
+            <div class="hero-stats" aria-label="Quick summary">
+                <div class="stat"><span class="stat-value">10+</span><span class="stat-label">Years Coding</span></div>
+                <div class="stat"><span class="stat-value">C&#183;Py&#183;JS</span><span class="stat-label">Core Stack</span></div>
+                <div class="stat"><span class="stat-value">100%</span><span class="stat-label">Owned Systems</span></div>
             </div>
-            <hr>
-            <div class="headerDiv" data-bs-toggle="collapse" href="#skillsSection">
-                <h4 class="header" title="Skills">Skills<i class="fa fa-angle-down"></i></h4>
+        </header>
+
+        <!-- About -->
+        <section class="section" id="about" aria-labelledby="about-title">
+            <div class="section-kicker">01</div>
+            <h2 class="section-title" id="about-title">About Me</h2>
+            <div class="grid grid-2 reveal">
+                <article class="card">
+                    <h3 class="card-title">Who I Am</h3>
+                    <p class="card-text">
+                        I am the founder of AEL Digital Studio, a practice dedicated to advanced computational
+                        problem-solving, software architecture and artificial intelligence. My mission is to build
+                        sovereign, production-grade systems that stand on their own engineering merit — and to give
+                        back to the community by teaching Computer Science from first principles.
+                    </p>
+                    <p class="card-text">
+                        I hold deep expertise across the full software lifecycle: from systems programming and
+                        database design to modern web engineering and machine-learning infrastructure.
+                    </p>
+                </article>
+                <article class="card">
+                    <h3 class="card-title">Fast Facts</h3>
+                    <ul class="fact-list">
+                        <li><span class="fact-label">Focus</span> Systems Architecture &amp; AI Engineering</li>
+                        <li><span class="fact-label">Studio</span> AEL Digital Studio &mdash; Foundational Owner</li>
+                        <li><span class="fact-label">Languages</span> Arabic (Native) &middot; English (Fluent)</li>
+                        <li><span class="fact-label">Philosophy</span> Sovereign, self-governing builds</li>
+                    </ul>
+                    <div class="contact-links-mini">
+                        <a href="https://github.com/aymanelmasryael" target="_blank" rel="noopener noreferrer" class="mini-link" title="GitHub profile">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.87 8.3 6.84 9.65.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.46-1.17-1.11-1.48-1.11-1.48-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.93.85.09-.66.35-1.12.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5.01 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.06 10.06 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+                            GitHub
+                        </a>
+                        <a href="https://linkedin.com/in/aymanelmasryael" target="_blank" rel="noopener noreferrer" class="mini-link" title="LinkedIn profile">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 22V8h4v14h-4ZM8 8h3.8v1.9h.05c.53-1 1.83-2.05 3.77-2.05C19.7 7.85 20 10.3 20 13.5V22h-4v-7.5c0-1.78-.03-4.07-2.48-4.07-2.48 0-2.86 1.94-2.86 3.94V22H8V8Z"/></svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://aymanelmasry.com" target="_blank" rel="noopener noreferrer" class="mini-link" title="Official website">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9 0-3.3 1.3-6.5 3.8-9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                            Website
+                        </a>
+                    </div>
+                </article>
             </div>
-            <div class="collapse" id="skillsSection">
-                <ul>
-                    <li><b>Languages: Arabic (Native), English (Fluent)</b></li>
-                    <li><b>Programming: C, Python, SQL, JavaScript, C#</b></li>
-                    <li><b>Web &amp; Systems: HTML5, CSS, Flask, Docker, Databases, System Architecture &amp; AI Engineering</b></li>
-                </ul>
+        </section>
+
+        <!-- Skills -->
+        <section class="section" id="skills" aria-labelledby="skills-title">
+            <div class="section-kicker">02</div>
+            <h2 class="section-title" id="skills-title">Core Skills</h2>
+            <div class="grid grid-3">
+                <article class="card reveal">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v12H3V5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 17h18l-2 4H5l-2-4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                        Languages
+                    </h3>
+                    <ul class="chip-list">
+                        <li>C / C#</li>
+                        <li>Python</li>
+                        <li>JavaScript (ES6+)</li>
+                        <li>SQL</li>
+                    </ul>
+                </article>
+                <article class="card reveal">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M2 6h.01M2 12h.01M2 18h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                        Web &amp; Systems
+                    </h3>
+                    <ul class="chip-list">
+                        <li>HTML5 / CSS3</li>
+                        <li>Flask &amp; APIs</li>
+                        <li>Docker &amp; DevOps</li>
+                        <li>System Architecture</li>
+                    </ul>
+                </article>
+                <article class="card reveal">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        AI &amp; Engineering
+                    </h3>
+                    <ul class="chip-list">
+                        <li>Artificial Intelligence</li>
+                        <li>Data Engineering</li>
+                        <li>Scalability Design</li>
+                        <li>Technical Education</li>
+                    </ul>
+                </article>
             </div>
-            <hr>
-            <div class="headerDiv" data-bs-toggle="collapse" href="#hobbiesSection">
-                <h4 class="header" title="Hobbies">Hobbies<i class="fa fa-angle-down"></i></h4>
+
+            <div class="grid grid-2 skill-meter-grid">
+                <div class="card reveal">
+                    <h3 class="card-title">Systems Programming</h3>
+                    <div class="meter"><span class="meter-fill" data-level="90">C, memory &amp; algorithms</span></div>
+                    <h3 class="card-title">Web Engineering</h3>
+                    <div class="meter"><span class="meter-fill" data-level="92">HTML5, CSS3, JS, Flask</span></div>
+                </div>
+                <div class="card reveal">
+                    <h3 class="card-title">AI &amp; Data</h3>
+                    <div class="meter"><span class="meter-fill" data-level="85">Machine learning, SQL, ETL</span></div>
+                    <h3 class="card-title">Architecture &amp; DevOps</h3>
+                    <div class="meter"><span class="meter-fill" data-level="88">Docker, CI/CD, system design</span></div>
+                </div>
             </div>
-            <div class="collapse" id="hobbiesSection">
-                <ul>
-                    <li>I am deeply interested in programming, artificial intelligence, and software architecture. Beyond engineering, I enjoy reading, teaching, and continuous learning.</li>
-                </ul>
+        </section>
+
+        <!-- Experience -->
+        <section class="section" id="experience" aria-labelledby="experience-title">
+            <div class="section-kicker">03</div>
+            <h2 class="section-title" id="experience-title">Experience</h2>
+            <div class="timeline reveal">
+                <article class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="card">
+                        <p class="timeline-period">Foundation</p>
+                        <h3 class="card-title">Founder &mdash; AEL Digital Studio</h3>
+                        <p class="card-text">
+                            Architecting a sovereign suite of production-grade software systems, digital products
+                            and educational platforms. Leading end-to-end engineering, from low-level systems code
+                            to modern web interfaces and AI infrastructure.
+                        </p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="card">
+                        <p class="timeline-period">Advocacy</p>
+                        <h3 class="card-title">Computer Science Educator &amp; Mentor</h3>
+                        <p class="card-text">
+                            Guiding learners through the fundamentals of Computer Science with a focus on deep
+                            understanding over memorization. Producing structured, sovereign course content and
+                            empowering students to build their own independent engineering identities.
+                        </p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="card">
+                        <p class="timeline-period">Signal</p>
+                        <h3 class="card-title">Academic Signal &mdash; Harvard CS50x 2026-2027</h3>
+                        <p class="card-text">
+                            Completing the world-renowned CS50x curriculum at an elite standing, applying rigorous
+                            problem-solving across C, Python, SQL, and web technologies to build polished,
+                            production-minded projects.
+                        </p>
+                    </div>
+                </article>
             </div>
-            <hr>
-            <footer>
-                <ul>
-                    <li><a href="https://github.com/aymanelmasryael">GitHub</a></li>
-                    <li><a href="https://aymanelmasry.com">AEL Digital Studio</a></li>
-                </ul>
-            </footer>
-        </div>
-    </body>
+        </section>
+
+        <!-- Contact -->
+        <section class="section" id="contact" aria-labelledby="contact-title">
+            <div class="section-kicker">04</div>
+            <h2 class="section-title" id="contact-title">Contact</h2>
+            <p class="section-lead">Let me know how I can help you engineer something excellent.</p>
+            <div class="grid grid-4 contact-grid">
+                <a class="card contact-card reveal" href="mailto:info@aymanelmasry.com">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M22 7l-10 7L2 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                    <h3>Email</h3>
+                    <p>info@aymanelmasry.com</p>
+                </a>
+                <a class="card contact-card reveal" href="https://github.com/aymanelmasryael" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.87 8.3 6.84 9.65.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.46-1.17-1.11-1.48-1.11-1.48-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.93.85.09-.66.35-1.12.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5.01 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.06 10.06 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+                    <h3>GitHub</h3>
+                    <p>aymanelmasryael</p>
+                </a>
+                <a class="card contact-card reveal" href="https://linkedin.com/in/aymanelmasryael" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 22V8h4v14h-4ZM8 8h3.8v1.9h.05c.53-1 1.83-2.05 3.77-2.05C19.7 7.85 20 10.3 20 13.5V22h-4v-7.5c0-1.78-.03-4.07-2.48-4.07-2.48 0-2.86 1.94-2.86 3.94V22H8V8Z"/></svg>
+                    <h3>LinkedIn</h3>
+                    <p>aymanelmasryael</p>
+                </a>
+                <a class="card contact-card reveal" href="https://aymanelmasry.com" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9 0-3.3 1.3-6.5 3.8-9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                    <h3>Website</h3>
+                    <p>aymanelmasry.com</p>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p class="footer-brand">AEL Digital Studio &mdash; Ayman Elmasry</p>
+        <p>&copy; <span id="year">2026</span> Ayman Elmasry. All rights reserved. &middot; Built for Harvard CS50x week 8 homepage.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
 </html>

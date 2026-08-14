@@ -5,11 +5,16 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Quote</h1>
-    <form action="/quote" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Symbol" type="text">
-        </div>
-        <button class="btn btn-primary" type="submit">Quote</button>
-    </form>
+    <h1 class="page-title">Stock <span class="accent">Quote</span></h1>
+    <p class="page-subtitle">resolve any ticker to a live valuation</p>
+
+    <div class="glass-card">
+        <form action="/quote" method="post" class="text-center">
+            <div class="mb-4">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-100"
+                       name="symbol" placeholder="e.g. NFLX" type="text">
+            </div>
+            <button class="btn btn-teal" type="submit">Fetch Quote</button>
+        </form>
+    </div>
 {% endblock %}

@@ -5,14 +5,21 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Buy</h1>
-    <form action="/buy" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Symbol" type="text">
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares" placeholder="Shares" type="number">
-        </div>
-        <button class="btn btn-primary" type="submit">Buy</button>
-    </form>
+    <h1 class="page-title">Buy <span class="accent">Shares</span></h1>
+    <p class="page-subtitle">acquire a position in your terminal</p>
+
+    <div class="glass-card">
+        <form action="/buy" method="post" class="text-center">
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-100"
+                       name="symbol" placeholder="Symbol" type="text">
+            </div>
+            <div class="mb-4">
+                <input autocomplete="off" class="form-control mx-auto w-100"
+                       name="shares" placeholder="Shares" min="1" step="1"
+                       type="number">
+            </div>
+            <button class="btn btn-teal" type="submit">Buy</button>
+        </form>
+    </div>
 {% endblock %}
